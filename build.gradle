@@ -1,0 +1,29 @@
+/**
+ * Gradle build file for the Whiteflag Java Library
+ */
+
+// Version
+version = '0.1.0'
+
+// Plugins
+apply plugin: 'java'
+apply plugin: 'java-library'
+
+// Metadata 
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Implementation-Version': project.version)
+    }
+}
+
+// Repositories
+repositories {
+    jcenter()
+}
+
+// Dependencies
+dependencies {
+    // The JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
