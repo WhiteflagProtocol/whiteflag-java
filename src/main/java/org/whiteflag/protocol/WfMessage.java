@@ -42,7 +42,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
      * @return hexadecimal string with the encoded Whiteflag message
-     * @throws WfCoreException if any field does not contain valid data
+     * @throws WfException if any field does not contain valid data
      */
     @Override
     public String encode() throws WfException {
@@ -53,7 +53,7 @@ public class WfMessage extends WfMessageCore {
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message
      * @param prefix if TRUE, the resulting string gets a 0x prefix (or whatever has been cached)
      * @return hexadecimal string with the encoded Whiteflag message
-     * @throws WfCoreException if any field does not contain valid data
+     * @throws WfException if any field does not contain valid data
      */
     @Override
     public String encode(Boolean prefix) throws WfException {
@@ -118,7 +118,7 @@ public class WfMessage extends WfMessageCore {
          * Creates a Whiteflag message object from field values
          * @param fieldValues String array with the values for the message fields
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfCoreException if the provided values are invalid
+         * @throws WfException if the provided values are invalid
          */
         public final WfMessage createFromValues(String[] fieldValues) throws WfException {
             WfMessageCore message;

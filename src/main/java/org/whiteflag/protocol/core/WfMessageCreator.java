@@ -48,9 +48,11 @@ public class WfMessageCreator {
         // Get number of bytes
         int nBytes = serializedMessage.length();
 
-        // Create message header and determine message type
+        // Create message header and get field values
         initHeader();
-        header.setAllFieldValues(serializedMessage);
+        deserialiseSegment(serializedMessage, header);
+
+        // Determine message type
         messageCode = header.getFieldValue("MessageCode");
 
         // Create message body based on message type
@@ -58,22 +60,33 @@ public class WfMessageCreator {
         switch (messageCode) {
             case "T":
                 // Extend test message body with pseudo message body
-                body.setAllFieldValues(serializedMessage);                                   // Deserialze the one field with pseudo message code
+                deserialiseSegment(serializedMessage, body);                        // Deserialze the one field with pseudo message code
                 String pseudoMessageCode = body.getFieldValue("PseudoMessageCode");
                 body.add(new WfMessageSegment(WfMessageDefinitions.getBodyFields(pseudoMessageCode, lastBodyByte)));
                 break;
             case "Q":
                 // Extend request message body with request fields
-                int nRequestObjects = (nBytes - lastBodyByte) / 4;                          // One request object requires 2 fields of 2 bytes
+                int nRequestObjects = (nBytes - lastBodyByte) / 4;                  // One request object requires 2 fields of 2 bytes
                 body.add(new WfMessageSegment(WfMessageDefinitions.getRequestFields(nRequestObjects, lastBodyByte)));
                 break;
             default:
                 // Nothing to do for other message types
                 break;
         }
-        body.setAllFieldValues(serializedMessage);
+        deserialiseSegment(serializedMessage, body);
 
         // Create and return the Whiteflag message
+        return new WfMessageCore(header, body);
+    }
+
+    /**
+     * Decodes an encoded message and creates a Whiteflag core message
+     * @param encodedMessage String with the uncompressed serialized message
+     * @return a {@link WfMessageCore} Whiteflag message
+     * @throws WfCoreException if the provided values are invalid
+     */
+    public final WfMessageCore decode(String encodedMessage) {
+        //TODO: write decoding
         return new WfMessageCore(header, body);
     }
 
@@ -133,11 +146,35 @@ public class WfMessageCreator {
      */
     private final void initBody (String messageCode) throws WfCoreException {
         // Create message body segment
-        int bodyOffset = header.getFieldByIndex(nHeaderFields - 1).endByte;
+        int bodyOffset = header.getField(nHeaderFields - 1).endByte;
         body = new WfMessageSegment(WfMessageDefinitions.getBodyFields(messageCode, bodyOffset));
 
         // Header characteristics
         nBodyFields = body.getNoFields();
-        lastBodyByte = body.getFieldByIndex(nBodyFields - 1).endByte;
+        lastBodyByte = body.getField(nBodyFields - 1).endByte;
+    }
+
+    /**
+     * Gets field values from a serialised message for the provided segment
+     */
+    private static final void deserialiseSegment(String data, WfMessageSegment segment) throws WfCoreException {
+        int nFields = segment.getNoFields();
+
+        for (int i = 0; i < nFields; i++) {
+            String value;
+            WfMessageField field = segment.getField(i);
+
+            // Get field value from serialized string 
+            if (field.endByte < 0) {
+                value = data.substring(field.startByte);
+            } else {
+                value = data.substring(field.startByte, field.endByte);
+            }
+
+            // Set the field value and check result
+            if (Boolean.TRUE.equals(!segment.setFieldValue(i, value))) {
+                throw new WfCoreException("Invalid data provided for " + field.name + " field in uncompressed serialized message at byte " + field.startByte + ": " + value + " must match " + field.pattern.toString());
+            }
+        }
     }
 }
