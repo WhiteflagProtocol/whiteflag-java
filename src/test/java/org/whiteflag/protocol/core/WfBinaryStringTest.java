@@ -17,7 +17,7 @@ public class WfBinaryStringTest {
      * Tests construction of BinString
      */
     @Test
-    public void testBinString1() throws WfCoreException {
+    public void testBinString1() {
         /* Test function */
         WfBinaryString wfBinString1 = new WfBinaryString(binString);
         assertEquals("Binary string should contain correct data", binString, wfBinString1.toBinString());
@@ -27,17 +27,17 @@ public class WfBinaryStringTest {
      * Tests construction of BinString with invalid data
      */
     @Test
-    public void testBinString2() throws WfCoreException {
+    public void testBinString2() {
         /* Test data */
         String binString2 = "020100111011001";
         WfBinaryString wfBinString2;
         /* Test function */
         try {
             wfBinString2 = new WfBinaryString(binString2);
-            fail("Expected a WfCoreException to be thrown");
+            fail("Expected a IllegalArgumentException to be thrown");
             assertNotEquals("Binary string should not be created", binString2, wfBinString2.toBinString());
-        } catch (WfCoreException e) {
-            assertTrue(e instanceof WfCoreException);
+        } catch (IllegalArgumentException e) {
+            assertTrue(e instanceof IllegalArgumentException);
         }
     }
 
@@ -45,7 +45,7 @@ public class WfBinaryStringTest {
      * Tests substring of a BinString
      */
     @Test
-    public void testBinString3() throws WfCoreException {
+    public void testBinString3() {
         /* Test data */
         WfBinaryString wfBinString3 = new WfBinaryString(binString);
         /* Test function */
@@ -56,7 +56,7 @@ public class WfBinaryStringTest {
      * Tests hexadecimal encoding of a BinString
      */
     @Test
-    public void testBinStringHex1() throws WfCoreException {
+    public void testBinStringHex1() {
         /* Test data */
         WfBinaryString wfBinaryStringH1 = new WfBinaryString(binString);
         /* Test function */
@@ -67,7 +67,7 @@ public class WfBinaryStringTest {
      * Tests hexadecimal encoding of a BinString
      */
     @Test
-    public void testBinStringHex2() throws WfCoreException {
+    public void testBinStringHex2() {
         /* Test data */
         WfBinaryString wfBinaryStringH2 = new WfBinaryString("1");
         /* Test function */
@@ -78,7 +78,7 @@ public class WfBinaryStringTest {
      * Tests addition of a BinString to another
      */
     @Test
-    public void testBinStringAdd() throws WfCoreException {
+    public void testBinStringAdd() {
         /* Test data */
         String binStringA = "11111111";
         WfBinaryString wfBinaryString = new WfBinaryString(binString);

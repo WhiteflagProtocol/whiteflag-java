@@ -37,7 +37,36 @@ public class WfMessage extends WfMessageCore {
         super(header, body);
     }
 
-    /* PUBLIC METHODS: Message interface */
+    /* PUBLIC METHODS: basic object interface */
+
+    /**
+     * Returns a copy of the message
+     * @return {@link WfMessage}
+     */
+    @Override
+    public WfMessage clone() throws CloneNotSupportedException {
+        return (WfMessage) super.clone();
+    }
+
+    /* PUBLIC METHODS: getters & setters */
+
+    /**
+     * Adds metadata to the Whiteflag message if not already existing
+     * @return null if successful, otherwise the value of the already existing key
+     */
+    public String addMetadata(String key, String value) {
+        return metadata.putIfAbsent(key, value);
+    }
+
+    /**
+     * Returns the requested metadata value of the Whiteflag message
+     * @return a string with the value of the requested metadata key
+     */
+    public String getMetadata(String key) {
+        return metadata.get(key);
+    }
+
+    /* PUBLIC METHODS: operations */
 
     /**
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
@@ -67,24 +96,6 @@ public class WfMessage extends WfMessageCore {
         return encodedMessage;
     }
 
-    /* PUBLIC METHODS: Metadata */
-
-    /**
-     * Adds metadata to the Whiteflag message if not already existing
-     * @return null if successful, otherwise the value of the already existing key
-     */
-    public String addMetadata(String key, String value) {
-        return metadata.putIfAbsent(key, value);
-    }
-
-    /**
-     * Returns the requested metadata value of the Whiteflag message
-     * @return a string with the value of the requested metadata key
-     */
-    public String getMetadata(String key) {
-        return metadata.get(key);
-    }
-
     /* NESTED CLASSES */
 
     /**
@@ -99,15 +110,31 @@ public class WfMessage extends WfMessageCore {
         /* METHODS */
 
         /**
-         * Creates a Whiteflag message object from a serialised message
+         * Creates a Whiteflag message object from a serialized message
          * @param serializedMessage String with the uncompressed serialized message
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfException if the provided values are invalid
+         * @throws WfException if the provided serialization is invalid
          */
-        public final WfMessage deserialize(String serializedMessage) throws WfException {
+        public static final WfMessage deserialize(String serializedMessage) throws WfException {
             WfMessageCore message;
             try {
                 message = new WfMessageCreator().deserialize(serializedMessage);
+            } catch (WfCoreException e) {
+                throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+            }
+            return new WfMessage(message.header, message.body);
+        }
+
+        /**
+         * Creates a Whiteflag message object from a encoded message
+         * @param encodedMessage String with the encoded message
+         * @return a {@link WfMessage} Whiteflag message
+         * @throws WfException if the provided encoding is invalid
+         */
+        public static final WfMessage decode(String encodedMessage) throws WfException {
+            WfMessageCore message;
+            try {
+                message = new WfMessageCreator().decode(encodedMessage);
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
@@ -120,7 +147,7 @@ public class WfMessage extends WfMessageCore {
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the provided values are invalid
          */
-        public final WfMessage compile(String[] fieldValues) throws WfException {
+        public static final WfMessage compile(String[] fieldValues) throws WfException {
             WfMessageCore message;
             try {
                 message = new WfMessageCreator().compile(fieldValues);

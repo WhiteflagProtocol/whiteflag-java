@@ -36,10 +36,10 @@ public class WfMessageCreator {
         // Nothing required for instantiating a Whiteflag creator object
     }
 
-    /* PUBLIC METHODS */
+    /* PUBLIC METHODS: operations */
 
     /**
-     * Creates a Whiteflag core message object from a serialised message
+     * Creates a Whiteflag core message object from a serialized message
      * @param serializedMessage String with the uncompressed serialized message
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
@@ -138,7 +138,7 @@ public class WfMessageCreator {
         return new WfMessageCore(header, body);
     }
 
-    /* PRIVATE METHODS */
+    /* PRIVATE METHODS: helper functions */
 
     /**
      * Initialises new message header segment and sets relatedv ariables
@@ -167,7 +167,7 @@ public class WfMessageCreator {
     }
 
     /**
-     * Gets field values from a serialised message for the provided segment
+     * Gets field values from a serialized message for the provided segment
      */
     private static final WfMessageSegment deserialiseSegment(String data, WfMessageSegment segment) throws WfCoreException {
         int nFields = segment.getNoFields();

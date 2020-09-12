@@ -89,19 +89,19 @@ public class WfMessageTest {
     @Test
     public void testAuthMessageDeserialization1() throws WfCoreException {
         /* Test data */
-        String serialisedMessage = "WF100A000000000000000000000000000000000000000000000000000000000000000001b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263";
-        WfMessage wfMessage = new WfMessage.Creator().deserialize(serialisedMessage);
+        String serializedMessage = "WF100A000000000000000000000000000000000000000000000000000000000000000001b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263";
+        WfMessage wfMessage = new WfMessage.Creator().deserialize(serializedMessage);
 
         /* Test function */
-        assertEquals("Prefix should be correctly set", serialisedMessage.substring(0, 2), wfMessage.getFieldValue("Prefix"));
-        assertEquals("Version number should be correctly set", serialisedMessage.substring(2, 3), wfMessage.getFieldValue("Version"));
-        assertEquals("Encryption indicator should be correctly set", serialisedMessage.substring(3, 4), wfMessage.getFieldValue("EncryptionIndicator"));
-        assertEquals("Duress indicator should be correctly set", serialisedMessage.substring(4, 5), wfMessage.getFieldValue("DuressIndicator"));
-        assertEquals("Message code should be correctly set", serialisedMessage.substring(5, 6), wfMessage.getFieldValue("MessageCode"));
-        assertEquals("Reference indicator should be correctly set", serialisedMessage.substring(6, 7), wfMessage.getFieldValue("ReferenceIndicator"));
-        assertEquals("Referenced message should be correctly set", serialisedMessage.substring(7, 71), wfMessage.getFieldValue("ReferencedMessage"));
-        assertEquals("Verification method type should be correctly set", serialisedMessage.substring(71, 72), wfMessage.getFieldValue("VerificationMethod"));
-        assertEquals("Verification data should be correctly set", serialisedMessage.substring(72), wfMessage.getFieldValue("VerificationData"));
+        assertEquals("Prefix should be correctly set", serializedMessage.substring(0, 2), wfMessage.getFieldValue("Prefix"));
+        assertEquals("Version number should be correctly set", serializedMessage.substring(2, 3), wfMessage.getFieldValue("Version"));
+        assertEquals("Encryption indicator should be correctly set", serializedMessage.substring(3, 4), wfMessage.getFieldValue("EncryptionIndicator"));
+        assertEquals("Duress indicator should be correctly set", serializedMessage.substring(4, 5), wfMessage.getFieldValue("DuressIndicator"));
+        assertEquals("Message code should be correctly set", serializedMessage.substring(5, 6), wfMessage.getFieldValue("MessageCode"));
+        assertEquals("Reference indicator should be correctly set", serializedMessage.substring(6, 7), wfMessage.getFieldValue("ReferenceIndicator"));
+        assertEquals("Referenced message should be correctly set", serializedMessage.substring(7, 71), wfMessage.getFieldValue("ReferencedMessage"));
+        assertEquals("Verification method type should be correctly set", serializedMessage.substring(71, 72), wfMessage.getFieldValue("VerificationMethod"));
+        assertEquals("Verification data should be correctly set", serializedMessage.substring(72), wfMessage.getFieldValue("VerificationData"));
         assertTrue("Message should be valid", wfMessage.isValid());
     }
     /**

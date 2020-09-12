@@ -39,12 +39,12 @@ public class WfBinaryString {
 
     /**
      * Creates a binary string object from a string with binary encoded data
-     * @param data String representing binary encoded data
-     * @throws WfCoreException if the provided string is not binary encoded data
+     * @param data String representing binary encoded data; only characters "0" and "1" are allowed
+     * @throws IllegalArgumentException if the provided string is not binary encoded data
      */
-    public WfBinaryString(String data) throws WfCoreException {
+    public WfBinaryString(String data) {
         if (data == null || !BINPATTERN.matcher(data).matches()) {
-            throw new WfCoreException("Invalid binary string");
+            throw new IllegalArgumentException("Invalid binary string");
         }
         this.value = data;
     }
@@ -52,11 +52,31 @@ public class WfBinaryString {
     /* PUBLIC METHODS */
 
     /**
+     * Returns a copy of the binary string
+     * @return {@link WfBinaryString}
+     */
+    @Override
+    public WfBinaryString clone() throws CloneNotSupportedException {
+        return (WfBinaryString) super.clone();
+    }
+
+    /**
+     * Returns the binary string object as a binary string
+     * @return String with binary representation of the object
+     */
+    @Override
+    public final String toString() {
+        return this.toBinString();
+    }
+
+    /* PUBLIC METHODS: metadata & validators */
+
+    /**
      * Chekcs if this binary string is empty
      * @return TRUE if null or empty, else FALSE
      */
-    public Boolean isEmpty() {
-        if (value.isEmpty()) return true;
+    public final Boolean isEmpty() {
+        if (this.value.isEmpty()) return true;
         return false;
     }
 
@@ -64,9 +84,11 @@ public class WfBinaryString {
      * Returns the length of the binary string
      * @return integer with the length
      */
-    public int length() {
-        return value.length();
+    public final int length() {
+        return this.value.length();
     }
+
+    /* PUBLIC METHODS: getters & setters */
 
     //TODO: set from bin string
     //TODO: set from hex string
@@ -75,15 +97,7 @@ public class WfBinaryString {
      * Returns the binary string value as a binary string without 0b prefix
      * @return String with binary representation
      */
-    public String toString() {
-        return this.toBinString();
-    }
-
-    /**
-     * Returns the binary string value as a binary string without 0b prefix
-     * @return String with binary representation
-     */
-    public String toBinString() {
+    public final String toBinString() {
         return this.toBinString(false);
     }
 
@@ -92,7 +106,7 @@ public class WfBinaryString {
      * @param prefix if TRUE, the resulting string gets a 0b prefix
      * @return String with binary representation
      */
-    public String toBinString(Boolean prefix) {
+    public final String toBinString(Boolean prefix) {
         if (Boolean.TRUE.equals(prefix)) {
             return BINPREFIX + this.value;
         }
@@ -103,7 +117,7 @@ public class WfBinaryString {
      * Returns the binary string value as a hexadeciomal string without 0x prefix
      * @return String with hexadecimal representation
      */
-    public String toHexString() {
+    public final String toHexString() {
         return this.toHexString(false);
     }
 
@@ -112,7 +126,7 @@ public class WfBinaryString {
      * @param prefix if TRUE, the resulting string gets a 0x prefix
      * @return String with hexadecimal representation
      */
-    public String toHexString(Boolean prefix) {
+    public final String toHexString(Boolean prefix) {
         StringBuilder hex = new StringBuilder();
         String bin = padRight(value, OCTET);
 
@@ -127,22 +141,24 @@ public class WfBinaryString {
         return hex.toString();
     }
 
-    /**
-     * Converts the specified range of the binary string object to a binary string
-     * @param beginIndex first bit of the requested range
-     * @param endIndex last bit of the range (not included)
-     * @return String with binary representation
-     */
-    public WfBinaryString sub(int beginIndex, int endIndex) throws WfCoreException {
-        return new WfBinaryString(this.value.substring(beginIndex, endIndex));
-    }
+    /* PUBLIC METHODS: operations */
 
     /**
+     * Converts the specified range of the binary string object to a binary string
+     * @param startBit first bit of the requested range
+     * @param endBit last bit of the range (not included)
+     * @return String with binary representation
+     */
+    public final WfBinaryString sub(int startBit, int endBit) {
+        return new WfBinaryString(this.value.substring(startBit, endBit));
+    }
+
+    /**s
      * Add a binary string object to this binary string object
      * @param binString the {@link WfBinaryString} to be added
      * @return The updated binary string object
      */
-    public WfBinaryString add(WfBinaryString binString) {
+    public final WfBinaryString add(WfBinaryString binString) {
         this.value = this.value + binString.toBinString();
         return this;
     }

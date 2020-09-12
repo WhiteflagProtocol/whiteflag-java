@@ -25,7 +25,7 @@ public class WfMessageField {
 
     /* Fixed properties upon instantiation */
     /**
-     * The name of the Whiteflag field
+     * The name of the field
      */
     public final String name;
     /**
@@ -154,10 +154,40 @@ public class WfMessageField {
         this.endByte = endByte;
     }
 
-    /* PUBLIC METHODS */
+    /* PUBLIC METHODS: basic object interface */
 
     /**
-     * Gets the value of the field
+     * Returns a copy of the message field
+     * @return {@link WfMessageField}
+     */
+    @Override
+    public WfMessageField clone() throws CloneNotSupportedException {
+        return (WfMessageField) super.clone();
+    }
+
+    /**
+     * Returns the message field as a tring
+     * @return String with the value of the message field
+     */
+    @Override
+    public final String toString() {
+        return this.getValue();
+    }
+
+    /* PUBLIC METHODS: metadata & validators */
+
+    /**
+     * Checks if the message field contains a valid value
+     * @return TRUE if the field contains a valid value, else FALSE
+     */
+    public final Boolean isValid() {
+        return isDataValid(this.value);
+    }
+
+    /* PUBLIC METHODS: getters & setters */
+
+    /**
+     * Gets the value of the message field
      * @return String with the field value
      */
     public final String getValue() {
@@ -165,7 +195,7 @@ public class WfMessageField {
     }
 
     /**
-     * Sets the value of the field 
+     * Sets the value of the message field
      * @param data The data representing the field value
      * @return TRUE if the data was valid and the field value is set, else FALSE
      */
@@ -177,16 +207,10 @@ public class WfMessageField {
         return false;
     }
 
-    /**
-     * Checks if the field contains a valid value
-     * @return TRUE if the field contains a valid value, else FALSE
-     */
-    public final Boolean isValid() {
-        return isDataValid(this.value);
-    }
+    /* PUBLIC METHODS: operations */
 
     /**
-     * Encodes the field into a binary string
+     * Encodes the message field into a binary string
      * @return {@link WfBinaryString} the compressed binary encoding of the field
      * @throws WfCoreException if the field cannot be encoded
      */
@@ -248,7 +272,7 @@ public class WfMessageField {
     }
 
     /**
-     * Decodes the  the field into a binary string
+     * Decodes the  the message field into a binary string
      * @param data {@link WfBinaryString} the compressed binary encoding of the field
      * @return String with the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
@@ -323,7 +347,7 @@ public class WfMessageField {
      * @param data The data to be checked
      * @return Boolean indicating if data is a valid value for this field
      */
-    private Boolean isDataValid(String data) {
+    private final Boolean isDataValid(String data) {
         if (data == null) return false;
         return this.pattern.matcher(data).matches();
     }

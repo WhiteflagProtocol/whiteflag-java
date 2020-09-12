@@ -27,11 +27,38 @@ public class WfMessageCore {
      * @param body the {@link WfMessageSegment} message body
      */
     public WfMessageCore(WfMessageSegment header, WfMessageSegment body) {
-        this.header = header;
-        this.body = body;
+        this.header = new WfMessageSegment(header);
+        this.body = new WfMessageSegment(body);
     }
 
-    /* PUBLIC METHODS: Message interface */
+    /* PUBLIC METHODS: basic object interface */
+
+    /**
+     * Returns a copy of the message
+     * @return {@link WfMessageCore}
+     */
+    @Override
+    public WfMessageCore clone() throws CloneNotSupportedException {
+        return (WfMessageCore) super.clone();
+    }
+
+
+    /**
+     * Returns the message as a concatinated string of field values
+     * @return String with serialized message
+     */
+    @Override
+    public final String toString() {
+        String string;
+        try {
+            string = this.serialize();
+        } catch (WfCoreException e) {
+            return "";
+        }
+        return string; 
+    }
+
+    /* PUBLIC METHODS: metadata & validators */
 
     /**
      * Checks if this message contains valid data
@@ -42,6 +69,21 @@ public class WfMessageCore {
         if (Boolean.TRUE.equals(!body.isValid())) return false;
         return true;
     }
+
+    /* PUBLIC METHODS: getters & setters */
+
+    /**
+     * Gets the value of the specified field
+     * @param name String with the name of the field
+     * @return String with the field value, or NULL if field does not exist
+     */
+    public String getFieldValue(String name) {
+        String value = header.getFieldValue(name);
+        if (value != null) return value;
+        return body.getFieldValue(name);
+    }
+
+    /* PUBLIC METHODS: operations */
 
     /**
      * Serializes the Whiteflag message
@@ -75,16 +117,5 @@ public class WfMessageCore {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }
         return header.encode().add(body.encode()).toHexString(prefix);
-    }
-
-    /**
-     * Gets the value of the specified field
-     * @param name String with the name of the field
-     * @return String with the field value, or NULL if field does not exist
-     */
-    public String getFieldValue(String name) {
-        String value = header.getFieldValue(name);
-        if (value != null) return value;
-        return body.getFieldValue(name);
     }
 }
