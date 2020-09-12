@@ -45,8 +45,8 @@ public class WfMessageCore {
 
     /**
      * Serializes the Whiteflag message
-     * @return String with the serialized message
-     * @throws WfCoreException if any field does not contain valid data
+     * @return String with the serialized message, i.e. the concatinated string of field values
+     * @throws WfCoreException if any of the field does not contain valid data
      */
     public String serialize() throws WfCoreException {
         if (Boolean.TRUE.equals(!this.isValid())) {
@@ -58,7 +58,7 @@ public class WfMessageCore {
     /**
      * Encodes the Whiteflag message without a 0x prefix
      * @return hexadecimal string with the encoded Whiteflag message
-     * @throws WfCoreException if any field does not contain valid data
+     * @throws WfCoreException if any of the field does not contain valid data
      */
     public String encode() throws WfCoreException {
         return encode(false);
@@ -68,7 +68,7 @@ public class WfMessageCore {
      * Encodes the Whiteflag message
      * @param prefix if TRUE, the resulting string gets a 0x prefix
      * @return hexadecimal string with the encoded Whiteflag message
-     * @throws WfCoreException if any field does not contain valid data
+     * @throws WfCoreException if any of the field does not contain valid data
      */
     public String encode(Boolean prefix) throws WfCoreException {
         if (Boolean.TRUE.equals(!this.isValid())) {

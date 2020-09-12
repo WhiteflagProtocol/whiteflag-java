@@ -59,53 +59,62 @@ public class WfMessageField {
         /**
          * 1-bit binary encoded bit
          */
-        BIN("[01]"),
+        BIN("[01]", BDXBITS, false),
 
         /**
          * 4-bit binary encoded decimal
          */
-        DEC("[0-9]"),
+        DEC("[0-9]", BDXBITS, false),
 
         /**
          * 4-bit binary encoded hexadecimal
          */
-        HEX("[a-fA-F0-9]"),
+        HEX("[a-fA-F0-9]", BDXBITS, false),
 
         /**
          * 8-bit binary encoded 1-byte UTF-8 character
          */
-        UTF8("[\u0000-\u007F]"),
+        UTF8("[\u0000-\u007F]", UTFBITS, false),
 
         /**
          *  4-bit binary encoded date-time coordinate
          */
-        DATETIME("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z"),
+        DATETIME("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", 8, true),
 
         /**
          *  4-bit binary encoded time duration
          */
-        DURATION("P[0-9]{2}D[0-9]{2}H[0-9]{2}M"),
+        DURATION("P[0-9]{2}D[0-9]{2}H[0-9]{2}M", 8, true),
 
         /**
          *  4-bit binary encoded latitude coordinate
          */
-        LAT("[+\\-][0-9]{2}\\.[0-9]{5}"),
+        LAT("[+\\-][0-9]{2}\\.[0-9]{5}", 8, true),
 
         /**
          *  4-bit binary encoded longitude coordinate
          */
-        LONG("[+\\-][0-9]{3}\\.[0-9]{5}");
+        LONG("[+\\-][0-9]{3}\\.[0-9]{5}", 8, true);
 
         /* PROPERTIES */
 
         /* The valid regex charset of an unencoded field value */
         private final String charset;
+        private final int bitLength;
+        private final Boolean fixedLength;
 
         /* METHODS */
 
         /* Constructor */
-        private Encoding(final String charset) {
+        /**
+         * @param charset String with regex charset with allowed characters for this encoding
+         * @param bitLength integer the number of bits required to encode
+         * @param fixedLength Boolean iondicating whether the encoded field has a fixed bitlentgh
+         */
+        private Encoding(final String charset, final int bitLength, final Boolean fixedLength) {
             this.charset = charset;
+            this.bitLength = bitLength;
+            this.fixedLength = fixedLength;
         }
 
         /**
@@ -114,6 +123,16 @@ public class WfMessageField {
          */
         public String charset() {
             return charset;
+        }
+
+        /**
+         * Returns the bit length of a field for a given encoding and unencoded field byte length
+         * @param byteLength integer with the number of bytes in the unencoded field
+         * @return integer with the number of bits in a compressed encoded field
+         */
+        public int length(int byteLength) {
+            if (fixedLength) return bitLength;
+            return (byteLength * bitLength);
         }
     }
 
@@ -226,6 +245,75 @@ public class WfMessageField {
         }
         // Return binary string with compressed field encoding
         return new WfBinaryString(bin.toString());
+    }
+
+    /**
+     * Decodes the  the field into a binary string
+     * @param data {@link WfBinaryString} the compressed binary encoding of the field
+     * @return String with the uncompressed value of the field
+     * @throws WfCoreException if the field cannot be decoded
+     */
+    public final String decode(WfBinaryString data) throws WfCoreException {
+        // Standard encoding error message indiocating field name
+        final String genericErrorMsg = "Cannot decode " + name + " field";
+
+        // Get bineary string
+        String bin = data.toBinString();
+
+        // Check number of bits
+        if (this.endByte > 0) {
+            int binLength = encoding.length(endByte - startByte);
+            if (binLength != bin.length()) {
+                throw new WfCoreException(genericErrorMsg + ": " + "Encoded data is not exactly " + binLength + " bits: " + bin);
+            }
+        } else {
+            //TODO: remove padding zeros at end
+        }
+        // Build value string iaw field encoding type
+        StringBuilder value = new StringBuilder();
+        switch (encoding) {
+
+            // Encode UTF 8 field
+            case UTF8:
+                //TODO: UTF decoding
+                break;
+
+            // Decode binary field
+            case BIN:
+                value = value.append(bin);
+                break;
+
+            // Decode decimal or hexadecimal field
+            case DEC:
+            case HEX:
+                //TODO: DEC/HEX decoding
+                break;
+
+            // Decode datetime field
+            case DATETIME:
+                //TODO: DATETIME decoding
+                break;
+
+            // Decode duration field
+            case DURATION:
+                //TODO: DURATION decoding
+                break;
+            
+            // Decode lat-long fields
+            case LAT:
+            case LONG:
+                // Sign of lat long coordinates
+                if (bin.substring(0,1).equals("0")) value.append("-");
+                if (bin.substring(0,1).equals("1")) value.append("+");
+                //TODO: LAT-LONG decoding
+                break;
+
+            // Unknown encoding
+            default:
+                throw new WfCoreException(genericErrorMsg + ": " + "Undefined message encoding: " + encoding);
+        }
+        // Return decoded uncompressed value string
+        return value.toString();
     }
 
     /* PRIVATE METHODS */

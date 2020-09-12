@@ -49,18 +49,18 @@ public class WfMessageCreator {
         int nBytes = serializedMessage.length();
 
         // Create message header and get field values
-        initHeader();
-        deserialiseSegment(serializedMessage, header);
+        header = initHeader();
+        header = deserialiseSegment(serializedMessage, header);
 
         // Determine message type
         messageCode = header.getFieldValue("MessageCode");
 
         // Create message body based on message type
-        initBody(messageCode);
+        body = initBody(messageCode);
         switch (messageCode) {
             case "T":
                 // Extend test message body with pseudo message body
-                deserialiseSegment(serializedMessage, body);                        // Deserialze the one field with pseudo message code
+                body = deserialiseSegment(serializedMessage, body);                        // Deserialze the one field with pseudo message code
                 String pseudoMessageCode = body.getFieldValue("PseudoMessageCode");
                 body.add(new WfMessageSegment(WfMessageDefinitions.getBodyFields(pseudoMessageCode, lastBodyByte)));
                 break;
@@ -73,7 +73,7 @@ public class WfMessageCreator {
                 // Nothing to do for other message types
                 break;
         }
-        deserialiseSegment(serializedMessage, body);
+        body = deserialiseSegment(serializedMessage, body);
 
         // Create and return the Whiteflag message
         return new WfMessageCore(header, body);
@@ -81,12 +81,22 @@ public class WfMessageCreator {
 
     /**
      * Decodes an encoded message and creates a Whiteflag core message
-     * @param encodedMessage String with the uncompressed serialized message
+     * @param encodedMessage String with the hexadecimal representation of the encoded message
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCore decode(String encodedMessage) {
-        //TODO: write decoding
+    public final WfMessageCore decode(String encodedMessage) throws WfCoreException {
+        //TODO: transform hexadecimal string to binary string
+
+        // Create message header and determine message type
+        header = initHeader();
+        //TODO: loop through header fields to decode
+        messageCode = header.getFieldValue("MessageCode");
+
+        // Create message body based on message type
+        body = initBody(messageCode);
+        //TODO: loop through body fields to decode
+
         return new WfMessageCore(header, body);
     }
 
@@ -96,17 +106,17 @@ public class WfMessageCreator {
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCore createFromValues(String[] fieldValues) throws WfCoreException {
+    public final WfMessageCore compile(String[] fieldValues) throws WfCoreException {
         // Get number of fields
         int nFields = fieldValues.length;
 
         // Create message header and determine message type
-        initHeader();
+        header = initHeader();
         header.setAllFieldValues(Arrays.copyOfRange(fieldValues, 0, nHeaderFields));
         messageCode = header.getFieldValue("MessageCode");
 
         // Create message body based on message type
-        initBody(messageCode);
+        body = initBody(messageCode);
         switch (messageCode) {
             case "T":
                 // Extend test message body with pseudo message body
@@ -133,31 +143,33 @@ public class WfMessageCreator {
     /**
      * Initialises new message header segment and sets relatedv ariables
      */
-    private final void initHeader() {
-        // Create message header segment
+    private final WfMessageSegment initHeader() {
+        // Create message header segment and update header characteristics
         header = new WfMessageSegment(WfMessageDefinitions.getHeaderFields());
-
-        // Header characteristics
         nHeaderFields = header.getNoFields();
+
+        // Return new message header
+        return header;
     }
 
     /**
      * Initialises new message body segment and sets relatedv ariables
      */
-    private final void initBody (String messageCode) throws WfCoreException {
-        // Create message body segment
+    private final WfMessageSegment initBody (String messageCode) throws WfCoreException {
+        // Create message body segment and update body characteristics
         int bodyOffset = header.getField(nHeaderFields - 1).endByte;
         body = new WfMessageSegment(WfMessageDefinitions.getBodyFields(messageCode, bodyOffset));
-
-        // Header characteristics
         nBodyFields = body.getNoFields();
         lastBodyByte = body.getField(nBodyFields - 1).endByte;
+
+        // Return new message body
+        return body;
     }
 
     /**
      * Gets field values from a serialised message for the provided segment
      */
-    private static final void deserialiseSegment(String data, WfMessageSegment segment) throws WfCoreException {
+    private static final WfMessageSegment deserialiseSegment(String data, WfMessageSegment segment) throws WfCoreException {
         int nFields = segment.getNoFields();
 
         for (int i = 0; i < nFields; i++) {
@@ -176,5 +188,7 @@ public class WfMessageCreator {
                 throw new WfCoreException("Invalid data provided for " + field.name + " field in uncompressed serialized message at byte " + field.startByte + ": " + value + " must match " + field.pattern.toString());
             }
         }
+        // Return updated segment
+        return segment;
     }
 }

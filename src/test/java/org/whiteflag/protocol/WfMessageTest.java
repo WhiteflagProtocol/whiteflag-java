@@ -21,7 +21,7 @@ public class WfMessageTest {
         WfMessage wfMessage;
         String[] fieldValues = { "WF", "1", "0", "0", "K", "0", "0000000000000000000000000000000000000000000000000000000000000000", "11", "d426bbe111221675e333f30ef608b1aa6e60a47080dd33cb49e96395894ef42f" };
         try {
-            wfMessage = new WfMessage.Creator().createFromValues(fieldValues);
+            wfMessage = new WfMessage.Creator().compile(fieldValues);
         } catch (WfCoreException e) {
             throw e;
         }
@@ -47,7 +47,7 @@ public class WfMessageTest {
         WfMessage wfMessage;
         String[] fieldValues = { "WF", "1", "0", "0", "A", "0", "0000000000000000000000000000000000000000000000000000000000000000", "1", "b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263"};
         try {
-            wfMessage = new WfMessage.Creator().createFromValues(fieldValues);
+            wfMessage = new WfMessage.Creator().compile(fieldValues);
         } catch (WfCoreException e) {
             throw e;
         }
@@ -73,7 +73,7 @@ public class WfMessageTest {
         WfMessage wfMessage;
         String[] fieldValues = { "WF", "1", "0", "0", "A", "0", "0000000000000000000000000000000000000000000000000000000000000000", "1", "b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263"};
         try {
-            wfMessage = new WfMessage.Creator().createFromValues(fieldValues);
+            wfMessage = new WfMessage.Creator().compile(fieldValues);
         } catch (WfCoreException e) {
             throw e;
         }
@@ -112,7 +112,7 @@ public class WfMessageTest {
         /* Test data */
         String[] fieldValues = { "WF", "1", "0", "0", "X", "0", "0000000000000000000000000000000000000000000000000000000000000000", "1", "b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263"};
         try {
-            WfMessage wfMessage = new WfMessage.Creator().createFromValues(fieldValues);
+            WfMessage wfMessage = new WfMessage.Creator().compile(fieldValues);
             fail("Expected a WfCoreException to be thrown");
             assertFalse("Message should not be valid", wfMessage.isValid());
         } catch (WfCoreException e) {
@@ -130,7 +130,7 @@ public class WfMessageTest {
                                  "80", "2013-08-31T04:29:15Z", "P00D00H00M", "22", "+30.79658", "-037.82602", "8765", "3210", "042"
                                 };
         try {
-            wfMessage = new WfMessage.Creator().createFromValues(fieldValues);
+            wfMessage = new WfMessage.Creator().compile(fieldValues);
         } catch (WfCoreException e) {
             throw e;
         }

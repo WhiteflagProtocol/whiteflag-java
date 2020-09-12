@@ -120,10 +120,10 @@ public class WfMessage extends WfMessageCore {
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the provided values are invalid
          */
-        public final WfMessage createFromValues(String[] fieldValues) throws WfException {
+        public final WfMessage compile(String[] fieldValues) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().createFromValues(fieldValues);
+                message = new WfMessageCreator().compile(fieldValues);
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
