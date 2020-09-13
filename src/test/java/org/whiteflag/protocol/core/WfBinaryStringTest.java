@@ -84,7 +84,7 @@ public class WfBinaryStringTest {
         WfBinaryString wfBinaryString = new WfBinaryString(binString);
         WfBinaryString wfBinaryStringA = new WfBinaryString(binStringA);
         /* Test function */
-        wfBinaryString.add(wfBinaryStringA);
+        wfBinaryString.concat(wfBinaryStringA);
         assertEquals("Binary string should include the added data", binString + binStringA, wfBinaryString.toBinString());
     }
 }

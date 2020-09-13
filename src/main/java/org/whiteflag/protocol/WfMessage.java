@@ -3,6 +3,7 @@
  */
 package org.whiteflag.protocol;
 
+import java.util.Set;
 import java.util.HashMap;
 import org.whiteflag.protocol.core.*;
 
@@ -37,17 +38,6 @@ public class WfMessage extends WfMessageCore {
         super(header, body);
     }
 
-    /* PUBLIC METHODS: basic object interface */
-
-    /**
-     * Returns a copy of the message
-     * @return {@link WfMessage}
-     */
-    @Override
-    public WfMessage clone() throws CloneNotSupportedException {
-        return (WfMessage) super.clone();
-    }
-
     /* PUBLIC METHODS: getters & setters */
 
     /**
@@ -64,6 +54,14 @@ public class WfMessage extends WfMessageCore {
      */
     public String getMetadata(String key) {
         return metadata.get(key);
+    }
+
+    /**
+     * Returns metadat keys of the Whiteflag message
+     * @return a string array with all metadata keys
+     */
+    public Set<String> getMetadataKeys() {
+        return metadata.keySet();
     }
 
     /* PUBLIC METHODS: operations */
@@ -108,6 +106,20 @@ public class WfMessage extends WfMessageCore {
     public static class Creator {
 
         /* METHODS */
+
+        /**
+         * Copies a Whiteflag message into new Whiteflag core message object
+         * @param originalMessage teh {@link WfMessageCore} to be copied
+         * @return a {@link WfMessageCore} Whiteflag message
+         * @throws WfCoreException if the provided values are invalid
+         */
+        public static final WfMessage copy(WfMessage originalMessage) {
+            WfMessage message = new WfMessage(new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
+            for (String key : originalMessage.getMetadataKeys()) {
+                message.addMetadata(key, originalMessage.getMetadata(key));
+            }
+            return message;
+        }
 
         /**
          * Creates a Whiteflag message object from a serialized message

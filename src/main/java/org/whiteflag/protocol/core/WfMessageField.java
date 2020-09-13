@@ -139,7 +139,7 @@ public class WfMessageField {
     /* CONSTRUCTOR */
 
     /**
-     * Creates a new Whiteflag message field based on provided poperties
+     * Constructs a new Whiteflag message field based on provided poperties
      * @param name the name of the Whiteflag field
      * @param pattern a string with the regex pattern defining allowed values
      * @param encoding the @{WfMessageField.Encoding} of the field
@@ -154,16 +154,20 @@ public class WfMessageField {
         this.endByte = endByte;
     }
 
-    /* PUBLIC METHODS: basic object interface */
-
     /**
-     * Returns a copy of the message field
-     * @return {@link WfMessageField}
+     * Constructs a new Whiteflag message field from an existing message field
+     * @param field the {@link WfMessageField} to create a new message field from
      */
-    @Override
-    public WfMessageField clone() throws CloneNotSupportedException {
-        return (WfMessageField) super.clone();
+    public WfMessageField(WfMessageField field) {
+        this.name = field.name;
+        this.pattern = Pattern.compile(field.pattern.toString());
+        this.encoding = field.encoding;
+        this.startByte = field.startByte;
+        this.endByte = field.endByte;
+        this.value = field.getValue();
     }
+
+    /* PUBLIC METHODS: basic object interface */
 
     /**
      * Returns the message field as a tring

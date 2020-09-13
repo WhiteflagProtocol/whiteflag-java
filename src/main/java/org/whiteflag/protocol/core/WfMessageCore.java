@@ -34,21 +34,11 @@ public class WfMessageCore {
     /* PUBLIC METHODS: basic object interface */
 
     /**
-     * Returns a copy of the message
-     * @return {@link WfMessageCore}
-     */
-    @Override
-    public WfMessageCore clone() throws CloneNotSupportedException {
-        return (WfMessageCore) super.clone();
-    }
-
-
-    /**
      * Returns the message as a concatinated string of field values
      * @return String with serialized message
      */
     @Override
-    public final String toString() {
+    public String toString() {
         String string;
         try {
             string = this.serialize();
@@ -116,6 +106,6 @@ public class WfMessageCore {
         if (Boolean.TRUE.equals(!this.isValid())) {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }
-        return header.encode().add(body.encode()).toHexString(prefix);
+        return header.encode().concat(body.encode()).toHexString(prefix);
     }
 }

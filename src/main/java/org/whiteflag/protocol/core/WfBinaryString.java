@@ -31,34 +31,34 @@ public class WfBinaryString {
     /* CONSTRUCTORS */
 
     /**
-     * Creates an empty binary string object
+     * Constructs a new empty binary string object
      */
     public WfBinaryString() {
         this.value = "";
     }
 
     /**
-     * Creates a binary string object from a string with binary encoded data
+     * Constructs a new binary string object from a string with binary encoded data
      * @param data String representing binary encoded data; only characters "0" and "1" are allowed
      * @throws IllegalArgumentException if the provided string is not binary encoded data
      */
     public WfBinaryString(String data) {
+        //TODO: check prefix
         if (data == null || !BINPATTERN.matcher(data).matches()) {
             throw new IllegalArgumentException("Invalid binary string");
         }
         this.value = data;
     }
 
-    /* PUBLIC METHODS */
-
     /**
-     * Returns a copy of the binary string
-     * @return {@link WfBinaryString}
+     * Constructs a new binary string object from an existing binary string object
+     * @param binaryString the {@link WfBinaryString} to create a new binary string from
      */
-    @Override
-    public WfBinaryString clone() throws CloneNotSupportedException {
-        return (WfBinaryString) super.clone();
+    public WfBinaryString(WfBinaryString binaryString) {
+        this.value = binaryString.toBinString(false);
     }
+
+    /* PUBLIC METHODS: basic object interface */
 
     /**
      * Returns the binary string object as a binary string
@@ -144,7 +144,7 @@ public class WfBinaryString {
     /* PUBLIC METHODS: operations */
 
     /**
-     * Converts the specified range of the binary string object to a binary string
+     * Extracts the specified bit range into a new binary string object
      * @param startBit first bit of the requested range
      * @param endBit last bit of the range (not included)
      * @return String with binary representation
@@ -153,12 +153,12 @@ public class WfBinaryString {
         return new WfBinaryString(this.value.substring(startBit, endBit));
     }
 
-    /**s
-     * Add a binary string object to this binary string object
+    /**
+     * Concatinates a binary string object to the end of this binary string object
      * @param binString the {@link WfBinaryString} to be added
      * @return The updated binary string object
      */
-    public final WfBinaryString add(WfBinaryString binString) {
+    public final WfBinaryString concat(WfBinaryString binString) {
         this.value = this.value + binString.toBinString();
         return this;
     }

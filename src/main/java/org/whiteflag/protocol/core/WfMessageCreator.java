@@ -39,16 +39,16 @@ public class WfMessageCreator {
     /* PUBLIC METHODS: operations */
 
     /**
-     * Creates a Whiteflag core message object from a serialized message
+     * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
      * @param serializedMessage String with the uncompressed serialized message
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCore deserialize(String serializedMessage) throws WfCoreException {
-        // Get number of bytes
+        // Get number of bytes of serialized message
         int nBytes = serializedMessage.length();
 
-        // Create message header and get field values
+        // Create and desrialize message header
         header = initHeader();
         header = deserialiseSegment(serializedMessage, header);
 
@@ -60,7 +60,7 @@ public class WfMessageCreator {
         switch (messageCode) {
             case "T":
                 // Extend test message body with pseudo message body
-                body = deserialiseSegment(serializedMessage, body);                        // Deserialze the one field with pseudo message code
+                body = deserialiseSegment(serializedMessage, body);                 // Deserialze the one field with pseudo message code
                 String pseudoMessageCode = body.getFieldValue("PseudoMessageCode");
                 body.add(new WfMessageSegment(WfMessageDefinitions.getBodyFields(pseudoMessageCode, lastBodyByte)));
                 break;
@@ -80,7 +80,7 @@ public class WfMessageCreator {
     }
 
     /**
-     * Decodes an encoded message and creates a Whiteflag core message
+     * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
      * @param encodedMessage String with the hexadecimal representation of the encoded message
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
@@ -101,7 +101,7 @@ public class WfMessageCreator {
     }
 
     /**
-     * Creates a Whiteflag core message object from field values
+     * Compiles a new Whiteflag core message object from field values
      * @param fieldValues String array with the values for the message fields
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid

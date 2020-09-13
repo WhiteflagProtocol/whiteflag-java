@@ -4,7 +4,7 @@
 package org.whiteflag.protocol.core;
 
 /**
- * Whiteflag protocol exception class
+ * Whiteflag protocol core exception class
  */
 public class WfCoreException extends Exception {
 

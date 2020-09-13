@@ -23,8 +23,8 @@ public class WfMessageSegment {
     /* CONSTRUCTOR */
 
     /**
-     * Constructs a message segment from a {@link WfMessageField} array
-     * @param fieldArray an array of {@link WfMessageField}
+     * Constructs a new Whiteflag message segment from a {@link WfMessageField} array
+     * @param fields an array of {@link WfMessageField}s
      */
     public WfMessageSegment(WfMessageField[] fields) {
         this.fields = new WfMessageField[fields.length];
@@ -32,7 +32,7 @@ public class WfMessageSegment {
     }
 
     /**
-     * Constructs a message segment from another message segment
+     * Constructs a new Whiteflag message segment from another message segment
      * @param segment the {@link WfMessageSegment} to create the new segment from
      */
     public WfMessageSegment(WfMessageSegment segment) {
@@ -41,15 +41,6 @@ public class WfMessageSegment {
     }
 
     /* PUBLIC METHODS: basic object interface */
-
-    /**
-     * Returns a copy of the message segment
-     * @return {@link WfMessageField}
-     */
-    @Override
-    public WfMessageSegment clone() throws CloneNotSupportedException {
-        return (WfMessageSegment) super.clone();
-    }
 
     /**
      * Returns the message segment as a concatinated string of field values
@@ -113,7 +104,7 @@ public class WfMessageSegment {
             if (field.startByte != currentByte) {
                 throw new WfCoreException("Invalid field order while encoding: did not expect field " + field.name + " at byte " + currentByte);
             }
-            bin.add(field.encode());
+            bin.concat(field.encode());
             currentByte = field.endByte;
         }
         return bin;
