@@ -87,10 +87,20 @@ public class WfBinaryString {
 
     /* PUBLIC METHODS: getters & setters */
 
+    /**
+     * Sets the value with the provided binary string
+     * @param data a string with the binary representation of the value
+     * @return this {@link WfBinaryString}
+     */
     public final WfBinaryString setValue(String data)  {
         return setBinValue(data);
     }
 
+    /**
+     * Sets the value with the provided binary string
+     * @param data a string with the binary representation of the value
+     * @return this {@link WfBinaryString}
+     */
     public final WfBinaryString setBinValue(String data) {
         if (data == null) throw new IllegalArgumentException("Null is not a valid binary string");
 
@@ -104,6 +114,11 @@ public class WfBinaryString {
         return this;
     }
 
+    /**
+     * Sets the value with the provided hexadecimal string
+     * @param data a string with the hexadecimal representation of the value
+     * @return this {@link WfBinaryString}
+     */
     public final WfBinaryString setHexValue(String data) {
         if (data == null) throw new IllegalArgumentException("Null is not a valid hexadecimal string");
 
