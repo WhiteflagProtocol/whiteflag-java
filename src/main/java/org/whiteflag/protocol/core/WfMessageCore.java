@@ -106,6 +106,6 @@ public class WfMessageCore {
         if (Boolean.TRUE.equals(!this.isValid())) {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }
-        return header.encode().concat(body.encode()).toHexString(prefix);
+        return header.encode().append(body.encode()).toHexString(prefix);
     }
 }

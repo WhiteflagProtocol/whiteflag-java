@@ -234,7 +234,7 @@ public class WfMessageField {
             // Encode UTF 8 field
             case UTF8:
                 for(byte b : value.getBytes(StandardCharsets.UTF_8)) {
-                    bin.append(padLeft(Integer.toBinaryString(b & 0xff), UTFBITS));
+                    bin.append(WfBinaryString.padLeft(Integer.toBinaryString(b & 0xff), UTFBITS));
                 }
                 break;
 
@@ -247,7 +247,7 @@ public class WfMessageField {
             case DEC:
             case HEX:
                 for(char c : value.toCharArray()) {
-                    bin.append(padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), BDXBITS));
+                    bin.append(WfBinaryString.padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), BDXBITS));
                 }
                 break;
 
@@ -263,7 +263,7 @@ public class WfMessageField {
                 String dec = value.replaceAll("[\\-+:.A-Z]", "");
                 // Run through characters of the string and convert to binary one by one
                 for(char c : dec.toCharArray()) {
-                    bin.append(padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), BDXBITS));
+                    bin.append(WfBinaryString.padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), BDXBITS));
                 }
                 break;
 
@@ -354,15 +354,5 @@ public class WfMessageField {
     private final Boolean isDataValid(String data) {
         if (data == null) return false;
         return this.pattern.matcher(data).matches();
-    }
-
-    /**
-     * Adds 0 to the left to fill the encoded field to its fields size
-     * @param s the string to be padded
-     * @param n the field size
-     * @return String with the padded encoded field
-     */
-    private static final String padLeft(String s, int n) {
-        return "00000000".substring(0, n - s.length()) + s;
     }
 }

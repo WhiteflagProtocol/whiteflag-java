@@ -18,6 +18,7 @@ public class WfBinaryString {
 
     /* Constants */
     public static final Pattern BINPATTERN = Pattern.compile("^[01]*$");
+    public static final Pattern HEXPATTERN = Pattern.compile("^[a-fA-F0-9]*$");
     public static final String BINPREFIX = "0b";
     public static final String HEXPREFIX = "0x";
     public static final int BINRADIX = 2;
@@ -43,11 +44,7 @@ public class WfBinaryString {
      * @throws IllegalArgumentException if the provided string is not binary encoded data
      */
     public WfBinaryString(String data) {
-        //TODO: check prefix
-        if (data == null || !BINPATTERN.matcher(data).matches()) {
-            throw new IllegalArgumentException("Invalid binary string");
-        }
-        this.value = data;
+        setValue(data);
     }
 
     /**
@@ -55,7 +52,7 @@ public class WfBinaryString {
      * @param binaryString the {@link WfBinaryString} to create a new binary string from
      */
     public WfBinaryString(WfBinaryString binaryString) {
-        this.value = binaryString.toBinString(false);
+        setValue(binaryString.toBinString());
     }
 
     /* PUBLIC METHODS: basic object interface */
@@ -90,8 +87,40 @@ public class WfBinaryString {
 
     /* PUBLIC METHODS: getters & setters */
 
-    //TODO: set from bin string
-    //TODO: set from hex string
+    public final WfBinaryString setValue(String data)  {
+        return setBinValue(data);
+    }
+
+    public final WfBinaryString setBinValue(String data) {
+        if (data == null) throw new IllegalArgumentException("Null is not a valid binary string");
+
+        // Check binary string
+        String bin = removePrefix(data, BINPREFIX);
+        if (!BINPATTERN.matcher(bin).matches()) {
+            throw new IllegalArgumentException("Invalid binary string: " + bin);
+        }
+        // Set value and return object
+        this.value = bin;
+        return this;
+    }
+
+    public final WfBinaryString setHexValue(String data) {
+        if (data == null) throw new IllegalArgumentException("Null is not a valid hexadecimal string");
+
+        // Check hexadecimal string
+        String hex = removePrefix(data, HEXPREFIX);
+        if (!HEXPATTERN.matcher(hex).matches()) {
+            throw new IllegalArgumentException("Invalid hexadecimal string: " + hex);
+        }
+        // Convert hexadecimal to binary
+        StringBuilder bin = new StringBuilder();;
+        for(char c : hex.toCharArray()) {
+            bin.append(padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), QUADBIT));
+        }
+        // Set value and return object
+        this.value = bin.toString();
+        return this;
+    }
 
     /**
      * Returns the binary string value as a binary string without 0b prefix
@@ -144,7 +173,7 @@ public class WfBinaryString {
     /* PUBLIC METHODS: operations */
 
     /**
-     * Extracts the specified bit range into a new binary string object
+     * Extracts the specified bit range of the binary string into a new binary string object
      * @param startBit first bit of the requested range
      * @param endBit last bit of the range (not included)
      * @return String with binary representation
@@ -154,16 +183,29 @@ public class WfBinaryString {
     }
 
     /**
-     * Concatinates a binary string object to the end of this binary string object
+     * Appends a binary string to this binary string
      * @param binString the {@link WfBinaryString} to be added
      * @return The updated binary string object
      */
-    public final WfBinaryString concat(WfBinaryString binString) {
+    public final WfBinaryString append(WfBinaryString binString) {
         this.value = this.value + binString.toBinString();
         return this;
     }
 
-    /* PRIVATE METHODS */
+    /* STATIC METHODS */
+
+    /**
+     * Checks for and removes prefix from string
+     * @param string STring to be checked
+     * @param prefix The prefix to be checked for
+     * @return String without prefix
+     */
+    public static final String removePrefix(String string, String prefix) {
+        if (string.startsWith(prefix)) {
+            return string.substring(prefix.length());
+        }
+        return string;
+    }
 
     /**
      * Adds 0 to the left to fill the encoded field to its fields size
@@ -171,9 +213,19 @@ public class WfBinaryString {
      * @param n the field size
      * @return String with the padded encoded field
      */
-    private static final String padRight(String s, int n) {
+    public static final String padRight(String s, int n) {
         int pad = s.length() % n;
         if (pad == 0) return s;
         return s + "00000000".substring(0, n - pad);
+    }
+
+    /**
+     * Adds 0 to the left to fill the encoded field to its fields size
+     * @param s the string to be padded
+     * @param n the field size
+     * @return String with the padded encoded field
+     */
+    public static final String padLeft(String s, int n) {
+        return "00000000".substring(0, n - s.length()) + s;
     }
 }

@@ -42,14 +42,26 @@ public class WfBinaryStringTest {
     }
 
     /**
-     * Tests substring of a BinString
+     * Tests substring of a BinString with prefix
      */
     @Test
     public void testBinString3() {
         /* Test data */
-        WfBinaryString wfBinString3 = new WfBinaryString(binString);
+        WfBinaryString wfBinString3 = new WfBinaryString("0b" + binString);
         /* Test function */
         assertEquals("Binary string should return correct substring", binString.subSequence(0, 8), wfBinString3.sub(0, 8).toBinString());
+    }
+
+    /**
+     * Tests binary value of provided hex string
+     */
+    @Test
+    public void testBinString4() {
+        /* Test data */
+        WfBinaryString wfBinString4 = new WfBinaryString();
+        wfBinString4.setHexValue("0xf4a3");
+        /* Test function */
+        assertEquals("Binary string should return correct binary string", "1111010010100011", wfBinString4.toBinString(false));
     }
 
     /**
@@ -60,7 +72,7 @@ public class WfBinaryStringTest {
         /* Test data */
         WfBinaryString wfBinaryStringH1 = new WfBinaryString(binString);
         /* Test function */
-        assertEquals("Binary string should return correct hexadecimal string", "a752a5c0", wfBinaryStringH1.toHexString());
+        assertEquals("Binary string should return correct hexadecimal string", "0xa752a5c0", wfBinaryStringH1.toHexString(true));
     }
 
     /**
@@ -78,13 +90,13 @@ public class WfBinaryStringTest {
      * Tests addition of a BinString to another
      */
     @Test
-    public void testBinStringAdd() {
+    public void testBinStringAppend() {
         /* Test data */
         String binStringA = "11111111";
         WfBinaryString wfBinaryString = new WfBinaryString(binString);
         WfBinaryString wfBinaryStringA = new WfBinaryString(binStringA);
         /* Test function */
-        wfBinaryString.concat(wfBinaryStringA);
+        wfBinaryString.append(wfBinaryStringA);
         assertEquals("Binary string should include the added data", binString + binStringA, wfBinaryString.toBinString());
     }
 }

@@ -86,7 +86,12 @@ public class WfMessageCreator {
      * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCore decode(String encodedMessage) throws WfCoreException {
-        //TODO: transform hexadecimal string to binary string
+        WfBinaryString binaryMessage = new WfBinaryString();
+        try {
+            binaryMessage.setHexValue(encodedMessage);
+        } catch (IllegalArgumentException e) {
+            throw new WfCoreException("Cannot decode message: " + e.getMessage());
+        }
 
         // Create message header and determine message type
         header = initHeader();
@@ -107,7 +112,7 @@ public class WfMessageCreator {
      * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCore compile(String[] fieldValues) throws WfCoreException {
-        // Get number of fields
+        // Get number of provided fields
         int nFields = fieldValues.length;
 
         // Create message header and determine message type

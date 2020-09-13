@@ -104,7 +104,7 @@ public class WfMessageSegment {
             if (field.startByte != currentByte) {
                 throw new WfCoreException("Invalid field order while encoding: did not expect field " + field.name + " at byte " + currentByte);
             }
-            bin.concat(field.encode());
+            bin.append(field.encode());
             currentByte = field.endByte;
         }
         return bin;
