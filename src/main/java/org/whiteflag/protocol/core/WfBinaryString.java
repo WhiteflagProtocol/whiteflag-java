@@ -25,6 +25,7 @@ public class WfBinaryString {
     public static final int HEXRADIX = 16;
     public static final int OCTET = 8;
     public static final int QUADBIT = 4;
+    public static final int BIT = 1;
 
     /* Main property */
     private String value;
@@ -188,13 +189,22 @@ public class WfBinaryString {
     /* PUBLIC METHODS: operations */
 
     /**
-     * Extracts the specified bit range of the binary string into a new binary string object
-     * @param startBit first bit of the requested range
+     * Extracts the specified bit range of the binary string
+     * @param startBit first bit of the requested range (included)
      * @param endBit last bit of the range (not included)
-     * @return String with binary representation
+     * @return new {@link WfBinaryString} with the extracted bit range
      */
     public final WfBinaryString sub(int startBit, int endBit) {
         return new WfBinaryString(this.value.substring(startBit, endBit));
+    }
+
+    /**
+     * Extracts range from the specified starting bit to the end of the binary string
+     * @param startBit first bit of the requested range (included)
+     * @return new {@link WfBinaryString} with the extracted bit range
+     */
+    public final WfBinaryString sub(int startBit) {
+        return new WfBinaryString(this.value.substring(startBit));
     }
 
     /**

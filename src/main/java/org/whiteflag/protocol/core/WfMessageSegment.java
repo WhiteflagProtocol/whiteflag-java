@@ -3,8 +3,6 @@
  */
 package org.whiteflag.protocol.core;
 
-import java.util.Arrays;
-
 /**
  * Whiteflag message segment class
  * 
@@ -161,11 +159,11 @@ public class WfMessageSegment {
     /* PROTECTED METHODS */
 
     /**
-     * Adds additional fields to this message segment if constructing complex message bodies
+     * Appends additional fields to this message segment if constructing complex message bodies
      * @param segment {@link WfMessageSegment} to be added to the message segment
      * @return The updated message segment object
      */
-    protected final WfMessageSegment add(WfMessageSegment segment) {
+    protected final WfMessageSegment append(WfMessageSegment segment) {
         // Create new field array
         WfMessageField[] newFields = new WfMessageField[this.fields.length + segment.getNoFields()];
         System.arraycopy(this.fields, 0, newFields, 0, this.fields.length);

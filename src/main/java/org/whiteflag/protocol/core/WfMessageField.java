@@ -22,6 +22,7 @@ public class WfMessageField {
     private static final int HEXRADIX = WfBinaryString.HEXRADIX;
     private static final int BDXBITS = WfBinaryString.QUADBIT;
     private static final int UTFBITS = WfBinaryString.OCTET;
+    private static final int BIT = WfBinaryString.BIT;
 
     /* Fixed properties upon instantiation */
     /**
@@ -59,7 +60,7 @@ public class WfMessageField {
         /**
          * 1-bit binary encoded bit
          */
-        BIN("[01]", BDXBITS, false),
+        BIN("[01]", BIT, false),
 
         /**
          * 4-bit binary encoded decimal
@@ -79,22 +80,22 @@ public class WfMessageField {
         /**
          *  4-bit binary encoded date-time coordinate
          */
-        DATETIME("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", 8, true),
+        DATETIME("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z", 56, true),
 
         /**
          *  4-bit binary encoded time duration
          */
-        DURATION("P[0-9]{2}D[0-9]{2}H[0-9]{2}M", 8, true),
+        DURATION("P[0-9]{2}D[0-9]{2}H[0-9]{2}M", 24, true),
 
         /**
          *  4-bit binary encoded latitude coordinate
          */
-        LAT("[+\\-][0-9]{2}\\.[0-9]{5}", 8, true),
+        LAT("[+\\-][0-9]{2}\\.[0-9]{5}", 29, true),
 
         /**
          *  4-bit binary encoded longitude coordinate
          */
-        LONG("[+\\-][0-9]{3}\\.[0-9]{5}", 8, true);
+        LONG("[+\\-][0-9]{3}\\.[0-9]{5}", 33, true);
 
         /* PROPERTIES */
 
@@ -176,6 +177,30 @@ public class WfMessageField {
     @Override
     public final String toString() {
         return this.getValue();
+    }
+
+    /**
+     * Returns the byte length of the unencoded field value
+     * @return integer with the byte length
+     */
+    public final int byteLength() {
+        if (this.endByte < 0) {
+            if (this.value == null) return 0;
+            return this.value.length();
+        }
+        return (this.endByte - this.startByte);
+    }
+
+    /**
+     * Returns the bit length of the encoded field
+     * @return integer with the bit length
+     */
+    public final int bitLength() {
+        if (this.endByte < 0) {
+            if (this.value == null) return 0;
+            return this.encoding.length(this.value.length());
+        }
+        return this.encoding.length(this.endByte - this.startByte);
     }
 
     /* PUBLIC METHODS: metadata & validators */
