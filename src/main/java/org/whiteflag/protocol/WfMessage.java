@@ -57,7 +57,7 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Returns metadat keys of the Whiteflag message
+     * Returns metadata keys of the Whiteflag message
      * @return a string array with all metadata keys
      */
     public Set<String> getMetadataKeys() {
@@ -111,7 +111,7 @@ public class WfMessage extends WfMessageCore {
          * Copies a Whiteflag message into new Whiteflag core message object
          * @param originalMessage teh {@link WfMessageCore} to be copied
          * @return a {@link WfMessageCore} Whiteflag message
-         * @throws WfCoreException if the provided values are invalid
+         * @throws WfCoreException if the original message is invalid
          */
         public static final WfMessage copy(WfMessage originalMessage) {
             WfMessage message = new WfMessage(new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
@@ -125,7 +125,7 @@ public class WfMessage extends WfMessageCore {
          * Creates a Whiteflag message object from a serialized message
          * @param serializedMessage String with the uncompressed serialized message
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfException if the provided serialization is invalid
+         * @throws WfException if the serialization of the message is invalid
          */
         public static final WfMessage deserialize(String serializedMessage) throws WfException {
             WfMessageCore message;
@@ -141,7 +141,7 @@ public class WfMessage extends WfMessageCore {
          * Creates a Whiteflag message object from a encoded message
          * @param encodedMessage String with the encoded message
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfException if the provided encoding is invalid
+         * @throws WfException if the encoding of the message is invalid
          */
         public static final WfMessage decode(String encodedMessage) throws WfException {
             WfMessageCore message;
@@ -157,7 +157,7 @@ public class WfMessage extends WfMessageCore {
          * Creates a Whiteflag message object from field values
          * @param fieldValues String array with the values for the message fields
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfException if the provided values are invalid
+         * @throws WfException if any of the provided values is invalid
          */
         public static final WfMessage compile(String[] fieldValues) throws WfException {
             WfMessageCore message;
