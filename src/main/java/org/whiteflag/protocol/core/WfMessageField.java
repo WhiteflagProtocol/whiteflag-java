@@ -296,22 +296,22 @@ public class WfMessageField {
 
     /**
      * Decodes the  the message field into a binary string
-     * @param data {@link WfBinaryString} the compressed binary encoding of the field
+     * @param binaryData {@link WfBinaryString} the compressed binary encoding of the field
      * @return String with the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
      */
-    public final String decode(WfBinaryString data) throws WfCoreException {
+    public final String decode(WfBinaryString binaryData) throws WfCoreException {
         // Standard encoding error message indiocating field name
         final String genericErrorMsg = "Cannot decode " + name + " field";
 
         // Get bineary string
-        String bin = data.toBinString();
+        String bin = binaryData.toBinString();
 
         // Check number of bits
         if (this.endByte > 0) {
-            int binLength = encoding.length(endByte - startByte);
-            if (binLength != bin.length()) {
-                throw new WfCoreException(genericErrorMsg + ": " + "Encoded data is not exactly " + binLength + " bits: " + bin);
+            int nFieldBits = encoding.length(endByte - startByte);
+            if (nFieldBits != bin.length()) {
+                throw new WfCoreException(genericErrorMsg + ": " + "Encoded data is not exactly " + nFieldBits + " bits: " + bin);
             }
         } else {
             // Remove trailing zero's
@@ -319,84 +319,84 @@ public class WfMessageField {
             bin = bin.substring(0, bin.length() - pad);
         }
         // Build value string iaw field encoding type
-        StringBuilder value = new StringBuilder();
+        StringBuilder data = new StringBuilder();
         switch (encoding) {
 
             // Encode UTF 8 field
             case UTF8:
-                value.append(decodeUTF(bin));
+                data.append(decodeUTF(bin));
                 break;
 
             // Decode binary field
             case BIN:
                 // A binary string is already a binary string...
-                value.append(bin);
+                data.append(bin);
                 break;
 
             // Decode decimal or hexadecimal field
             case HEX:
             case DEC:
-                value.append(decodeBDX(bin));
+                data.append(decodeBDX(bin));
                 break;
 
             // Decode datetime field
             case DATETIME:
-                value.append(decodeBDX(bin));
+                data.append(decodeBDX(bin));
 
                 // Reinsert fixed characters
-                value.insert(4, "-");
-                value.insert(7, "-");
-                value.insert(10, "T");
-                value.insert(13, ":");
-                value.insert(16, ":");
-                value.insert(19, "Z");
+                data.insert(4, "-");
+                data.insert(7, "-");
+                data.insert(10, "T");
+                data.insert(13, ":");
+                data.insert(16, ":");
+                data.insert(19, "Z");
                 break;
 
             // Decode duration field
             case DURATION:
-                value.append(decodeBDX(bin));
+                data.append(decodeBDX(bin));
 
                 // Reinsert fixed characters
-                value.insert(0, "P");
-                value.insert(3, "D");
-                value.insert(6, "H");
-                value.insert(9, "M");
+                data.insert(0, "P");
+                data.insert(3, "D");
+                data.insert(6, "H");
+                data.insert(9, "M");
                 break;
             
             // Decode lat-long fields
             case LAT:
             case LONG:
                 // Sign of lat long coordinates
-                if (bin.substring(0,1).equals("0")) value.append("-");
-                if (bin.substring(0,1).equals("1")) value.append("+");
+                if (bin.substring(0,1).equals("0")) data.append("-");
+                if (bin.substring(0,1).equals("1")) data.append("+");
 
                 // Decode digits
-                value.append(decodeBDX(bin.substring(1)));
+                data.append(decodeBDX(bin.substring(1)));
 
                 // Insert decimal dot
-                value.insert(value.length() - 5, ".");
+                data.insert(data.length() - 5, ".");
                 break;
 
             // Unknown encoding
             default:
                 throw new WfCoreException(genericErrorMsg + ": " + "Undefined message encoding: " + encoding);
         }
-        // Return decoded uncompressed value string
-        return value.toString();
+        // Return decoded uncompressed data string
+        return data.toString();
     }
 
     /* STATIC METHODS */
 
     /**
      * Encodes a (hexa)decimal string into a binary string
-     * @param value the (hexa)decimal value to encode
+     * @param data String with the (hexa)decimal data to encode
      * @return String representing of the binary encoding
      */
-    public static final String encodeBDX(String value) {
+    public static final String encodeBDX(String data) {
         StringBuilder bin = new StringBuilder();
 
         // Run through digits of the string and convert to binary string with leading zeros one by one
-        for(char c : value.toCharArray()) {
+        for(char c : data.toCharArray()) {
             bin.append(WfBinaryString.padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), BDXBITS));
         }
         return bin.toString();
@@ -404,14 +404,14 @@ public class WfMessageField {
 
     /**
      * Encodes UTF data into a binary string
-     * @param value the UTF data to encode
+     * @param data String with the UTF data to encode
      * @return String representing of the binary encoding
      */
-    public static final String encodeUTF(String value) {
+    public static final String encodeUTF(String data) {
         StringBuilder bin = new StringBuilder();
 
         // Run through bytes of the string and convert to binary string with leading zeros one by one
-        for(byte b : value.getBytes(StandardCharsets.UTF_8)) {
+        for(byte b : data.getBytes(StandardCharsets.UTF_8)) {
             bin.append(WfBinaryString.padLeft(Integer.toBinaryString(b & 0xff), UTFBITS));
         }
         return bin.toString();
@@ -420,29 +420,29 @@ public class WfMessageField {
     /**
      * Decodes a binary string into a (hexa)decimal string
      * @param bin the binary string to decode
-     * @return String representing the (hexa)decimal value
+     * @return String representing the decoded (hexa)decimal value
      */
     public static final String decodeBDX(String bin) {
-        StringBuilder value = new StringBuilder();
+        StringBuilder data = new StringBuilder();
         for (int i = 0; i < bin.length(); i += BDXBITS) {
-            // Parse 4 bits from the binary string back to the (hexa)decimal value, and convert that to char
-            value.append(Integer.toHexString(Integer.parseUnsignedInt(bin.substring(i, i + BDXBITS), BINRADIX)));
+            // Parse 4 bits from the binary string back to the (hexa)decimal data, and convert that to char
+            data.append(Integer.toHexString(Integer.parseUnsignedInt(bin.substring(i, i + BDXBITS), BINRADIX)));
         }
-        return value.toString();
+        return data.toString();
     }
 
     /**
      * Decodes a binary string into a UTF string
      * @param bin the binary string to decode
-     * @return String with the UTF data
+     * @return String with the decoded UTF data
      */
     public static final String decodeUTF(String bin) {
-        StringBuilder value = new StringBuilder();
+        StringBuilder data = new StringBuilder();
         for (int i = 0; i < bin.length(); i += UTFBITS) {
             // Parse 8 UTF bits from the binary string to an integer, and cast that as a char
-            value.append((char) Integer.parseUnsignedInt(bin.substring(i, i + UTFBITS), BINRADIX));
+            data.append((char) Integer.parseUnsignedInt(bin.substring(i, i + UTFBITS), BINRADIX));
         }
-        return value.toString();
+        return data.toString();
     }
 
     /* PRIVATE METHODS */

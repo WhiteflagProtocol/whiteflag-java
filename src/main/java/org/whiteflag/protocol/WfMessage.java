@@ -105,6 +105,15 @@ public class WfMessage extends WfMessageCore {
      */
     public static class Creator {
 
+        /* CONSTRUCTORS */
+
+        /**
+         * Prevents the static class to be instantiated
+         */
+        private Creator() {
+            throw new IllegalStateException("Cannot instantiate static class");
+        }
+
         /* METHODS */
 
         /**

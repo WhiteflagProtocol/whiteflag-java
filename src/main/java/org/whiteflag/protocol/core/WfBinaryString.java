@@ -129,7 +129,7 @@ public class WfBinaryString {
             throw new IllegalArgumentException("Invalid hexadecimal string: " + hex);
         }
         // Convert hexadecimal to binary
-        StringBuilder bin = new StringBuilder();;
+        StringBuilder bin = new StringBuilder();
         for(char c : hex.toCharArray()) {
             bin.append(padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), QUADBIT));
         }

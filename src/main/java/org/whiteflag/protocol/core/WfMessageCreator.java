@@ -26,8 +26,10 @@ public class WfMessageCreator {
 
     /* Message parameters */
     private String messageCode;
-    private int nFields;
     private int nHeaderFields;
+
+    /* Constants */
+    private static final String MESSAGETYPEFIELD = "MessageCode";
 
     /* Indexes */
     private int currentBitIndex = 0;
@@ -61,7 +63,7 @@ public class WfMessageCreator {
         header = deserialiseSegment(header, serializedMessage);
 
         // Determine message type
-        messageCode = header.getFieldValue("MessageCode");
+        messageCode = header.getFieldValue(MESSAGETYPEFIELD);
 
         // Create and deserialize message body based on message type
         body = initBody(messageCode);
@@ -73,14 +75,14 @@ public class WfMessageCreator {
                 // Extend test message body with pseudo message body
                 String pseudoMessageCode = body.getFieldValue("PseudoMessageCode");
                 WfMessageSegment pseudoBody = new WfMessageSegment(WfMessageDefinitions.getBodyFields(pseudoMessageCode, lastByte()));
-                pseudoBody = deserialiseSegment(pseudoBody, serializedMessage);
+                deserialiseSegment(pseudoBody, serializedMessage);
                 body.append(pseudoBody);
                 break;
             case "Q":
                 // Extend request message body with request fields
                 int nRequestObjects = (nBytes - lastByte()) / 4;                  // One request object requires 2 fields of 2 bytes
                 WfMessageSegment requestFields = new WfMessageSegment(WfMessageDefinitions.getRequestFields(nRequestObjects, lastByte()));
-                requestFields = deserialiseSegment(requestFields, serializedMessage);
+                deserialiseSegment(requestFields, serializedMessage);
                 body.append(requestFields);
                 break;
             default:
@@ -114,7 +116,7 @@ public class WfMessageCreator {
         header = decodeSegment(header, binaryMessage);
 
         // Determine message type
-        messageCode = header.getFieldValue("MessageCode");
+        messageCode = header.getFieldValue(MESSAGETYPEFIELD);
 
         // Create and decode message body based on message type
         body = initBody(messageCode);
@@ -126,15 +128,16 @@ public class WfMessageCreator {
                 // Extend test message body with pseudo message body
                 String pseudoMessageCode = body.getFieldValue("PseudoMessageCode");
                 WfMessageSegment pseudoBody = new WfMessageSegment(WfMessageDefinitions.getBodyFields(pseudoMessageCode, lastByte()));
-                pseudoBody = decodeSegment(pseudoBody, binaryMessage);
+                decodeSegment(pseudoBody, binaryMessage);
                 body.append(pseudoBody);
                 break;
             case "Q":
                 // Extend request message body with request fields
                 int nRequestObjects = (binaryMessage.length() - currentBitIndex) / 16;      // One request object requires 2 fields of 8 bits
                 WfMessageSegment requestFields = new WfMessageSegment(WfMessageDefinitions.getRequestFields(nRequestObjects, lastByte()));
-                requestFields = decodeSegment(requestFields, binaryMessage);
+                decodeSegment(requestFields, binaryMessage);
                 body.append(requestFields);
+                break;
             default:
                 // Nothing to do for other message types
                 break;
@@ -155,12 +158,12 @@ public class WfMessageCreator {
         checkCreation();
 
         // Get number of provided fields
-        nFields = fieldValues.length;
+        int nFields = fieldValues.length;
 
         // Create message header, set field values and determine message type
         header = initHeader();
         header.setAllFieldValues(Arrays.copyOfRange(fieldValues, 0, nHeaderFields));
-        messageCode = header.getFieldValue("MessageCode");
+        messageCode = header.getFieldValue(MESSAGETYPEFIELD);
 
         // Create message body based on message type
         body = initBody(messageCode);

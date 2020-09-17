@@ -55,8 +55,8 @@ public class WfMessageCore {
      * @return TRUE if all message fields contain valid data, else FALSE
      */
     public Boolean isValid() {
-        if (Boolean.TRUE.equals(!header.isValid())) return false;
-        if (Boolean.TRUE.equals(!body.isValid())) return false;
+        if (Boolean.FALSE.equals(header.isValid())) return false;
+        if (Boolean.FALSE.equals(body.isValid())) return false;
         return true;
     }
 
@@ -81,7 +81,7 @@ public class WfMessageCore {
      * @throws WfCoreException if any of the field does not contain valid data
      */
     public String serialize() throws WfCoreException {
-        if (Boolean.TRUE.equals(!this.isValid())) {
+        if (Boolean.FALSE.equals(this.isValid())) {
             throw new WfCoreException("Cannot serialize message with invalid or incomplete data fields");
         }
         return header.serialize() + body.serialize();
@@ -103,7 +103,7 @@ public class WfMessageCore {
      * @throws WfCoreException if any of the field does not contain valid data
      */
     public String encode(Boolean prefix) throws WfCoreException {
-        if (Boolean.TRUE.equals(!this.isValid())) {
+        if (Boolean.FALSE.equals(this.isValid())) {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }
         return header.encode().append(body.encode()).toHexString(prefix);
