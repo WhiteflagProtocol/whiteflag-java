@@ -374,7 +374,7 @@ public class WfMessageField {
                 value.append(decodeBDX(bin.substring(1)));
 
                 // Insert decimal dot
-                value.insert(endByte - 6, ".");
+                value.insert(value.length() - 5, ".");
                 break;
 
             // Unknown encoding

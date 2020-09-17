@@ -266,10 +266,14 @@ public class WfMessageCreator {
 
             // Decode field value from encoded message part
             String value;
-            if (field.endByte < 0) {
-                value = field.decode(binaryMessage.sub(currentBitIndex));
-            } else {
-                value = field.decode(binaryMessage.sub(currentBitIndex, fieldEndBit));
+            try {
+                if (field.endByte < 0) {
+                    value = field.decode(binaryMessage.sub(currentBitIndex));
+                } else {
+                    value = field.decode(binaryMessage.sub(currentBitIndex, fieldEndBit));
+                }
+            } catch (Exception e) {
+                throw new WfCoreException("Exception " + e.getClass() + " when decoding " + field.name + " field: " + e.getMessage());
             }
             // Set the field value and check result
             if (Boolean.FALSE.equals(segment.setFieldValue(i, value))) {

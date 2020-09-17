@@ -25,6 +25,8 @@ public class WfMessageFieldTest {
     String datetimeBinEncoded = "00100000001000000000011100000001001000010100001000100011";
     String lat = "+23.34244";
     String latBinEncoded = "10010001100110100001001000100";
+    String lng = "-163.34245";
+    String lngBinEncoded = "000010110001100110100001001000101";
 
     /**
      * Tests compressed binary encoding of utf-8 field
@@ -183,5 +185,29 @@ public class WfMessageFieldTest {
         assertEquals("Datum field should be correctly decoded", lat, field.decode(latBinString));
         field.setValue(field.decode(latBinString));
         assertEquals("Datum decoded field value should be correctly set", lat, field.getValue());
+    }
+        /**
+     * Tests compressed binary encoding of lngitude datum field
+     */
+    @Test
+    public void testLongitudeDatumEncoding() throws WfCoreException {
+        /* Test function */
+        WfMessageField field = new WfMessageField("lngitude", "^"+WfMessageField.Encoding.LONG.charset()+"$", WfMessageField.Encoding.LONG, 0, 10);
+        field.setValue(lng);
+        assertEquals("Datum field should be correctly binary encoded", lngBinEncoded, field.encode().toBinString());
+        assertEquals("Unencoded lngitude field should be 9 bytes", 10, field.byteLength());
+        assertEquals("Encoded lngitude field should be 29 bits", 33, field.bitLength());
+    }
+    /**
+     * Tests compressed binary encoding of lngitude datum field
+     */
+    @Test
+    public void testLongitudeDatumDecoding() throws WfCoreException {
+        /* Test function */
+        WfMessageField field = new WfMessageField("lngitude", "^"+WfMessageField.Encoding.LONG.charset()+"$", WfMessageField.Encoding.LONG, 0, 10);
+        WfBinaryString lngBinString = new WfBinaryString().setBinValue(lngBinEncoded);
+        assertEquals("Datum field should be correctly decoded", lng, field.decode(lngBinString));
+        field.setValue(field.decode(lngBinString));
+        assertEquals("Datum decoded field value should be correctly set", lng, field.getValue());
     }
 }
