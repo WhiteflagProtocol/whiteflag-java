@@ -1,4 +1,4 @@
-name: Ubuntu Test
+name: Windows Test
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-18.04, ubuntu-latest]
+        os: [windows-latest]
         java-version: [8, 11, 15]
     steps:
     - uses: actions/checkout@v2
@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: ${{ matrix.java-version }}
-        ava-package: jdk
+        java-package: jdk
         architecture: x64
     - name: Run tests
       run: ./gradlew test
