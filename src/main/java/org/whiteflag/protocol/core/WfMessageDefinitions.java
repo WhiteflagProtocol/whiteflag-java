@@ -180,7 +180,7 @@ public class WfMessageDefinitions {
             int endByte = splitByte + QUANTFIELDSIZE;
             fields[i] = new WfMessageField(FIELDBASENAME + n, "^"+WfMessageField.Encoding.HEX.charset()+"{2}$", WfMessageField.Encoding.HEX, startByte, splitByte);
             fields[i + 1] = new WfMessageField(FIELDBASENAME + n+"Quant", "^[0-9]{2}$", WfMessageField.Encoding.DEC, splitByte, endByte);
-            startByte = endByte;
+            startByte = endByte;                // Next fields starts where this one ends
         }
         return fields;
     }

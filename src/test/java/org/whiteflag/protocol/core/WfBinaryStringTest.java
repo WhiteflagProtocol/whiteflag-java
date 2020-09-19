@@ -17,74 +17,86 @@ public class WfBinaryStringTest {
      * Tests construction of BinString
      */
     @Test
-    public void testBinString1() throws WfCoreException {
+    public void testBinString1() {
         /* Test function */
         WfBinaryString wfBinString1 = new WfBinaryString(binString);
-        assertEquals("Binary string should contain correct data", binString, wfBinString1.toString());
+        assertEquals("Binary string should contain correct data", binString, wfBinString1.toBinString());
     }
 
     /**
      * Tests construction of BinString with invalid data
      */
     @Test
-    public void testBinString2() throws WfCoreException {
+    public void testBinString2() {
         /* Test data */
         String binString2 = "020100111011001";
         WfBinaryString wfBinString2;
         /* Test function */
         try {
             wfBinString2 = new WfBinaryString(binString2);
-            fail("Expected a WfCoreException to be thrown");
-            assertNotEquals("Binary string should not be created", binString2, wfBinString2.toString());
-        } catch (WfCoreException e) {
-            assertTrue(e instanceof WfCoreException);
+            fail("Expected a IllegalArgumentException to be thrown");
+            assertNotEquals("Binary string should not be created", binString2, wfBinString2.toBinString());
+        } catch (IllegalArgumentException e) {
+            assertTrue(e instanceof IllegalArgumentException);
         }
     }
 
     /**
-     * Tests substring of a BinString
+     * Tests substring of a BinString with prefix
      */
     @Test
-    public void testBinString3() throws WfCoreException {
+    public void testBinString3() {
         /* Test data */
-        WfBinaryString wfBinString3 = new WfBinaryString(binString);
+        WfBinaryString wfBinString3 = new WfBinaryString("0b" + binString);
         /* Test function */
-        assertEquals("Binary string should return correct substring", binString.subSequence(0, 8), wfBinString3.substring(0, 8).toString());
+        assertEquals("Binary string should return correct substring", binString.subSequence(0, 8), wfBinString3.sub(0, 8).toBinString());
+    }
+
+    /**
+     * Tests binary value of provided hex string
+     */
+    @Test
+    public void testBinString4() {
+        /* Test data */
+        WfBinaryString wfBinString4 = new WfBinaryString();
+        wfBinString4.setHexValue("0xf4a3");
+        /* Test function */
+        assertEquals("Binary string should return correct binary string", "1111010010100011", wfBinString4.toBinString(false));
     }
 
     /**
      * Tests hexadecimal encoding of a BinString
      */
     @Test
-    public void testBinStringHex1() throws WfCoreException {
+    public void testBinStringHex1() {
         /* Test data */
-        WfBinaryString WfBinaryStringH1 = new WfBinaryString(binString);
+        WfBinaryString wfBinaryStringH1 = new WfBinaryString(binString);
         /* Test function */
-        assertEquals("Binary string should return correct hexadecimal string", "a752a5c0", WfBinaryStringH1.toHexString());
+        assertEquals("Binary string should return correct hexadecimal string", "0xa752a5c0", wfBinaryStringH1.toHexString(true));
     }
 
     /**
      * Tests hexadecimal encoding of a BinString
      */
     @Test
-    public void testBinStringHex2() throws WfCoreException {
+    public void testBinStringHex2() {
         /* Test data */
-        WfBinaryString WfBinaryStringH2 = new WfBinaryString("1");
+        WfBinaryString wfBinaryStringH2 = new WfBinaryString("1");
         /* Test function */
-        assertEquals("Binary string should return correct hexadecimal string", "80", WfBinaryStringH2.toHexString());
+        assertEquals("Binary string should return correct hexadecimal string", "80", wfBinaryStringH2.toHexString());
     }
 
     /**
      * Tests addition of a BinString to another
      */
     @Test
-    public void testBinStringAdd() throws WfCoreException {
+    public void testBinStringAppend() {
         /* Test data */
         String binStringA = "11111111";
-        WfBinaryString WfBinaryString = new WfBinaryString(binString);
-        WfBinaryString WfBinaryStringA = new WfBinaryString(binStringA);
+        WfBinaryString wfBinaryString = new WfBinaryString(binString);
+        WfBinaryString wfBinaryStringA = new WfBinaryString(binStringA);
         /* Test function */
-        WfBinaryString.add(WfBinaryStringA);
-        assertEquals("Binary string should include the added data", binString + binStringA, WfBinaryString.toString());
+        wfBinaryString.append(wfBinaryStringA);
+        assertEquals("Binary string should include the added data", binString + binStringA, wfBinaryString.toBinString());
     }
 }

@@ -2,14 +2,31 @@
  * Gradle build file for the Whiteflag Java Library
  */
 
-// Version
-version = '0.1.0'
+// Project
+version = '0.2.0'
 
 // Plugins
 apply plugin: 'java'
 apply plugin: 'java-library'
+apply plugin: 'java-library-distribution'
 
-// Metadata 
+// Repositories and Dependencies
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // The JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+// Include documentation and source
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+// Metadata
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
@@ -17,13 +34,16 @@ jar {
     }
 }
 
-// Repositories
-repositories {
-    jcenter()
+// Distribution
+distributions {
+    main {
+        distributionBaseName = project.name
+    }
 }
 
-// Dependencies
-dependencies {
-    // The JUnit test framework
-    testImplementation 'junit:junit:4.12'
+// Task to create documentation
+task docs(type: Copy) {
+    dependsOn javadoc
+    from "$buildDir/docs/javadoc"
+    into "docs/javadoc"
 }

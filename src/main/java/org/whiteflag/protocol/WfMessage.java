@@ -3,6 +3,7 @@
  */
 package org.whiteflag.protocol;
 
+import java.util.Set;
 import java.util.HashMap;
 import org.whiteflag.protocol.core.*;
 
@@ -37,37 +38,7 @@ public class WfMessage extends WfMessageCore {
         super(header, body);
     }
 
-    /* PUBLIC METHODS: Message interface */
-
-    /**
-     * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
-     * @return hexadecimal string with the encoded Whiteflag message
-     * @throws WfCoreException if any field does not contain valid data
-     */
-    @Override
-    public String encode() throws WfException {
-        return encode(false);
-    }
-
-    /**
-     * Returns the cached encoded message, or else it encodes and caches Whiteflag message
-     * @param prefix if TRUE, the resulting string gets a 0x prefix (or whatever has been cached)
-     * @return hexadecimal string with the encoded Whiteflag message
-     * @throws WfCoreException if any field does not contain valid data
-     */
-    @Override
-    public String encode(Boolean prefix) throws WfException {
-        try {
-            if (encodedMessage == null) {
-                encodedMessage = super.encode(prefix);
-            }
-        } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
-        }
-        return encodedMessage;
-    }
-
-    /* PUBLIC METHODS: Metadata */
+    /* PUBLIC METHODS: getters & setters */
 
     /**
      * Adds metadata to the Whiteflag message if not already existing
@@ -85,6 +56,44 @@ public class WfMessage extends WfMessageCore {
         return metadata.get(key);
     }
 
+    /**
+     * Returns metadata keys of the Whiteflag message
+     * @return a string array with all metadata keys
+     */
+    public Set<String> getMetadataKeys() {
+        return metadata.keySet();
+    }
+
+    /* PUBLIC METHODS: operations */
+
+    /**
+     * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
+     * @return hexadecimal string with the encoded Whiteflag message
+     * @throws WfException if any field does not contain valid data
+     */
+    @Override
+    public String encode() throws WfException {
+        return encode(false);
+    }
+
+    /**
+     * Returns the cached encoded message, or else it encodes and caches Whiteflag message
+     * @param prefix if TRUE, the resulting string gets a 0x prefix (or whatever has been cached)
+     * @return hexadecimal string with the encoded Whiteflag message
+     * @throws WfException if any field does not contain valid data
+     */
+    @Override
+    public String encode(Boolean prefix) throws WfException {
+        try {
+            if (encodedMessage == null) {
+                encodedMessage = super.encode(prefix);
+            }
+        } catch (WfCoreException e) {
+            throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+        }
+        return encodedMessage;
+    }
+
     /* NESTED CLASSES */
 
     /**
@@ -96,15 +105,38 @@ public class WfMessage extends WfMessageCore {
      */
     public static class Creator {
 
+        /* CONSTRUCTORS */
+
+        /**
+         * Prevents the static class to be instantiated
+         */
+        private Creator() {
+            throw new IllegalStateException("Cannot instantiate static class");
+        }
+
         /* METHODS */
 
         /**
-         * Creates a Whiteflag message object from a serialised message
+         * Copies a Whiteflag message into new Whiteflag core message object
+         * @param originalMessage teh {@link WfMessageCore} to be copied
+         * @return a {@link WfMessageCore} Whiteflag message
+         * @throws WfCoreException if the original message is invalid
+         */
+        public static final WfMessage copy(WfMessage originalMessage) {
+            WfMessage message = new WfMessage(new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
+            for (String key : originalMessage.getMetadataKeys()) {
+                message.addMetadata(key, originalMessage.getMetadata(key));
+            }
+            return message;
+        }
+
+        /**
+         * Creates a Whiteflag message object from a serialized message
          * @param serializedMessage String with the uncompressed serialized message
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfException if the provided values are invalid
+         * @throws WfException if the serialization of the message is invalid
          */
-        public final WfMessage deserialize(String serializedMessage) throws WfException {
+        public static final WfMessage deserialize(String serializedMessage) throws WfException {
             WfMessageCore message;
             try {
                 message = new WfMessageCreator().deserialize(serializedMessage);
@@ -115,15 +147,31 @@ public class WfMessage extends WfMessageCore {
         }
 
         /**
+         * Creates a Whiteflag message object from a encoded message
+         * @param encodedMessage String with the encoded message
+         * @return a {@link WfMessage} Whiteflag message
+         * @throws WfException if the encoding of the message is invalid
+         */
+        public static final WfMessage decode(String encodedMessage) throws WfException {
+            WfMessageCore message;
+            try {
+                message = new WfMessageCreator().decode(encodedMessage);
+            } catch (WfCoreException e) {
+                throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+            }
+            return new WfMessage(message.header, message.body);
+        }
+
+        /**
          * Creates a Whiteflag message object from field values
          * @param fieldValues String array with the values for the message fields
          * @return a {@link WfMessage} Whiteflag message
-         * @throws WfCoreException if the provided values are invalid
+         * @throws WfException if any of the provided values is invalid
          */
-        public final WfMessage createFromValues(String[] fieldValues) throws WfException {
+        public static final WfMessage compile(String[] fieldValues) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().createFromValues(fieldValues);
+                message = new WfMessageCreator().compile(fieldValues);
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }

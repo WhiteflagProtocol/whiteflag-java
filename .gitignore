@@ -13,13 +13,15 @@ logs
 ## Build Tools
 # Gradle
 .gradle
-/build/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
 
 ## Development Environments
-# (these should be in developers' gitignore)
+# (these should typically be in the developers' gitignore)
+/bin/
+/build/
+tmp/
 .DS_Store
 .vscode/
 launch.json
