@@ -1,4 +1,4 @@
 /*
  * Gradle settings file for the Whiteflag Java Library
  */
-rootProject.name = 'whiteflag'
+rootProject.name = 'Whiteflag Java Library'

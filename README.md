@@ -1,5 +1,9 @@
 # Whiteflag Java Library
 
+![GitHub latest release](https://img.shields.io/github/v/release/whiteflagprotocol/whiteflag-javalib?label=latest&logo=github&sort=semver)
+
+## Introduction
+
 Whiteflag is a fully neutral and secure communciations means based on
 blockchain technology. It enables near real-time communication in armed
 conflicts and disasters to exchange early warning and status information

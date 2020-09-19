@@ -2,7 +2,7 @@
  * Gradle build file for the Whiteflag Java Library
  */
 
-// Version
+// Project
 version = '0.2.0-dev'
 
 // Plugins
