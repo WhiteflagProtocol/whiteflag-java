@@ -8,16 +8,9 @@ version = '0.2.0-dev'
 // Plugins
 apply plugin: 'java'
 apply plugin: 'java-library'
+apply plugin: 'java-library-distribution'
 
-// Metadata 
-jar {
-    manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
-    }
-}
-
-// Repositories
+// Repositories and Dpendencies
 repositories {
     jcenter()
 }
@@ -26,4 +19,32 @@ repositories {
 dependencies {
     // The JUnit test framework
     testImplementation 'junit:junit:4.12'
+}
+
+// Include documentation and source
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+// Metadata
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                   'Implementation-Version': project.version)
+    }
+}
+
+// Distribution
+distributions {
+    main {
+        distributionBaseName = project.name
+    }
+}
+
+// Create documentation
+task docs(type: Copy) {
+    dependsOn javadoc
+    from "$buildDir/docs/javadoc"
+    into "docs/javadoc"
 }
