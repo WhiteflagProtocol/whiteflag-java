@@ -14,5 +14,5 @@ The following documentation is available.
 
 ## Source Code Description
 
-* [Java package structure](md/packages.md)
+* [Package structure](md/packages.md)
 * [Exception handling](md/errors.md)

@@ -3,19 +3,18 @@
  */
 
 // Project
-version = '0.2.0-dev'
+version = '0.2.0'
 
 // Plugins
 apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'java-library-distribution'
 
-// Repositories and Dpendencies
+// Repositories and Dependencies
 repositories {
     jcenter()
 }
 
-// Dependencies
 dependencies {
     // The JUnit test framework
     testImplementation 'junit:junit:4.12'
@@ -42,7 +41,7 @@ distributions {
     }
 }
 
-// Create documentation
+// Task to create documentation
 task docs(type: Copy) {
     dependsOn javadoc
     from "$buildDir/docs/javadoc"

@@ -1,14 +1,14 @@
 # Whiteflag Java Library Error Handling
 
-## Exceptions
-
 In addition to the standard Java exception classes, the Whiteflag Java Library
 extends the Java exception class for specific Whiteflag protocol errors.
 
+## Whiteflag Exceptions
+
 The core package defines the `WfCoreException` class, that is thrown by its
 classes if any request is made that is not in accordance with the Whiteflag
-specification. For example, when a field value is not allowed or is not
-correctly formatted for a specfic field.
+specification, e.g. when a field value is not allowed or is not correctly
+formatted for a specfic field.
 
 The main package `org.whiteflag.protocol` that provides the external interface,
 uses the `WfExcepetion` class that extends the `WfCoreException` class. The
