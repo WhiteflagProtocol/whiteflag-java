@@ -6,8 +6,8 @@ package org.whiteflag.protocol.core;
 /**
  * Whiteflag message definitions utility class
  *
- * </p> This is a non-instantiatable utility class that holds the all message
- * and message field definitions in accordance with the Whiteflag specification.
+ * </p> This is a non-instantiatable utility class that holds all message and
+ * message field definitions in accordance with the Whiteflag specification.
  * No implementation specific properties and methods are defined by this class.
  */
 public class WfMessageDefinitions {

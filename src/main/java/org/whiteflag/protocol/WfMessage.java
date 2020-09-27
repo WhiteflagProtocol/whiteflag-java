@@ -11,7 +11,8 @@ import org.whiteflag.protocol.core.*;
  * Whiteflag message class
  * 
  * </p> This is a class representing a Whiteflag message. It contains
- * all methods to handle a Whiteflag message, e.g. to encode, decode, etc.
+ * all methods to handle a Whiteflag message, e.g. to encode, decode, etc. It
+ * also provides a nested static class to create Whiteflag messages.
  */
 public class WfMessage extends WfMessageCore {
 
@@ -23,9 +24,10 @@ public class WfMessage extends WfMessageCore {
     private HashMap<String, String> metadata = new HashMap<>();
 
     /**
-     * Contains the cached encoded message
+     * Contains the cached serialzed and encoded message
      */
-    private String encodedMessage;
+    private String messageEncoded;
+    private String messageSerialized;
 
     /* CONSTRUCTORS */
 
@@ -67,6 +69,23 @@ public class WfMessage extends WfMessageCore {
     /* PUBLIC METHODS: operations */
 
     /**
+     * Returns the cached serialized message, or else it serialzes and caches Whiteflag message
+     * @return String with the serialized message, i.e. the concatinated string of field values
+     * @throws WfException if any of the field does not contain valid data
+     */
+    @Override
+    public String serialize() throws WfException {
+        try {
+            if (messageSerialized == null) {
+                messageSerialized = super.serialize();
+            }
+        } catch (WfCoreException e) {
+            throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+        }
+        return messageSerialized;
+    }
+
+    /**
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
      * @return hexadecimal string with the encoded Whiteflag message
      * @throws WfException if any field does not contain valid data
@@ -85,13 +104,13 @@ public class WfMessage extends WfMessageCore {
     @Override
     public String encode(Boolean prefix) throws WfException {
         try {
-            if (encodedMessage == null) {
-                encodedMessage = super.encode(prefix);
+            if (messageEncoded == null) {
+                messageEncoded = super.encode(prefix);
             }
         } catch (WfCoreException e) {
             throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
         }
-        return encodedMessage;
+        return messageEncoded;
     }
 
     /* NESTED CLASSES */
@@ -120,7 +139,6 @@ public class WfMessage extends WfMessageCore {
          * Copies a Whiteflag message into new Whiteflag core message object
          * @param originalMessage teh {@link WfMessageCore} to be copied
          * @return a {@link WfMessageCore} Whiteflag message
-         * @throws WfCoreException if the original message is invalid
          */
         public static final WfMessage copy(WfMessage originalMessage) {
             WfMessage message = new WfMessage(new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
@@ -132,14 +150,14 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Creates a Whiteflag message object from a serialized message
-         * @param serializedMessage String with the uncompressed serialized message
+         * @param messageSerialized String with the uncompressed serialized message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the serialization of the message is invalid
          */
-        public static final WfMessage deserialize(String serializedMessage) throws WfException {
+        public static final WfMessage deserialize(String messageSerialized) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().deserialize(serializedMessage);
+                message = new WfMessageCreator().deserialize(messageSerialized);
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
@@ -148,14 +166,14 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Creates a Whiteflag message object from a encoded message
-         * @param encodedMessage String with the encoded message
+         * @param messageEncoded String with the encoded message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the encoding of the message is invalid
          */
-        public static final WfMessage decode(String encodedMessage) throws WfException {
+        public static final WfMessage decode(String messageEncoded) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().decode(encodedMessage);
+                message = new WfMessageCreator().decode(messageEncoded);
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }

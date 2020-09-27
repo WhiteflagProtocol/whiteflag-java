@@ -47,27 +47,27 @@ public class WfMessageCreator {
 
     /**
      * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
-     * @param serializedMessage String with the uncompressed serialized message
+     * @param messageSerialized String with the uncompressed serialized message
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCore deserialize(String serializedMessage) throws WfCoreException {
+    public final WfMessageCore deserialize(String messageSerialized) throws WfCoreException {
         // Check if message already created
         checkCreation();
 
         // Get number of bytes of serialized message
-        int nBytes = serializedMessage.length();
+        int nBytes = messageSerialized.length();
 
         // Create and deserialize message header
         header = initHeader();
-        header = deserialiseSegment(header, serializedMessage);
+        header = deserialiseSegment(header, messageSerialized);
 
         // Determine message type
         messageCode = header.getFieldValue(MESSAGETYPEFIELD);
 
         // Create and deserialize message body based on message type
         body = initBody(messageCode);
-        body = deserialiseSegment(body, serializedMessage);
+        body = deserialiseSegment(body, messageSerialized);
 
         // Deserialize additional fields of some message types
         switch (messageCode) {
@@ -75,14 +75,14 @@ public class WfMessageCreator {
                 // Extend test message body with pseudo message body
                 String pseudoMessageCode = body.getFieldValue("PseudoMessageCode");
                 WfMessageSegment pseudoBody = new WfMessageSegment(WfMessageDefinitions.getBodyFields(pseudoMessageCode, lastByte()));
-                deserialiseSegment(pseudoBody, serializedMessage);
+                deserialiseSegment(pseudoBody, messageSerialized);
                 body.append(pseudoBody);
                 break;
             case "Q":
                 // Extend request message body with request fields
                 int nRequestObjects = (nBytes - lastByte()) / 4;                  // One request object requires 2 fields of 2 bytes
                 WfMessageSegment requestFields = new WfMessageSegment(WfMessageDefinitions.getRequestFields(nRequestObjects, lastByte()));
-                deserialiseSegment(requestFields, serializedMessage);
+                deserialiseSegment(requestFields, messageSerialized);
                 body.append(requestFields);
                 break;
             default:
@@ -96,18 +96,18 @@ public class WfMessageCreator {
 
     /**
      * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
-     * @param encodedMessage String with the hexadecimal representation of the encoded message
+     * @param messageEncoded String with the hexadecimal representation of the encoded message
      * @return a {@link WfMessageCore} Whiteflag message
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCore decode(String encodedMessage) throws WfCoreException {
+    public final WfMessageCore decode(String messageEncoded) throws WfCoreException {
         // Check if message already created
         checkCreation();
 
         // COnvert hexadecimal string representation into binary string
         WfBinaryString binaryMessage = new WfBinaryString();
         try {
-            binaryMessage.setHexValue(encodedMessage);
+            binaryMessage.setHexValue(messageEncoded);
         } catch (IllegalArgumentException e) {
             throw new WfCoreException("Cannot decode message: " + e.getMessage());
         }
@@ -235,7 +235,7 @@ public class WfMessageCreator {
     /**
      * Gets field values from a serialized message for the specified segment
      */
-    private final WfMessageSegment deserialiseSegment(WfMessageSegment segment, String serializedMessage) throws WfCoreException {
+    private final WfMessageSegment deserialiseSegment(WfMessageSegment segment, String messageSerialized) throws WfCoreException {
 
         // Deserialize field by field
         for (int i = 0; i < segment.getNoFields(); i++) {
@@ -244,9 +244,9 @@ public class WfMessageCreator {
             // Get field value from serialized message part
             String value;
             if (field.endByte < 0) {
-                value = serializedMessage.substring(field.startByte);
+                value = messageSerialized.substring(field.startByte);
             } else {
-                value = serializedMessage.substring(field.startByte, field.endByte);
+                value = messageSerialized.substring(field.startByte, field.endByte);
             }
             // Set the field value and check result
             if (Boolean.FALSE.equals(segment.setFieldValue(i, value))) {
