@@ -1,4 +1,3 @@
-@startuml style
+@startuml stylesheet
 skinparam monochrome true
-left footer  Whiteflag Java Library
 @enduml

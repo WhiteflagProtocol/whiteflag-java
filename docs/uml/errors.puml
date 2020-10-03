@@ -1,7 +1,7 @@
 @startuml errors
 !include .stylesheet.puml
 
-title WFJL Error Class Diagram
+left footer WFJL Error Class Diagram
 
 class Exception <<Throwable>>
 

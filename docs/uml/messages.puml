@@ -1,7 +1,7 @@
 @startuml messages
 !include .stylesheet.puml
 
-title WFJL Message Class Diagram
+left footer WFJL Message Class Diagram
 
 package org.whiteflag.protocol.core {
     class WfMessageCore {
