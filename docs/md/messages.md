@@ -2,7 +2,7 @@
 
 ## Whiteflag messages
 
-This section describes hwo Whiteflag message are implemented by the WFJL.
+This section describes how Whiteflag message are implemented by the WFJL.
 
 ### Message classes
 
@@ -18,19 +18,19 @@ in the class diagram below.
 ### Message core, segment and field classes
 
 The `WfMessageCore` class only contains the core elements as specified in the
-Whiteflag standard, i.e. the genertic message header and the message type
+Whiteflag standard, i.e. the generic message header and the message type
 specific body. Both are implemented as a `WfMessageSegment` class, which
 comprises a number of message fields implemented as `WfMessageField` class.
 
 ### Message creator and definition classes
 
-To create Whiteflag messages, a creator classes are used: the
-`WfMessageCreator` class creates `WfMessageCore` objects and is used by the
-nested `WfMessage.Creator` class to created extended `WfMessage` objects.
+To create Whiteflag messages, creator classes are used: the
+`WfMessageCreator` class creates `WfMessageCore` objects and is instantiated by
+the nested `WfMessage.Creator` class to created extended `WfMessage` objects.
 
 The `WfMessageDefinitions` class used by the `WfMessageCreator` class contains
 all message types and field definitions i.a.w. the Whiteflag specification.
 
-### WFJL Message Class Diagram
+### Message Class Diagram
 
 ![WFJL Message Class Diagram](../uml/messages.png)

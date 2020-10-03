@@ -39,6 +39,6 @@ should only use that class themselves. For example:
 throw new WfException("The message originator could not be authenticated", WfException.ErrorType.WF_AUTH_ERROR);
 ```
 
-### WFJL Error Class Diagram
+### Error Class Diagram
 
 ![WFJL Error Class Diagram](../uml/errors.png)
