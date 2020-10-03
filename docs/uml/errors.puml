@@ -1,0 +1,29 @@
+@startuml errors
+!include .stylesheet.puml
+
+title WFJL Error Class Diagram
+
+class Exception <<Throwable>>
+
+package org.whiteflag.protocol.core {
+    class WfCoreException
+}
+
+package org.whiteflag.protocol {
+    class WfException
+    enum WfException.ErrorType {
+        WF_PROTOCOL_ERROR
+        WF_METADATA_ERROR
+        WF_FORMAT_ERROR
+        WF_REFERENCE_ERROR
+        WF_AUTH_ERROR
+        WF_SIGN_ERROR
+        WF_ENCRYPTION_ERROR
+    }
+}
+
+Exception <|- WfCoreException
+WfCoreException <|- WfException
+WfException +-- WfException.ErrorType
+
+@enduml

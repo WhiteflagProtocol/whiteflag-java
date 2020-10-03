@@ -37,7 +37,7 @@ public class WfMessageField {
     /**
      * The {@link WfMessageField.Encoding} encoding type of the field
      */
-    public final WfMessageField.Encoding encoding;
+    public final Encoding encoding;
     /**
      * The starting byte of the field in a serialized / uncompressed message
      */
@@ -148,7 +148,7 @@ public class WfMessageField {
      * @param startByte the starting byte of the field in a serialized / uncompressed message
      * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message
      */
-    public WfMessageField(String name, String pattern, WfMessageField.Encoding encoding, int startByte, int endByte) {
+    public WfMessageField(String name, String pattern, Encoding encoding, int startByte, int endByte) {
         this.name = name;
         this.pattern = Pattern.compile(pattern);
         this.encoding = encoding;

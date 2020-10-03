@@ -68,7 +68,7 @@ public class WfMessageSegment {
         return true;
     }
 
-    /* PUBLIC METHODS: operations */
+    /* PUBLIC METHODS: object operations */
 
     /**
      * Serializes this message segment
@@ -107,6 +107,8 @@ public class WfMessageSegment {
         }
         return bin;
     }
+
+    /* PUBLIC METHODS: field operations */
 
     /**
      * Gets the field specified by name
@@ -156,7 +158,7 @@ public class WfMessageSegment {
         return null;
     }
 
-    /* PROTECTED METHODS */
+    /* PROTECTED METHODS: object operations */
 
     /**
      * Appends additional fields to this message segment if constructing complex message bodies
@@ -172,6 +174,24 @@ public class WfMessageSegment {
         //Set the fields and return this object
         this.fields = newFields;
         return this;
+    }
+
+    /* PROTECTED METHODS: field operations */
+
+    /**
+     * Gets the number of fields in this message segment
+     * @return integer with the numbver of fields
+     */
+    protected final int getNoFields() {
+        return this.fields.length;
+    }
+
+    /**
+     * Gets all fields from this message segment
+     * @return Array of {@link WfMessageField}
+     */
+    protected final WfMessageField[] getFields() {
+        return this.fields;
     }
 
     /**
@@ -216,21 +236,5 @@ public class WfMessageSegment {
             }
         }
         return true;
-    }
-
-    /**
-     * Gets the number of fields in this message segment
-     * @return integer with the numbver of fields
-     */
-    protected final int getNoFields() {
-        return this.fields.length;
-    }
-
-    /**
-     * Gets all fields from this message segment
-     * @return Array of {@link WfMessageField}
-     */
-    protected final WfMessageField[] getFields() {
-        return this.fields;
     }
 }

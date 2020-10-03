@@ -1,0 +1,76 @@
+@startuml messages
+!include .stylesheet.puml
+
+title WFJL Message Class Diagram
+
+package org.whiteflag.protocol.core {
+    class WfMessageCore {
+        +header : WfMessageSegment
+        +body : WfMessageSegment
+        +serialize() : String
+        +enode() : String
+    }
+    class WfMessageSegment {
+        -fields : WfMessageField[]
+        +serialize() : String
+        +encode() : WfBinaryString
+    }
+    class WfMessageField {
+        +name : String
+        +pattern : Pattern
+        +encoding : Encoding
+        +startByte : int
+        +endByte : int
+        -value : String
+        +encode() : WfBinaryString
+        +decode(WfBinaryString) : String
+    }
+    enum WfMessageField.Encoding {
+        BIN
+        DEC
+        HEX
+        UTF8
+        DATETIME
+        DURATION
+        LAT
+        LONG
+    }
+    class WfMessageCreator {
+        +deserialize()
+        +decode()
+        +compile()
+    }
+    class WfMessageDefinitions <<Utility>>
+    class WfBinaryString <<DataType>>
+
+    WfMessageCreator -> WfMessageCore: creates
+}
+
+package org.whiteflag.protocol {
+    class WfMessage {
+        -metaData
+        +serialize()
+        +encode()
+    }
+    class WfMessage.Creator {
+        +copy()
+        +deserialize()
+        +decode()
+        +compile()
+    }
+}
+
+WfMessageField +- WfMessageField.Encoding
+WfMessageSegment *-- "*" WfMessageField: comprises
+WfMessageCore *-- "2" WfMessageSegment: comprises
+
+WfMessageCreator ..> WfMessageSegment: <<use>>
+WfMessageCreator ..> WfMessageDefinitions: <<use>>
+WfMessageDefinitions ..> WfMessageField: <<use>>
+
+WfMessage --|> WfMessageCore
+WfMessage +- WfMessage.Creator
+WfMessage.Creator -> WfMessage: creates
+WfMessage.Creator --> WfMessageCreator
+
+@enduml
