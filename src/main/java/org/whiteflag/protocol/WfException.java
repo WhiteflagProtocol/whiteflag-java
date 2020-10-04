@@ -70,7 +70,7 @@ public class WfException extends WfCoreException {
      * @param errorMessage String containing the human readible error message
      * @param wfErrorType The Whiteflag {@link ErrorType} 
      */
-    public WfException(String errorMessage, ErrorType wfErrorType) {
+    public WfException(final String errorMessage, final ErrorType wfErrorType) {
         super(errorMessage);
         this.errorType = wfErrorType;
     }

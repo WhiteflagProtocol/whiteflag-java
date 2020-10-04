@@ -26,7 +26,7 @@ public class WfMessageCore {
      * @param header the {@link WfMessageSegment} message header
      * @param body the {@link WfMessageSegment} message body
      */
-    public WfMessageCore(WfMessageSegment header, WfMessageSegment body) {
+    public WfMessageCore(final  WfMessageSegment header, final WfMessageSegment body) {
         this.header = new WfMessageSegment(header);
         this.body = new WfMessageSegment(body);
     }
@@ -67,7 +67,7 @@ public class WfMessageCore {
      * @param name String with the name of the field
      * @return String with the field value, or NULL if field does not exist
      */
-    public String getFieldValue(String name) {
+    public String getFieldValue(final String name) {
         String value = header.getFieldValue(name);
         if (value != null) return value;
         return body.getFieldValue(name);
@@ -102,7 +102,7 @@ public class WfMessageCore {
      * @return hexadecimal string with the encoded Whiteflag message
      * @throws WfCoreException if any of the field does not contain valid data
      */
-    public String encode(Boolean prefix) throws WfCoreException {
+    public String encode(final Boolean prefix) throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }

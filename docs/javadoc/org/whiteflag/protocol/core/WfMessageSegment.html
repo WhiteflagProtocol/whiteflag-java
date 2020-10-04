@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/whiteflag/protocol/core/WfMessageField.Encoding.html" title="enum in org.whiteflag.protocol.core"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/whiteflag/protocol/core/WfMessageSegment.html" target="_top">Frames</a></li>
@@ -113,8 +113,8 @@ extends java.lang.Object</pre>
  
  </p> This is a class representing a segment of a Whiteflag message, such as a
  the message header or the message body. A message segment contains a number of
- message fields, depending on the part and the type of the message. This
- class is used to construct different message types with a single interface.</div>
+ message fields, depending on the part and the type of the message. The fields
+ should be ordered without missing or overlapping bytes.</div>
 </li>
 </ul>
 </div>
@@ -445,6 +445,34 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a name="getNoFields--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNoFields</h4>
+<pre>protected final&nbsp;int&nbsp;getNoFields()</pre>
+<div class="block">Gets the number of fields in this message segment</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>integer with the numbver of fields</dd>
+</dl>
+</li>
+</ul>
+<a name="getFields--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getFields</h4>
+<pre>protected final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;getFields()</pre>
+<div class="block">Gets all fields from this message segment</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Array of <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a></dd>
+</dl>
+</li>
+</ul>
 <a name="setFieldValue-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
@@ -484,7 +512,7 @@ extends java.lang.Object</pre>
 <a name="setAllFieldValues-java.lang.String:A-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>setAllFieldValues</h4>
 <pre>protected final&nbsp;java.lang.Boolean&nbsp;setAllFieldValues(java.lang.String[]&nbsp;data)
@@ -497,34 +525,6 @@ extends java.lang.Object</pre>
 <dd>TRUE if the data was valid and all field values are set</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the provided data is invalid</dd>
-</dl>
-</li>
-</ul>
-<a name="getNoFields--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getNoFields</h4>
-<pre>protected final&nbsp;int&nbsp;getNoFields()</pre>
-<div class="block">Gets the number of fields in this message segment</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>integer with the numbver of fields</dd>
-</dl>
-</li>
-</ul>
-<a name="getFields--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getFields</h4>
-<pre>protected final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;getFields()</pre>
-<div class="block">Gets all fields from this message segment</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Array of <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -556,7 +556,7 @@ extends java.lang.Object</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../org/whiteflag/protocol/core/WfMessageField.Encoding.html" title="enum in org.whiteflag.protocol.core"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li>Next&nbsp;Class</li>
+<li><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/whiteflag/protocol/core/WfMessageSegment.html" target="_top">Frames</a></li>

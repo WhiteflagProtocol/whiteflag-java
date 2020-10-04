@@ -36,7 +36,7 @@ public class WfMessage extends WfMessageCore {
      * @param header the {@link WfMessageSegment} message header
      * @param body the {@link WfMessageSegment} message body
      */
-    public WfMessage(WfMessageSegment header, WfMessageSegment body) {
+    private WfMessage(final WfMessageSegment header, final WfMessageSegment body) {
         super(header, body);
     }
 
@@ -46,7 +46,7 @@ public class WfMessage extends WfMessageCore {
      * Adds metadata to the Whiteflag message if not already existing
      * @return null if successful, otherwise the value of the already existing key
      */
-    public String addMetadata(String key, String value) {
+    public String addMetadata(final String key, final String value) {
         return metadata.putIfAbsent(key, value);
     }
 
@@ -54,7 +54,7 @@ public class WfMessage extends WfMessageCore {
      * Returns the requested metadata value of the Whiteflag message
      * @return a string with the value of the requested metadata key
      */
-    public String getMetadata(String key) {
+    public String getMetadata(final String key) {
         return metadata.get(key);
     }
 
@@ -102,7 +102,7 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if any field does not contain valid data
      */
     @Override
-    public String encode(Boolean prefix) throws WfException {
+    public String encode(final Boolean prefix) throws WfException {
         try {
             if (messageEncoded == null) {
                 messageEncoded = super.encode(prefix);
@@ -137,10 +137,10 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Copies a Whiteflag message into new Whiteflag core message object
-         * @param originalMessage teh {@link WfMessageCore} to be copied
+         * @param originalMessage the {@link WfMessageCore} to be copied
          * @return a {@link WfMessageCore} Whiteflag message
          */
-        public static final WfMessage copy(WfMessage originalMessage) {
+        public static final WfMessage copy(final WfMessage originalMessage) {
             WfMessage message = new WfMessage(new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
             for (String key : originalMessage.getMetadataKeys()) {
                 message.addMetadata(key, originalMessage.getMetadata(key));
@@ -154,10 +154,10 @@ public class WfMessage extends WfMessageCore {
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the serialization of the message is invalid
          */
-        public static final WfMessage deserialize(String messageSerialized) throws WfException {
+        public static final WfMessage deserialize(final String messageSerialized) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().deserialize(messageSerialized);
+                message = new WfMessageCreator().deserialize(messageSerialized).create();
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
@@ -170,10 +170,10 @@ public class WfMessage extends WfMessageCore {
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the encoding of the message is invalid
          */
-        public static final WfMessage decode(String messageEncoded) throws WfException {
+        public static final WfMessage decode(final String messageEncoded) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().decode(messageEncoded);
+                message = new WfMessageCreator().decode(messageEncoded).create();
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
@@ -186,10 +186,10 @@ public class WfMessage extends WfMessageCore {
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if any of the provided values is invalid
          */
-        public static final WfMessage compile(String[] fieldValues) throws WfException {
+        public static final WfMessage compile(final String[] fieldValues) throws WfException {
             WfMessageCore message;
             try {
-                message = new WfMessageCreator().compile(fieldValues);
+                message = new WfMessageCreator().compile(fieldValues).create();
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }

@@ -40,10 +40,31 @@ package org.whiteflag.protocol.core {
         +decode()
         +compile()
     }
-    class WfMessageDefinitions <<Utility>>
+    enum WfMessageType {
+        A
+        K
+        T
+        F
+        R
+        P
+        E
+        S
+        D
+        I
+        M
+        Q
+    }
+    class WfMessageDefinitions <<Utility>> {
+        #headerFields : WfMessageField[]
+        #authenticationFields : WfMessageField[]
+        #cryptoFields : WfMessageField[]
+        #testFields : WfMessageField[]
+        #freetextFields : WfMessageField[]
+        #resourceFields : WfMessageField[]
+        #signsignalFields : WfMessageField[]
+        #createRequestFields() : WfMessageField[]
+    }
     class WfBinaryString <<DataType>>
-
-    WfMessageCreator -> WfMessageCore: creates
 }
 
 package org.whiteflag.protocol {
@@ -64,8 +85,12 @@ WfMessageField +- WfMessageField.Encoding
 WfMessageSegment *-- "*" WfMessageField: comprises
 WfMessageCore *-- "2" WfMessageSegment: comprises
 
+WfMessageCreator -> WfMessageCore: creates
+WfMessageCreator --> WfMessageType
+
+WfMessageType --> WfMessageDefinitions
+
 WfMessageCreator ..> WfMessageSegment: <<use>>
-WfMessageCreator ..> WfMessageDefinitions: <<use>>
 WfMessageDefinitions ..> WfMessageField: <<use>>
 
 WfMessage --|> WfMessageCore

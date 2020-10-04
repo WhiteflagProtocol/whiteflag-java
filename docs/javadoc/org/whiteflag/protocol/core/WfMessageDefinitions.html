@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
+var methods = {"i0":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -73,13 +73,13 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -120,6 +120,67 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#authenticationFields">authenticationFields</a></span></code>
+<div class="block">Authentication message body fields</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#cryptoFields">cryptoFields</a></span></code>
+<div class="block">Cryptographic message body fields</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#freetextFields">freetextFields</a></span></code>
+<div class="block">Free text message body fields</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#headerFields">headerFields</a></span></code>
+<div class="block">Generic message header fields</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#resourceFields">resourceFields</a></span></code>
+<div class="block">Resource message body fields</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#signsignalFields">signsignalFields</a></span></code>
+<div class="block">Sign/signal message body fields</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#testFields">testFields</a></span></code>
+<div class="block">Test message body fields</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#UNDEFINED">UNDEFINED</a></span></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -134,71 +195,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createAuthFields-int-">createAuthFields</a></span>(int&nbsp;offset)</code>
-<div class="block">Creates an array with Whiteflag authentication message body fields</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createCryptoFields-int-">createCryptoFields</a></span>(int&nbsp;offset)</code>
-<div class="block">Creates an array with Whiteflag cryptographic message body fields</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createFreeTextFields-int-">createFreeTextFields</a></span>(int&nbsp;offset)</code>
-<div class="block">Creates an array with Whiteflag free text message body fields</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createHeaderFields--">createHeaderFields</a></span>()</code>
-<div class="block">Creates an array with Whiteflag message header fields</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createRequestFields-int-int-">createRequestFields</a></span>(int&nbsp;n,
-                   int&nbsp;offset)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createRequestFields-int-">createRequestFields</a></span>(int&nbsp;n)</code>
 <div class="block">Creates an array with additional Whiteflag sign/signal message body request fields</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createResourceFields-int-">createResourceFields</a></span>(int&nbsp;offset)</code>
-<div class="block">Creates an array with Whiteflag resource message body fields</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createSignSignalFields-int-">createSignSignalFields</a></span>(int&nbsp;offset)</code>
-<div class="block">Creates an array with Whiteflag sign/signal message body fields</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>protected static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#createTextFields-int-">createTextFields</a></span>(int&nbsp;offset)</code>
-<div class="block">Creates an array with Whiteflag test message body fields</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#getBodyFields-java.lang.String-int-">getBodyFields</a></span>(java.lang.String&nbsp;messageCode,
-             int&nbsp;offset)</code>
-<div class="block">Returns an array with the message body fields for the specified message type</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#getHeaderFields--">getHeaderFields</a></span>()</code>
-<div class="block">Returns an array with the generic message header fields</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageDefinitions.html#getRequestFields-int-int-">getRequestFields</a></span>(int&nbsp;n,
-                int&nbsp;offset)</code>
-<div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
 </td>
 </tr>
 </table>
@@ -217,182 +215,106 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="UNDEFINED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>UNDEFINED</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] UNDEFINED</pre>
+</li>
+</ul>
+<a name="headerFields">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>headerFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] headerFields</pre>
+<div class="block">Generic message header fields</div>
+</li>
+</ul>
+<a name="authenticationFields">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>authenticationFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] authenticationFields</pre>
+<div class="block">Authentication message body fields</div>
+</li>
+</ul>
+<a name="cryptoFields">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cryptoFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] cryptoFields</pre>
+<div class="block">Cryptographic message body fields</div>
+</li>
+</ul>
+<a name="freetextFields">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>freetextFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] freetextFields</pre>
+<div class="block">Free text message body fields</div>
+</li>
+</ul>
+<a name="resourceFields">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resourceFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] resourceFields</pre>
+<div class="block">Resource message body fields</div>
+</li>
+</ul>
+<a name="testFields">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>testFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] testFields</pre>
+<div class="block">Test message body fields</div>
+</li>
+</ul>
+<a name="signsignalFields">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>signsignalFields</h4>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[] signsignalFields</pre>
+<div class="block">Sign/signal message body fields</div>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getHeaderFields--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getHeaderFields</h4>
-<pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;getHeaderFields()</pre>
-<div class="block">Returns an array with the generic message header fields</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="getBodyFields-java.lang.String-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBodyFields</h4>
-<pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;getBodyFields(java.lang.String&nbsp;messageCode,
-                                                   int&nbsp;offset)
-                                            throws <a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></pre>
-<div class="block">Returns an array with the message body fields for the specified message type</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>messageCode</code> - String with the message code</dd>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the provided message code is invalid</dd>
-</dl>
-</li>
-</ul>
-<a name="getRequestFields-int-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRequestFields</h4>
-<pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;getRequestFields(int&nbsp;n,
-                                                      int&nbsp;offset)</pre>
-<div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>n</code> - the number of request objects</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createHeaderFields--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createHeaderFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createHeaderFields()</pre>
-<div class="block">Creates an array with Whiteflag message header fields</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createAuthFields-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createAuthFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createAuthFields(int&nbsp;offset)</pre>
-<div class="block">Creates an array with Whiteflag authentication message body fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createCryptoFields-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCryptoFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createCryptoFields(int&nbsp;offset)</pre>
-<div class="block">Creates an array with Whiteflag cryptographic message body fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createFreeTextFields-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createFreeTextFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createFreeTextFields(int&nbsp;offset)</pre>
-<div class="block">Creates an array with Whiteflag free text message body fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createResourceFields-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createResourceFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createResourceFields(int&nbsp;offset)</pre>
-<div class="block">Creates an array with Whiteflag resource message body fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createTextFields-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createTextFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createTextFields(int&nbsp;offset)</pre>
-<div class="block">Creates an array with Whiteflag test message body fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createSignSignalFields-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createSignSignalFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createSignSignalFields(int&nbsp;offset)</pre>
-<div class="block">Creates an array with Whiteflag sign/signal message body fields</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - Integer indicating the starting byte of the first field</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
-</dl>
-</li>
-</ul>
-<a name="createRequestFields-int-int-">
+<a name="createRequestFields-int-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createRequestFields</h4>
-<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createRequestFields(int&nbsp;n,
-                                                            int&nbsp;offset)</pre>
+<pre>protected static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createRequestFields(int&nbsp;n)</pre>
 <div class="block">Creates an array with additional Whiteflag sign/signal message body request fields</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -455,13 +377,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

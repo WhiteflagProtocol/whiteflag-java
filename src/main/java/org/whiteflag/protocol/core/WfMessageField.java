@@ -132,7 +132,7 @@ public class WfMessageField {
          * @param byteLength integer with the number of bytes in the unencoded field
          * @return integer with the number of bits in a compressed encoded field
          */
-        public int length(int byteLength) {
+        public int length(final int byteLength) {
             if (Boolean.TRUE.equals(fixedLength)) return bitLength;
             return (byteLength * bitLength);
         }
@@ -160,12 +160,21 @@ public class WfMessageField {
      * Constructs a new Whiteflag message field from an existing message field
      * @param field the {@link WfMessageField} to create a new message field from
      */
-    public WfMessageField(WfMessageField field) {
+    public WfMessageField(final WfMessageField field) {
+        this(field, 0);
+    }
+
+    /**
+     * Constructs a new Whiteflag message field from an existing message field
+     * @param field the {@link WfMessageField} to create a new message field from
+     * @param shift integer how many byte to shift the 
+     */
+    public WfMessageField(final WfMessageField field, final int shift) {
         this.name = field.name;
         this.pattern = Pattern.compile(field.pattern.toString());
         this.encoding = field.encoding;
-        this.startByte = field.startByte;
-        this.endByte = field.endByte;
+        this.startByte = field.startByte + shift;
+        this.endByte = field.endByte + shift;
         this.value = field.getValue();
     }
 
@@ -229,7 +238,7 @@ public class WfMessageField {
      * @param data The data representing the field value
      * @return TRUE if the data was valid and the field value is set, else FALSE
      */
-    public final Boolean setValue(String data) {
+    public final Boolean setValue(final String data) {
         if (Boolean.TRUE.equals(isDataValid(data))) {
             this.value = data;
             return true;
@@ -300,7 +309,7 @@ public class WfMessageField {
      * @return String with the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
      */
-    public final String decode(WfBinaryString binaryData) throws WfCoreException {
+    public final String decode(final WfBinaryString binaryData) throws WfCoreException {
         // Standard encoding error message indiocating field name
         final String genericErrorMsg = "Cannot decode " + name + " field";
 
@@ -392,7 +401,7 @@ public class WfMessageField {
      * @param data String with the (hexa)decimal data to encode
      * @return String representing of the binary encoding
      */
-    public static final String encodeBDX(String data) {
+    public static final String encodeBDX(final String data) {
         StringBuilder bin = new StringBuilder();
 
         // Run through digits of the string and convert to binary string with leading zeros one by one
@@ -407,7 +416,7 @@ public class WfMessageField {
      * @param data String with the UTF data to encode
      * @return String representing of the binary encoding
      */
-    public static final String encodeUTF(String data) {
+    public static final String encodeUTF(final String data) {
         StringBuilder bin = new StringBuilder();
 
         // Run through bytes of the string and convert to binary string with leading zeros one by one
@@ -422,7 +431,7 @@ public class WfMessageField {
      * @param bin the binary string to decode
      * @return String representing the decoded (hexa)decimal value
      */
-    public static final String decodeBDX(String bin) {
+    public static final String decodeBDX(final String bin) {
         StringBuilder data = new StringBuilder();
         for (int i = 0; i < bin.length(); i += BDXBITS) {
             // Parse 4 bits from the binary string back to the (hexa)decimal data, and convert that to char
@@ -436,7 +445,7 @@ public class WfMessageField {
      * @param bin the binary string to decode
      * @return String with the decoded UTF data
      */
-    public static final String decodeUTF(String bin) {
+    public static final String decodeUTF(final String bin) {
         StringBuilder data = new StringBuilder();
         for (int i = 0; i < bin.length(); i += UTFBITS) {
             // Parse 8 UTF bits from the binary string to an integer, and cast that as a char
@@ -452,7 +461,7 @@ public class WfMessageField {
      * @param data The data to be checked
      * @return Boolean indicating if data is a valid value for this field
      */
-    private final Boolean isDataValid(String data) {
+    private final Boolean isDataValid(final String data) {
         if (data == null) return false;
         return this.pattern.matcher(data).matches();
     }
