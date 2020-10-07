@@ -15,18 +15,26 @@ public class WfMessageCore {
 
     /* PROPERTIES */
 
+    /* Message type */
+    public final WfMessageType type;
+
     /* Message parts */
     public final WfMessageSegment header;
     public final WfMessageSegment body;
+
+    /* Constants */
+    private static final String FIELD_MESSAGETYPE = "MessageCode";
 
     /* CONSTRUCTORS */
 
     /**
      * Creates a Whiteflag message from a header and a body segment
+     * @param type the {@link WfMessageType} of the message
      * @param header the {@link WfMessageSegment} message header
      * @param body the {@link WfMessageSegment} message body
      */
-    public WfMessageCore(final  WfMessageSegment header, final WfMessageSegment body) {
+    protected WfMessageCore(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
+        this.type = type;
         this.header = new WfMessageSegment(header);
         this.body = new WfMessageSegment(body);
     }
@@ -55,8 +63,10 @@ public class WfMessageCore {
      * @return TRUE if all message fields contain valid data, else FALSE
      */
     public Boolean isValid() {
+        if (this.type == WfMessageType.ANY) return false;
         if (Boolean.FALSE.equals(header.isValid())) return false;
         if (Boolean.FALSE.equals(body.isValid())) return false;
+        if (!this.type.getMessageCode().equals(header.getFieldValue(FIELD_MESSAGETYPE))) return false;
         return true;
     }
 

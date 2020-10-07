@@ -6,6 +6,13 @@ package org.whiteflag.protocol.core;
 import java.util.regex.Pattern;
 import java.nio.charset.StandardCharsets;
 
+/* Encoding parameters */
+import static org.whiteflag.protocol.core.WfBinaryString.BINRADIX;
+import static org.whiteflag.protocol.core.WfBinaryString.HEXRADIX;
+import static org.whiteflag.protocol.core.WfBinaryString.QUADBIT;
+import static org.whiteflag.protocol.core.WfBinaryString.OCTET;
+import static org.whiteflag.protocol.core.WfBinaryString.BIT;
+
 /**
  * Whiteflag generic message field class
  * 
@@ -17,13 +24,6 @@ import java.nio.charset.StandardCharsets;
 public class WfMessageField {
 
     /* PROPERTIES */
-
-    /* Encoding parameters */
-    private static final int BINRADIX = WfBinaryString.BINRADIX;
-    private static final int HEXRADIX = WfBinaryString.HEXRADIX;
-    private static final int BDXBITS = WfBinaryString.QUADBIT;
-    private static final int UTFBITS = WfBinaryString.OCTET;
-    private static final int BIT = WfBinaryString.BIT;
 
     /* Fixed properties upon instantiation */
     /**
@@ -66,17 +66,17 @@ public class WfMessageField {
         /**
          * 4-bit binary encoded decimal
          */
-        DEC("[0-9]", BDXBITS, false),
+        DEC("[0-9]", QUADBIT, false),
 
         /**
          * 4-bit binary encoded hexadecimal
          */
-        HEX("[a-fA-F0-9]", BDXBITS, false),
+        HEX("[a-fA-F0-9]", QUADBIT, false),
 
         /**
          * 8-bit binary encoded 1-byte UTF-8 character
          */
-        UTF8("[\u0000-\u007F]", UTFBITS, false),
+        UTF8("[\u0000-\u007F]", OCTET, false),
 
         /**
          *  4-bit binary encoded date-time coordinate
@@ -406,7 +406,7 @@ public class WfMessageField {
 
         // Run through digits of the string and convert to binary string with leading zeros one by one
         for(char c : data.toCharArray()) {
-            bin.append(WfBinaryString.padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), BDXBITS));
+            bin.append(WfBinaryString.padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), QUADBIT));
         }
         return bin.toString();
     }
@@ -421,7 +421,7 @@ public class WfMessageField {
 
         // Run through bytes of the string and convert to binary string with leading zeros one by one
         for(byte b : data.getBytes(StandardCharsets.UTF_8)) {
-            bin.append(WfBinaryString.padLeft(Integer.toBinaryString(b & 0xff), UTFBITS));
+            bin.append(WfBinaryString.padLeft(Integer.toBinaryString(b & 0xff), OCTET));
         }
         return bin.toString();
     }
@@ -433,9 +433,9 @@ public class WfMessageField {
      */
     public static final String decodeBDX(final String bin) {
         StringBuilder data = new StringBuilder();
-        for (int i = 0; i < bin.length(); i += BDXBITS) {
+        for (int i = 0; i < bin.length(); i += QUADBIT) {
             // Parse 4 bits from the binary string back to the (hexa)decimal data, and convert that to char
-            data.append(Integer.toHexString(Integer.parseUnsignedInt(bin.substring(i, i + BDXBITS), BINRADIX)));
+            data.append(Integer.toHexString(Integer.parseUnsignedInt(bin.substring(i, i + QUADBIT), BINRADIX)));
         }
         return data.toString();
     }
@@ -447,9 +447,9 @@ public class WfMessageField {
      */
     public static final String decodeUTF(final String bin) {
         StringBuilder data = new StringBuilder();
-        for (int i = 0; i < bin.length(); i += UTFBITS) {
+        for (int i = 0; i < bin.length(); i += OCTET) {
             // Parse 8 UTF bits from the binary string to an integer, and cast that as a char
-            data.append((char) Integer.parseUnsignedInt(bin.substring(i, i + UTFBITS), BINRADIX));
+            data.append((char) Integer.parseUnsignedInt(bin.substring(i, i + OCTET), BINRADIX));
         }
         return data.toString();
     }

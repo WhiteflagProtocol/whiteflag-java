@@ -1,5 +1,10 @@
+/*
+ * Whiteflag Java Library
+ */
 package org.whiteflag.protocol.core;
 
+/* Field defintions required for message type */
+import static org.whiteflag.protocol.core.WfMessageDefinitions.*;
 
 /**
  * Whiteflag message type
@@ -14,73 +19,73 @@ public enum WfMessageType {
     /**
      * Undefined message type
      */
-    any("", WfMessageDefinitions.UNDEFINED),
+    ANY("", UNDEFINED),
 
     /** 
      * Authentication message type
      */
-    A("A", WfMessageDefinitions.authenticationFields),
+    A("A", authenticationBodyFields),
 
     /** 
      * Cryptographic message type
      */
-    K("K", WfMessageDefinitions.cryptoFields),
+    K("K", cryptoBodyFields),
 
     /** 
-     * Cryptographic message type
+     * Test message type
      */
-    T("T", WfMessageDefinitions.testFields),
+    T("T", testBodyFields),
 
     /** 
      * Free Text message type
      */
-    F("F", WfMessageDefinitions.freetextFields),
+    F("F", freetextBodyFields),
 
     /** 
      * Resource message type
      */
-    R("R", WfMessageDefinitions.resourceFields),
+    R("R", resourceBodyFields),
 
     /** 
      * Protective Sign message type
      */
-    P("P", WfMessageDefinitions.signsignalFields),
+    P("P", signsignalBodyFields),
 
     /** 
-     * Emergency Signal  message type
+     * Emergency Signal message type
      */
-    E("E", WfMessageDefinitions.signsignalFields),
+    E("E", signsignalBodyFields),
 
     /** 
-     * Cryptographic message type
+     * Status Signal message type
      */
-    S("S", WfMessageDefinitions.signsignalFields),
+    S("S", signsignalBodyFields),
 
     /** 
-     * Cryptographic message type
+     * Danger Sign message type
      */
-    D("D", WfMessageDefinitions.signsignalFields),
+    D("D", signsignalBodyFields),
 
     /** 
-     * Cryptographic message type
+     * Infrastructure Sign message type
      */
-    I("I", WfMessageDefinitions.signsignalFields),
+    I("I", signsignalBodyFields),
 
     /** 
-     * Cryptographic message type
+     * Mission Sign message type
      */
-    M("M", WfMessageDefinitions.signsignalFields),
+    M("M", signsignalBodyFields),
 
     /** 
-     * Cryptographic message type
+     * Request Signal message type
      */
-    Q("Q", WfMessageDefinitions.signsignalFields);
+    Q("Q", signsignalBodyFields);
 
     /* PROPERTIES */
 
     /* The valid regex charset of an unencoded field value */
     private final String messageCode;
-    private final WfMessageField[] headerFields = WfMessageDefinitions.headerFields;
+    private final WfMessageField[] headerFields = genericHeaderFields;
     private final WfMessageField[] bodyFields;
 
     /* METHODS */
@@ -100,13 +105,21 @@ public enum WfMessageType {
      * @param code String with the message code
      */
     public static WfMessageType getType(final String code) throws WfCoreException {
-        if (code == null || code.isEmpty()) return any;
+        if (code == null || code.isEmpty()) return ANY;
         for (WfMessageType type : WfMessageType.values()) {
             if (type.messageCode.equalsIgnoreCase(code)) {
                 return type;
             }
         }
         throw new WfCoreException("Invalid message type: " + code);
+    }
+
+    /**
+     * Returns the message code string
+     * @return String with the message code
+     */
+    public String getMessageCode() {
+        return messageCode;
     }
 
     /**
@@ -121,5 +134,41 @@ public enum WfMessageType {
      */
     public WfMessageField[] getBodyFields() {
         return bodyFields;
+    }
+
+    /**
+     * Returns an array with additional Whiteflag sign/signal message body request fields
+     * @param n the number of request objects
+     * @return array with {@link WfMessageField}s
+     */
+    public WfMessageField[] createRequestFields(final int n) {
+        // Request fields are only defined for Request message type
+        if (!this.equals(Q)) return WfMessageDefinitions.UNDEFINED;
+
+        // Field definitions
+        final WfMessageField objectField = WfMessageDefinitions.requestFields[0];
+        final WfMessageField quantField = WfMessageDefinitions.requestFields[1];
+        final int OBJECTFIELDSIZE = objectField.endByte - objectField.startByte;
+        final int QUANTFIELDSIZE = quantField.endByte - quantField.startByte;
+
+        // Determine parameters
+        final int nFields = (n * 2);
+        int startByte = objectField.startByte;
+
+        // Create fields array
+        WfMessageField[] fields = new WfMessageField[nFields];
+        for (int i = 0; i < nFields; i += 2) {
+            // Calculate field beginnings and ends
+            final int splitByte = startByte + OBJECTFIELDSIZE;
+            final int endByte = splitByte + QUANTFIELDSIZE;
+
+            // Add object and quantity field to array
+            fields[i] = new WfMessageField(objectField.name + n, objectField.pattern.toString(), objectField.encoding, startByte, startByte);
+            fields[i + 1] = new WfMessageField(quantField.name + n+"Quant", quantField.pattern.toString(), quantField.encoding, startByte, endByte);
+
+            // Starting byte of next field
+            startByte = endByte;
+        }
+        return fields;
     }
 }

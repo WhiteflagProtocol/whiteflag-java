@@ -22,13 +22,15 @@ public class WfMessageCreator {
     private WfMessageSegment body;
 
     /* Message type */
-    private WfMessageType messageType = WfMessageType.any;
+    private WfMessageType messageType = WfMessageType.ANY;
 
     /* Constants */
+    private static final String PROTOCOL_VERSION = "1";
+    private static final String FIELD_VERSION = "Version";
     private static final String FIELD_MESSAGETYPE = "MessageCode";
     private static final String FIELD_TESTMESSAGETYPE = "PseudoMessageCode";
 
-    /* Cursors for desrialzing and decoding */
+    /* Cursors for deserialzing and decoding */
     private int byteCursor = 0;
     private int bitCursor = 0;
 
@@ -49,7 +51,26 @@ public class WfMessageCreator {
      * @throws WfCoreException if the message cannot be created
      */
     public final WfMessageCore create() throws WfCoreException {
-        return new WfMessageCore(header, body);
+        return new WfMessageCore(messageType, header, body);
+    }
+
+    /**
+     * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
+     * @param messageCode String with message code
+     * @return this {@link WfMessageCreator}
+     * @throws WfCoreException if the provided values are invalid
+     */
+    public final WfMessageCreator newType(final String messageCode) throws WfCoreException {
+        // Create header and body based on message code
+        messageType = WfMessageType.getType(messageCode);
+        header = new WfMessageSegment(messageType.getHeaderFields());
+        body = new WfMessageSegment(messageType.getBodyFields());
+
+        // Set version and message code field values
+        header.setFieldValue(FIELD_VERSION, PROTOCOL_VERSION);
+        header.setFieldValue(FIELD_MESSAGETYPE, messageCode);
+
+        return this;
     }
 
     /**
@@ -82,7 +103,7 @@ public class WfMessageCreator {
             case Q:
                 // Extend request message body with remaining request fields (calculated with remaining bytes)
                 final int nRequestObjects = (messageStr.length() - byteCursor) / 4;   // One request object requires 2 fields of 2 bytes
-                body.append(new WfMessageSegment(WfMessageDefinitions.createRequestFields(nRequestObjects)));
+                body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
@@ -125,7 +146,7 @@ public class WfMessageCreator {
             case Q:
                 // Extend request message body with request fields (calculated with remaining bits)
                 final int nRequestObjects = (messageBinStr.length() - bitCursor) / 16;   // One request object requires 2 fields of 8 bits
-                body.append(new WfMessageSegment(WfMessageDefinitions.createRequestFields(nRequestObjects)));
+                body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
@@ -160,7 +181,7 @@ public class WfMessageCreator {
             case Q:
                 // Extend request message body with request fields (calculated with remaining fields)
                 final int nRequestObjects = (fieldValues.length - (header.getNoFields() + body.getNoFields())) / 2;  // One request object requires 2 fields
-                body.append(new WfMessageSegment(WfMessageDefinitions.createRequestFields(nRequestObjects)));
+                body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
@@ -173,7 +194,7 @@ public class WfMessageCreator {
     /* PRIVATE METHODS: helper functions */
 
     /**
-     * Converts a String to {@link WfBinaryString}
+     * Converts a hexadecimal string to a {@link WfBinaryString}
      * @param hex String with hexadecimal representation of message
      * @throws WfCoreException if invalid hexadecimal encoded message
      */

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":9,"i3":9,"i4":9};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -148,18 +148,18 @@ extends java.lang.Enum&lt;<a href="../../../../org/whiteflag/protocol/core/WfMes
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#any">any</a></span></code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#ANY">ANY</a></span></code>
 <div class="block">Undefined message type</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#D">D</a></span></code>
-<div class="block">Cryptographic message type</div>
+<div class="block">Danger Sign message type</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#E">E</a></span></code>
-<div class="block">Emergency Signal  message type</div>
+<div class="block">Emergency Signal message type</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -169,7 +169,7 @@ extends java.lang.Enum&lt;<a href="../../../../org/whiteflag/protocol/core/WfMes
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#I">I</a></span></code>
-<div class="block">Cryptographic message type</div>
+<div class="block">Infrastructure Sign message type</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -179,7 +179,7 @@ extends java.lang.Enum&lt;<a href="../../../../org/whiteflag/protocol/core/WfMes
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#M">M</a></span></code>
-<div class="block">Cryptographic message type</div>
+<div class="block">Mission Sign message type</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -189,7 +189,7 @@ extends java.lang.Enum&lt;<a href="../../../../org/whiteflag/protocol/core/WfMes
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#Q">Q</a></span></code>
-<div class="block">Cryptographic message type</div>
+<div class="block">Request Signal message type</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -199,12 +199,12 @@ extends java.lang.Enum&lt;<a href="../../../../org/whiteflag/protocol/core/WfMes
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#S">S</a></span></code>
-<div class="block">Cryptographic message type</div>
+<div class="block">Status Signal message type</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#T">T</a></span></code>
-<div class="block">Cryptographic message type</div>
+<div class="block">Test message type</div>
 </td>
 </tr>
 </table>
@@ -224,29 +224,41 @@ extends java.lang.Enum&lt;<a href="../../../../org/whiteflag/protocol/core/WfMes
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#createRequestFields-int-">createRequestFields</a></span>(int&nbsp;n)</code>
+<div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#getBodyFields--">getBodyFields</a></span>()</code>
 <div class="block">Returns an array with the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> body fields</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#getHeaderFields--">getHeaderFields</a></span>()</code>
 <div class="block">Returns an array with the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> header fields</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#getMessageCode--">getMessageCode</a></span>()</code>
+<div class="block">Returns the message code string</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#getType-java.lang.String-">getType</a></span>(java.lang.String&nbsp;code)</code>
 <div class="block">Returns the <a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><code>WfMessageType</code></a> message type</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#valueOf-java.lang.String-">valueOf</a></span>(java.lang.String&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html#values--">values</a></span>()</code>
 <div class="block">Returns an array containing the constants of this enum type, in
@@ -282,13 +294,13 @@ the order they are declared.</div>
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
-<a name="any">
+<a name="ANY">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>any</h4>
-<pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> any</pre>
+<h4>ANY</h4>
+<pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> ANY</pre>
 <div class="block">Undefined message type</div>
 </li>
 </ul>
@@ -319,7 +331,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>T</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> T</pre>
-<div class="block">Cryptographic message type</div>
+<div class="block">Test message type</div>
 </li>
 </ul>
 <a name="F">
@@ -359,7 +371,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>E</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> E</pre>
-<div class="block">Emergency Signal  message type</div>
+<div class="block">Emergency Signal message type</div>
 </li>
 </ul>
 <a name="S">
@@ -369,7 +381,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>S</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> S</pre>
-<div class="block">Cryptographic message type</div>
+<div class="block">Status Signal message type</div>
 </li>
 </ul>
 <a name="D">
@@ -379,7 +391,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>D</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> D</pre>
-<div class="block">Cryptographic message type</div>
+<div class="block">Danger Sign message type</div>
 </li>
 </ul>
 <a name="I">
@@ -389,7 +401,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>I</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> I</pre>
-<div class="block">Cryptographic message type</div>
+<div class="block">Infrastructure Sign message type</div>
 </li>
 </ul>
 <a name="M">
@@ -399,7 +411,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>M</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> M</pre>
-<div class="block">Cryptographic message type</div>
+<div class="block">Mission Sign message type</div>
 </li>
 </ul>
 <a name="Q">
@@ -409,7 +421,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>Q</h4>
 <pre>public static final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> Q</pre>
-<div class="block">Cryptographic message type</div>
+<div class="block">Request Signal message type</div>
 </li>
 </ul>
 </li>
@@ -479,6 +491,20 @@ not permitted.)</div>
 </dl>
 </li>
 </ul>
+<a name="getMessageCode--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMessageCode</h4>
+<pre>public&nbsp;java.lang.String&nbsp;getMessageCode()</pre>
+<div class="block">Returns the message code string</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>String with the message code</dd>
+</dl>
+</li>
+</ul>
 <a name="getHeaderFields--">
 <!--   -->
 </a>
@@ -492,11 +518,27 @@ not permitted.)</div>
 <a name="getBodyFields--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getBodyFields</h4>
 <pre>public&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;getBodyFields()</pre>
 <div class="block">Returns an array with the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> body fields</div>
+</li>
+</ul>
+<a name="createRequestFields-int-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>createRequestFields</h4>
+<pre>public&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>[]&nbsp;createRequestFields(int&nbsp;n)</pre>
+<div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>n</code> - the number of request objects</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>array with <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>s</dd>
+</dl>
 </li>
 </ul>
 </li>

@@ -33,11 +33,12 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Creates a Whiteflag message by calling the super constructor with an array of field values
+     * @param type the {@link WfMessageType} of the message
      * @param header the {@link WfMessageSegment} message header
      * @param body the {@link WfMessageSegment} message body
      */
-    private WfMessage(final WfMessageSegment header, final WfMessageSegment body) {
-        super(header, body);
+    private WfMessage(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
+        super(type, header, body);
     }
 
     /* PUBLIC METHODS: getters & setters */
@@ -141,7 +142,7 @@ public class WfMessage extends WfMessageCore {
          * @return a {@link WfMessageCore} Whiteflag message
          */
         public static final WfMessage copy(final WfMessage originalMessage) {
-            WfMessage message = new WfMessage(new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
+            WfMessage message = new WfMessage(originalMessage.type, new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
             for (String key : originalMessage.getMetadataKeys()) {
                 message.addMetadata(key, originalMessage.getMetadata(key));
             }
@@ -161,7 +162,7 @@ public class WfMessage extends WfMessageCore {
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
-            return new WfMessage(message.header, message.body);
+            return new WfMessage(message.type, message.header, message.body);
         }
 
         /**
@@ -177,7 +178,7 @@ public class WfMessage extends WfMessageCore {
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
-            return new WfMessage(message.header, message.body);
+            return new WfMessage(message.type, message.header, message.body);
         }
 
         /**
@@ -193,7 +194,7 @@ public class WfMessage extends WfMessageCore {
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
-            return new WfMessage(message.header, message.body);
+            return new WfMessage(message.type, message.header, message.body);
         }
     }
 }

@@ -84,7 +84,7 @@
 <dd>
 <div class="block">Appends additional fields to this message segment if constructing complex message bodies</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#authenticationFields">authenticationFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#authenticationBodyFields">authenticationBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Authentication message body fields</div>
 </dd>
@@ -138,11 +138,11 @@
 <dd>
 <div class="block">Creates the Whiteflag core message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#createRequestFields-int-">createRequestFields(int)</a></span> - Static method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#createRequestFields-int-">createRequestFields(int)</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
-<div class="block">Creates an array with additional Whiteflag sign/signal message body request fields</div>
+<div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#cryptoFields">cryptoFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#cryptoBodyFields">cryptoBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Cryptographic message body fields</div>
 </dd>
@@ -236,7 +236,7 @@
 </a>
 <h2 class="title">F</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#freetextFields">freetextFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#freetextBodyFields">freetextBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Free text message body fields</div>
 </dd>
@@ -246,6 +246,10 @@
 </a>
 <h2 class="title">G</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#genericHeaderFields">genericHeaderFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dd>
+<div class="block">Generic message header fields</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getBodyFields--">getBodyFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> body fields</div>
@@ -278,6 +282,10 @@
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> header fields</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getMessageCode--">getMessageCode()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
+<dd>
+<div class="block">Returns the message code string</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.html#getMetadata-java.lang.String-">getMetadata(String)</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol">WfMessage</a></dt>
 <dd>
 <div class="block">Returns the requested metadata value of the Whiteflag message</div>
@@ -306,10 +314,6 @@
 <dl>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#header">header</a></span> - Variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#headerFields">headerFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
-<dd>
-<div class="block">Generic message header fields</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#HEXPATTERN">HEXPATTERN</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#HEXPREFIX">HEXPREFIX</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
@@ -366,6 +370,10 @@
 <dd>
 <div class="block">The name of the field</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#newType-java.lang.String-">newType(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
+<dd>
+<div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
+</dd>
 </dl>
 <a name="I:O">
 <!--   -->
@@ -418,7 +426,9 @@
 <dd>
 <div class="block">Checks for and removes prefix from string</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#resourceFields">resourceFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#requestFields">requestFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#resourceBodyFields">resourceBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Resource message body fields</div>
 </dd>
@@ -468,7 +478,7 @@
 <dd>
 <div class="block">Sets the value of the message field</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#signsignalFields">signsignalFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#signsignalBodyFields">signsignalBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Sign/signal message body fields</div>
 </dd>
@@ -490,7 +500,7 @@
 </a>
 <h2 class="title">T</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#testFields">testFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#testBodyFields">testBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Test message body fields</div>
 </dd>
@@ -526,6 +536,8 @@
 <dd>
 <div class="block">Returns the message segment as a concatinated string of field values</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#type">type</a></span> - Variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a name="I:U">
 <!--   -->
@@ -533,7 +545,9 @@
 <h2 class="title">U</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#UNDEFINED">UNDEFINED</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Undefined fields</div>
+</dd>
 </dl>
 <a name="I:V">
 <!--   -->
@@ -619,7 +633,7 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag basic message core class</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#WfMessageCore-org.whiteflag.protocol.core.WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">WfMessageCore(WfMessageSegment, WfMessageSegment)</a></span> - Constructor for class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#WfMessageCore-org.whiteflag.protocol.core.WfMessageType-org.whiteflag.protocol.core.WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">WfMessageCore(WfMessageType, WfMessageSegment, WfMessageSegment)</a></span> - Constructor for class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
 <dd>
 <div class="block">Creates a Whiteflag message from a header and a body segment</div>
 </dd>

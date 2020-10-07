@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,6 +176,12 @@ extends java.lang.Object</pre>
 <div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
 </td>
 </tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html#newType-java.lang.String-">newType</a></span>(java.lang.String&nbsp;messageCode)</code>
+<div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -230,6 +236,25 @@ extends java.lang.Object</pre>
 <dd>a new <a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core"><code>WfMessageCore</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the message cannot be created</dd>
+</dl>
+</li>
+</ul>
+<a name="newType-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>newType</h4>
+<pre>public final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a>&nbsp;newType(java.lang.String&nbsp;messageCode)
+                               throws <a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></pre>
+<div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>messageCode</code> - String with message code</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this <a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core"><code>WfMessageCreator</code></a></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the provided values are invalid</dd>
 </dl>
 </li>
 </ul>

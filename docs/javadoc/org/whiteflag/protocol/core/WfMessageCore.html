@@ -145,6 +145,10 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html#header">header</a></span></code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html#type">type</a></span></code>&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -157,10 +161,13 @@ extends java.lang.Object</pre>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html#WfMessageCore-org.whiteflag.protocol.core.WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">WfMessageCore</a></span>(<a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;header,
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html#WfMessageCore-org.whiteflag.protocol.core.WfMessageType-org.whiteflag.protocol.core.WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">WfMessageCore</a></span>(<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a>&nbsp;type,
+             <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;header,
              <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;body)</code>
 <div class="block">Creates a Whiteflag message from a header and a body segment</div>
 </td>
@@ -238,6 +245,15 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="type">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>type</h4>
+<pre>public final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a> type</pre>
+</li>
+</ul>
 <a name="header">
 <!--   -->
 </a>
@@ -264,17 +280,19 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="WfMessageCore-org.whiteflag.protocol.core.WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">
+<a name="WfMessageCore-org.whiteflag.protocol.core.WfMessageType-org.whiteflag.protocol.core.WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>WfMessageCore</h4>
-<pre>public&nbsp;WfMessageCore(<a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;header,
-                     <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;body)</pre>
+<pre>protected&nbsp;WfMessageCore(<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a>&nbsp;type,
+                        <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;header,
+                        <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a>&nbsp;body)</pre>
 <div class="block">Creates a Whiteflag message from a header and a body segment</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>type</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><code>WfMessageType</code></a> of the message</dd>
 <dd><code>header</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core"><code>WfMessageSegment</code></a> message header</dd>
 <dd><code>body</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core"><code>WfMessageSegment</code></a> message body</dd>
 </dl>
