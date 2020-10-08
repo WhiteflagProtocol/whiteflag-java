@@ -25,7 +25,9 @@ public class WfMessageCreator {
     private WfMessageType messageType = WfMessageType.ANY;
 
     /* Constants */
+    private static final String PREFIX = "WF";
     private static final String PROTOCOL_VERSION = "1";
+    private static final String FIELD_PREFIX = "Prefix";
     private static final String FIELD_VERSION = "Version";
     private static final String FIELD_MESSAGETYPE = "MessageCode";
     private static final String FIELD_TESTMESSAGETYPE = "PseudoMessageCode";
@@ -67,6 +69,7 @@ public class WfMessageCreator {
         body = new WfMessageSegment(messageType.getBodyFields());
 
         // Set version and message code field values
+        header.setFieldValue(FIELD_PREFIX, PREFIX);
         header.setFieldValue(FIELD_VERSION, PROTOCOL_VERSION);
         header.setFieldValue(FIELD_MESSAGETYPE, messageCode);
 
@@ -230,7 +233,7 @@ public class WfMessageCreator {
             }
             // Set the field value and check result
             if (Boolean.FALSE.equals(segment.setFieldValue(i, value))) {
-                throw new WfCoreException("Invalid data provided for " + field.name + " field in uncompressed serialized message at byte " + byteCursor + ": " + value + " does not match regex " + field.pattern.toString());
+                throw new WfCoreException(field.debugString() + " already set or invalid data in serialized message at byte " + byteCursor + ": " + value);
             }
             // Update cursors
             bitCursor += field.bitLength();
@@ -265,7 +268,7 @@ public class WfMessageCreator {
             }
             // Set the field value and check result
             if (Boolean.FALSE.equals(segment.setFieldValue(i, value))) {
-                throw new WfCoreException("Invalid data when decoding " + field.name + " field from encoded binary message at bit " + bitCursor + ": " + value + " does not match regex " + field.pattern.toString());
+                throw new WfCoreException(field.debugString() + " already set or invalid data in encoded binary message at bit " + bitCursor + ": " + value);
             }
             // Update cursors
             bitCursor = fieldEndBit;

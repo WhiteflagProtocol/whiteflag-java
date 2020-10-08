@@ -137,9 +137,24 @@ public class WfMessage extends WfMessageCore {
         /* METHODS */
 
         /**
-         * Copies a Whiteflag message into new Whiteflag core message object
+         * Creates a new empty Whiteflag message object of the specified type
          * @param originalMessage the {@link WfMessageCore} to be copied
          * @return a {@link WfMessageCore} Whiteflag message
+         */
+        public static final WfMessage type(final String messageCode) throws WfException {
+            WfMessageCore message;
+            try {
+                message = new WfMessageCreator().type(messageCode).create();
+            } catch (WfCoreException e) {
+                throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+            }
+            return new WfMessage(message.type, message.header, message.body);
+        }
+
+        /**
+         * Copies a Whiteflag message into new Whiteflag message object
+         * @param originalMessage the {@link WfMessage} to be copied
+         * @return a {@link WfMessage} Whiteflag message
          */
         public static final WfMessage copy(final WfMessage originalMessage) {
             WfMessage message = new WfMessage(originalMessage.type, new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
@@ -150,7 +165,7 @@ public class WfMessage extends WfMessageCore {
         }
 
         /**
-         * Creates a Whiteflag message object from a serialized message
+         * Creates a new Whiteflag message object from a serialized message
          * @param messageSerialized String with the uncompressed serialized message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the serialization of the message is invalid
@@ -160,14 +175,14 @@ public class WfMessage extends WfMessageCore {
             try {
                 message = new WfMessageCreator().deserialize(messageSerialized).create();
             } catch (WfCoreException e) {
-                throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot deserialize message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
             return new WfMessage(message.type, message.header, message.body);
         }
 
         /**
-         * Creates a Whiteflag message object from a encoded message
-         * @param messageEncoded String with the encoded message
+         * Creates a new Whiteflag message object from an encoded message
+         * @param messageEncoded String with hexadecimal representation of the encoded message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the encoding of the message is invalid
          */
@@ -176,13 +191,13 @@ public class WfMessage extends WfMessageCore {
             try {
                 message = new WfMessageCreator().decode(messageEncoded).create();
             } catch (WfCoreException e) {
-                throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot decode message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
             return new WfMessage(message.type, message.header, message.body);
         }
 
         /**
-         * Creates a Whiteflag message object from field values
+         * Creates a new Whiteflag message object from field values
          * @param fieldValues String array with the values for the message fields
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if any of the provided values is invalid
@@ -192,7 +207,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 message = new WfMessageCreator().compile(fieldValues).create();
             } catch (WfCoreException e) {
-                throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot compile message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
             return new WfMessage(message.type, message.header, message.body);
         }

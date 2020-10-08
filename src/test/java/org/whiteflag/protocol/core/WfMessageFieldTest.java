@@ -6,6 +6,9 @@ package org.whiteflag.protocol.core;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/* Field encodings required for field definitions */
+import static org.whiteflag.protocol.core.WfMessageField.Encoding.*;
+
 /**
  * Whiteflag field test class
  */
@@ -15,16 +18,46 @@ public class WfMessageFieldTest {
 
     /* Regex field begin and end */
     private final String BEGIN = "^";
-    private final String TOEND = "*$";
+    private final String REPEAT = "*$";
     private final String END = "$";
 
+    /**
+     * Tests setting field value
+     */
+    @Test
+    public void testSetFieldValue() {
+        /* Setup */
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.setValue("some text"));
+        assertTrue("Field should be set", field.isSet());
+        assertFalse("Should not be able to set field value twice", field.setValue("another text"));
+    }
+    /**
+     * Tests copying of a field
+     */
+    @Test
+    public void testCopyField() {
+        /* Setup */
+        WfMessageField field1 = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
+        field1.setValue("first value");
+        WfMessageField field2 = new WfMessageField(field1, 7);
+
+        /* Verify */
+        assertFalse("The copy of the field should not have a set value", field2.isSet());
+        assertTrue("Should be able to set value of the copy of the field", field2.setValue("second value"));
+        assertTrue("The copy of the field should have a set value", field2.isSet());
+        assertEquals("Field start byte should be 7", 7, field2.startByte);
+        assertEquals("Field start byte should be -1", -1, field2.endByte);
+    }
     /**
      * Tests compressed binary encoding of UTF-8 field
      */
     @Test
     public void testUtfEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.UTF8.charset()+TOEND, WfMessageField.Encoding.UTF8, 0, -1);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
         field.setValue("WF");
 
         /* Verify */
@@ -39,7 +72,7 @@ public class WfMessageFieldTest {
     @Test
     public void testUtfDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.UTF8.charset()+TOEND, WfMessageField.Encoding.UTF8, 0, -1);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
         WfBinaryString binString = new WfBinaryString().setHexValue("5746");
         field.setValue(field.decode(binString));
 
@@ -53,7 +86,7 @@ public class WfMessageFieldTest {
     @Test
     public void testBinEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.BIN.charset()+TOEND, WfMessageField.Encoding.BIN, 0, 8);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+BIN.charset()+REPEAT, BIN, 0, 8);
         field.setValue("10111011");
         
         /* Verify */
@@ -67,7 +100,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDecEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.DEC.charset()+TOEND, WfMessageField.Encoding.DEC, 0, 3);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DEC.charset()+REPEAT, DEC, 0, 3);
         field.setValue("123");
         
         /* Verify */
@@ -81,7 +114,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDecDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.DEC.charset()+TOEND, WfMessageField.Encoding.DEC, 0, 3);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DEC.charset()+REPEAT, DEC, 0, 3);
         WfBinaryString binString = new WfBinaryString().setBinValue("000100100011");
         field.setValue(field.decode(binString));
         
@@ -95,7 +128,7 @@ public class WfMessageFieldTest {
     @Test
     public void testHexEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.HEX.charset()+TOEND, WfMessageField.Encoding.HEX, 0, 2);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+HEX.charset()+REPEAT, HEX, 0, 2);
         field.setValue("3f");
         
         /* Verify */
@@ -110,7 +143,7 @@ public class WfMessageFieldTest {
     @Test
     public void testHexDecoding() throws WfCoreException {
         /* Test function */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.HEX.charset()+TOEND, WfMessageField.Encoding.HEX, 0, 2);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+HEX.charset()+REPEAT, HEX, 0, 2);
         WfBinaryString binString = new WfBinaryString().setHexValue("0x3f");
         field.setValue(field.decode(binString));
 
@@ -124,7 +157,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDateTimeEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.DATETIME.charset()+END, WfMessageField.Encoding.DATETIME, 0, -1);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DATETIME.charset()+END, DATETIME, 0, -1);
         field.setValue("2020-07-01T21:42:23Z");
 
         /* Verify */
@@ -138,7 +171,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDateTimeDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.DATETIME.charset()+END, WfMessageField.Encoding.DATETIME, 0, -1);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DATETIME.charset()+END, DATETIME, 0, -1);
         WfBinaryString binString = new WfBinaryString().setBinValue("00100000001000000000011100000001001000010100001000100011");
         field.setValue(field.decode(binString));
 
@@ -152,7 +185,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDurationEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.DURATION.charset()+END, WfMessageField.Encoding.DURATION, 0, 10);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DURATION.charset()+END, DURATION, 0, 10);
         field.setValue("P24D11H30M");
 
         /* Verify */
@@ -166,7 +199,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDurationDecoding() throws WfCoreException {
         /* Test function */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.DURATION.charset()+END, WfMessageField.Encoding.DURATION, 0, 10);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DURATION.charset()+END, DURATION, 0, 10);
         WfBinaryString binString = new WfBinaryString().setBinValue("001001000001000100110000");
         field.setValue(field.decode(binString));
 
@@ -180,7 +213,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLatitudeEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.LAT.charset()+END, WfMessageField.Encoding.LAT, 0, 9);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LAT.charset()+END, LAT, 0, 9);
         field.setValue("+23.34244");
 
         /* Verify */
@@ -194,7 +227,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLatitudeDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.LAT.charset()+END, WfMessageField.Encoding.LAT, 0, 9);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LAT.charset()+END, LAT, 0, 9);
         WfBinaryString binString = new WfBinaryString().setBinValue("10010001100110100001001000100");
         field.setValue(field.decode(binString));
 
@@ -208,7 +241,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLongitudeEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.LONG.charset()+END, WfMessageField.Encoding.LONG, 0, 10);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LONG.charset()+END, LONG, 0, 10);
         field.setValue("-163.34245");
 
         /* Verify */
@@ -222,7 +255,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLongitudeDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+WfMessageField.Encoding.LONG.charset()+END, WfMessageField.Encoding.LONG, 0, 10);
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LONG.charset()+END, LONG, 0, 10);
         WfBinaryString binString = new WfBinaryString().setBinValue("000010110001100110100001001000101");
         field.setValue(field.decode(binString));
 

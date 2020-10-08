@@ -3,8 +3,6 @@
  */
 package org.whiteflag.protocol.core;
 
-//TODO: review access modifiers
-
 /**
  * Whiteflag message segment class
  * 
@@ -23,16 +21,20 @@ public class WfMessageSegment {
     /* CONSTRUCTOR */
 
     /**
-     * Constructs a new Whiteflag message segment from a {@link WfMessageField} array
+     * Constructs a new Whiteflag message segment from a {@link WfMessageField} array, without copying field values
      * @param fields an array of {@link WfMessageField}s
      */
     public WfMessageSegment(final WfMessageField[] fields) {
         this.fields = new WfMessageField[fields.length];
-        this.fields = fields.clone();
+
+        // Deep copy of the fields, using the copy constructor (which does not copy the field values)
+        for (int i=0; i < fields.length; i++) {
+            this.fields[i] = new WfMessageField(fields[i]);
+        }
     }
 
     /**
-     * Constructs a new Whiteflag message segment from another message segment
+     * Constructs a new Whiteflag message segment from another message segment, cloning its fields including values
      * @param segment the {@link WfMessageSegment} to create the new segment from
      */
     public WfMessageSegment(final WfMessageSegment segment) {
@@ -118,6 +120,14 @@ public class WfMessageSegment {
     /* PUBLIC METHODS: field operations */
 
     /**
+     * Gets the number of fields in this message segment
+     * @return integer with the numbver of fields
+     */
+    public final int getNoFields() {
+        return this.fields.length;
+    }
+
+    /**
      * Gets the value of the field specified by name
      * @param name String with the name of the requested field
      * @return String with the field value, or NULL if field does not exist
@@ -196,14 +206,6 @@ public class WfMessageSegment {
     /* PROTECTED METHODS: field operations */
 
     /**
-     * Gets the number of fields in this message segment
-     * @return integer with the numbver of fields
-     */
-    protected final int getNoFields() {
-        return this.fields.length;
-    }
-
-    /**
      * Gets the field specified by name
      * @param name String with the name of the requested field
      * @return the requested {@link WfMessageField}, or NULL if it does not exist
@@ -243,11 +245,11 @@ public class WfMessageSegment {
      */
     protected final Boolean setAllFieldValues(final String[] data) throws WfCoreException {
         if (data.length != fields.length) {
-            throw new WfCoreException("Message part has " + fields.length + " fields, but provided data for " + data.length + " fields");
+            throw new WfCoreException("Message part has " + fields.length + " fields, but have data for " + data.length + " fields");
         }
         for (int n = 0; n < fields.length; n++) {
-            if (Boolean.TRUE.equals(!fields[n].setValue(data[n]))) {
-                throw new WfCoreException("Invalid data provided for " + fields[n].name + " field: " + data[n] + " must match " + fields[n].pattern.toString());
+            if (Boolean.FALSE.equals(fields[n].setValue(data[n]))) {
+                throw new WfCoreException(fields[n].debugString() + " already set or invalid data provided: " + data[n]);
             }
         }
         return true;

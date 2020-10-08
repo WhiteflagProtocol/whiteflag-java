@@ -3,9 +3,6 @@
  */
 package org.whiteflag.protocol.core;
 
-//TODO: review access modifiers
-//TODO: once set, field value cannot change
-
 import java.util.regex.Pattern;
 import java.nio.charset.StandardCharsets;
 
@@ -50,7 +47,7 @@ public class WfMessageField {
      */
     public final int endByte;
 
-    /* Main property */
+    /* Main properties */
     private String value;
 
     /** 
@@ -160,7 +157,7 @@ public class WfMessageField {
     }
 
     /**
-     * Constructs a new Whiteflag message field from an existing message field
+     * Constructs a new Whiteflag message field from an existing message field, without the value
      * @param field the {@link WfMessageField} to create a new message field from
      */
     public WfMessageField(final WfMessageField field) {
@@ -168,7 +165,7 @@ public class WfMessageField {
     }
 
     /**
-     * Constructs a new Whiteflag message field from an existing message field
+     * Constructs a new Whiteflag message field from an existing message field, without the value
      * @param field the {@link WfMessageField} to create a new message field from
      * @param shift integer how many bytes to shift the field as copying is mostly used to append
      */
@@ -177,8 +174,11 @@ public class WfMessageField {
         this.pattern = Pattern.compile(field.pattern.toString());
         this.encoding = field.encoding;
         this.startByte = field.startByte + shift;
-        this.endByte = field.endByte + shift;
-        this.value = field.getValue();
+        if (field.endByte < 0) {
+            this.endByte = field.endByte;
+        } else {
+            this.endByte = field.endByte + shift;
+        }
     }
 
     /* PUBLIC METHODS: basic object interface */
@@ -190,6 +190,35 @@ public class WfMessageField {
     @Override
     public final String toString() {
         return this.getValue();
+    }
+
+    /* PUBLIC METHODS: metadata & validators */
+
+    /**
+     * Checks if the message field value has been set
+     * @return TRUE if the field has been set, else FALSE
+     */
+    public final Boolean isSet() {
+        // Field is considered set if it contains a valid value
+        return this.isValid();
+    }
+
+    /**
+     * Checks if the message field contains a valid value
+     * @return TRUE if the field contains a valid value, else FALSE
+     */
+    public final Boolean isValid() {
+        return isDataValid(this.value);
+    }
+
+    /**
+     * Checks if the provided data is a valid value for this field
+     * @param data The data to be checked
+     * @return Boolean indicating if data is a valid value for this field
+     */
+    public final Boolean isDataValid(final String data) {
+        if (data == null) return false;
+        return this.pattern.matcher(data).matches();
     }
 
     /**
@@ -216,16 +245,6 @@ public class WfMessageField {
         return this.encoding.length(this.endByte - this.startByte);
     }
 
-    /* PUBLIC METHODS: metadata & validators */
-
-    /**
-     * Checks if the message field contains a valid value
-     * @return TRUE if the field contains a valid value, else FALSE
-     */
-    public final Boolean isValid() {
-        return isDataValid(this.value);
-    }
-
     /* PUBLIC METHODS: getters & setters */
 
     /**
@@ -237,11 +256,15 @@ public class WfMessageField {
     }
 
     /**
-     * Sets the value of the message field
+     * Sets the value of the message field if not already set
      * @param data The data representing the field value
-     * @return TRUE if the data was valid and the field value is set, else FALSE
+     * @return TRUE if field value is set, FALSE if field already set or data is invalid
      */
     public final Boolean setValue(final String data) {
+        // Cannot set value twice
+        if (Boolean.TRUE.equals(this.isSet())) return false;
+
+        // Set if data is valid
         if (Boolean.TRUE.equals(isDataValid(data))) {
             this.value = data;
             return true;
@@ -457,15 +480,13 @@ public class WfMessageField {
         return data.toString();
     }
 
-    /* PRIVATE METHODS */
+    /* PROTECTED METHODS */
 
     /**
-     * Checks if the provided data is a valid value for this field
-     * @param data The data to be checked
-     * @return Boolean indicating if data is a valid value for this field
+     * Returns debug information
+     * @return String with debug information
      */
-    private final Boolean isDataValid(final String data) {
-        if (data == null) return false;
-        return this.pattern.matcher(data).matches();
+    protected String debugString() {
+        return this.name + " field [\"" + this.value + "\", /" + this.pattern.toString() + "/, " + this.isValid() + "]";
     }
 }
