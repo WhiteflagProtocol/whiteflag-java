@@ -50,17 +50,17 @@ public class WfMessageCreator {
      * @return a new {@link WfMessageCore}
      * @throws WfCoreException if the message cannot be created
      */
-    public final WfMessageCore create() throws WfCoreException {
+    public final WfMessageCore create() {
         return new WfMessageCore(messageType, header, body);
     }
 
     /**
-     * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
+     * Creates a new empty Whiteflag core message object of the specified type
      * @param messageCode String with message code
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCreator newType(final String messageCode) throws WfCoreException {
+    public final WfMessageCreator type(final String messageCode) throws WfCoreException {
         // Create header and body based on message code
         messageType = WfMessageType.getType(messageCode);
         header = new WfMessageSegment(messageType.getHeaderFields());

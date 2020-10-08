@@ -3,6 +3,8 @@
  */
 package org.whiteflag.protocol.core;
 
+//TODO: review access modifiers
+
 /**
  * Whiteflag message segment class
  * 
@@ -116,30 +118,6 @@ public class WfMessageSegment {
     /* PUBLIC METHODS: field operations */
 
     /**
-     * Gets the field specified by name
-     * @param name String with the name of the requested field
-     * @return the requested {@link WfMessageField}, or NULL if it does not exist
-     */
-    public final WfMessageField getField(final String name) {
-        for (WfMessageField field : fields) {
-            if (name.equals(field.name)) return field;
-        }
-        return null;
-    }
-
-    /**
-     * Gets the field specified by index
-     * @param index integer with the index of the requested field
-     * @return the requested {@link WfMessageField}, or NULL if it does not exist
-     */
-    public final WfMessageField getField(final int index) {
-        if (index >= 0 && index < fields.length) {
-            return fields[index];
-        }
-        return null;
-    }
-
-    /**
      * Gets the value of the field specified by name
      * @param name String with the name of the requested field
      * @return String with the field value, or NULL if field does not exist
@@ -161,6 +139,32 @@ public class WfMessageSegment {
             return fields[index].getValue();
         }
         return null;
+    }
+
+    /**
+     * Sets the value of the specified field in the message segment
+     * @param name String with the name of the field
+     * @param data String with data to be set as the field value
+     * @return TRUE if the data was valid and the field value is set, else FALSE
+     */
+    public final Boolean setFieldValue(final String name, final String data) {
+        for (WfMessageField field : fields) {
+            if (name.equals(field.name)) return field.setValue(data);
+        }
+        return false;
+    }
+
+    /**
+     * Sets the value of the field specified by its index in the message segment
+     * @param index Integer with the name of the field
+     * @param data String with data to be set as the field value
+     * @return TRUE if the data was valid and the field value is set, else FALSE
+     */
+    public final Boolean setFieldValue(final int index, final String data) {
+        if (index >= 0 && index < fields.length) {
+            return fields[index].setValue(data);
+        }
+        return false;
     }
 
     /* PROTECTED METHODS: object operations */
@@ -200,37 +204,35 @@ public class WfMessageSegment {
     }
 
     /**
+     * Gets the field specified by name
+     * @param name String with the name of the requested field
+     * @return the requested {@link WfMessageField}, or NULL if it does not exist
+     */
+    protected final WfMessageField getField(final String name) {
+        for (WfMessageField field : fields) {
+            if (name.equals(field.name)) return field;
+        }
+        return null;
+    }
+
+    /**
+     * Gets the field specified by index
+     * @param index integer with the index of the requested field
+     * @return the requested {@link WfMessageField}, or NULL if it does not exist
+     */
+    protected final WfMessageField getField(final int index) {
+        if (index >= 0 && index < fields.length) {
+            return fields[index];
+        }
+        return null;
+    }
+
+    /**
      * Gets all fields from this message segment
      * @return Array of {@link WfMessageField}
      */
     protected final WfMessageField[] getFields() {
         return this.fields;
-    }
-
-    /**
-     * Sets the value of the specified field in the message segment
-     * @param name String with the name of the field
-     * @param data String with data to be set as the field value
-     * @return TRUE if the data was valid and the field value is set, else FALSE
-     */
-    protected final Boolean setFieldValue(final String name, final String data) {
-        for (WfMessageField field : fields) {
-            if (name.equals(field.name)) return field.setValue(data);
-        }
-        return false;
-    }
-
-    /**
-     * Sets the value of the field specified by its index in the message segment
-     * @param index Integer with the name of the field
-     * @param data String with data to be set as the field value
-     * @return TRUE if the data was valid and the field value is set, else FALSE
-     */
-    protected final Boolean setFieldValue(final int index, final String data) {
-        if (index >= 0 && index < fields.length) {
-            return fields[index].setValue(data);
-        }
-        return false;
     }
 
     /**

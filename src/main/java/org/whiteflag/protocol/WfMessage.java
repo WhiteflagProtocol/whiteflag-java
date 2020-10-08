@@ -61,7 +61,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns metadata keys of the Whiteflag message
-     * @return a string array with all metadata keys
+     * @return a string set with all metadata keys
      */
     public Set<String> getMetadataKeys() {
         return metadata.keySet();

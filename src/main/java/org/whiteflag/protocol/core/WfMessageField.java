@@ -3,6 +3,9 @@
  */
 package org.whiteflag.protocol.core;
 
+//TODO: review access modifiers
+//TODO: once set, field value cannot change
+
 import java.util.regex.Pattern;
 import java.nio.charset.StandardCharsets;
 
@@ -167,7 +170,7 @@ public class WfMessageField {
     /**
      * Constructs a new Whiteflag message field from an existing message field
      * @param field the {@link WfMessageField} to create a new message field from
-     * @param shift integer how many byte to shift the 
+     * @param shift integer how many bytes to shift the field as copying is mostly used to append
      */
     public WfMessageField(final WfMessageField field, final int shift) {
         this.name = field.name;
