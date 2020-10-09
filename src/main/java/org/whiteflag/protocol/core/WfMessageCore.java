@@ -74,13 +74,24 @@ public class WfMessageCore {
 
     /**
      * Gets the value of the specified field
-     * @param name String with the name of the field
+     * @param name String with the name of the requested field
      * @return String with the field value, or NULL if field does not exist
      */
     public String getFieldValue(final String name) {
         String value = header.getFieldValue(name);
         if (value != null) return value;
         return body.getFieldValue(name);
+    }
+
+    /**
+     * Sets the value of the specified field
+     * @param name String with the name of the field
+     * @param data String with data to be set as the field value
+     * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
+     */
+    public Boolean setFieldValue(final String name, final String data) {
+        if (Boolean.TRUE.equals(header.setFieldValue(name, data))) return true;
+        return body.setFieldValue(name, data);
     }
 
     /* PUBLIC METHODS: operations */

@@ -155,7 +155,7 @@ public class WfMessageSegment {
      * Sets the value of the specified field in the message segment
      * @param name String with the name of the field
      * @param data String with data to be set as the field value
-     * @return TRUE if the data was valid and the field value is set, else FALSE
+     * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
     public final Boolean setFieldValue(final String name, final String data) {
         for (WfMessageField field : fields) {

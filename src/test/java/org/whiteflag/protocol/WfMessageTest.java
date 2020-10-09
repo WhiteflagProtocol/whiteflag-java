@@ -36,7 +36,10 @@ public class WfMessageTest {
         assertFalse("Should not be able to set field value twice", message.header.setFieldValue("EncryptionIndicator", "2"));
         assertTrue("Should be able to set field value", message.body.setFieldValue("SubjectCode", "10"));
         assertFalse("Should not be able to set field value twice", message.body.setFieldValue("SubjectCode", "20"));
+        assertTrue("Should be able to set field value", message.setFieldValue("ObjectType", "21"));
+        assertFalse("Should not be able to set field value twice", message.setFieldValue("ObjectType", "22"));
         assertFalse("Should not be able to set value of non existing field", message.body.setFieldValue("ReferenceIndicator", "1"));
+        assertFalse("Should not be able to set value of non existing field", message.setFieldValue("NoField", "00"));
     }
     /**
      * Tests for correctly constructed cryptographic message with header and body object
