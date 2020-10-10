@@ -202,18 +202,20 @@ public class WfMessageSegment {
             newFieldArray[index] = new WfMessageField(field, shift);
             index++;
         }
-        //Set the fields with new field array and return this object
+        //Set the fields with new field array, update cursor if all fields are valid and return this object
         this.fields = newFieldArray;
+        if (cursor != 0 && Boolean.TRUE.equals(isValid())) cursor = this.fields.length;
         return this;
     }
 
     /**
      * Deserializes this message segment from the provided serialized message
      * @param messageStr String with the serialized message
-     * @param byteCursor the byte position where this segment starts in the serialized message
+     * @param startByte the byte position where this segment starts in the serialized message
      * @return the byte position where this segment ends in the serialized message
      */
-    protected final int deserialize(final String messageStr, int byteCursor) throws WfCoreException {
+    protected final int deserialize(final String messageStr, final int startByte) throws WfCoreException {
+        int byteCursor = startByte;
         for (; cursor < this.fields.length; cursor++) {
             String value;
 
@@ -236,10 +238,11 @@ public class WfMessageSegment {
     /**
      * Decodes this message segment from the provided encoded message
      * @param messageBinStr {@link WfBinaryString} with the encoded message
-     * @param bitCursor the bit position where this segment starts in the encoded message
+     * @param startBit the bit position where this segment starts in the encoded message
      * @return the bit position where this segment ends in the encoded message
      */
-    protected final int decode(final WfBinaryString messageBinStr, int bitCursor) throws WfCoreException {
+    protected final int decode(final WfBinaryString messageBinStr, final int startBit) throws WfCoreException {
+        int bitCursor = startBit;
         for (; cursor < this.fields.length; cursor++) {
             final int endBit = bitCursor + fields[cursor].bitLength();
             String value;
