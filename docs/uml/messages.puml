@@ -13,7 +13,9 @@ package org.whiteflag.protocol.core {
     class WfMessageSegment {
         -fields : WfMessageField[]
         +serialize() : String
+        +deserialize(String)
         +encode() : WfBinaryString
+        +decode(WfBinaryString)
     }
     class WfMessageField {
         +name : String
@@ -36,9 +38,10 @@ package org.whiteflag.protocol.core {
         LONG
     }
     class WfMessageCreator {
-        +deserialize()
-        +decode()
-        +compile()
+        +type(WfMessageType)
+        +deserialize(String)
+        +decode(String)
+        +compile(String[])
     }
     enum WfMessageType {
         A
@@ -69,15 +72,18 @@ package org.whiteflag.protocol.core {
 
 package org.whiteflag.protocol {
     class WfMessage {
-        -metaData
-        +serialize()
-        +encode()
+        -metaData : HashMap<>
+        +header : WfMessageSegment
+        +body : WfMessageSegment
+        +serialize() : String
+        +encode() : String
     }
     class WfMessage.Creator {
-        +copy()
-        +deserialize()
-        +decode()
-        +compile()
+        +type(String)
+        +copy(WfMessage)
+        +deserialize(String)
+        +decode(String)
+        +compile(String[])
     }
 }
 

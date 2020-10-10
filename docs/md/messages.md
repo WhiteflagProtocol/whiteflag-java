@@ -33,10 +33,16 @@ the message header and body as `WfMessageSegment` objects, which contain the
 
 ### Accessing message fields
 
-Message fields are accessed through the message header or body segments. There
-are a number of methods available to interact with the message fields, but the
+Message fields may be accessed through the message header or body segments, but
+the `WfMessage` class also provides an interface to get or set a field. So, the
+following ways both work to get a value from a header field:
 
-* `WfMessage.body.getFieldValue(String name)`: returns the value of the specified message body field
+* `WfMessage.getFieldValue(String name)`: returns the value of the specified message field
+* `WfMessage.header.getFieldValue(String name)`: returns the value of the specified message body field
+
+Or to set a field value in the message body:
+
+* `WfMessage.setFieldValue(String name, String value)`: sets the value of the specified message field
 * `WfMessage.body.setFieldValue(String name, String value)`: sets the value of the specified message body field
 
 To ensure data integrity, a field value cannot change once set.

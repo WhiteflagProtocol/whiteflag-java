@@ -18,6 +18,9 @@ public class WfMessageSegment {
     /* Array of message segment fields */
     private WfMessageField[] fields;
 
+    /* Deserialisation and Decoding cursor */
+    private int cursor = 0;
+
     /* CONSTRUCTOR */
 
     /**
@@ -98,6 +101,32 @@ public class WfMessageSegment {
         return s.toString();
     }
 
+        /**
+     * Deserializes this message segment from the provided serialized message
+     * @param messageStr String with the serialized message
+     * @param byteCursor the byte position where this segment starts in the serialized message
+     * @return the byte position where this segment ends in the serialized message
+     */
+    public final int deserialize(final String messageStr, int byteCursor) throws WfCoreException {
+        for (; cursor < this.fields.length; cursor++) {
+            String value;
+
+            // Get field value from serialized message part
+            if (fields[cursor].endByte < 0) {
+                value = messageStr.substring(fields[cursor].startByte);
+            } else {
+                value = messageStr.substring(fields[cursor].startByte, fields[cursor].endByte);
+            }
+            // Set the field value and check result
+            if (Boolean.FALSE.equals(fields[cursor].setValue(value))) {
+                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in serialized message at byte " + byteCursor + ": " + value);
+            }
+            // Move to next field in serialized message
+            byteCursor = fields[cursor].endByte;
+        }
+        return byteCursor;
+    }
+
     /**
      * Encodes this message segment
      * @return a string with the serialized message segment
@@ -115,6 +144,33 @@ public class WfMessageSegment {
             currentByte = field.endByte;
         }
         return bin;
+    }
+
+    /**
+     * Decodes this message segment from the provided encoded message
+     * @param messageBinStr {@link WfBinaryString} with the encoded message
+     * @param bitCursor the bit position where this segment starts in the encoded message
+     * @return the bit position where this segment ends in the encoded message
+     */
+    public final int decode(final WfBinaryString messageBinStr, int bitCursor) throws WfCoreException {
+        for (; cursor < this.fields.length; cursor++) {
+            final int endBit = bitCursor + fields[cursor].bitLength();
+            String value;
+            
+            // Decode the field from the encoded message part
+            if (fields[cursor].endByte < 0) {
+                value = fields[cursor].decode(messageBinStr.sub(bitCursor));
+            } else {
+                value = fields[cursor].decode(messageBinStr.sub(bitCursor, endBit));
+            }
+            // Set the field value
+            if (Boolean.FALSE.equals(fields[cursor].setValue(value))) {
+                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in encoded binary message at bit " + bitCursor + ": " + value);
+            }
+            // Move to next field in encoded message
+            bitCursor = endBit;
+        }
+        return bitCursor;
     }
 
     /* PUBLIC METHODS: field operations */
@@ -189,11 +245,11 @@ public class WfMessageSegment {
         WfMessageField[] newFieldArray = new WfMessageField[this.fields.length + segment.getNoFields()];
         System.arraycopy(this.fields, 0, newFieldArray, 0, this.fields.length);
 
-        // Get index and last byte of original field array from this segment
-        int i = this.fields.length;
+        // Get last byte of original field array to shit bytes in added array
         int shift = this.fields[this.fields.length].endByte;
 
         // Add new fields from other segment with shifted start and end byte to array
+        int i = this.fields.length;
         for (WfMessageField field : segment.getFields()) {
             newFieldArray[i] = new WfMessageField(field, shift);
             i++;

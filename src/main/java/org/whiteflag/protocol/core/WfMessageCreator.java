@@ -32,10 +32,6 @@ public class WfMessageCreator {
     private static final String FIELD_MESSAGETYPE = "MessageCode";
     private static final String FIELD_TESTMESSAGETYPE = "PseudoMessageCode";
 
-    /* Cursors for deserialzing and decoding */
-    private int byteCursor = 0;
-    private int bitCursor = 0;
-
     /* CONSTRUCTOR */
 
     /**
@@ -62,16 +58,16 @@ public class WfMessageCreator {
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCreator type(final String messageCode) throws WfCoreException {
+    public final WfMessageCreator type(final WfMessageType messageType) throws WfCoreException {
         // Create header and body based on message code
-        messageType = WfMessageType.getType(messageCode);
-        header = new WfMessageSegment(messageType.getHeaderFields());
-        body = new WfMessageSegment(messageType.getBodyFields());
+        this.messageType = messageType;
+        this.header = new WfMessageSegment(messageType.getHeaderFields());
+        this.body = new WfMessageSegment(messageType.getBodyFields());
 
         // Set version and message code field values
         header.setFieldValue(FIELD_PREFIX, PREFIX);
         header.setFieldValue(FIELD_VERSION, PROTOCOL_VERSION);
-        header.setFieldValue(FIELD_MESSAGETYPE, messageCode);
+        header.setFieldValue(FIELD_MESSAGETYPE, messageType.getMessageCode());
 
         return this;
     }
@@ -83,18 +79,17 @@ public class WfMessageCreator {
      * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCreator deserialize(final String messageStr) throws WfCoreException {
-        // Cursor pointing to next field to be deserialized
-        int fieldCursor = 0;
+        // Cursor pointing to next field in the serialized message
+        int byteCursor = 0;
 
         // Create and deserialize message header, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        deserialiseSegment(header, messageStr, fieldCursor);
+        byteCursor = header.deserialize(messageStr, byteCursor);
         messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
 
         // Create and deserialize message body
         body = new WfMessageSegment(messageType.getBodyFields());
-        deserialiseSegment(body, messageStr, fieldCursor);
-        fieldCursor = body.getNoFields();
+        byteCursor = body.deserialize(messageStr, byteCursor);
 
         // Add and deserialize additional fields for some message types
         switch (messageType) {
@@ -111,7 +106,7 @@ public class WfMessageCreator {
             default:
                 break;
         }
-        deserialiseSegment(body, messageStr, fieldCursor);
+        byteCursor = body.deserialize(messageStr, byteCursor);
 
         return this;
     }
@@ -123,21 +118,20 @@ public class WfMessageCreator {
      * @throws WfCoreException if the encoded message is invalid
      */
     public final WfMessageCreator decode(final String messageStr) throws WfCoreException {
-        // Cursor pointing to next field to be decoded
-        int fieldCursor = 0;
+        // Cursor pointing to next field in the encoded message
+        int bitCursor = 0;
 
         // Convert hexadecimal string representation into binary string
         final WfBinaryString messageBinStr = toBinStr(messageStr);
 
         // Create and decode message header, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        decodeSegment(header, messageBinStr, fieldCursor);
+        bitCursor = header.decode(messageBinStr, bitCursor);
         messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
 
         // Create and decode message body
         body = new WfMessageSegment(messageType.getBodyFields());
-        decodeSegment(body, messageBinStr, fieldCursor);
-        fieldCursor = body.getNoFields();
+        bitCursor = body.decode(messageBinStr, bitCursor);
 
         // Add and decode additional fields for some message types
         switch (messageType) {
@@ -154,7 +148,7 @@ public class WfMessageCreator {
             default:
                 break;
         }
-        decodeSegment(body, messageBinStr, fieldCursor);
+        bitCursor = body.decode(messageBinStr, bitCursor);
 
         return this;
     }
@@ -207,74 +201,5 @@ public class WfMessageCreator {
         } catch (IllegalArgumentException e) {
             throw new WfCoreException("Invalid hexadecimal encoded message: " + e.getMessage());
         }
-    }
-
-    /**
-     * Gets field values from a serialized message for the specified segment
-     * @param segment {@link WfMessageSegment} with the message fields to be deserialized
-     * @param messageStr String with the full serialized message
-     * @param start starting index indicating with which field from the segment to begin
-     * @throws WfCoreException if incorrect data or field order
-     */
-    private final WfMessageSegment deserialiseSegment(WfMessageSegment segment, final String messageStr, final int start) throws WfCoreException {
-        for (int i = start; i < segment.getNoFields(); i++) {
-            final WfMessageField field = segment.getField(i);
-
-            // Check field sequence
-            if (byteCursor != field.startByte) {
-                throw new WfCoreException("Invalid field order when deserializing: did not expect field " + field.name + " at byte " + byteCursor);
-            }
-            // Get field value from serialized message part
-            String value;
-            if (field.endByte < 0) {
-                value = messageStr.substring(field.startByte);
-            } else {
-                value = messageStr.substring(field.startByte, field.endByte);
-            }
-            // Set the field value and check result
-            if (Boolean.FALSE.equals(segment.setFieldValue(i, value))) {
-                throw new WfCoreException(field.debugString() + " already set or invalid data in serialized message at byte " + byteCursor + ": " + value);
-            }
-            // Update cursors
-            bitCursor += field.bitLength();
-            byteCursor = field.endByte;
-        }
-        // Return updated segment
-        return segment;
-    }
-
-    /**
-     * Decodes field values from an encoded message for the specified segment
-     * @param segment {@link WfMessageSegment} with the message fields to be decoded
-     * @param messageBinStr {@link WfBinaryString} with the encoded message
-     * @param start starting index indicating with which field from the segment to begin
-     * @throws WfCoreException if incorrect data or field order
-     */
-    private final WfMessageSegment decodeSegment(WfMessageSegment segment, final WfBinaryString messageBinStr, final int start) throws WfCoreException {
-        for (int i = start; i < segment.getNoFields(); i++) {
-            final WfMessageField field = segment.getField(i);
-            final int fieldEndBit = bitCursor + field.bitLength();
-
-            // Check field sequence because message is decoded segment by segment
-            if (byteCursor != field.startByte) {
-                throw new WfCoreException("Invalid field order when decoding: did not expect field " + field.name + " at byte " + byteCursor);
-            }
-            // Decode field value from encoded message part
-            String value;
-            if (field.endByte < 0) {
-                value = field.decode(messageBinStr.sub(bitCursor));
-            } else {
-                value = field.decode(messageBinStr.sub(bitCursor, fieldEndBit));
-            }
-            // Set the field value and check result
-            if (Boolean.FALSE.equals(segment.setFieldValue(i, value))) {
-                throw new WfCoreException(field.debugString() + " already set or invalid data in encoded binary message at bit " + bitCursor + ": " + value);
-            }
-            // Update cursors
-            bitCursor = fieldEndBit;
-            byteCursor = field.endByte;
-        }
-        // Return updated segment
-        return segment;
     }
 }
