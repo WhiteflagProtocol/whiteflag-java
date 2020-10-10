@@ -128,11 +128,11 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.Creator.html#compile-java.lang.String:A-">compile(String[])</a></span> - Static method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.Creator.html" title="class in org.whiteflag.protocol">WfMessage.Creator</a></dt>
 <dd>
-<div class="block">Creates a Whiteflag message object from field values</div>
+<div class="block">Creates a new Whiteflag message object from field values</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.Creator.html#copy-org.whiteflag.protocol.WfMessage-">copy(WfMessage)</a></span> - Static method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.Creator.html" title="class in org.whiteflag.protocol">WfMessage.Creator</a></dt>
 <dd>
-<div class="block">Copies a Whiteflag message into new Whiteflag core message object</div>
+<div class="block">Copies a Whiteflag message into new Whiteflag message object</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#create--">create()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
 <dd>
@@ -152,6 +152,10 @@
 </a>
 <h2 class="title">D</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#debugString--">debugString()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Returns debug information</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#decode-java.lang.String-">decode(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
 <dd>
 <div class="block">Decodes an encoded Whiteflag message and creates a new Whiteflag core message object</div>
@@ -160,9 +164,13 @@
 <dd>
 <div class="block">Decodes the  the message field into a binary string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#decode-org.whiteflag.protocol.core.WfBinaryString-int-">decode(WfBinaryString, int)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Decodes this message segment from the provided encoded message</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.Creator.html#decode-java.lang.String-">decode(String)</a></span> - Static method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.Creator.html" title="class in org.whiteflag.protocol">WfMessage.Creator</a></dt>
 <dd>
-<div class="block">Creates a Whiteflag message object from a encoded message</div>
+<div class="block">Creates a new Whiteflag message object from an encoded message</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#decodeBDX-java.lang.String-">decodeBDX(String)</a></span> - Static method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
@@ -176,9 +184,13 @@
 <dd>
 <div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#deserialize-java.lang.String-int-">deserialize(String, int)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Deserializes this message segment from the provided serialized message</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.Creator.html#deserialize-java.lang.String-">deserialize(String)</a></span> - Static method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.Creator.html" title="class in org.whiteflag.protocol">WfMessage.Creator</a></dt>
 <dd>
-<div class="block">Creates a Whiteflag message object from a serialized message</div>
+<div class="block">Creates a new Whiteflag message object from a serialized message</div>
 </dd>
 </dl>
 <a name="I:E">
@@ -326,9 +338,17 @@
 </a>
 <h2 class="title">I</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#isDataValid-java.lang.String-">isDataValid(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Checks if the provided data is a valid value for this field</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#isEmpty--">isEmpty()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Chekcs if this binary string is empty</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#isSet--">isSet()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Checks if the message field value has been set</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#isValid--">isValid()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
 <dd>
@@ -369,10 +389,6 @@
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#name">name</a></span> - Variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
 <div class="block">The name of the field</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#newType-java.lang.String-">newType(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
-<dd>
-<div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
 </dd>
 </dl>
 <a name="I:O">
@@ -458,6 +474,10 @@
 <dd>
 <div class="block">Sets the value with the provided binary string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#setFieldValue-java.lang.String-java.lang.String-">setFieldValue(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Sets the value of the specified field</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setFieldValue-java.lang.String-java.lang.String-">setFieldValue(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Sets the value of the specified field in the message segment</div>
@@ -476,7 +496,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#setValue-java.lang.String-">setValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
-<div class="block">Sets the value of the message field</div>
+<div class="block">Sets the value of the message field if not already set</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#signsignalBodyFields">signsignalBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
@@ -538,6 +558,14 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#type">type</a></span> - Variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#type-org.whiteflag.protocol.core.WfMessageType-">type(WfMessageType)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
+<dd>
+<div class="block">Creates a new empty Whiteflag core message object of the specified type</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.Creator.html#type-java.lang.String-">type(String)</a></span> - Static method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.Creator.html" title="class in org.whiteflag.protocol">WfMessage.Creator</a></dt>
+<dd>
+<div class="block">Creates a new empty Whiteflag message object of the specified type</div>
+</dd>
 </dl>
 <a name="I:U">
 <!--   -->
@@ -659,11 +687,11 @@ the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#WfMessageField-org.whiteflag.protocol.core.WfMessageField-">WfMessageField(WfMessageField)</a></span> - Constructor for class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
-<div class="block">Constructs a new Whiteflag message field from an existing message field</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field, without the value</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#WfMessageField-org.whiteflag.protocol.core.WfMessageField-int-">WfMessageField(WfMessageField, int)</a></span> - Constructor for class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
-<div class="block">Constructs a new Whiteflag message field from an existing message field</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field, without the value</div>
 </dd>
 <dt><a href="org/whiteflag/protocol/core/WfMessageField.Encoding.html" title="enum in org.whiteflag.protocol.core"><span class="typeNameLink">WfMessageField.Encoding</span></a> - Enum in <a href="org/whiteflag/protocol/core/package-summary.html">org.whiteflag.protocol.core</a></dt>
 <dd>
@@ -675,11 +703,11 @@ the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#WfMessageSegment-org.whiteflag.protocol.core.WfMessageField:A-">WfMessageSegment(WfMessageField[])</a></span> - Constructor for class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
-<div class="block">Constructs a new Whiteflag message segment from a <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> array</div>
+<div class="block">Constructs a new Whiteflag message segment from a <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> array, without copying field values</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#WfMessageSegment-org.whiteflag.protocol.core.WfMessageSegment-">WfMessageSegment(WfMessageSegment)</a></span> - Constructor for class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
-<div class="block">Constructs a new Whiteflag message segment from another message segment</div>
+<div class="block">Constructs a new Whiteflag message segment from another message segment, also copying values</div>
 </dd>
 <dt><a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><span class="typeNameLink">WfMessageType</span></a> - Enum in <a href="org/whiteflag/protocol/core/package-summary.html">org.whiteflag.protocol.core</a></dt>
 <dd>

@@ -284,7 +284,7 @@ public class WfMessageField {
         final String genericErrorMsg = "Cannot encode " + name + " field";
 
         // Check if field contains a valid value
-        if (Boolean.TRUE.equals(!isDataValid(this.value))) {
+        if (Boolean.FALSE.equals(isDataValid(this.value))) {
             throw new WfCoreException(genericErrorMsg + ": " + value + " is not a valid Whiteflag " + encoding.toString() + " encoding");
         }
 

@@ -54,7 +54,7 @@ public class WfMessageCreator {
 
     /**
      * Creates a new empty Whiteflag core message object of the specified type
-     * @param messageCode String with message code
+     * @param messageType the {@link WfMessageType} of the new message
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided values are invalid
      */

@@ -138,8 +138,8 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Creates a new empty Whiteflag message object of the specified type
-         * @param originalMessage the {@link WfMessageCore} to be copied
-         * @return a {@link WfMessageCore} Whiteflag message
+         * @param messageCode the code indicating the message type to be created
+         * @return a new {@link WfMessage} Whiteflag message
          */
         public static final WfMessage type(final String messageCode) throws WfException {
             WfMessageCore message;

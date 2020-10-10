@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -218,6 +218,13 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html#setFieldValue-java.lang.String-java.lang.String-">setFieldValue</a></span>(java.lang.String&nbsp;name,
+             java.lang.String&nbsp;data)</code>
+<div class="block">Sets the value of the specified field</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCore.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the message as a concatinated string of field values</div>
@@ -346,9 +353,27 @@ extends java.lang.Object</pre>
 <div class="block">Gets the value of the specified field</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - String with the name of the field</dd>
+<dd><code>name</code> - String with the name of the requested field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>String with the field value, or NULL if field does not exist</dd>
+</dl>
+</li>
+</ul>
+<a name="setFieldValue-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setFieldValue</h4>
+<pre>public&nbsp;java.lang.Boolean&nbsp;setFieldValue(java.lang.String&nbsp;name,
+                                       java.lang.String&nbsp;data)</pre>
+<div class="block">Sets the value of the specified field</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - String with the name of the field</dd>
+<dd><code>data</code> - String with data to be set as the field value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid</dd>
 </dl>
 </li>
 </ul>
