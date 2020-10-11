@@ -3,6 +3,9 @@
  */
 package org.whiteflag.protocol.core;
 
+import java.util.Map;
+import java.util.HashMap;
+
 /**
  * Whiteflag message segment class
  * 
@@ -119,6 +122,30 @@ public class WfMessageSegment {
             byteCursor = field.endByte;
         }
         return messageBinStr;
+    }
+
+    /* PUBLIC METHODS: mapping */
+
+    /**
+     * Returns a map with all field names and values of the segment
+     * @return Map with field names and values
+     */
+    public final Map<String, String> toMap() {
+        Map<String, String> map = new HashMap<>(this.fields.length + 1, 1);
+        for (WfMessageField field : fields) {
+            map.put(field.name, field.getValue());
+        }
+        return map;
+    }
+
+    /**
+     * Sets fields values of the segment from a map
+     * @param map a Map with field names and corresponding values
+     * @return TRUE if all field values are coorectly set, else FALSE
+    */
+    public final Boolean fromMap(Map<String, String> map) {
+        map.forEach(this::setFieldValue);
+        return this.isValid();
     }
 
     /* PUBLIC METHODS: field operations */

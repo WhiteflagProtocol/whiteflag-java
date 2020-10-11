@@ -4,6 +4,7 @@
 package org.whiteflag.protocol;
 
 import java.util.Set;
+import java.util.Map;
 import java.util.HashMap;
 import org.whiteflag.protocol.core.*;
 
@@ -21,7 +22,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Contains implementation specific message metadata
      */
-    private HashMap<String, String> metadata = new HashMap<>();
+    private Map<String, String> metadata = new HashMap<>();
 
     /**
      * Contains the cached serialzed and encoded message

@@ -4,6 +4,7 @@
 package org.whiteflag.protocol.core;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Whiteflag message builder class
@@ -58,7 +59,7 @@ public class WfMessageCreator {
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCreator type(final WfMessageType messageType) throws WfCoreException {
+    public final WfMessageCreator type(final WfMessageType messageType) {
         // Create header and body based on message code
         this.messageType = messageType;
         this.header = new WfMessageSegment(messageType.getHeaderFields());
@@ -69,6 +70,45 @@ public class WfMessageCreator {
         header.setFieldValue(FIELD_VERSION, PROTOCOL_VERSION);
         header.setFieldValue(FIELD_MESSAGETYPE, messageType.getMessageCode());
 
+        // Return new message
+        return this;
+    }
+
+    /**
+     * Creates a new Whiteflag core message object from header and body maps
+     * @param header Map with the header field names and values of the new message
+     * @param body Map with the body field names and values of the new message
+     * @return this {@link WfMessageCreator}
+     * @throws WfCoreException if the provided fields and/or values are invalid
+     */
+    public final WfMessageCreator fromMap(final Map<String, String> headerMap, final Map<String, String> bodyMap) throws WfCoreException {
+        // Create message header, set field values, and determine message type
+        header = new WfMessageSegment(messageType.getHeaderFields());
+        if (Boolean.TRUE.equals(header.fromMap(headerMap))) {
+            throw new WfCoreException("Provided header map contains invalid fields and/or values");
+        }
+        messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
+
+        // Create message body
+        body = new WfMessageSegment(messageType.getHeaderFields());
+        // Add additional fields for some message types
+        switch (messageType) {
+            case T:
+                // Extend test message body with pseudo message body
+                final WfMessageType pseudoMessageType = WfMessageType.getType(bodyMap.get(FIELD_TESTMESSAGETYPE));
+                body.append(new WfMessageSegment(pseudoMessageType.getBodyFields()));
+                break;
+            case Q:
+                // Extend request message body with remaining request fields (calculated with remaining bytes)
+                final int nRequestObjects = (bodyMap.size() - body.getNoFields()) / 2;   // One request object requires 2 fields
+                body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
+                break;
+            default:
+                break;
+        }
+        if (Boolean.TRUE.equals(body.fromMap(bodyMap))) {
+            throw new WfCoreException("Provided body map contains invalid fields and/or values");
+        }
         return this;
     }
 
@@ -106,8 +146,7 @@ public class WfMessageCreator {
             default:
                 break;
         }
-        byteCursor = body.deserialize(messageStr, byteCursor);
-
+        body.deserialize(messageStr, byteCursor);
         return this;
     }
 
@@ -148,8 +187,7 @@ public class WfMessageCreator {
             default:
                 break;
         }
-        bitCursor = body.decode(messageBinStr, bitCursor);
-
+        body.decode(messageBinStr, bitCursor);
         return this;
     }
 
@@ -184,7 +222,6 @@ public class WfMessageCreator {
                 break;
         }
         body.setAllFieldValues(Arrays.copyOfRange(fieldValues, header.getNoFields(), fieldValues.length));
-
         return this;
     }
 
