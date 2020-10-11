@@ -67,7 +67,7 @@
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-<div class="contentContainer"><a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a name="I:A">
+<div class="contentContainer"><a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a name="I:A">
 <!--   -->
 </a>
 <h2 class="title">A</h2>
@@ -192,6 +192,10 @@
 <dd>
 <div class="block">Creates a new Whiteflag message object from a serialized message</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.Creator.html#deserializeJson-java.lang.String-">deserializeJson(String)</a></span> - Static method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.Creator.html" title="class in org.whiteflag.protocol">WfMessage.Creator</a></dt>
+<dd>
+<div class="block">Creates a new Whiteflag message object from a serialized JSON message</div>
+</dd>
 </dl>
 <a name="I:E">
 <!--   -->
@@ -252,6 +256,10 @@
 <dd>
 <div class="block">Free text message body fields</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#fromMap-java.util.Map-">fromMap(Map&lt;String, String&gt;)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Sets field values of this segment from a field name-to-value mapping</div>
+</dd>
 </dl>
 <a name="I:G">
 <!--   -->
@@ -261,6 +269,10 @@
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#genericHeaderFields">genericHeaderFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Generic message header fields</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getBody--">getBody()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Gets the message body</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getBodyFields--">getBodyFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
@@ -290,6 +302,10 @@
 <dd>
 <div class="block">Gets the value of the field specified by index</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getHeader--">getHeader()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Gets the message header</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getHeaderFields--">getHeaderFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> header fields</div>
@@ -297,6 +313,10 @@
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getMessageCode--">getMessageCode()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns the message code string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getMetadata--">getMetadata()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Gets the message metadata</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.html#getMetadata-java.lang.String-">getMetadata(String)</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol">WfMessage</a></dt>
 <dd>
@@ -381,6 +401,28 @@
 <div class="block">Returns the bit length of a field for a given encoding and unencoded field byte length</div>
 </dd>
 </dl>
+<a name="I:M">
+<!--   -->
+</a>
+<h2 class="title">M</h2>
+<dl>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#map-java.util.Map-java.util.Map-">map(Map&lt;String, String&gt;, Map&lt;String, String&gt;)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
+<dd>
+<div class="block">Creates a new Whiteflag core message object from header and body maps</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#MESSAGE_BODY">MESSAGE_BODY</a></span> - Static variable in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Name of the container object for the message body, which depends on the message type</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#MESSAGE_HEADER">MESSAGE_HEADER</a></span> - Static variable in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Name of the container object  for the message header fields, which are identical for all message types</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#MESSAGE_METADATA">MESSAGE_METADATA</a></span> - Static variable in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Name of the optional container object for implementation specific metadata about the message or the underlying blockchain</div>
+</dd>
+</dl>
 <a name="I:N">
 <!--   -->
 </a>
@@ -406,6 +448,8 @@
 <dd>
 <div class="block">Whiteflag Protocol Core Java Library</div>
 </dd>
+<dt><a href="org/whiteflag/protocol/util/package-summary.html">org.whiteflag.protocol.util</a> - package org.whiteflag.protocol.util</dt>
+<dd>&nbsp;</dd>
 </dl>
 <a name="I:P">
 <!--   -->
@@ -540,6 +584,14 @@
 <dd>
 <div class="block">Returns the binary string value as a hexadeciomal string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.html#toJson--">toJson()</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol">WfMessage</a></dt>
+<dd>
+<div class="block">Returns the serialised JSON representation of the Whiteflag message</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#toMap--">toMap()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Returns a field name-to-value mapping of this message segment</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#toString--">toString()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Returns the binary string object as a binary string</div>
@@ -649,6 +701,22 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag protocol error categories</div>
 </dd>
+<dt><a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util"><span class="typeNameLink">WfJsonMessage</span></a> - Class in <a href="org/whiteflag/protocol/util/package-summary.html">org.whiteflag.protocol.util</a></dt>
+<dd>
+<div class="block">Whiteflag JSON message representation</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#WfJsonMessage-java.lang.String-">WfJsonMessage(String)</a></span> - Constructor for class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Creates a new JSON representation of a Whiteflag message from a serialized JSON string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#WfJsonMessage-java.util.Map-java.util.Map-">WfJsonMessage(Map&lt;String, String&gt;, Map&lt;String, String&gt;)</a></span> - Constructor for class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Creates a new JSON representation of a Whiteflag message</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#WfJsonMessage-java.util.Map-java.util.Map-java.util.Map-">WfJsonMessage(Map&lt;String, String&gt;, Map&lt;String, String&gt;, Map&lt;String, String&gt;)</a></span> - Constructor for class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Creates a new JSON representation of a Whiteflag message</div>
+</dd>
 <dt><a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol"><span class="typeNameLink">WfMessage</span></a> - Class in <a href="org/whiteflag/protocol/package-summary.html">org.whiteflag.protocol</a></dt>
 <dd>
 <div class="block">Whiteflag message class</div>
@@ -720,7 +788,7 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfState.html#WfState--">WfState()</a></span> - Constructor for class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfState.html" title="class in org.whiteflag.protocol">WfState</a></dt>
 <dd>&nbsp;</dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;</div>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;</div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">
 <!--   -->

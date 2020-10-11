@@ -127,8 +127,8 @@ public class WfMessageSegment {
     /* PUBLIC METHODS: mapping */
 
     /**
-     * Returns a map with all field names and values of the segment
-     * @return Map with field names and values
+     * Returns a field name-to-value mapping of this message segment
+     * @return a field name-to-value mapping
      */
     public final Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>(this.fields.length + 1, 1);
@@ -139,9 +139,9 @@ public class WfMessageSegment {
     }
 
     /**
-     * Sets fields values of the segment from a map
-     * @param map a Map with field names and corresponding values
-     * @return TRUE if all field values are coorectly set, else FALSE
+     * Sets field values of this segment from a field name-to-value mapping
+     * @param map a field name-to-value mapping
+     * @return TRUE if all field values in this segment were correctly set, else FALSE
     */
     public final Boolean fromMap(Map<String, String> map) {
         map.forEach(this::setFieldValue);

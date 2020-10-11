@@ -6,7 +6,7 @@ package org.whiteflag.protocol.core;
 import java.util.regex.Pattern;
 import java.nio.charset.StandardCharsets;
 
-/* Encoding parameters */
+/* Required encoding parameters */
 import static org.whiteflag.protocol.core.WfBinaryString.BINRADIX;
 import static org.whiteflag.protocol.core.WfBinaryString.HEXRADIX;
 import static org.whiteflag.protocol.core.WfBinaryString.QUADBIT;

@@ -3,7 +3,8 @@
  */
 package org.whiteflag.protocol;
 
-import org.whiteflag.protocol.core.*;
+/* Required Whiteflag core exception class to extend */
+import org.whiteflag.protocol.core.WfCoreException;
 
 public class WfException extends WfCoreException {
 

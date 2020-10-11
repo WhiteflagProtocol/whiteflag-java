@@ -76,16 +76,16 @@ public class WfMessageCreator {
 
     /**
      * Creates a new Whiteflag core message object from header and body maps
-     * @param header Map with the header field names and values of the new message
-     * @param body Map with the body field names and values of the new message
+     * @param headerMap a name-to-value mapping of the message header fields
+     * @param bodyMap a name-to-value mapping of the message body fields
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided fields and/or values are invalid
      */
-    public final WfMessageCreator fromMap(final Map<String, String> headerMap, final Map<String, String> bodyMap) throws WfCoreException {
+    public final WfMessageCreator map(final Map<String, String> headerMap, final Map<String, String> bodyMap) throws WfCoreException {
         // Create message header, set field values, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        if (Boolean.TRUE.equals(header.fromMap(headerMap))) {
-            throw new WfCoreException("Provided header map contains invalid fields and/or values");
+        if (Boolean.FALSE.equals(header.fromMap(headerMap))) {
+            throw new WfCoreException("Header fields name-to-value mapping contains invalid field names and/or values");
         }
         messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
 
@@ -106,8 +106,8 @@ public class WfMessageCreator {
             default:
                 break;
         }
-        if (Boolean.TRUE.equals(body.fromMap(bodyMap))) {
-            throw new WfCoreException("Provided body map contains invalid fields and/or values");
+        if (Boolean.FALSE.equals(body.fromMap(bodyMap))) {
+            throw new WfCoreException("Body fields name-to-value mapping contains invalid field names and/or values");
         }
         return this;
     }

@@ -10,14 +10,14 @@ import static org.junit.Assert.*;
 import static org.whiteflag.protocol.core.WfMessageType.*;
 
 /**
- * Whiteflag message test class
+ * Whiteflag message representation test class
  */
 public class WfMessageTest {
     /**
-     * Tests creating a new message
+     * Tests creating a new JSON message
      */
     @Test
-    public void testNewMessage() throws WfException {
+    public void testNewJsonMessage() throws WfException {
         /* Setup */
         WfMessage message;
         try {
@@ -277,5 +277,29 @@ public class WfMessageTest {
         assertEquals("Referenced message should be identical", message1.getFieldValue("ReferencedMessage"), message2.getFieldValue("ReferencedMessage"));
         assertFalse("Should not be able to change text field", message2.body.setFieldValue("Text", "alternate text"));
         assertEquals("Text fields should be identical", message1.getFieldValue("Text"), message2.getFieldValue("Text"));
+    }
+    /**
+     * Tests JSON serialization
+     */
+    @Test
+    public void testJsonSerialization() throws WfException {
+        /* Setup */
+        WfMessage message = WfMessage.Creator.deserialize("WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!");
+
+        /* Test */
+        String jsonMessage = message.toJson();
+    }
+    /**
+     * Tests JSON deserialization
+     */
+    @Test
+    public void testJsonDeserialization() throws WfException {
+        /* Setup */
+        String jsonMessage = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
+        //TODO: Create message
+        //WfMessage message = WfMessage.Creator.deserializeJson(jsonMessage);
+
+        /* Test */
+        //TODO: Write assertions
     }
 }
