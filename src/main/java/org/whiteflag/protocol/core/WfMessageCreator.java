@@ -85,12 +85,12 @@ public class WfMessageCreator {
         // Create message header, set field values, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
         if (Boolean.FALSE.equals(header.fromMap(headerMap))) {
-            throw new WfCoreException("Header fields name-to-value mapping contains invalid field names and/or values");
+            throw new WfCoreException("Header fields name-to-value mapping contains invalid field names and/or values: " + headerMap);
         }
         messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
 
         // Create message body
-        body = new WfMessageSegment(messageType.getHeaderFields());
+        body = new WfMessageSegment(messageType.getBodyFields());
         // Add additional fields for some message types
         switch (messageType) {
             case T:
@@ -107,7 +107,7 @@ public class WfMessageCreator {
                 break;
         }
         if (Boolean.FALSE.equals(body.fromMap(bodyMap))) {
-            throw new WfCoreException("Body fields name-to-value mapping contains invalid field names and/or values");
+            throw new WfCoreException("Body fields name-to-value mapping contains invalid field names and/or values: " + bodyMap);
         }
         return this;
     }

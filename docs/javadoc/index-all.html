@@ -138,6 +138,10 @@
 <dd>
 <div class="block">Creates the Whiteflag core message</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#create-java.lang.String-">create(String)</a></span> - Static method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Creates a new JSON representation of a Whiteflag message from a serialized JSON string</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#createRequestFields-int-">createRequestFields(int)</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
@@ -274,6 +278,10 @@
 <dd>
 <div class="block">Gets the message body</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getBodyField-java.lang.String-">getBodyField(String)</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Gets body field value by field name</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getBodyFields--">getBodyFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> body fields</div>
@@ -306,6 +314,10 @@
 <dd>
 <div class="block">Gets the message header</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getHeaderField-java.lang.String-">getHeaderField(String)</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Gets header field value by field name</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getHeaderFields--">getHeaderFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> header fields</div>
@@ -317,6 +329,10 @@
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getMetadata--">getMetadata()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
 <dd>
 <div class="block">Gets the message metadata</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getMetadata-java.lang.String-">getMetadata(String)</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Gets metadata by key</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.html#getMetadata-java.lang.String-">getMetadata(String)</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol">WfMessage</a></dt>
 <dd>
@@ -409,18 +425,6 @@
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCreator.html#map-java.util.Map-java.util.Map-">map(Map&lt;String, String&gt;, Map&lt;String, String&gt;)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></dt>
 <dd>
 <div class="block">Creates a new Whiteflag core message object from header and body maps</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#MESSAGE_BODY">MESSAGE_BODY</a></span> - Static variable in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Name of the container object for the message body, which depends on the message type</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#MESSAGE_HEADER">MESSAGE_HEADER</a></span> - Static variable in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Name of the container object  for the message header fields, which are identical for all message types</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#MESSAGE_METADATA">MESSAGE_METADATA</a></span> - Static variable in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Name of the optional container object for implementation specific metadata about the message or the underlying blockchain</div>
 </dd>
 </dl>
 <a name="I:N">
@@ -584,6 +588,10 @@
 <dd>
 <div class="block">Returns the binary string value as a hexadeciomal string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#toJson--">toJson()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
+<dd>
+<div class="block">Creates a serialized JSON representation of a Whiteflag message</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.html#toJson--">toJson()</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol">WfMessage</a></dt>
 <dd>
 <div class="block">Returns the serialised JSON representation of the Whiteflag message</div>
@@ -704,14 +712,6 @@ the order they are declared.</div>
 <dt><a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util"><span class="typeNameLink">WfJsonMessage</span></a> - Class in <a href="org/whiteflag/protocol/util/package-summary.html">org.whiteflag.protocol.util</a></dt>
 <dd>
 <div class="block">Whiteflag JSON message representation</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#WfJsonMessage-java.lang.String-">WfJsonMessage(String)</a></span> - Constructor for class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Creates a new JSON representation of a Whiteflag message from a serialized JSON string</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#WfJsonMessage-java.util.Map-java.util.Map-">WfJsonMessage(Map&lt;String, String&gt;, Map&lt;String, String&gt;)</a></span> - Constructor for class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Creates a new JSON representation of a Whiteflag message</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#WfJsonMessage-java.util.Map-java.util.Map-java.util.Map-">WfJsonMessage(Map&lt;String, String&gt;, Map&lt;String, String&gt;, Map&lt;String, String&gt;)</a></span> - Constructor for class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
 <dd>

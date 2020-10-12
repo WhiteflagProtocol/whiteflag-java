@@ -17,7 +17,7 @@ public class WfMessageTest {
      * Tests creating a new JSON message
      */
     @Test
-    public void testNewJsonMessage() throws WfException {
+    public void testNewMessage() throws WfException {
         /* Setup */
         WfMessage message;
         try {
@@ -284,10 +284,24 @@ public class WfMessageTest {
     @Test
     public void testJsonSerialization() throws WfException {
         /* Setup */
-        WfMessage message = WfMessage.Creator.deserialize("WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!");
+        WfMessage message1 = WfMessage.Creator.deserialize("WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!");
+        String jsonMessageStr = message1.toJson();
+        WfMessage message2 = WfMessage.Creator.deserializeJson(jsonMessageStr);
 
-        /* Test */
-        String jsonMessage = message.toJson();
+        /* Verify */
+        assertEquals("Message type should be identical", message1.type, message2.type);
+        assertEquals("Prefix should be identical", message1.getFieldValue("Prefix"), message2.getFieldValue("Prefix"));
+        assertEquals("Version number should be identical", message1.getFieldValue("Version"), message2.getFieldValue("Version"));
+        assertFalse("Should not be able to change encryption indicator field", message1.header.setFieldValue("EncryptionIndicator", "2"));
+        assertEquals("Encryption indicator should be identical", message1.getFieldValue("EncryptionIndicator"), message2.getFieldValue("EncryptionIndicator"));
+        assertEquals("Duress indicator should be identical", message1.getFieldValue("DuressIndicator"), message2.getFieldValue("DuressIndicator"));
+        assertEquals("Message code should be identical", message1.getFieldValue("MessageCode"), message2.getFieldValue("MessageCode"));
+        assertEquals("Reference indicator should be identical", message1.getFieldValue("ReferenceIndicator"), message2.getFieldValue("ReferenceIndicator"));
+        assertEquals("Referenced message should be identical", message1.getFieldValue("ReferencedMessage"), message2.getFieldValue("ReferencedMessage"));
+        assertFalse("Should not be able to change text field", message2.body.setFieldValue("Text", "alternate text"));
+        assertEquals("Text fields should be identical", message1.getFieldValue("Text"), message2.getFieldValue("Text"));
+        assertTrue("Message should be valid", message1.isValid());
+        assertTrue("Message should be valid", message2.isValid());
     }
     /**
      * Tests JSON deserialization
@@ -295,11 +309,14 @@ public class WfMessageTest {
     @Test
     public void testJsonDeserialization() throws WfException {
         /* Setup */
-        String jsonMessage = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
-        //TODO: Create message
-        //WfMessage message = WfMessage.Creator.deserializeJson(jsonMessage);
+        String messageStr = "WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!";
+        String jsonMessageStr = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
+        WfMessage message = WfMessage.Creator.deserializeJson(jsonMessageStr);
 
-        /* Test */
-        //TODO: Write assertions
+        /* Verify */
+        assertEquals("Prefix should be correctly set", "WF", message.getFieldValue("Prefix"));
+        assertEquals("Free text should be correctly set", "Whiteflag test message!", message.body.getFieldValue("Text"));
+        assertFalse("Should not be able to change text field", message.body.setFieldValue("Text", "alternate text"));
+        assertEquals("Serialization should be correct", messageStr, message.toString());
     }
 }

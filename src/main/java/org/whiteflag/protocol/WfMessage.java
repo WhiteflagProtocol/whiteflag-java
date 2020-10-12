@@ -6,7 +6,7 @@ package org.whiteflag.protocol;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
-import com.github.cliftonlabs.json_simple.JsonException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /* Required Whiteflag core and util classes */
 import org.whiteflag.protocol.core.*;
@@ -123,8 +123,14 @@ public class WfMessage extends WfMessageCore {
      * Returns the serialised JSON representation of the Whiteflag message 
      * @return String with the serialised JSON representation
      */
-    public String toJson() {
-        return new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
+    public String toJson() throws WfException {
+        String jsonMessageStr;
+        try {
+            jsonMessageStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
+        } catch (JsonProcessingException e) {
+            throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+        }
+        return jsonMessageStr;
     }
 
     /* PRIVATE METHODS */
@@ -210,11 +216,11 @@ public class WfMessage extends WfMessageCore {
          * @throws WfException if the serialization of the message is invalid
          */
         public static final WfMessage deserializeJson(final String jsonMessageStr) throws WfException {
-            // Deserialize JSOM string
+            // Deserialize JSON string
             WfJsonMessage jsonMessage;
             try {
-                jsonMessage = new WfJsonMessage(jsonMessageStr);
-            } catch (JsonException e) {
+                jsonMessage = WfJsonMessage.create(jsonMessageStr);
+            } catch (JsonProcessingException e) {
                 throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
             // Create message core with header and body field name-to-value mappings
