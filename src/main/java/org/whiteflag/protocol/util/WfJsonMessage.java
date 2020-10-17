@@ -13,6 +13,9 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/* Required error types */
+import static org.whiteflag.protocol.util.WfUtilException.ErrorType.WF_JSON_ERROR;
+
 /**
  * Whiteflag JSON message representation
  * 
@@ -70,8 +73,14 @@ public class WfJsonMessage {
      * @return String with the serialized JSON representation
      * @throws JsonProcessingException if no valid JSON serialization can be created
      */
-    public String toJson() throws JsonProcessingException {
-        return new ObjectMapper().writeValueAsString(this);
+    public String toJson() throws WfUtilException {
+        String jsonStr;
+        try{
+            jsonStr = new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new WfUtilException("Cannot convert message to JSON string:" + e.getMessage(), WF_JSON_ERROR);
+        }
+        return jsonStr;
     }
 
     /**
@@ -79,10 +88,16 @@ public class WfJsonMessage {
      * @param jsonStr String with a JSON representation of a Whiteflag message
      * @throws JsonProcessingException if JSON is invalid
      */
-    public static WfJsonMessage create(String jsonStr) throws JsonProcessingException {
+    public static WfJsonMessage create(String jsonStr) throws WfUtilException {
+        WfJsonMessage jsonMessage;
         ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(jsonStr, WfJsonMessage.class);
+        try {
+            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            jsonMessage = mapper.readValue(jsonStr, WfJsonMessage.class);
+        } catch (JsonProcessingException e) {
+            throw new WfUtilException("Cannot convert JSON string to message:" + e.getMessage(), WF_JSON_ERROR);
+        }
+        return jsonMessage;
     }
 
     /* PUBLIC METHODS: getters for mappings */

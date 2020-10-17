@@ -23,7 +23,7 @@ public class WfException extends WfCoreException {
     /** 
      * Whiteflag protocol error categories
      * 
-     * </p> These error categories are used by the {@link WfCoreException} class to
+     * </p> These error categories are used by the {@link WfException} class to
      * specify the type of error.
      */
     public enum ErrorType {
@@ -31,7 +31,7 @@ public class WfException extends WfCoreException {
         /**
          * Generic Whiteflag protocol error
          */
-        WF_PROTOCOL_ERROR,
+        WF_GENERIC_ERROR,
 
         /** 
          * Incorrect or missing Whiteflag message metadata

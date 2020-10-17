@@ -6,11 +6,13 @@ package org.whiteflag.protocol;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 /* Required Whiteflag core and util classes */
 import org.whiteflag.protocol.core.*;
-import org.whiteflag.protocol.util.WfJsonMessage;
+import org.whiteflag.protocol.util.*;
+
+/* Required error types */
+import static org.whiteflag.protocol.WfException.ErrorType.WF_FORMAT_ERROR;
 
 /**
  * Whiteflag message class
@@ -86,7 +88,7 @@ public class WfMessage extends WfMessageCore {
                 messageSerialized = super.serialize();
             }
         } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
         return messageSerialized;
     }
@@ -114,7 +116,7 @@ public class WfMessage extends WfMessageCore {
                 messageEncoded = super.encode(prefix);
             }
         } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
         return messageEncoded;
     }
@@ -127,8 +129,8 @@ public class WfMessage extends WfMessageCore {
         String jsonMessageStr;
         try {
             jsonMessageStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
-        } catch (JsonProcessingException e) {
-            throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+        } catch (WfUtilException e) {
+            throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WF_FORMAT_ERROR);
         }
         return jsonMessageStr;
     }
@@ -175,7 +177,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 messageCore = new WfMessageCreator().type(WfMessageType.byCode(messageCode)).create();
             } catch (WfCoreException e) {
-                throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WF_FORMAT_ERROR);
             }
             return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
         }
@@ -204,7 +206,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 messageCore = new WfMessageCreator().deserialize(messageSerialized).create();
             } catch (WfCoreException e) {
-                throw new WfException("Cannot deserialize message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot deserialize message: " + e.getMessage(), WF_FORMAT_ERROR);
             }
             return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
         }
@@ -220,15 +222,15 @@ public class WfMessage extends WfMessageCore {
             WfJsonMessage jsonMessage;
             try {
                 jsonMessage = WfJsonMessage.create(jsonMessageStr);
-            } catch (JsonProcessingException e) {
-                throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+            } catch (WfUtilException e) {
+                throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
             }
             // Create message core with header and body field name-to-value mappings
             WfMessageCore messageCore;
             try {
                 messageCore = new WfMessageCreator().map(jsonMessage.getHeader(), jsonMessage.getBody()).create();
             } catch (WfCoreException e) {
-                throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
             }
             // Create message and add metadata
             WfMessage message = new WfMessage(messageCore.type, messageCore.header, messageCore.body);
@@ -247,7 +249,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 messageCore = new WfMessageCreator().decode(messageEncoded).create();
             } catch (WfCoreException e) {
-                throw new WfException("Cannot decode message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot decode message: " + e.getMessage(), WF_FORMAT_ERROR);
             }
             return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
         }
@@ -263,7 +265,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 messageCore = new WfMessageCreator().compile(fieldValues).create();
             } catch (WfCoreException e) {
-                throw new WfException("Cannot compile message: " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
+                throw new WfException("Cannot compile message: " + e.getMessage(), WF_FORMAT_ERROR);
             }
             return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
         }

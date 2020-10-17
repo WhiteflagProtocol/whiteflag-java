@@ -7,7 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.Map;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Whiteflag JSON message test class
@@ -17,7 +16,7 @@ public class WfJsonMessageTest {
      * Tests creating a new message
      */
     @Test
-    public void testJsonDeserialization() throws JsonProcessingException {
+    public void testJsonDeserialization() throws WfUtilException {
         /* Setup */
         String jsonStr1A = "{\"MetaHeader\": { },\n\"MessageHeader\": {\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\n\"MessageBody\":{\"Text\": \"Whiteflag test message!\"} } ";
         String jsonStr1B = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
@@ -36,7 +35,7 @@ public class WfJsonMessageTest {
      * Tests creating a new message without MetaHeader
      */
     @Test
-    public void testJsonWithoutMetaheader() throws JsonProcessingException {
+    public void testJsonWithoutMetaheader() throws WfUtilException {
         /* Setup */
         String jsonStr1 = "{\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
         WfJsonMessage jsonMessage = WfJsonMessage.create(jsonStr1);
@@ -52,7 +51,7 @@ public class WfJsonMessageTest {
      * Tests creating a new message with polluted data
      */
     @Test
-    public void testJsonWithPollutedData() throws JsonProcessingException {
+    public void testJsonWithPollutedData() throws WfUtilException {
         /* Setup */
         String jsonStr1 = "{\"Object\":{\"foo\":\"bar\"},\"MessageHeader\":{\"Prefix\":\"WF\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\",\"Version\":\"1\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\",\"MoreText\":\"JSON test string!\"}}";
         WfJsonMessage jsonMessage = WfJsonMessage.create(jsonStr1);
@@ -68,7 +67,7 @@ public class WfJsonMessageTest {
      * Tests creating a new message with metadata
      */
     @Test
-    public void testJsonMetaheader() throws JsonProcessingException {
+    public void testJsonMetaheader() throws WfUtilException {
         /* Setup */
         String jsonStr1 = "{\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"},\"MetaHeader\":{\"transactionHash\":\"a1b2c3\"}}";
         WfJsonMessage jsonMessage = WfJsonMessage.create(jsonStr1);
