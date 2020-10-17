@@ -30,9 +30,9 @@ public class WfMessageFieldTest {
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
 
         /* Verify */
-        assertTrue("Should be able to set field value", field.setValue("some text"));
+        assertTrue("Should be able to set field value", field.set("some text"));
         assertTrue("Field should be set", field.isSet());
-        assertFalse("Should not be able to set field value twice", field.setValue("another text"));
+        assertFalse("Should not be able to set field value twice", field.set("another text"));
     }
     /**
      * Tests copying of a field
@@ -41,12 +41,12 @@ public class WfMessageFieldTest {
     public void testCopyField() {
         /* Setup */
         WfMessageField field1 = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
-        field1.setValue("first value");
+        field1.set("first value");
         WfMessageField field2 = new WfMessageField(field1, 7);
 
         /* Verify */
         assertFalse("The copy of the field should not have a set value", field2.isSet());
-        assertTrue("Should be able to set value of the copy of the field", field2.setValue("second value"));
+        assertTrue("Should be able to set value of the copy of the field", field2.set("second value"));
         assertTrue("The copy of the field should have a set value", field2.isSet());
         assertEquals("Field start byte should be 7", 7, field2.startByte);
         assertEquals("Field start byte should be -1", -1, field2.endByte);
@@ -58,7 +58,7 @@ public class WfMessageFieldTest {
     public void testUtfEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
-        field.setValue("WF");
+        field.set("WF");
 
         /* Verify */
         assertEquals("UTF-8 field should be correctly binary encoded", "0101011101000110", field.encode().toBinString());
@@ -74,11 +74,11 @@ public class WfMessageFieldTest {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
         WfBinaryString binString = new WfBinaryString().setHexValue("5746");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
 
         /* Verify */
         assertEquals("UTF-8 field should be correctly decoded", "WF", field.decode(binString));
-        assertEquals("UTF-8 decoded field value should be correctly set", "WF", field.getValue());
+        assertEquals("UTF-8 decoded field value should be correctly set", "WF", field.get());
     }
     /**
      * Tests compressed binary encoding of Binary field
@@ -87,7 +87,7 @@ public class WfMessageFieldTest {
     public void testBinEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+BIN.charset()+REPEAT, BIN, 0, 8);
-        field.setValue("10111011");
+        field.set("10111011");
         
         /* Verify */
         assertEquals("Binary field should be correctly binary encoded with prefix", "0b10111011", field.encode().toBinString(true));
@@ -101,7 +101,7 @@ public class WfMessageFieldTest {
     public void testDecEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DEC.charset()+REPEAT, DEC, 0, 3);
-        field.setValue("123");
+        field.set("123");
         
         /* Verify */
         assertEquals("Decimal field should be correctly binary encoded", "000100100011", field.encode().toBinString());
@@ -116,11 +116,11 @@ public class WfMessageFieldTest {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DEC.charset()+REPEAT, DEC, 0, 3);
         WfBinaryString binString = new WfBinaryString().setBinValue("000100100011");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
         
         /* Verify */
         assertEquals("Decimal field should be correctly decoded", "123", field.decode(binString));
-        assertEquals("Decimal decoded field value should be correctly set", "123", field.getValue());
+        assertEquals("Decimal decoded field value should be correctly set", "123", field.get());
     }
     /**
      * Tests compressed binary encoding of Hexadecimal field
@@ -129,7 +129,7 @@ public class WfMessageFieldTest {
     public void testHexEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+HEX.charset()+REPEAT, HEX, 0, 2);
-        field.setValue("3f");
+        field.set("3f");
         
         /* Verify */
         assertEquals("Hexadecimal field should be correctly binary encoded", "00111111", field.encode().toBinString());
@@ -145,11 +145,11 @@ public class WfMessageFieldTest {
         /* Test function */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+HEX.charset()+REPEAT, HEX, 0, 2);
         WfBinaryString binString = new WfBinaryString().setHexValue("0x3f");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
 
         /* Verify */
         assertEquals("Hexadecimal field should be correctly decoded", "3f", field.decode(binString));
-        assertEquals("Hexadecimal decoded field value should be correctly set", "3f", field.getValue());
+        assertEquals("Hexadecimal decoded field value should be correctly set", "3f", field.get());
     }
     /**
      * Tests compressed binary encoding of DateTime datum field
@@ -158,7 +158,7 @@ public class WfMessageFieldTest {
     public void testDateTimeEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DATETIME.charset()+END, DATETIME, 0, -1);
-        field.setValue("2020-07-01T21:42:23Z");
+        field.set("2020-07-01T21:42:23Z");
 
         /* Verify */
         assertEquals("DateTime field should be correctly binary encoded", "00100000001000000000011100000001001000010100001000100011", field.encode().toBinString());
@@ -173,11 +173,11 @@ public class WfMessageFieldTest {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DATETIME.charset()+END, DATETIME, 0, -1);
         WfBinaryString binString = new WfBinaryString().setBinValue("00100000001000000000011100000001001000010100001000100011");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
 
         /* Verify */
         assertEquals("DateTime field should be correctly decoded", "2020-07-01T21:42:23Z", field.decode(binString));
-        assertEquals("DateTime decoded field value should be correctly set", "2020-07-01T21:42:23Z", field.getValue());
+        assertEquals("DateTime decoded field value should be correctly set", "2020-07-01T21:42:23Z", field.get());
     }
     /**
      * Tests compressed binary encoding of Duration datum field
@@ -186,7 +186,7 @@ public class WfMessageFieldTest {
     public void testDurationEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DURATION.charset()+END, DURATION, 0, 10);
-        field.setValue("P24D11H30M");
+        field.set("P24D11H30M");
 
         /* Verify */
         assertEquals("Duration field should be correctly binary encoded", "001001000001000100110000", field.encode().toBinString());
@@ -201,11 +201,11 @@ public class WfMessageFieldTest {
         /* Test function */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+DURATION.charset()+END, DURATION, 0, 10);
         WfBinaryString binString = new WfBinaryString().setBinValue("001001000001000100110000");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
 
         /* Verify */
         assertEquals("Duration field should be correctly decoded", "P24D11H30M", field.decode(binString));
-        assertEquals("Duration decoded field value should be correctly set", "P24D11H30M", field.getValue());
+        assertEquals("Duration decoded field value should be correctly set", "P24D11H30M", field.get());
     }
     /**
      * Tests compressed binary encoding of Latitude datum field
@@ -214,7 +214,7 @@ public class WfMessageFieldTest {
     public void testLatitudeEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LAT.charset()+END, LAT, 0, 9);
-        field.setValue("+23.34244");
+        field.set("+23.34244");
 
         /* Verify */
         assertEquals("Latitude field should be correctly binary encoded", "10010001100110100001001000100", field.encode().toBinString());
@@ -229,11 +229,11 @@ public class WfMessageFieldTest {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LAT.charset()+END, LAT, 0, 9);
         WfBinaryString binString = new WfBinaryString().setBinValue("10010001100110100001001000100");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
 
         /* Verify */
         assertEquals("Latitude field should be correctly decoded", "+23.34244", field.decode(binString));
-        assertEquals("Latitude decoded field value should be correctly set", "+23.34244", field.getValue());
+        assertEquals("Latitude decoded field value should be correctly set", "+23.34244", field.get());
     }
         /**
      * Tests compressed binary encoding of Longitude datum field
@@ -242,7 +242,7 @@ public class WfMessageFieldTest {
     public void testLongitudeEncoding() throws WfCoreException {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LONG.charset()+END, LONG, 0, 10);
-        field.setValue("-163.34245");
+        field.set("-163.34245");
 
         /* Verify */
         assertEquals("Longitude field should be correctly binary encoded", "000010110001100110100001001000101", field.encode().toBinString());
@@ -257,10 +257,10 @@ public class WfMessageFieldTest {
         /* Setup */
         WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+LONG.charset()+END, LONG, 0, 10);
         WfBinaryString binString = new WfBinaryString().setBinValue("000010110001100110100001001000101");
-        field.setValue(field.decode(binString));
+        field.set(field.decode(binString));
 
         /* Verify */
         assertEquals("Longitude field should be correctly decoded", "-163.34245", field.decode(binString));
-        assertEquals("Longitude decoded field value should be correctly set", "-163.34245", field.getValue());
+        assertEquals("Longitude decoded field value should be correctly set", "-163.34245", field.get());
     }
 }

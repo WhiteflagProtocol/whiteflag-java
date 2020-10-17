@@ -66,9 +66,9 @@ public class WfMessageCreator {
         this.body = new WfMessageSegment(messageType.getBodyFields());
 
         // Set version and message code field values
-        header.setFieldValue(FIELD_PREFIX, PREFIX);
-        header.setFieldValue(FIELD_VERSION, PROTOCOL_VERSION);
-        header.setFieldValue(FIELD_MESSAGETYPE, messageType.getMessageCode());
+        header.set(FIELD_PREFIX, PREFIX);
+        header.set(FIELD_VERSION, PROTOCOL_VERSION);
+        header.set(FIELD_MESSAGETYPE, messageType.getCode());
 
         // Return new message
         return this;
@@ -76,18 +76,18 @@ public class WfMessageCreator {
 
     /**
      * Creates a new Whiteflag core message object from header and body maps
-     * @param headerMap a name-to-value mapping of the message header fields
-     * @param bodyMap a name-to-value mapping of the message body fields
+     * @param headerValues a name-to-value mapping of the message header fields
+     * @param bodyValues a name-to-value mapping of the message body fields
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided fields and/or values are invalid
      */
-    public final WfMessageCreator map(final Map<String, String> headerMap, final Map<String, String> bodyMap) throws WfCoreException {
+    public final WfMessageCreator map(final Map<String, String> headerValues, final Map<String, String> bodyValues) throws WfCoreException {
         // Create message header, set field values, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        if (Boolean.FALSE.equals(header.fromMap(headerMap))) {
-            throw new WfCoreException("Header fields name-to-value mapping contains invalid field names and/or values: " + headerMap);
+        if (Boolean.FALSE.equals(header.setAll(headerValues))) {
+            throw new WfCoreException("Header fields name-to-value mapping contains invalid field names and/or values: " + headerValues);
         }
-        messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
+        messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
         // Create message body
         body = new WfMessageSegment(messageType.getBodyFields());
@@ -95,19 +95,19 @@ public class WfMessageCreator {
         switch (messageType) {
             case T:
                 // Extend test message body with pseudo message body
-                final WfMessageType pseudoMessageType = WfMessageType.getType(bodyMap.get(FIELD_TESTMESSAGETYPE));
+                final WfMessageType pseudoMessageType = WfMessageType.byCode(bodyValues.get(FIELD_TESTMESSAGETYPE));
                 body.append(new WfMessageSegment(pseudoMessageType.getBodyFields()));
                 break;
             case Q:
                 // Extend request message body with remaining request fields (calculated with remaining bytes)
-                final int nRequestObjects = (bodyMap.size() - body.getNoFields()) / 2;   // One request object requires 2 fields
+                final int nRequestObjects = (bodyValues.size() - body.getNoFields()) / 2;   // One request object requires 2 fields
                 body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
         }
-        if (Boolean.FALSE.equals(body.fromMap(bodyMap))) {
-            throw new WfCoreException("Body fields name-to-value mapping contains invalid field names and/or values: " + bodyMap);
+        if (Boolean.FALSE.equals(body.setAll(bodyValues))) {
+            throw new WfCoreException("Body fields name-to-value mapping contains invalid field names and/or values: " + bodyValues);
         }
         return this;
     }
@@ -125,7 +125,7 @@ public class WfMessageCreator {
         // Create and deserialize message header, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
         byteCursor = header.deserialize(messageStr, byteCursor);
-        messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
+        messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
         // Create and deserialize message body
         body = new WfMessageSegment(messageType.getBodyFields());
@@ -135,7 +135,7 @@ public class WfMessageCreator {
         switch (messageType) {
             case T:
                 // Extend test message body with pseudo message body
-                final WfMessageType pseudoMessageType = WfMessageType.getType(body.getFieldValue(FIELD_TESTMESSAGETYPE));
+                final WfMessageType pseudoMessageType = WfMessageType.byCode(body.get(FIELD_TESTMESSAGETYPE));
                 body.append(new WfMessageSegment(pseudoMessageType.getBodyFields()));
                 break;
             case Q:
@@ -166,7 +166,7 @@ public class WfMessageCreator {
         // Create and decode message header, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
         bitCursor = header.decode(messageBinStr, bitCursor);
-        messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
+        messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
         // Create and decode message body
         body = new WfMessageSegment(messageType.getBodyFields());
@@ -176,7 +176,7 @@ public class WfMessageCreator {
         switch (messageType) {
             case T:
                 // Determine pseudo message type and extend test message body with pseudo message body
-                final WfMessageType pseudoMessageType = WfMessageType.getType(body.getFieldValue(FIELD_TESTMESSAGETYPE));
+                final WfMessageType pseudoMessageType = WfMessageType.byCode(body.get(FIELD_TESTMESSAGETYPE));
                 body.append(new WfMessageSegment(pseudoMessageType.getBodyFields()));
                 break;
             case Q:
@@ -200,28 +200,29 @@ public class WfMessageCreator {
     public final WfMessageCreator compile(final String[] fieldValues) throws WfCoreException {
         // Create message header, set field values and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        header.setAllFieldValues(Arrays.copyOfRange(fieldValues, 0, header.getNoFields()));
-        messageType = WfMessageType.getType(header.getFieldValue(FIELD_MESSAGETYPE));
+        header.setAll(fieldValues, 0);
+        messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
         // Create message body based on message type
+        int bodyStartIndex = header.getNoFields();
         body = new WfMessageSegment(messageType.getBodyFields());
 
         // Add additional fields to message body for some message types
         switch (messageType) {
             case T:
                 // Determine pseudo message type and extend test message body with pseudo message body
-                final WfMessageType pseudoMessageType = WfMessageType.getType(fieldValues[header.getNoFields()]);
+                final WfMessageType pseudoMessageType = WfMessageType.byCode(fieldValues[bodyStartIndex]);
                 body.append(new WfMessageSegment(pseudoMessageType.getBodyFields()));
                 break;
             case Q:
                 // Extend request message body with request fields (calculated with remaining fields)
-                final int nRequestObjects = (fieldValues.length - (header.getNoFields() + body.getNoFields())) / 2;  // One request object requires 2 fields
+                final int nRequestObjects = (fieldValues.length - (bodyStartIndex + body.getNoFields())) / 2;  // One request object requires 2 fields
                 body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
         }
-        body.setAllFieldValues(Arrays.copyOfRange(fieldValues, header.getNoFields(), fieldValues.length));
+        body.setAll(fieldValues, bodyStartIndex);
         return this;
     }
 

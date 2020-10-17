@@ -189,7 +189,7 @@ public class WfMessageField {
      */
     @Override
     public final String toString() {
-        return this.getValue();
+        return this.get();
     }
 
     /* PUBLIC METHODS: metadata & validators */
@@ -251,7 +251,7 @@ public class WfMessageField {
      * Gets the value of the message field
      * @return String with the field value
      */
-    public final String getValue() {
+    public final String get() {
         return this.value;
     }
 
@@ -260,7 +260,7 @@ public class WfMessageField {
      * @param data The data representing the field value
      * @return TRUE if field value is set, FALSE if field already set or data is invalid
      */
-    public final Boolean setValue(final String data) {
+    public final Boolean set(final String data) {
         // Cannot set value twice
         if (Boolean.TRUE.equals(this.isSet())) return false;
 

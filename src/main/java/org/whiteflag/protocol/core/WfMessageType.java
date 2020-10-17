@@ -102,23 +102,21 @@ public enum WfMessageType {
 
     /**
      * Returns the {@link WfMessageType} message type
-     * @param code String with the message code
+     * @param messageCode String with the message code
      */
-    public static WfMessageType getType(final String code) throws WfCoreException {
-        if (code == null || code.isEmpty()) return ANY;
+    public static WfMessageType byCode(final String messageCode) throws WfCoreException {
+        if (messageCode == null || messageCode.isEmpty()) return ANY;
         for (WfMessageType type : WfMessageType.values()) {
-            if (type.messageCode.equalsIgnoreCase(code)) {
-                return type;
-            }
+            if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
         }
-        throw new WfCoreException("Invalid message type: " + code);
+        throw new WfCoreException("Invalid message type: " + messageCode);
     }
 
     /**
      * Returns the message code string
      * @return String with the message code
      */
-    public String getMessageCode() {
+    public String getCode() {
         return messageCode;
     }
 

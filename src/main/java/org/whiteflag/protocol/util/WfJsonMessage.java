@@ -9,7 +9,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * Whiteflag JSON message representation
@@ -19,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * of the Whiteflag specification. The basic structure is as follows:
  * <code> { "MetaHeader" : {}, "MessageHeader": {}, "MessageBody": {} }</code>
  */
+@JsonPropertyOrder({ "MetaHeader", "MessageHeader", "MessageBody" })
 public class WfJsonMessage {
 
     /* PROPERTIES */
@@ -65,7 +68,7 @@ public class WfJsonMessage {
     /**
      * Creates a serialized JSON representation of a Whiteflag message
      * @return String with the serialized JSON representation
-     * @throws JsonProcessingException if no valdi JSON serialization can be created
+     * @throws JsonProcessingException if no valid JSON serialization can be created
      */
     public String toJson() throws JsonProcessingException {
         return new ObjectMapper().writeValueAsString(this);
@@ -73,13 +76,13 @@ public class WfJsonMessage {
 
     /**
      * Creates a new JSON representation of a Whiteflag message from a serialized JSON string
-     * @param jsonMessageStr String with a JSON representation of a Whiteflag message
+     * @param jsonStr String with a JSON representation of a Whiteflag message
      * @throws JsonProcessingException if JSON is invalid
      */
-    public static WfJsonMessage create(String jsonMessageStr) throws JsonProcessingException {
+    public static WfJsonMessage create(String jsonStr) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return mapper.readValue(jsonMessageStr, WfJsonMessage.class);
+        return mapper.readValue(jsonStr, WfJsonMessage.class);
     }
 
     /* PUBLIC METHODS: getters for mappings */
@@ -88,6 +91,7 @@ public class WfJsonMessage {
      * Gets the message metadata
      * @return the key-to-value mapping of the message metadata
      */
+    @JsonGetter("MetaHeader")
     public Map<String, String> getMetadata() {
         return metadata;
     }
@@ -96,6 +100,7 @@ public class WfJsonMessage {
      * Gets the message header
      * @return the field name-to-value mapping of the message header
      */
+    @JsonGetter("MessageHeader")
     public Map<String, String> getHeader() {
         return header;
     }
@@ -104,36 +109,8 @@ public class WfJsonMessage {
      * Gets the message body
      * @return the field name-to-value mapping of the message body
      */
+    @JsonGetter("MessageBody")
     public Map<String, String> getBody() {
         return body;
-    }
-
-    /* PUBLIC METHODS: getters for values */
-
-    /**
-     * Gets metadata by key
-     * @param key String with the key name
-     * @return String with the value
-     */
-    public String getMetadata(String key) {
-        return metadata.get(key);
-    }
-
-    /**
-     * Gets header field value by field name
-     * @param fieldname String header field name
-     * @return String with the header field value
-     */
-    public String getHeaderField(String fieldname) {
-        return header.get(fieldname);
-    }
-
-    /**
-     * Gets body field value by field name
-     * @param fieldname String body field name
-     * @return String with the body field value
-     */
-    public String getBodyField(String fieldname) {
-        return body.get(fieldname);
     }
 }

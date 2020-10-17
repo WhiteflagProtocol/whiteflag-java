@@ -3,6 +3,8 @@
  */
 package org.whiteflag.protocol.core;
 
+import java.util.Set;
+
 /**
  * Whiteflag basic message core class
  * 
@@ -66,8 +68,26 @@ public class WfMessageCore {
         if (this.type == WfMessageType.ANY) return false;
         if (Boolean.FALSE.equals(header.isValid())) return false;
         if (Boolean.FALSE.equals(body.isValid())) return false;
-        if (!this.type.getMessageCode().equals(header.getFieldValue(FIELD_MESSAGETYPE))) return false;
+        if (!this.type.getCode().equals(header.get(FIELD_MESSAGETYPE))) return false;
         return true;
+    }
+
+    /**
+     * Gets the number of fields in this message
+     * @return integer with the number of fields
+     */
+    public final int getNoFields() {
+        return header.getNoFields() + body.getNoFields();
+    }
+
+    /**
+     * Returns the field names of this message
+     * @return a string set with all field names
+     */
+    public Set<String> getFieldNames() {
+        Set<String> names = header.getFieldNames();
+        names.addAll(body.getFieldNames());
+        return names;
     }
 
     /* PUBLIC METHODS: getters & setters */
@@ -77,10 +97,10 @@ public class WfMessageCore {
      * @param name String with the name of the requested field
      * @return String with the field value, or NULL if field does not exist
      */
-    public String getFieldValue(final String name) {
-        String value = header.getFieldValue(name);
+    public String get(final String name) {
+        String value = header.get(name);
         if (value != null) return value;
-        return body.getFieldValue(name);
+        return body.get(name);
     }
 
     /**
@@ -89,9 +109,9 @@ public class WfMessageCore {
      * @param data String with data to be set as the field value
      * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
-    public Boolean setFieldValue(final String name, final String data) {
-        if (Boolean.TRUE.equals(header.setFieldValue(name, data))) return true;
-        return body.setFieldValue(name, data);
+    public Boolean set(final String name, final String data) {
+        if (Boolean.TRUE.equals(header.set(name, data))) return true;
+        return body.set(name, data);
     }
 
     /* PUBLIC METHODS: operations */

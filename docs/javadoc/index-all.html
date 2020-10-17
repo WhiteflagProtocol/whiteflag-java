@@ -108,6 +108,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#body">body</a></span> - Variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#byCode-java.lang.String-">byCode(String)</a></span> - Static method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
+<dd>
+<div class="block">Returns the <a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><code>WfMessageType</code></a> message type</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#byteLength--">byteLength()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
 <div class="block">Returns the byte length of the unencoded field value</div>
@@ -260,10 +264,6 @@
 <dd>
 <div class="block">Free text message body fields</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#fromMap-java.util.Map-">fromMap(Map&lt;String, String&gt;)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
-<dd>
-<div class="block">Sets field values of this segment from a field name-to-value mapping</div>
-</dd>
 </dl>
 <a name="I:G">
 <!--   -->
@@ -274,17 +274,37 @@
 <dd>
 <div class="block">Generic message header fields</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#get-java.lang.String-">get(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Gets the value of the specified field</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#get--">get()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Gets the value of the message field</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#get-java.lang.String-">get(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Gets the value of the field specified by name</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#get-int-">get(int)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Gets the value of the field specified by index</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getAllFields--">getAllFields()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Gets all fields from this message segment</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getBody--">getBody()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
 <dd>
 <div class="block">Gets the message body</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getBodyField-java.lang.String-">getBodyField(String)</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Gets body field value by field name</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getBodyFields--">getBodyFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> body fields</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getCode--">getCode()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
+<dd>
+<div class="block">Returns the message code string</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getField-java.lang.String-">getField(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
@@ -294,45 +314,25 @@
 <dd>
 <div class="block">Gets the field specified by index</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getFields--">getFields()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#getFieldNames--">getFieldNames()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
 <dd>
-<div class="block">Gets all fields from this message segment</div>
+<div class="block">Returns the field names of this message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#getFieldValue-java.lang.String-">getFieldValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getFieldNames--">getFieldNames()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
-<div class="block">Gets the value of the specified field</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getFieldValue-java.lang.String-">getFieldValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
-<dd>
-<div class="block">Gets the value of the field specified by name</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getFieldValue-int-">getFieldValue(int)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
-<dd>
-<div class="block">Gets the value of the field specified by index</div>
+<div class="block">Returns the field names of the message segment</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getHeader--">getHeader()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
 <dd>
 <div class="block">Gets the message header</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getHeaderField-java.lang.String-">getHeaderField(String)</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Gets header field value by field name</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getHeaderFields--">getHeaderFields()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> header fields</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getMessageCode--">getMessageCode()</a></span> - Method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
-<dd>
-<div class="block">Returns the message code string</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getMetadata--">getMetadata()</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
 <dd>
 <div class="block">Gets the message metadata</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/util/WfJsonMessage.html#getMetadata-java.lang.String-">getMetadata(String)</a></span> - Method in class org.whiteflag.protocol.util.<a href="org/whiteflag/protocol/util/WfJsonMessage.html" title="class in org.whiteflag.protocol.util">WfJsonMessage</a></dt>
-<dd>
-<div class="block">Gets metadata by key</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfMessage.html#getMetadata-java.lang.String-">getMetadata(String)</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfMessage.html" title="class in org.whiteflag.protocol">WfMessage</a></dt>
 <dd>
@@ -342,17 +342,13 @@
 <dd>
 <div class="block">Returns metadata keys of the Whiteflag message</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#getNoFields--">getNoFields()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Gets the number of fields in this message</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#getNoFields--">getNoFields()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Gets the number of fields in this message segment</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageType.html#getType-java.lang.String-">getType(String)</a></span> - Static method in enum org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a></dt>
-<dd>
-<div class="block">Returns the <a href="org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core"><code>WfMessageType</code></a> message type</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#getValue--">getValue()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Gets the value of the message field</div>
 </dd>
 </dl>
 <a name="I:H">
@@ -514,37 +510,41 @@
 <dd>
 <div class="block">Returns the cached serialized message, or else it serialzes and caches Whiteflag message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setAllFieldValues-java.lang.String:A-">setAllFieldValues(String[])</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#set-java.lang.String-">set(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>
-<div class="block">Sets the value of all fields in the message segment with values from an array</div>
+<div class="block">Sets the value with the provided binary string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#set-java.lang.String-java.lang.String-">set(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Sets the value of the specified field</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#set-java.lang.String-">set(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Sets the value of the message field if not already set</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#set-java.lang.String-java.lang.String-">set(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Sets the value of the specified field in the message segment</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#set-int-java.lang.String-">set(int, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Sets the value of the field specified by its index in the message segment</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setAll-java.util.Map-">setAll(Map&lt;String, String&gt;)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Sets all field values of this segment from a field name-to-value mapping</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setAll-java.lang.String:A-int-">setAll(String[], int)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Sets all field values of this segment with values from an array</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#setBinValue-java.lang.String-">setBinValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Sets the value with the provided binary string</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#setFieldValue-java.lang.String-java.lang.String-">setFieldValue(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
-<dd>
-<div class="block">Sets the value of the specified field</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setFieldValue-java.lang.String-java.lang.String-">setFieldValue(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
-<dd>
-<div class="block">Sets the value of the specified field in the message segment</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setFieldValue-int-java.lang.String-">setFieldValue(int, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
-<dd>
-<div class="block">Sets the value of the field specified by its index in the message segment</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#setHexValue-java.lang.String-">setHexValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Sets the value with the provided hexadecimal string</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#setValue-java.lang.String-">setValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
-<dd>
-<div class="block">Sets the value with the provided binary string</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#setValue-java.lang.String-">setValue(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Sets the value of the message field if not already set</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageDefinitions.html#signsignalBodyFields">signsignalBodyFields</a></span> - Static variable in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageDefinitions.html" title="class in org.whiteflag.protocol.core">WfMessageDefinitions</a></dt>
 <dd>
@@ -598,7 +598,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#toMap--">toMap()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
-<div class="block">Returns a field name-to-value mapping of this message segment</div>
+<div class="block">Gets a field name-to-value mapping of this message segment</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#toString--">toString()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>

@@ -173,7 +173,7 @@ public class WfMessage extends WfMessageCore {
         public static final WfMessage type(final String messageCode) throws WfException {
             WfMessageCore messageCore;
             try {
-                messageCore = new WfMessageCreator().type(WfMessageType.getType(messageCode)).create();
+                messageCore = new WfMessageCreator().type(WfMessageType.byCode(messageCode)).create();
             } catch (WfCoreException e) {
                 throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WfException.ErrorType.WF_FORMAT_ERROR);
             }
