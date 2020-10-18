@@ -141,7 +141,7 @@ public class WfMessage extends WfMessageCore {
      * Returns the requested metadata value of the Whiteflag message
      * @return a string with the value of the requested metadata key
      */
-    private void setMetadata(Map<String, String> metadata) {
+    private void setMetadata(final Map<String, String> metadata) {
         metadata.forEach(this.metadata::put);
     }
 
@@ -225,7 +225,7 @@ public class WfMessage extends WfMessageCore {
             } catch (WfUtilException e) {
                 throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
             }
-            // Create message core with header and body field name-to-value mappings
+            // Create message core with header and body fieldname-to-value mappings
             WfMessageCore messageCore;
             try {
                 messageCore = new WfMessageCreator().map(jsonMessage.getHeader(), jsonMessage.getBody()).create();

@@ -26,16 +26,25 @@ public class WfMessageTest {
             throw e;
         }
 
-        /* Verify */
+        /* Verify message*/
         assertEquals("Message type should be correct", S, message.type);
         assertEquals("Number of fields should be correct", 16, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertFalse("Message should not be valid without valid field values", message.isValid());
+
+        /* Verify pre-set fields */ 
         assertEquals("Prefix should be correctly set", "WF", message.get("Prefix"));
         assertEquals("Version number should be correctly set", "1", message.get("Version"));
         assertEquals("Message code should be correctly set", "S", message.get("MessageCode"));
+
+        /* Verify header fields */
         assertTrue("Should be able to set field value", message.header.set("EncryptionIndicator", "1"));
+        assertTrue("Value should be valid", message.header.isValid("EncryptionIndicator", "2"));
         assertFalse("Should not be able to set field value twice", message.header.set("EncryptionIndicator", "2"));
+        assertTrue("Field should be valid", message.isValid("EncryptionIndicator"));
+        assertFalse("Should not be able to set value of non existing field", message.header.set("ObjectType", "1"));
+
+        /* Verify body fields */
         assertTrue("Should be able to set field value", message.body.set("SubjectCode", "10"));
         assertFalse("Should not be able to set field value twice", message.body.set("SubjectCode", "20"));
         assertTrue("Should be able to set field value", message.set("ObjectType", "21"));
@@ -59,7 +68,7 @@ public class WfMessageTest {
             throw e;
         }
 
-        /* Verify */
+        /* Verify message */
         assertEquals("Message type should be correct", K, message.type);
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
@@ -75,6 +84,12 @@ public class WfMessageTest {
         assertEquals("Cryptographic data type should be correctly set", fieldValues[7], message.get("CryptoDataType"));
         assertEquals("Cryptographic data should be correctly set", fieldValues[8], message.get("CryptoData"));
         assertTrue("Message should be valid", message.isValid());
+
+        /* Verify some field data */
+        assertFalse("Value should not be valid", message.isValid("DuressIndicator", "2"));
+        assertFalse("Value should not be valid", message.isValid("ReferencedMessage", "wrong datatype"));
+        assertFalse("Value should not be valid", message.isValid("CryptoDataType", "123"));
+        assertTrue("Value should be valid", message.isValid("CryptoDataType", "0A"));
     }
     /**
      * Tests for correctly constructed authentication message with header and body object

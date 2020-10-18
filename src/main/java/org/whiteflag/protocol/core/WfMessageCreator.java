@@ -76,8 +76,8 @@ public class WfMessageCreator {
 
     /**
      * Creates a new Whiteflag core message object from header and body maps
-     * @param headerValues a name-to-value mapping of the message header fields
-     * @param bodyValues a name-to-value mapping of the message body fields
+     * @param headerValues a fieldname-to-value mapping of the message header fields
+     * @param bodyValues a fieldname-to-value mapping of the message body fields
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided fields and/or values are invalid
      */
@@ -85,7 +85,7 @@ public class WfMessageCreator {
         // Create message header, set field values, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
         if (Boolean.FALSE.equals(header.setAll(headerValues))) {
-            throw new WfCoreException("Header fields name-to-value mapping contains invalid field names and/or values: " + headerValues);
+            throw new WfCoreException("Header fieldname-to-value mapping contains invalid field names and/or values: " + headerValues);
         }
         messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
@@ -107,7 +107,7 @@ public class WfMessageCreator {
                 break;
         }
         if (Boolean.FALSE.equals(body.setAll(bodyValues))) {
-            throw new WfCoreException("Body fields name-to-value mapping contains invalid field names and/or values: " + bodyValues);
+            throw new WfCoreException("Body fieldname-to-value mapping contains invalid field names and/or values: " + bodyValues);
         }
         return this;
     }

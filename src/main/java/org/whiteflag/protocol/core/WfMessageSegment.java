@@ -72,7 +72,7 @@ public class WfMessageSegment {
 
     /**
      * Checks if all fields of this message segment contain valid data
-     * @return TRUE if message segment contains valid data, esle FALSE
+     * @return TRUE if message segment contains valid data, else FALSE
      */
     public final Boolean isValid() {
         int byteCursor = fields[0].startByte;
@@ -84,6 +84,35 @@ public class WfMessageSegment {
             if (Boolean.FALSE.equals(field.isValid())) return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if the specified field contains valid data
+     * @param fieldname String with the name of the field
+     * @return TRUE if the field contains valid data, else FALSE
+     */
+    public final Boolean isValid(final String fieldname) {
+        for (WfMessageField field : fields) {
+            if (fieldname.equals(field.name)) {
+                return field.isValid();
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the provided data is valid for the specified field
+     * @param fieldname String with the name of the field
+     * @param data String with the value to be checked
+     * @return TRUE if the field contains valid data, else FALSE
+     */
+    public final Boolean isValid(final String fieldname, final String data) {
+        for (WfMessageField field : fields) {
+            if (fieldname.equals(field.name)) {
+                return field.isValid(data);
+            }
+        }
+        return false;
     }
 
     /**
@@ -110,12 +139,12 @@ public class WfMessageSegment {
 
     /**
      * Gets the value of the field specified by name
-     * @param name String with the name of the requested field
+     * @param fieldname String with the name of the requested field
      * @return String with the field value, or NULL if field does not exist
      */
-    public final String get(final String name) {
+    public final String get(final String fieldname) {
         for (WfMessageField field : fields) {
-            if (name.equals(field.name)) return field.get();
+            if (fieldname.equals(field.name)) return field.get();
         }
         return null;
     }
@@ -125,7 +154,7 @@ public class WfMessageSegment {
      * @param index integer with the index of the requested field
      * @return String with the field value, or NULL if it does not exist
      */
-    public final String get(int index) {
+    public final String get(final int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index].get();
         }
@@ -134,13 +163,13 @@ public class WfMessageSegment {
 
     /**
      * Sets the value of the specified field in the message segment
-     * @param name String with the name of the field
+     * @param fieldname String with the name of the field
      * @param data String with data to be set as the field value
      * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
-    public final Boolean set(final String name, final String data) {
+    public final Boolean set(final String fieldname, final String data) {
         for (WfMessageField field : fields) {
-            if (name.equals(field.name)) return field.set(data);
+            if (fieldname.equals(field.name)) return field.set(data);
         }
         return false;
     }
@@ -161,8 +190,8 @@ public class WfMessageSegment {
     /* PUBLIC METHODS: mapping */
 
     /**
-     * Gets a field name-to-value mapping of this message segment
-     * @return a field name-to-value mapping
+     * Gets a fieldname-to-value mapping of this message segment
+     * @return a fieldname-to-value mapping
      */
     public final Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>(this.fields.length + 1, 1);
@@ -173,11 +202,11 @@ public class WfMessageSegment {
     }
 
     /**
-     * Sets all field values of this segment from a field name-to-value mapping
-     * @param map a field name-to-value mapping
+     * Sets all field values of this segment from a fieldname-to-value mapping
+     * @param map a fieldname-to-value mapping
      * @return TRUE if all field values in this segment were correctly set, else FALSE
     */
-    public final Boolean setAll(Map<String, String> map) {
+    public final Boolean setAll(final Map<String, String> map) {
         map.forEach(this::set);
         return this.isValid();
     }
@@ -190,15 +219,14 @@ public class WfMessageSegment {
      * @throws WfCoreException if the provided data is invalid
      */
     public final Boolean setAll(final String[] data, final int index) throws WfCoreException {
-        if ((data.length - index) < fields.length) {
-            throw new WfCoreException("Message segment has " + fields.length + " fields, but received data for " + (data.length - index) + " fields");
+        int nFields = data.length - index;
+        if (fields.length == 0 || nFields < fields.length) {
+            throw new WfCoreException("Message segment has " + fields.length + " fields, but received data for " + nFields + " fields");
         }
         for (; cursor < this.fields.length; cursor++) {
-            if (Boolean.FALSE.equals(fields[cursor].set(data[index + cursor]))) {
-                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data provided: " + data[index + cursor]);
-            }
+            fields[cursor].set(data[index + cursor]);
         }
-        return true;
+        return this.isValid();
     }
 
     /* PROTECTED METHODS: operations */
@@ -325,12 +353,12 @@ public class WfMessageSegment {
 
     /**
      * Gets the field specified by name
-     * @param name String with the name of the requested field
+     * @param fieldname String with the name of the requested field
      * @return the requested {@link WfMessageField}, or NULL if it does not exist
      */
-    protected final WfMessageField getField(final String name) {
+    protected final WfMessageField getField(final String fieldname) {
         for (WfMessageField field : fields) {
-            if (name.equals(field.name)) return field;
+            if (fieldname.equals(field.name)) return field;
         }
         return null;
     }

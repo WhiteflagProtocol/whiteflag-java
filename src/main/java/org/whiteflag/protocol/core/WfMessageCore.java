@@ -73,6 +73,27 @@ public class WfMessageCore {
     }
 
     /**
+     * Checks if the specified message field contains valid data
+     * @param fieldname String with the name of the field
+     * @return TRUE if the field contains valid data, else FALSE
+     */
+    public final Boolean isValid(final String fieldname) {
+        if (Boolean.TRUE.equals(header.isValid(fieldname))) return true;
+        return body.isValid(fieldname);
+    }
+
+    /**
+     * Checks if the provided data is valid for the specified message field
+     * @param fieldname String with the name of the field
+     * @param data String with the value to be checked
+     * @return TRUE if the field contains valid data, else FALSE
+     */
+    public final Boolean isValid(final String fieldname, final String data) {
+        if (Boolean.TRUE.equals(header.isValid(fieldname, data))) return true;
+        return body.isValid(fieldname, data);
+    }
+
+    /**
      * Gets the number of fields in this message
      * @return integer with the number of fields
      */
@@ -94,24 +115,24 @@ public class WfMessageCore {
 
     /**
      * Gets the value of the specified field
-     * @param name String with the name of the requested field
+     * @param fieldname String with the name of the requested field
      * @return String with the field value, or NULL if field does not exist
      */
-    public String get(final String name) {
-        String value = header.get(name);
+    public String get(final String fieldname) {
+        String value = header.get(fieldname);
         if (value != null) return value;
-        return body.get(name);
+        return body.get(fieldname);
     }
 
     /**
      * Sets the value of the specified field
-     * @param name String with the name of the field
+     * @param fieldname String with the name of the field
      * @param data String with data to be set as the field value
      * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
-    public Boolean set(final String name, final String data) {
-        if (Boolean.TRUE.equals(header.set(name, data))) return true;
-        return body.set(name, data);
+    public Boolean set(final String fieldname, final String data) {
+        if (Boolean.TRUE.equals(header.set(fieldname, data))) return true;
+        return body.set(fieldname, data);
     }
 
     /* PUBLIC METHODS: operations */

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -191,7 +191,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#get-java.lang.String-">get</a></span>(java.lang.String&nbsp;name)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#get-java.lang.String-">get</a></span>(java.lang.String&nbsp;fieldname)</code>
 <div class="block">Gets the value of the field specified by name</div>
 </td>
 </tr>
@@ -209,7 +209,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#getField-java.lang.String-">getField</a></span>(java.lang.String&nbsp;name)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#getField-java.lang.String-">getField</a></span>(java.lang.String&nbsp;fieldname)</code>
 <div class="block">Gets the field specified by name</div>
 </td>
 </tr>
@@ -232,45 +232,58 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#isValid-java.lang.String-">isValid</a></span>(java.lang.String&nbsp;fieldname)</code>
+<div class="block">Checks if the specified field contains valid data</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#isValid-java.lang.String-java.lang.String-">isValid</a></span>(java.lang.String&nbsp;fieldname,
+       java.lang.String&nbsp;data)</code>
+<div class="block">Checks if the provided data is valid for the specified field</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#serialize--">serialize</a></span>()</code>
 <div class="block">Serializes this message segment</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#set-int-java.lang.String-">set</a></span>(int&nbsp;index,
    java.lang.String&nbsp;data)</code>
 <div class="block">Sets the value of the field specified by its index in the message segment</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#set-java.lang.String-java.lang.String-">set</a></span>(java.lang.String&nbsp;name,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#set-java.lang.String-java.lang.String-">set</a></span>(java.lang.String&nbsp;fieldname,
    java.lang.String&nbsp;data)</code>
 <div class="block">Sets the value of the specified field in the message segment</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#setAll-java.util.Map-">setAll</a></span>(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;map)</code>
-<div class="block">Sets all field values of this segment from a field name-to-value mapping</div>
+<div class="block">Sets all field values of this segment from a fieldname-to-value mapping</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#setAll-java.lang.String:A-int-">setAll</a></span>(java.lang.String[]&nbsp;data,
       int&nbsp;index)</code>
 <div class="block">Sets all field values of this segment with values from an array</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.lang.String&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#toMap--">toMap</a></span>()</code>
-<div class="block">Gets a field name-to-value mapping of this message segment</div>
+<div class="block">Gets a fieldname-to-value mapping of this message segment</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageSegment.html#toString--">toString</a></span>()</code>
 <div class="block">Returns the message segment as a concatinated string of field values</div>
@@ -360,7 +373,41 @@ extends java.lang.Object</pre>
 <div class="block">Checks if all fields of this message segment contain valid data</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>TRUE if message segment contains valid data, esle FALSE</dd>
+<dd>TRUE if message segment contains valid data, else FALSE</dd>
+</dl>
+</li>
+</ul>
+<a name="isValid-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isValid</h4>
+<pre>public final&nbsp;java.lang.Boolean&nbsp;isValid(java.lang.String&nbsp;fieldname)</pre>
+<div class="block">Checks if the specified field contains valid data</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fieldname</code> - String with the name of the field</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>TRUE if the field contains valid data, else FALSE</dd>
+</dl>
+</li>
+</ul>
+<a name="isValid-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isValid</h4>
+<pre>public final&nbsp;java.lang.Boolean&nbsp;isValid(java.lang.String&nbsp;fieldname,
+                                       java.lang.String&nbsp;data)</pre>
+<div class="block">Checks if the provided data is valid for the specified field</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fieldname</code> - String with the name of the field</dd>
+<dd><code>data</code> - String with the value to be checked</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>TRUE if the field contains valid data, else FALSE</dd>
 </dl>
 </li>
 </ul>
@@ -398,11 +445,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>get</h4>
-<pre>public final&nbsp;java.lang.String&nbsp;get(java.lang.String&nbsp;name)</pre>
+<pre>public final&nbsp;java.lang.String&nbsp;get(java.lang.String&nbsp;fieldname)</pre>
 <div class="block">Gets the value of the field specified by name</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - String with the name of the requested field</dd>
+<dd><code>fieldname</code> - String with the name of the requested field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>String with the field value, or NULL if field does not exist</dd>
 </dl>
@@ -430,12 +477,12 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>set</h4>
-<pre>public final&nbsp;java.lang.Boolean&nbsp;set(java.lang.String&nbsp;name,
+<pre>public final&nbsp;java.lang.Boolean&nbsp;set(java.lang.String&nbsp;fieldname,
                                    java.lang.String&nbsp;data)</pre>
 <div class="block">Sets the value of the specified field in the message segment</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - String with the name of the field</dd>
+<dd><code>fieldname</code> - String with the name of the field</dd>
 <dd><code>data</code> - String with data to be set as the field value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid</dd>
@@ -467,10 +514,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>toMap</h4>
 <pre>public final&nbsp;java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;toMap()</pre>
-<div class="block">Gets a field name-to-value mapping of this message segment</div>
+<div class="block">Gets a fieldname-to-value mapping of this message segment</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a field name-to-value mapping</dd>
+<dd>a fieldname-to-value mapping</dd>
 </dl>
 </li>
 </ul>
@@ -481,10 +528,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setAll</h4>
 <pre>public final&nbsp;java.lang.Boolean&nbsp;setAll(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;map)</pre>
-<div class="block">Sets all field values of this segment from a field name-to-value mapping</div>
+<div class="block">Sets all field values of this segment from a fieldname-to-value mapping</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>map</code> - a field name-to-value mapping</dd>
+<dd><code>map</code> - a fieldname-to-value mapping</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>TRUE if all field values in this segment were correctly set, else FALSE</dd>
 </dl>
@@ -609,11 +656,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getField</h4>
-<pre>protected final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>&nbsp;getField(java.lang.String&nbsp;name)</pre>
+<pre>protected final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>&nbsp;getField(java.lang.String&nbsp;fieldname)</pre>
 <div class="block">Gets the field specified by name</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - String with the name of the requested field</dd>
+<dd><code>fieldname</code> - String with the name of the requested field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the requested <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>, or NULL if it does not exist</dd>
 </dl>

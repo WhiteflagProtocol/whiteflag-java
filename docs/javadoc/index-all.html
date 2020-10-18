@@ -374,10 +374,6 @@
 </a>
 <h2 class="title">I</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#isDataValid-java.lang.String-">isDataValid(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Checks if the provided data is a valid value for this field</div>
-</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#isEmpty--">isEmpty()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Chekcs if this binary string is empty</div>
@@ -390,13 +386,33 @@
 <dd>
 <div class="block">Checks if this message contains valid data</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#isValid-java.lang.String-">isValid(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Checks if the specified message field contains valid data</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageCore.html#isValid-java.lang.String-java.lang.String-">isValid(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Checks if the provided data is valid for the specified message field</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#isValid--">isValid()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
 <dd>
 <div class="block">Checks if the message field contains a valid value</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageField.html#isValid-java.lang.String-">isValid(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Checks if the provided data is a valid value for this field</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#isValid--">isValid()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Checks if all fields of this message segment contain valid data</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#isValid-java.lang.String-">isValid(String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Checks if the specified field contains valid data</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#isValid-java.lang.String-java.lang.String-">isValid(String, String)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Checks if the provided data is valid for the specified field</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/WfState.html#isValid--">isValid()</a></span> - Method in class org.whiteflag.protocol.<a href="org/whiteflag/protocol/WfState.html" title="class in org.whiteflag.protocol">WfState</a></dt>
 <dd>
@@ -538,7 +554,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setAll-java.util.Map-">setAll(Map&lt;String, String&gt;)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
-<div class="block">Sets all field values of this segment from a field name-to-value mapping</div>
+<div class="block">Sets all field values of this segment from a fieldname-to-value mapping</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#setAll-java.lang.String:A-int-">setAll(String[], int)</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
@@ -604,7 +620,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfMessageSegment.html#toMap--">toMap()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfMessageSegment.html" title="class in org.whiteflag.protocol.core">WfMessageSegment</a></dt>
 <dd>
-<div class="block">Gets a field name-to-value mapping of this message segment</div>
+<div class="block">Gets a fieldname-to-value mapping of this message segment</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflag/protocol/core/WfBinaryString.html#toString--">toString()</a></span> - Method in class org.whiteflag.protocol.core.<a href="org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core">WfBinaryString</a></dt>
 <dd>

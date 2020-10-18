@@ -57,8 +57,8 @@ public class WfJsonMessage {
     /**
      * Creates a new JSON representation of a Whiteflag message
      * @param metadata the key-to-value mapping of metadata
-     * @param header the field name-to-value mapping of the message header
-     * @param body the field name-to-value mapping of message body
+     * @param header the fieldname-to-value mapping of the message header
+     * @param body the fieldname-to-value mapping of message body
      */
     public WfJsonMessage(Map<String, String> metadata, Map<String, String> header, Map<String, String> body) {
         this.metadata = metadata;
@@ -113,7 +113,7 @@ public class WfJsonMessage {
 
     /**
      * Gets the message header
-     * @return the field name-to-value mapping of the message header
+     * @return the fieldname-to-value mapping of the message header
      */
     @JsonGetter("MessageHeader")
     public Map<String, String> getHeader() {
@@ -122,7 +122,7 @@ public class WfJsonMessage {
 
     /**
      * Gets the message body
-     * @return the field name-to-value mapping of the message body
+     * @return the fieldname-to-value mapping of the message body
      */
     @JsonGetter("MessageBody")
     public Map<String, String> getBody() {

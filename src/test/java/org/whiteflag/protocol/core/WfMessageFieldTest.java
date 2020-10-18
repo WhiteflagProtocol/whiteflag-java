@@ -13,7 +13,7 @@ import static org.whiteflag.protocol.core.WfMessageField.Encoding.*;
  * Whiteflag field test class
  */
 public class WfMessageFieldTest {
-    /* Field name */
+    /* Fieldname */
     private final String FIELDNAME = "TESTFIELD";
 
     /* Regex field begin and end */
