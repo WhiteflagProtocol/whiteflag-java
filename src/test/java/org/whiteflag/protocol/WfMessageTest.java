@@ -51,6 +51,13 @@ public class WfMessageTest {
         assertFalse("Should not be able to set field value twice", message.set("ObjectType", "22"));
         assertFalse("Should not be able to set value of non existing field", message.body.set("ReferenceIndicator", "1"));
         assertFalse("Should not be able to set value of non existing field", message.set("NoField", "00"));
+
+        /* Verify metadata */
+        assertEquals("Metadata should be added", null, message.addMetadata("transactionHash", "a1b2c3"));
+        assertEquals("Metadata cannot be added twice", "a1b2c3", message.addMetadata("transactionHash", "d4e5f6"));
+        assertEquals("Metadata should be added", null, message.addMetadata("originatorAddress", "abc123"));
+        assertEquals("Metadata should return correct value", "abc123", message.getMetadata("originatorAddress"));
+        assertEquals("Metadata should have two keys", 2, message.getMetadataKeys().size());
     }
     /**
      * Tests for correctly constructed cryptographic message with header and body object
@@ -240,11 +247,16 @@ public class WfMessageTest {
         }
 
         /* Verify */
+        assertEquals("Metadata should be added", null, message.addMetadata("transactionHash", "a1b2c3"));
+        assertEquals("Metadata cannot be added twice", "a1b2c3", message.addMetadata("transactionHash", "d4e5f6"));
+        assertEquals("Metadata should be added", null, message.addMetadata("originatorAddress", "abc123"));
+        assertEquals("Metadata should return correct value", "abc123", message.getMetadata("originatorAddress"));
+        assertEquals("Metadata should have two keys", 2, message.getMetadataKeys().size());
         assertEquals("Message type should be correct", M, message.type);
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Encoding should be correct", messageEncoded, message.encode());
-        assertEquals("Encoding from chache should be correct", messageEncoded, message.encode());
+        assertEquals("Encoding from cache should be correct", messageEncoded, message.encode());
         assertTrue("Message should be valid", message.isValid());
     }
     /**
@@ -285,6 +297,140 @@ public class WfMessageTest {
         assertEquals("Size dimention 2 should be correctly set", fieldValues[14], message.get("ObjectSizeDim2"));
         assertEquals("Orientation should be correctly set", fieldValues[15], message.get("ObjectOrientation"));
         assertTrue("Message should be valid", message.isValid());
+    }
+    /**
+     * Tests test message
+     */
+    @Test
+    public void testTestMessage() throws WfException {
+        /* Setup */
+        final String messageSerialized = "WF101T33efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3aeM802013-08-31T04:29:15ZP00D00H00M22+30.79658-037.8260287653210042";
+        final String[] fieldValues = { "WF", "1", "0", "1", "T", "3", "3efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae",
+                                       "M", "80", "2013-08-31T04:29:15Z", "P00D00H00M", "22", "+30.79658", "-037.82602", "8765", "3210", "042"
+                                    };
+        WfMessage message;
+        try {
+            message = WfMessage.Creator.compile(fieldValues);
+        } catch (WfException e) {
+            throw e;
+        }
+        // Encode
+        String messageEncoded;
+        try {
+            messageEncoded = message.encode();
+        } catch (WfException e) {
+            throw e;
+        }
+        // Decode
+        WfMessage messageDecoded;
+        try {
+            messageDecoded = WfMessage.Creator.compile(fieldValues);
+        } catch (WfException e) {
+            throw e;
+        }
+
+        /* Verify */
+        assertEquals("Should have no metadata", null, message.getMetadata("transactionHash"));
+        assertEquals("Message type should be correct", T, message.type);
+        assertEquals("Decoded message type should be correct", T, messageDecoded.type);
+        assertEquals("Serialization should be correct", messageSerialized, message.serialize());
+        assertEquals("Serialization from cache should be identical", messageDecoded.serialize(), message.serialize());
+        assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
+        assertEquals("Number of fields should be equal to number of decoded field names in set", message.getFieldNames().size(), messageDecoded.getNoFields());
+        assertEquals("Prefix should be correctly set", fieldValues[0], message.get("Prefix"));
+        assertEquals("Prefix should be correctly set in decoded message", fieldValues[0], messageDecoded.get("Prefix"));
+        assertEquals("Version number should be correctly set", fieldValues[1], message.get("Version"));
+        assertEquals("Encryption indicator should be correctly set", fieldValues[2], message.get("EncryptionIndicator"));
+        assertEquals("Duress indicator should be correctly set", fieldValues[3], message.get("DuressIndicator"));
+        assertEquals("Message code should be correctly set", fieldValues[4], message.get("MessageCode"));
+        assertEquals("Reference indicator should be correctly set", fieldValues[5], message.get("ReferenceIndicator"));
+        assertFalse("Should not be able to change reference indicator field", message.header.set("ReferenceIndicator", "6"));
+        assertEquals("Referenced message should be correctly set", fieldValues[6], message.get("ReferencedMessage"));
+        assertEquals("Referenced message should be correctly set in decoded message", fieldValues[6], messageDecoded.get("ReferencedMessage"));
+        assertEquals("Pseudo message code should be correctly set", fieldValues[7], message.get("PseudoMessageCode"));
+        assertEquals("Pseudo message code should be correctly set in decoded message", fieldValues[7], messageDecoded.get("PseudoMessageCode"));
+        assertEquals("Subject code should be correctly set", fieldValues[8], message.get("SubjectCode"));
+        assertEquals("DateTime should be correctly set", fieldValues[9], message.get("DateTime"));
+        assertEquals("Duration should be correctly set", fieldValues[10], message.get("Duration"));
+        assertEquals("Object code  should be correctly set", fieldValues[11], message.body.get("ObjectType"));
+        assertEquals("Latitude should be correctly set", fieldValues[12], message.get("ObjectLatitude"));
+        assertEquals("Longitude should be correctly set", fieldValues[13], message.get("ObjectLongitude"));
+        assertEquals("Size dimention 1 should be correctly set", fieldValues[14], message.get("ObjectSizeDim1"));
+        assertEquals("Size dimention 2 should be correctly set", fieldValues[15], message.get("ObjectSizeDim2"));
+        assertEquals("Orientation should be correctly set in decoded message", fieldValues[16], messageDecoded.body.get("ObjectOrientation"));
+        assertTrue("Message should be valid", message.isValid());
+        assertTrue("Decoded message should be valid", messageDecoded.isValid());
+
+        /* Verify metadata */
+        assertEquals("Metadata should be added", null, messageDecoded.addMetadata("transactionHash", "a1b2c3"));
+        assertEquals("Metadata cannot be added twice", "a1b2c3", messageDecoded.addMetadata("transactionHash", "d4e5f6"));
+        assertEquals("Metadata should be added", null, messageDecoded.addMetadata("originatorAddress", "abc123"));
+        assertEquals("Metadata should return correct value", "abc123", messageDecoded.getMetadata("originatorAddress"));
+        assertEquals("Metadata should have two keys", 2, messageDecoded.getMetadataKeys().size());
+    }
+    /**
+     * Tests compilation of request message
+     */
+    @Test
+    public void testRequestMessage() throws WfException {
+        /* Setup */
+        final String messageSerialized = "WF101Q13efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae802013-08-31T04:29:15ZP01D00H00M22+31.79658-033.826028799321000010022003";
+        final String[] fieldValues = { "WF", "1", "0", "1", "Q", "1", "3efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae",
+                                       "80", "2013-08-31T04:29:15Z", "P01D00H00M", "22", "+31.79658", "-033.82602", "8799", "3210", "000",
+                                       "10", "02", "20", "03"
+                                    };
+        WfMessage message;
+        try {
+            message = WfMessage.Creator.compile(fieldValues);
+        } catch (WfException e) {
+            throw e;
+        }
+        // Encode
+        String messageEncoded;
+        try {
+            messageEncoded = message.encode();
+        } catch (WfException e) {
+            throw e;
+        }
+        // Decode
+        WfMessage messageDecoded;
+        try {
+            messageDecoded = WfMessage.Creator.compile(fieldValues);
+        } catch (WfException e) {
+            throw e;
+        }
+
+        /* Verify */
+        assertEquals("Message type should be correct", Q, message.type);
+        assertEquals("Decoded message type should be correct", Q, messageDecoded.type);
+        assertEquals("Serialization should be correct", messageSerialized, message.serialize());
+        assertEquals("Serialization from cache should be identical", messageDecoded.serialize(), message.serialize());
+        assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
+        assertEquals("Number of decoded fields should be equal to number of original field names in set", messageDecoded.getFieldNames().size(), message.getNoFields());
+        assertEquals("Prefix should be correctly set", fieldValues[0], message.get("Prefix"));
+        assertEquals("Version number should be correctly set", fieldValues[1], message.get("Version"));
+        assertEquals("Encryption indicator should be correctly set", fieldValues[2], message.get("EncryptionIndicator"));
+        assertEquals("Duress indicator should be correctly set", fieldValues[3], message.get("DuressIndicator"));
+        assertEquals("Message code should be correctly set", fieldValues[4], message.get("MessageCode"));
+        assertEquals("Reference indicator should be correctly set", fieldValues[5], message.get("ReferenceIndicator"));
+        assertEquals("Referenced message should be correctly set", fieldValues[6], message.get("ReferencedMessage"));
+        assertEquals("Subject code should be correctly set", fieldValues[7], message.get("SubjectCode"));
+        assertEquals("DateTime should be correctly set", fieldValues[8], message.get("DateTime"));
+        assertEquals("Duration should be correctly set", fieldValues[9], message.get("Duration"));
+        assertEquals("Object code  should be correctly set", fieldValues[10], message.get("ObjectType"));
+        assertEquals("Latitude should be correctly set", fieldValues[11], message.get("ObjectLatitude"));
+        assertEquals("Longitude should be correctly set", fieldValues[12], message.get("ObjectLongitude"));
+        assertEquals("Size dimention 1 should be correctly set", fieldValues[13], message.get("ObjectSizeDim1"));
+        assertEquals("Size dimention 2 should be correctly set", fieldValues[14], message.get("ObjectSizeDim2"));
+        assertEquals("Orientation should be correctly set", fieldValues[15], message.get("ObjectOrientation"));
+        assertEquals("Request object type 1 is correctly set", fieldValues[16], message.get("ObjectType1"));
+        assertEquals("Request object type 1 quantity is correctly set", fieldValues[17], message.get("ObjectType1Quant"));
+        assertEquals("Request object type 2 is correctly set", fieldValues[18], message.get("ObjectType2"));
+        assertEquals("Request object type 2 quantity is correctly set", fieldValues[19], message.get("ObjectType2Quant"));
+        assertTrue("Message header should be valid", message.header.isValid());
+        assertTrue("Message body be valid", message.body.isValid());
+        assertTrue("Message should be valid", message.isValid());
+        assertTrue("Decoded message should be valid", messageDecoded.isValid());
     }
     /**
      * Tests serialization of free text message

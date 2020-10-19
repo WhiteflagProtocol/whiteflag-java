@@ -465,7 +465,7 @@ extends java.lang.Object</pre>
 <div class="block">Gets the value of the field specified by index</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>index</code> - integer with the index of the requested field</dd>
+<dd><code>index</code> - integer with the index of the requested field; negative index counts back from last field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>String with the field value, or NULL if it does not exist</dd>
 </dl>
@@ -500,7 +500,7 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value of the field specified by its index in the message segment</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>index</code> - Integer with the name of the field</dd>
+<dd><code>index</code> - integer with the index of the requested field; negative index counts back from last field</dd>
 <dd><code>data</code> - String with data to be set as the field value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>TRUE if the data was valid and the field value is set, else FALSE</dd>
@@ -676,7 +676,7 @@ extends java.lang.Object</pre>
 <div class="block">Gets the field specified by index</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>index</code> - integer with the index of the requested field</dd>
+<dd><code>index</code> - integer with the index of the requested field; negative index counts back from last field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the requested <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a>, or NULL if it does not exist</dd>
 </dl>

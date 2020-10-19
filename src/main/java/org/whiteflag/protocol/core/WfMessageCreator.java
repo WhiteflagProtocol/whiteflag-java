@@ -216,7 +216,7 @@ public class WfMessageCreator {
                 break;
             case Q:
                 // Extend request message body with request fields (calculated with remaining fields)
-                final int nRequestObjects = (fieldValues.length - (bodyStartIndex + body.getNoFields())) / 2;  // One request object requires 2 fields
+                final int nRequestObjects = (fieldValues.length - (header.getNoFields() + body.getNoFields())) / 2;  // One request object requires 2 fields
                 body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:

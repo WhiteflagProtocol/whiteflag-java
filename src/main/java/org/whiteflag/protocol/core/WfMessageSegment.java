@@ -20,10 +20,14 @@ public class WfMessageSegment {
 
     /* PROPERTIES */
 
-    /* Array of message segment fields */
+    /**
+     * Array of fields in this message segment
+     */
     private WfMessageField[] fields;
 
-    /* Deserialisation, decoding and copying cursor */
+    /**
+     * Deserialisation, decoding and copying cursor
+     */
     private int cursor = 0;
 
     /* CONSTRUCTOR */
@@ -78,7 +82,10 @@ public class WfMessageSegment {
         int byteCursor = fields[0].startByte;
         for (WfMessageField field : fields) {
             // Fields should be ordered without missing or overlapping bytes
-            if (field.startByte != byteCursor) return false;
+            if (field.startByte != byteCursor) {
+                throw new RuntimeException("Invalid field order: " + field.name + " field is defined at byte " + field.startByte + ", but is at byte " + byteCursor);
+                //return false;
+            }
             byteCursor = field.endByte;
             // Field should be valid
             if (Boolean.FALSE.equals(field.isValid())) return false;
@@ -151,12 +158,15 @@ public class WfMessageSegment {
 
     /**
      * Gets the value of the field specified by index
-     * @param index integer with the index of the requested field
+     * @param index integer with the index of the requested field; negative index counts back from last field
      * @return String with the field value, or NULL if it does not exist
      */
     public final String get(final int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index].get();
+        }
+        if (index < 0 && (fields.length + index) >= 0) {
+            return fields[fields.length + index].get();
         }
         return null;
     }
@@ -176,13 +186,16 @@ public class WfMessageSegment {
 
     /**
      * Sets the value of the field specified by its index in the message segment
-     * @param index Integer with the name of the field
+     * @param index integer with the index of the requested field; negative index counts back from last field
      * @param data String with data to be set as the field value
      * @return TRUE if the data was valid and the field value is set, else FALSE
      */
     public final Boolean set(final int index, final String data) {
         if (index >= 0 && index < fields.length) {
             return fields[index].set(data);
+        }
+        if (index < 0 && (fields.length + index) >= 0) {
+            return fields[fields.length + index].set(data);
         }
         return false;
     }
@@ -224,7 +237,10 @@ public class WfMessageSegment {
             throw new WfCoreException("Message segment has " + fields.length + " fields, but received data for " + nFields + " fields");
         }
         for (; cursor < this.fields.length; cursor++) {
-            fields[cursor].set(data[index + cursor]);
+            final int i = index + cursor;
+            if (Boolean.FALSE.equals(fields[cursor].set(data[i]))) {
+                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in array at item " + i + ": " + data[i]);
+            }
         }
         return this.isValid();
     }
@@ -333,21 +349,23 @@ public class WfMessageSegment {
      */
     protected final WfMessageSegment append(final WfMessageSegment segment) {
         // Create new field array and fill with original fields from this segment
-        WfMessageField[] newFieldArray = new WfMessageField[this.fields.length + segment.getNoFields()];
-        System.arraycopy(this.fields, 0, newFieldArray, 0, this.fields.length);
+        WfMessageField[] newFields = new WfMessageField[this.getNoFields() + segment.getNoFields()];
+        System.arraycopy(this.fields, 0, newFields, 0, this.fields.length);
 
-        // Get last byte of original field array to shit bytes in added array
-        int shift = this.fields[this.fields.length].endByte;
+        // Check ending and starting bytes of both segments
+        final int shift = this.getField(-1).endByte - segment.getField(0).startByte;
 
         // Add new fields from other segment with shifted start and end byte to array
-        int index = this.fields.length;
+        int i = this.fields.length;
         for (WfMessageField field : segment.getAllFields()) {
-            newFieldArray[index] = new WfMessageField(field, shift);
-            index++;
+            newFields[i] = new WfMessageField(field, shift);
+            i++;
         }
-        //Set the fields with new field array, update cursor if all fields are valid and return this object
-        this.fields = newFieldArray;
-        if (cursor != 0 && Boolean.TRUE.equals(isValid())) cursor = this.fields.length;
+        // Set the fields with new field array, update cursor if all fields are valid and return this object
+        this.fields = newFields;
+        if (cursor != 0 && Boolean.TRUE.equals(this.isValid())) {
+            cursor = this.fields.length;
+        }
         return this;
     }
 
@@ -365,12 +383,15 @@ public class WfMessageSegment {
 
     /**
      * Gets the field specified by index
-     * @param index integer with the index of the requested field
+     * @param index integer with the index of the requested field; negative index counts back from last field
      * @return the requested {@link WfMessageField}, or NULL if it does not exist
      */
     protected final WfMessageField getField(final int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index];
+        }
+        if (index < 0 && (fields.length + index) >= 0) {
+            return fields[fields.length + index];
         }
         return null;
     }
