@@ -102,23 +102,21 @@ public enum WfMessageType {
 
     /**
      * Returns the {@link WfMessageType} message type
-     * @param code String with the message code
+     * @param messageCode String with the message code
      */
-    public static WfMessageType getType(final String code) throws WfCoreException {
-        if (code == null || code.isEmpty()) return ANY;
+    public static WfMessageType byCode(final String messageCode) throws WfCoreException {
+        if (messageCode == null || messageCode.isEmpty()) return ANY;
         for (WfMessageType type : WfMessageType.values()) {
-            if (type.messageCode.equalsIgnoreCase(code)) {
-                return type;
-            }
+            if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
         }
-        throw new WfCoreException("Invalid message type: " + code);
+        throw new WfCoreException("Invalid message type: " + messageCode);
     }
 
     /**
      * Returns the message code string
      * @return String with the message code
      */
-    public String getMessageCode() {
+    public String getCode() {
         return messageCode;
     }
 
@@ -158,13 +156,14 @@ public enum WfMessageType {
         // Create fields array
         WfMessageField[] fields = new WfMessageField[nFields];
         for (int i = 0; i < nFields; i += 2) {
-            // Calculate field beginnings and ends
+            // Calculate field number, beginnings and ends
+            final int nField = (i / 2) + 1;
             final int splitByte = startByte + OBJECTFIELDSIZE;
             final int endByte = splitByte + QUANTFIELDSIZE;
 
             // Add object and quantity field to array
-            fields[i] = new WfMessageField(objectField.name + n, objectField.pattern.toString(), objectField.encoding, startByte, startByte);
-            fields[i + 1] = new WfMessageField(quantField.name + n+"Quant", quantField.pattern.toString(), quantField.encoding, startByte, endByte);
+            fields[i] = new WfMessageField(objectField.name + nField, objectField.pattern.toString(), objectField.encoding, startByte, splitByte);
+            fields[i + 1] = new WfMessageField(objectField.name + nField + "Quant", quantField.pattern.toString(), quantField.encoding, splitByte, endByte);
 
             // Starting byte of next field
             startByte = endByte;

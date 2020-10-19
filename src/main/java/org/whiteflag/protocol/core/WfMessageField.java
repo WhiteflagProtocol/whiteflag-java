@@ -6,7 +6,7 @@ package org.whiteflag.protocol.core;
 import java.util.regex.Pattern;
 import java.nio.charset.StandardCharsets;
 
-/* Encoding parameters */
+/* Required encoding parameters */
 import static org.whiteflag.protocol.core.WfBinaryString.BINRADIX;
 import static org.whiteflag.protocol.core.WfBinaryString.HEXRADIX;
 import static org.whiteflag.protocol.core.WfBinaryString.QUADBIT;
@@ -189,7 +189,7 @@ public class WfMessageField {
      */
     @Override
     public final String toString() {
-        return this.getValue();
+        return this.get();
     }
 
     /* PUBLIC METHODS: metadata & validators */
@@ -208,7 +208,7 @@ public class WfMessageField {
      * @return TRUE if the field contains a valid value, else FALSE
      */
     public final Boolean isValid() {
-        return isDataValid(this.value);
+        return isValid(this.value);
     }
 
     /**
@@ -216,7 +216,7 @@ public class WfMessageField {
      * @param data The data to be checked
      * @return Boolean indicating if data is a valid value for this field
      */
-    public final Boolean isDataValid(final String data) {
+    public final Boolean isValid(final String data) {
         if (data == null) return false;
         return this.pattern.matcher(data).matches();
     }
@@ -251,7 +251,7 @@ public class WfMessageField {
      * Gets the value of the message field
      * @return String with the field value
      */
-    public final String getValue() {
+    public final String get() {
         return this.value;
     }
 
@@ -260,12 +260,12 @@ public class WfMessageField {
      * @param data The data representing the field value
      * @return TRUE if field value is set, FALSE if field already set or data is invalid
      */
-    public final Boolean setValue(final String data) {
+    public final Boolean set(final String data) {
         // Cannot set value twice
         if (Boolean.TRUE.equals(this.isSet())) return false;
 
         // Set if data is valid
-        if (Boolean.TRUE.equals(isDataValid(data))) {
+        if (Boolean.TRUE.equals(isValid(data))) {
             this.value = data;
             return true;
         }
@@ -284,7 +284,7 @@ public class WfMessageField {
         final String genericErrorMsg = "Cannot encode " + name + " field";
 
         // Check if field contains a valid value
-        if (Boolean.FALSE.equals(isDataValid(this.value))) {
+        if (Boolean.FALSE.equals(isValid(this.value))) {
             throw new WfCoreException(genericErrorMsg + ": " + value + " is not a valid Whiteflag " + encoding.toString() + " encoding");
         }
 

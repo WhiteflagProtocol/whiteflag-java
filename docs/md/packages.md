@@ -15,6 +15,7 @@ The WFJL software consists of the following Java packages:
 |-----------------------------------|-----------------------------------|
 |`org.whiteflag.protocol`           | Main Whiteflag protocol interface |
 |`org.whiteflag.protocol.core`      | Whiteflag core functionality      |
+|`org.whiteflag.protocol.util`      | Whiteflag utilities               |
 
 ### Description
 
@@ -26,3 +27,8 @@ independent core functionality as defined in the Whiteflag specification,
 such as the Whiteflag message definitions. This seperates the core
 protocol functionality from implementation-specific design decisions
 as much as possible.
+
+The `org.whiteflag.protocol.util` package contains utilities used by
+the main protocol classes, but that are not part of the external interface
+and also not part of the protocol core, e.g. data conversions, such as
+conversion of Whiteflag message to and from JSON.

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -210,13 +210,19 @@ extends <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html" title=
 <div class="block">Returns the cached serialized message, or else it serialzes and caches Whiteflag message</div>
 </td>
 </tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/whiteflag/protocol/WfMessage.html#toJson--">toJson</a></span>()</code>
+<div class="block">Returns the serialised JSON representation of the Whiteflag message</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.whiteflag.protocol.core.WfMessageCore">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.whiteflag.protocol.core.<a href="../../../org/whiteflag/protocol/core/WfMessageCore.html" title="class in org.whiteflag.protocol.core">WfMessageCore</a></h3>
-<code><a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#getFieldValue-java.lang.String-">getFieldValue</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#isValid--">isValid</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#setFieldValue-java.lang.String-java.lang.String-">setFieldValue</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#toString--">toString</a></code></li>
+<code><a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#get-java.lang.String-">get</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#getFieldNames--">getFieldNames</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#getNoFields--">getNoFields</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#isValid--">isValid</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#isValid-java.lang.String-">isValid</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#isValid-java.lang.String-java.lang.String-">isValid</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#set-java.lang.String-java.lang.String-">set</a>, <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html#toString--">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -323,7 +329,7 @@ extends <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html" title=
 <a name="encode-java.lang.Boolean-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>encode</h4>
 <pre>public&nbsp;java.lang.String&nbsp;encode(java.lang.Boolean&nbsp;prefix)
@@ -338,6 +344,23 @@ extends <a href="../../../org/whiteflag/protocol/core/WfMessageCore.html" title=
 <dd>hexadecimal string with the encoded Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../org/whiteflag/protocol/WfException.html" title="class in org.whiteflag.protocol">WfException</a></code> - if any field does not contain valid data</dd>
+</dl>
+</li>
+</ul>
+<a name="toJson--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toJson</h4>
+<pre>public&nbsp;java.lang.String&nbsp;toJson()
+                        throws <a href="../../../org/whiteflag/protocol/WfException.html" title="class in org.whiteflag.protocol">WfException</a></pre>
+<div class="block">Returns the serialised JSON representation of the Whiteflag message</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>String with the serialised JSON representation</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../org/whiteflag/protocol/WfException.html" title="class in org.whiteflag.protocol">WfException</a></code></dd>
 </dl>
 </li>
 </ul>

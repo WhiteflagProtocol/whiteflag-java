@@ -45,7 +45,7 @@ public class WfBinaryString {
      * @throws IllegalArgumentException if the provided string is not binary encoded data
      */
     public WfBinaryString(final String data) {
-        setValue(data);
+        set(data);
     }
 
     /**
@@ -53,7 +53,7 @@ public class WfBinaryString {
      * @param binaryString the {@link WfBinaryString} to create a new binary string from
      */
     public WfBinaryString(final WfBinaryString binaryString) {
-        setValue(binaryString.toBinString());
+        set(binaryString.toBinString());
     }
 
     /* PUBLIC METHODS: basic object interface */
@@ -74,7 +74,7 @@ public class WfBinaryString {
      * @return TRUE if null or empty, else FALSE
      */
     public final Boolean isEmpty() {
-        if (this.value.isEmpty()) return true;
+        if (this.value == null || this.value.isEmpty()) return true;
         return false;
     }
 
@@ -93,7 +93,7 @@ public class WfBinaryString {
      * @param data a string with the binary representation of the value
      * @return this {@link WfBinaryString}
      */
-    public final WfBinaryString setValue(final String data)  {
+    public final WfBinaryString set(final String data)  {
         return setBinValue(data);
     }
 

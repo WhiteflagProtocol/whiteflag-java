@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -178,6 +178,13 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html#map-java.util.Map-java.util.Map-">map</a></span>(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;headerValues,
+   java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;bodyValues)</code>
+<div class="block">Creates a new Whiteflag core message object from header and body maps</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html#type-org.whiteflag.protocol.core.WfMessageType-">type</a></span>(<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a>&nbsp;messageType)</code>
 <div class="block">Creates a new empty Whiteflag core message object of the specified type</div>
 </td>
@@ -244,8 +251,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>type</h4>
-<pre>public final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a>&nbsp;type(<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a>&nbsp;messageType)
-                            throws <a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></pre>
+<pre>public final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a>&nbsp;type(<a href="../../../../org/whiteflag/protocol/core/WfMessageType.html" title="enum in org.whiteflag.protocol.core">WfMessageType</a>&nbsp;messageType)</pre>
 <div class="block">Creates a new empty Whiteflag core message object of the specified type</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -254,6 +260,27 @@ extends java.lang.Object</pre>
 <dd>this <a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core"><code>WfMessageCreator</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the provided values are invalid</dd>
+</dl>
+</li>
+</ul>
+<a name="map-java.util.Map-java.util.Map-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>map</h4>
+<pre>public final&nbsp;<a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core">WfMessageCreator</a>&nbsp;map(java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;headerValues,
+                                  java.util.Map&lt;java.lang.String,java.lang.String&gt;&nbsp;bodyValues)
+                           throws <a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></pre>
+<div class="block">Creates a new Whiteflag core message object from header and body maps</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>headerValues</code> - a fieldname-to-value mapping of the message header fields</dd>
+<dd><code>bodyValues</code> - a fieldname-to-value mapping of the message body fields</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this <a href="../../../../org/whiteflag/protocol/core/WfMessageCreator.html" title="class in org.whiteflag.protocol.core"><code>WfMessageCreator</code></a></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the provided fields and/or values are invalid</dd>
 </dl>
 </li>
 </ul>
