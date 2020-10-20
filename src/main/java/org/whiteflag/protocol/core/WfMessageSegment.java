@@ -82,10 +82,7 @@ public class WfMessageSegment {
         int byteCursor = fields[0].startByte;
         for (WfMessageField field : fields) {
             // Fields should be ordered without missing or overlapping bytes
-            if (field.startByte != byteCursor) {
-                throw new RuntimeException("Invalid field order: " + field.name + " field is defined at byte " + field.startByte + ", but is at byte " + byteCursor);
-                //return false;
-            }
+            if (field.startByte != byteCursor) return false;
             byteCursor = field.endByte;
             // Field should be valid
             if (Boolean.FALSE.equals(field.isValid())) return false;
@@ -353,8 +350,12 @@ public class WfMessageSegment {
         System.arraycopy(this.fields, 0, newFields, 0, this.fields.length);
 
         // Check ending and starting bytes of both segments
-        final int shift = this.getField(-1).endByte - segment.getField(0).startByte;
-
+        WfMessageField endField = this.getField(-1);
+        WfMessageField startField = segment.getField(0); 
+        int shift = 0;
+        if (endField != null && startField != null) {
+            shift = endField.endByte - startField.startByte;
+        }
         // Add new fields from other segment with shifted start and end byte to array
         int i = this.fields.length;
         for (WfMessageField field : segment.getAllFields()) {

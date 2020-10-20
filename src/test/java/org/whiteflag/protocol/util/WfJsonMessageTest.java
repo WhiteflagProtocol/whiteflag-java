@@ -6,8 +6,6 @@ package org.whiteflag.protocol.util;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Map;
-
 /**
  * Whiteflag JSON message test class
  */

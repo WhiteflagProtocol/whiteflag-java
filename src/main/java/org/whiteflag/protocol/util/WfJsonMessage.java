@@ -8,7 +8,6 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -52,7 +51,7 @@ public class WfJsonMessage {
     /**
      * Creates a new empty JSON representation of a Whiteflag message
      */
-    private WfJsonMessage() {};
+    private WfJsonMessage() {}
 
     /**
      * Creates a new JSON representation of a Whiteflag message
@@ -75,10 +74,10 @@ public class WfJsonMessage {
      */
     public String toJson() throws WfUtilException {
         String jsonStr;
-        try{
+        try {
             jsonStr = new ObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            throw new WfUtilException("Cannot convert message to JSON string:" + e.getMessage(), WF_JSON_ERROR);
+            throw new WfUtilException("Cannot convert message to JSON string: " + e.getMessage(), WF_JSON_ERROR);
         }
         return jsonStr;
     }
