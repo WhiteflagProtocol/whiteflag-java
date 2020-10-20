@@ -324,7 +324,7 @@ public class WfMessageTest {
         // Decode
         WfMessage messageDecoded;
         try {
-            messageDecoded = WfMessage.Creator.compile(fieldValues);
+            messageDecoded = WfMessage.Creator.decode(messageEncoded);
         } catch (WfException e) {
             throw e;
         }
@@ -395,7 +395,7 @@ public class WfMessageTest {
         // Decode
         WfMessage messageDecoded;
         try {
-            messageDecoded = WfMessage.Creator.compile(fieldValues);
+            messageDecoded = WfMessage.Creator.decode(messageEncoded);
         } catch (WfException e) {
             throw e;
         }
