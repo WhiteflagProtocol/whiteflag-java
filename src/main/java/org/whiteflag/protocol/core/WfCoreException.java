@@ -19,9 +19,9 @@ public class WfCoreException extends Exception {
 
     /**
      * Creates a generic Whiteflag exception
-     * @param errorMessage String containing the human readible error message
+     * @param errorMessage a human readible error message
      */
-    public WfCoreException(String errorMessage) {
+    public WfCoreException(final String errorMessage) {
         super(errorMessage);
     }
 }

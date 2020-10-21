@@ -1,0 +1,120 @@
+@startuml messages
+!include .stylesheet.puml
+
+left footer WFJL Message Class Diagram
+
+package org.whiteflag.protocol.core {
+    class WfMessageCore {
+        +type : WfMessageType
+        +header : WfMessageSegment
+        +body : WfMessageSegment
+        +serialize() : String
+        +encode() : String
+    }
+    class WfMessageSegment {
+        -fields : WfMessageField[]
+        +serialize() : String
+        +deserialize(String)
+        +encode() : WfBinaryString
+        +decode(WfBinaryString)
+    }
+    class WfMessageField {
+        +name : String
+        +pattern : Pattern
+        +encoding : Encoding
+        +startByte : int
+        +endByte : int
+        -value : String
+        +encode() : WfBinaryString
+        +decode(WfBinaryString) : String
+    }
+    enum WfMessageField.Encoding {
+        BIN
+        DEC
+        HEX
+        UTF8
+        DATETIME
+        DURATION
+        LAT
+        LONG
+    }
+    class WfMessageCreator {
+        __
+        +create()
+        ..
+        +type(WfMessageType)
+        +map(Map, Map)
+        +deserialize(String)
+        +decode(String)
+        +compile(String[])
+    }
+    enum WfMessageType {
+        A
+        K
+        T
+        F
+        R
+        P
+        E
+        S
+        D
+        I
+        M
+        Q
+    }
+    class WfMessageDefinitions <<Utility>> {
+        #headerFields : WfMessageField[]
+        #authenticationFields : WfMessageField[]
+        #cryptoFields : WfMessageField[]
+        #testFields : WfMessageField[]
+        #freetextFields : WfMessageField[]
+        #resourceFields : WfMessageField[]
+        #signsignalFields : WfMessageField[]
+        #createRequestFields() : WfMessageField[]
+    }
+    class WfBinaryString <<DataType>>
+}
+
+package org.whiteflag.protocol.util {
+    class WfJsonMessage {
+        +toJson() : String
+        +create(String)
+    }
+}
+
+package org.whiteflag.protocol {
+    class WfMessage {
+        -metaData : HashMap<>
+        +toJson() : String
+    }
+    class WfMessage.Creator {
+        +type(String)
+        +copy(WfMessage)
+        +deserialize(String)
+        +deserializeJson(String)
+        +decode(String)
+        +compile(String[])
+    }
+}
+
+WfJsonMessage <. WfMessage: uses
+WfJsonMessage <. WfMessage.Creator: uses
+
+WfMessage --|> WfMessageCore
+WfMessage +- WfMessage.Creator
+WfMessage <- WfMessage.Creator: uses
+WfMessage.Creator --> WfMessageCreator
+
+WfMessageCore --> WfMessageType
+WfMessageCore *-- "2" WfMessageSegment
+WfMessageSegment *-- "*" WfMessageField
+WfMessageField +- WfMessageField.Encoding
+
+WfMessageCreator -> WfMessageCore: creates
+WfMessageCreator ..> WfMessageType: uses
+WfMessageCreator ..> WfMessageSegment: uses
+
+WfMessageType --> WfMessageDefinitions
+WfMessageDefinitions --> WfMessageField
+
+@enduml

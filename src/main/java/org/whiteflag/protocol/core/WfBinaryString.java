@@ -41,26 +41,26 @@ public class WfBinaryString {
 
     /**
      * Constructs a new binary string object from a string with binary encoded data
-     * @param data String representing binary encoded data; only characters "0" and "1" are allowed
+     * @param data string representation of the binary encoded data; only characters "0" and "1" are allowed
      * @throws IllegalArgumentException if the provided string is not binary encoded data
      */
-    public WfBinaryString(String data) {
-        setValue(data);
+    public WfBinaryString(final String data) {
+        set(data);
     }
 
     /**
      * Constructs a new binary string object from an existing binary string object
-     * @param binaryString the {@link WfBinaryString} to create a new binary string from
+     * @param binaryString the binary string to be copied
      */
-    public WfBinaryString(WfBinaryString binaryString) {
-        setValue(binaryString.toBinString());
+    public WfBinaryString(final WfBinaryString binaryString) {
+        set(binaryString.toBinString());
     }
 
     /* PUBLIC METHODS: basic object interface */
 
     /**
      * Returns the binary string object as a binary string
-     * @return String with binary representation of the object
+     * @return binary representation of the object
      */
     @Override
     public final String toString() {
@@ -74,13 +74,13 @@ public class WfBinaryString {
      * @return TRUE if null or empty, else FALSE
      */
     public final Boolean isEmpty() {
-        if (this.value.isEmpty()) return true;
+        if (this.value == null || this.value.isEmpty()) return true;
         return false;
     }
 
     /**
-     * Returns the length of the binary string
-     * @return integer with the length
+     * Gets the length of the binary string
+     * @return the length of the binary string, i.e. the number of bits
      */
     public final int length() {
         return this.value.length();
@@ -90,19 +90,19 @@ public class WfBinaryString {
 
     /**
      * Sets the value with the provided binary string
-     * @param data a string with the binary representation of the value
+     * @param data the binary representation of the value
      * @return this {@link WfBinaryString}
      */
-    public final WfBinaryString setValue(String data)  {
+    public final WfBinaryString set(final String data)  {
         return setBinValue(data);
     }
 
     /**
      * Sets the value with the provided binary string
-     * @param data a string with the binary representation of the value
+     * @param data the binary representation of the value
      * @return this {@link WfBinaryString}
      */
-    public final WfBinaryString setBinValue(String data) {
+    public final WfBinaryString setBinValue(final String data) {
         if (data == null) throw new IllegalArgumentException("Null is not a valid binary string");
 
         // Check binary string
@@ -117,10 +117,10 @@ public class WfBinaryString {
 
     /**
      * Sets the value with the provided hexadecimal string
-     * @param data a string with the hexadecimal representation of the value
+     * @param data the hexadecimal representation of the value
      * @return this {@link WfBinaryString}
      */
-    public final WfBinaryString setHexValue(String data) {
+    public final WfBinaryString setHexValue(final String data) {
         if (data == null) throw new IllegalArgumentException("Null is not a valid hexadecimal string");
 
         // Check hexadecimal string
@@ -139,19 +139,19 @@ public class WfBinaryString {
     }
 
     /**
-     * Returns the binary string value as a binary string without 0b prefix
-     * @return String with binary representation
+     * Gets the binary string value as a binary string without 0b prefix
+     * @return binary representation of the value
      */
     public final String toBinString() {
         return this.toBinString(false);
     }
 
     /**
-     * Returns the binary string value as a binary string
+     * Gets the binary string value as a binary string
      * @param prefix if TRUE, the resulting string gets a 0b prefix
-     * @return String with binary representation
+     * @return binary representation of the value
      */
-    public final String toBinString(Boolean prefix) {
+    public final String toBinString(final Boolean prefix) {
         if (Boolean.TRUE.equals(prefix)) {
             return BINPREFIX + this.value;
         }
@@ -159,19 +159,19 @@ public class WfBinaryString {
     }
 
     /**
-     * Returns the binary string value as a hexadeciomal string without 0x prefix
-     * @return String with hexadecimal representation
+     * Gets the binary string value as a hexadeciomal string without 0x prefix
+     * @return hexadecimal representation of the value
      */
     public final String toHexString() {
         return this.toHexString(false);
     }
 
     /**
-     * Returns the binary string value as a hexadeciomal string
+     * Gets the binary string value as a hexadeciomal string
      * @param prefix if TRUE, the resulting string gets a 0x prefix
-     * @return String with hexadecimal representation
+     * @return hexadecimal representation of the value
      */
-    public final String toHexString(Boolean prefix) {
+    public final String toHexString(final Boolean prefix) {
         StringBuilder hex = new StringBuilder();
         String bin = padRight(value, OCTET);
 
@@ -192,27 +192,27 @@ public class WfBinaryString {
      * Extracts the specified bit range of the binary string
      * @param startBit first bit of the requested range (included)
      * @param endBit last bit of the range (not included)
-     * @return new {@link WfBinaryString} with the extracted bit range
+     * @return new binary string with the extracted bit range
      */
-    public final WfBinaryString sub(int startBit, int endBit) {
+    public final WfBinaryString sub(final int startBit, final int endBit) {
         return new WfBinaryString(this.value.substring(startBit, endBit));
     }
 
     /**
      * Extracts range from the specified starting bit to the end of the binary string
      * @param startBit first bit of the requested range (included)
-     * @return new {@link WfBinaryString} with the extracted bit range
+     * @return new binary string with the extracted bit range
      */
-    public final WfBinaryString sub(int startBit) {
+    public final WfBinaryString sub(final int startBit) {
         return new WfBinaryString(this.value.substring(startBit));
     }
 
     /**
      * Appends a binary string to this binary string
-     * @param binString the {@link WfBinaryString} to be added
-     * @return The updated binary string object
+     * @param binString the binary string to be added
+     * @return this {@link WfBinaryString}
      */
-    public final WfBinaryString append(WfBinaryString binString) {
+    public final WfBinaryString append(final WfBinaryString binString) {
         this.value = this.value + binString.toBinString();
         return this;
     }
@@ -221,36 +221,36 @@ public class WfBinaryString {
 
     /**
      * Checks for and removes prefix from string
-     * @param string STring to be checked
-     * @param prefix The prefix to be checked for
-     * @return String without prefix
+     * @param str string to be checked
+     * @param prefix the prefix to be checked for
+     * @return the string without prefix
      */
-    public static final String removePrefix(String string, String prefix) {
-        if (string.startsWith(prefix)) {
-            return string.substring(prefix.length());
+    public static final String removePrefix(final String str, final String prefix) {
+        if (str.startsWith(prefix)) {
+            return str.substring(prefix.length());
         }
-        return string;
+        return str;
     }
 
     /**
      * Adds 0 to the left to fill the encoded field to its fields size
-     * @param s the string to be padded
+     * @param str the string to be padded
      * @param n the field size
-     * @return String with the padded encoded field
+     * @return the padded encoded field
      */
-    public static final String padRight(String s, int n) {
-        int pad = s.length() % n;
-        if (pad == 0) return s;
-        return s + "00000000".substring(0, n - pad);
+    public static final String padRight(final String str, final int n) {
+        int pad = str.length() % n;
+        if (pad == 0) return str;
+        return str + "00000000".substring(0, n - pad);
     }
 
     /**
      * Adds 0 to the left to fill the encoded field to its fields size
-     * @param s the string to be padded
+     * @param str the string to be padded
      * @param n the field size
-     * @return String with the padded encoded field
+     * @return the padded encoded field
      */
-    public static final String padLeft(String s, int n) {
-        return "00000000".substring(0, n - s.length()) + s;
+    public static final String padLeft(final String str, final int n) {
+        return "00000000".substring(0, n - str.length()) + str;
     }
 }

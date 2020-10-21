@@ -1,14 +1,24 @@
+/*
+ * Whiteflag Java Library tests
+ */
 package org.whiteflag.protocol;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Whiteflag state test class
  */
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 public class WfStateTest {
-    @Test public void testStateIsValid() {
+    /**
+     * Tests for correctly constructed state object
+     */
+    @Test
+    public void testStateIsValid() {
+        /* Setup */
         WfState wfState = new WfState();
+
+        /* Verify */
         assertTrue("Whiteflag state should be valid", wfState.isValid());
     }
 }

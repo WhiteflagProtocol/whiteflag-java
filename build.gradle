@@ -3,7 +3,7 @@
  */
 
 // Project
-version = '0.2.0'
+version = '0.2.1'
 
 // Plugins
 apply plugin: 'java'
@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-    // The JUnit test framework
     testImplementation 'junit:junit:4.12'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
 }
 
 // Include documentation and source

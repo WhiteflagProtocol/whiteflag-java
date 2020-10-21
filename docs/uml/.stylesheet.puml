@@ -1,0 +1,3 @@
+@startuml stylesheet
+skinparam monochrome true
+@enduml

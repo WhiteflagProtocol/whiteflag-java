@@ -16,3 +16,4 @@ The following documentation is available.
 
 * [Package structure](md/packages.md)
 * [Exception handling](md/errors.md)
+* [Whiteflag messages](md/messages.md)
