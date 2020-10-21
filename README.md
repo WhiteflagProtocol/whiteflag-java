@@ -57,8 +57,10 @@ The WFJL software is not yet published in a central Java repository. To use
 the library, integrate the source code manually into your software by cloning
 the `src/` directory.
 
-The only dependency, as specified in the `build.gradle` file, is the
-[JUnit test framework]((https://junit.org/)) for testing the software.
+The dependencies, as specified in the `build.gradle` file, are:
+
+* the [JUnit test framework]((https://junit.org/)) for testing the software
+* the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
 
 ## Building and Testing
 
