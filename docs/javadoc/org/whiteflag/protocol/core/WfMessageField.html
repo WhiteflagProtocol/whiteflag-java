@@ -109,11 +109,11 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">WfMessageField</span>
 extends java.lang.Object</pre>
-<div class="block">Whiteflag generic message field class
+<div class="block">Whiteflag message field class
  
- </p> This is a class defining a generic Whiteflag message field. Instances
- of this class represent specific fields in specific message types with a
- number of defined properties: name, allowed values, encoding, starting byte
+ </p> This claas represents a Whiteflag message field. Instances of this
+ class represent specific fields in specific message types with a number
+ of defined properties: name, allowed values, encoding, starting byte
  and ending byte.</div>
 </li>
 </ul>
@@ -209,13 +209,13 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html#WfMessageField-org.whiteflag.protocol.core.WfMessageField-">WfMessageField</a></span>(<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>&nbsp;field)</code>
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html#WfMessageField-org.whiteflag.protocol.core.WfMessageField-int-">WfMessageField</a></span>(<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>&nbsp;field,
               int&nbsp;shift)</code>
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
 </td>
 </tr>
 </table>
@@ -236,19 +236,19 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html#bitLength--">bitLength</a></span>()</code>
-<div class="block">Returns the bit length of the encoded field</div>
+<div class="block">Gets the bit length of the encoded field</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html#byteLength--">byteLength</a></span>()</code>
-<div class="block">Returns the byte length of the unencoded field value</div>
+<div class="block">Gets the byte length of the unencoded field value</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html#debugString--">debugString</a></span>()</code>
-<div class="block">Returns debug information</div>
+<div class="block">Gives debug information of the field</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -320,7 +320,7 @@ extends java.lang.Object</pre>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfMessageField.html#toString--">toString</a></span>()</code>
-<div class="block">Returns the message field as a tring</div>
+<div class="block">Returns the message field as a string</div>
 </td>
 </tr>
 </table>
@@ -418,8 +418,8 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - the name of the Whiteflag field</dd>
-<dd><code>pattern</code> - a string with the regex pattern defining allowed values</dd>
-<dd><code>encoding</code> - the @{WfMessageField.Encoding} of the field</dd>
+<dd><code>pattern</code> - the regex pattern defining allowed values</dd>
+<dd><code>encoding</code> - the encoding of the field</dd>
 <dd><code>startByte</code> - the starting byte of the field in a serialized / uncompressed message</dd>
 <dd><code>endByte</code> - the ending byte (not included) of the field in a serialized / uncompressed message</dd>
 </dl>
@@ -432,10 +432,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>WfMessageField</h4>
 <pre>public&nbsp;WfMessageField(<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>&nbsp;field)</pre>
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>field</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> to create a new message field from</dd>
+<dd><code>field</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> to copy</dd>
 </dl>
 </li>
 </ul>
@@ -447,11 +447,11 @@ extends java.lang.Object</pre>
 <h4>WfMessageField</h4>
 <pre>public&nbsp;WfMessageField(<a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core">WfMessageField</a>&nbsp;field,
                       int&nbsp;shift)</pre>
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>field</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> to create a new message field from</dd>
-<dd><code>shift</code> - integer how many bytes to shift the field as copying is mostly used to append</dd>
+<dd><code>field</code> - the <a href="../../../../org/whiteflag/protocol/core/WfMessageField.html" title="class in org.whiteflag.protocol.core"><code>WfMessageField</code></a> to copy</dd>
+<dd><code>shift</code> - number of bytes to shift the field</dd>
 </dl>
 </li>
 </ul>
@@ -470,12 +470,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>toString</h4>
 <pre>public final&nbsp;java.lang.String&nbsp;toString()</pre>
-<div class="block">Returns the message field as a tring</div>
+<div class="block">Returns the message field as a string</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with the value of the message field</dd>
+<dd>the value of the message field</dd>
 </dl>
 </li>
 </ul>
@@ -519,7 +519,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - The data to be checked</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Boolean indicating if data is a valid value for this field</dd>
+<dd>TRUE if data is a valid value for this field</dd>
 </dl>
 </li>
 </ul>
@@ -530,10 +530,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>byteLength</h4>
 <pre>public final&nbsp;int&nbsp;byteLength()</pre>
-<div class="block">Returns the byte length of the unencoded field value</div>
+<div class="block">Gets the byte length of the unencoded field value</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>integer with the byte length</dd>
+<dd>the byte length of the unencoded field value</dd>
 </dl>
 </li>
 </ul>
@@ -544,10 +544,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>bitLength</h4>
 <pre>public final&nbsp;int&nbsp;bitLength()</pre>
-<div class="block">Returns the bit length of the encoded field</div>
+<div class="block">Gets the bit length of the encoded field</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>integer with the bit length</dd>
+<dd>the bit length of the compressed encoded field value</dd>
 </dl>
 </li>
 </ul>
@@ -561,7 +561,7 @@ extends java.lang.Object</pre>
 <div class="block">Gets the value of the message field</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with the field value</dd>
+<dd>the field value</dd>
 </dl>
 </li>
 </ul>
@@ -575,7 +575,7 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value of the message field if not already set</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - The data representing the field value</dd>
+<dd><code>data</code> - the data representing the field value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>TRUE if field value is set, FALSE if field already set or data is invalid</dd>
 </dl>
@@ -592,7 +592,7 @@ extends java.lang.Object</pre>
 <div class="block">Encodes the message field into a binary string</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd><a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a> the compressed binary encoding of the field</dd>
+<dd>the compressed binary encoding of the field</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the field cannot be encoded</dd>
 </dl>
@@ -611,7 +611,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>binaryData</code> - <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a> the compressed binary encoding of the field</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with the uncompressed value of the field</dd>
+<dd>the uncompressed value of the field</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/whiteflag/protocol/core/WfCoreException.html" title="class in org.whiteflag.protocol.core">WfCoreException</a></code> - if the field cannot be decoded</dd>
 </dl>
@@ -627,9 +627,9 @@ extends java.lang.Object</pre>
 <div class="block">Encodes a (hexa)decimal string into a binary string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - String with the (hexa)decimal data to encode</dd>
+<dd><code>data</code> - the (hexa)decimal data to encode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String representing of the binary encoding</dd>
+<dd>string representation of the binary encoding</dd>
 </dl>
 </li>
 </ul>
@@ -643,9 +643,9 @@ extends java.lang.Object</pre>
 <div class="block">Encodes UTF data into a binary string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - String with the UTF data to encode</dd>
+<dd><code>data</code> - the UTF data to encode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String representing of the binary encoding</dd>
+<dd>string representation of the binary encoding</dd>
 </dl>
 </li>
 </ul>
@@ -661,7 +661,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>bin</code> - the binary string to decode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String representing the decoded (hexa)decimal value</dd>
+<dd>the decoded (hexa)decimal value</dd>
 </dl>
 </li>
 </ul>
@@ -677,7 +677,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>bin</code> - the binary string to decode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with the decoded UTF data</dd>
+<dd>the decoded UTF data</dd>
 </dl>
 </li>
 </ul>
@@ -688,10 +688,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>debugString</h4>
 <pre>protected&nbsp;java.lang.String&nbsp;debugString()</pre>
-<div class="block">Returns debug information</div>
+<div class="block">Gives debug information of the field</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with debug information</dd>
+<dd>field name, value and pattern and validity check</dd>
 </dl>
 </li>
 </ul>

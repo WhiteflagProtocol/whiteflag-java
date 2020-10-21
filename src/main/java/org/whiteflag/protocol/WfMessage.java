@@ -60,7 +60,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns the requested metadata value of the Whiteflag message
-     * @return a string with the value of the requested metadata key
+     * @return the value of the requested metadata key
      */
     public String getMetadata(final String key) {
         return metadata.get(key);
@@ -78,7 +78,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns the cached serialized message, or else it serialzes and caches Whiteflag message
-     * @return String with the serialized message, i.e. the concatinated string of field values
+     * @return the serialized message, i.e. the concatinated string of field values
      * @throws WfException if any of the field does not contain valid data
      */
     @Override
@@ -95,7 +95,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
-     * @return hexadecimal string with the encoded Whiteflag message
+     * @return the hexadecimal representation of he encoded Whiteflag message
      * @throws WfException if any field does not contain valid data
      */
     @Override
@@ -106,7 +106,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message
      * @param prefix if TRUE, the resulting string gets a 0x prefix (or whatever has been cached)
-     * @return hexadecimal string with the encoded Whiteflag message
+     * @return the hexadecimal representation of the encoded Whiteflag message
      * @throws WfException if any field does not contain valid data
      */
     @Override
@@ -123,7 +123,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns the serialised JSON representation of the Whiteflag message 
-     * @return String with the serialised JSON representation
+     * @return the serialised JSON representation
      */
     public String toJson() throws WfException {
         String jsonMessageStr;
@@ -139,7 +139,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns the requested metadata value of the Whiteflag message
-     * @return a string with the value of the requested metadata key
+     * @return the value of the requested metadata key
      */
     private void setMetadata(final Map<String, String> metadata) {
         metadata.forEach(this.metadata::put);
@@ -184,7 +184,7 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Copies a Whiteflag message into new Whiteflag message object
-         * @param originalMessage the {@link WfMessage} to be copied
+         * @param originalMessage the message to be copied
          * @return a {@link WfMessage} Whiteflag message
          */
         public static final WfMessage copy(final WfMessage originalMessage) {
@@ -197,7 +197,7 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Creates a new Whiteflag message object from a serialized message
-         * @param messageSerialized String with the uncompressed serialized message
+         * @param messageSerialized the uncompressed serialized message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the serialization of the message is invalid
          */
@@ -213,7 +213,7 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Creates a new Whiteflag message object from a serialized JSON message
-         * @param jsonMessageStr String with the serialized JSON message
+         * @param jsonMessageStr the serialized JSON message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the serialization of the message is invalid
          */
@@ -240,7 +240,7 @@ public class WfMessage extends WfMessageCore {
 
         /**
          * Creates a new Whiteflag message object from an encoded message
-         * @param messageEncoded String with hexadecimal representation of the encoded message
+         * @param messageEncoded the hexadecimal representation of the encoded message
          * @return a {@link WfMessage} Whiteflag message
          * @throws WfException if the encoding of the message is invalid
          */

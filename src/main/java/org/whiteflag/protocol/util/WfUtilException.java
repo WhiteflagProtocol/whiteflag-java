@@ -18,7 +18,7 @@ public class WfUtilException extends Exception {
     public final ErrorType errorType;
 
     /** 
-     * Whiteflag protocol error categories
+     * Whiteflag utility error categories
      * 
      * </p> These error categories are used by the {@link WfUtilException} class to
      * specify the type of error.
@@ -39,7 +39,7 @@ public class WfUtilException extends Exception {
     /* CONSTRUCTORS */
 
     /**
-     * Creates a Whiteflag exception with a specific Whiteflag error type
+     * Creates a Whiteflag utility exception with a specific utility error type
      * @param errorMessage String containing the human readible error message
      * @param wfUtilErrorType The Whiteflag {@link ErrorType} 
      */

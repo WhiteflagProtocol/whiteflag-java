@@ -69,7 +69,7 @@ public class WfJsonMessage {
 
     /**
      * Creates a serialized JSON representation of a Whiteflag message
-     * @return String with the serialized JSON representation
+     * @return the serialized JSON representation of the message
      * @throws JsonProcessingException if no valid JSON serialization can be created
      */
     public String toJson() throws WfUtilException {
@@ -84,7 +84,7 @@ public class WfJsonMessage {
 
     /**
      * Creates a new JSON representation of a Whiteflag message from a serialized JSON string
-     * @param jsonStr String with a JSON representation of a Whiteflag message
+     * @param jsonStr a JSON representation of a Whiteflag message
      * @throws JsonProcessingException if JSON is invalid
      */
     public static WfJsonMessage create(String jsonStr) throws WfUtilException {

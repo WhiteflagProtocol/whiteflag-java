@@ -35,7 +35,7 @@ public class WfMessageCreator {
     /* CONSTRUCTOR */
 
     /**
-     * Creates a Whiteflag message builder
+     * Constructs a Whiteflag message builder
      */
     public WfMessageCreator() {
         // Nothing required for instantiating a Whiteflag creator object
@@ -113,7 +113,7 @@ public class WfMessageCreator {
 
     /**
      * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
-     * @param messageStr String with the uncompressed serialized message
+     * @param messageStr the uncompressed serialized message
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided values are invalid
      */
@@ -151,7 +151,7 @@ public class WfMessageCreator {
 
     /**
      * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
-     * @param messageStr String with the hexadecimal representation of the encoded message
+     * @param messageStr the hexadecimal representation of the encoded message
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the encoded message is invalid
      */
@@ -229,7 +229,7 @@ public class WfMessageCreator {
 
     /**
      * Converts a hexadecimal string to a {@link WfBinaryString}
-     * @param hex String with hexadecimal representation of message
+     * @param hex the hexadecimal representation of message
      * @throws WfCoreException if invalid hexadecimal encoded message
      */
     private final WfBinaryString toBinStr(final String hex) throws WfCoreException {

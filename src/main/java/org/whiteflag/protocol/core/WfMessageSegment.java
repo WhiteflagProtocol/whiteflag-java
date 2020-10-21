@@ -33,7 +33,8 @@ public class WfMessageSegment {
     /* CONSTRUCTOR */
 
     /**
-     * Constructs a new Whiteflag message segment from a {@link WfMessageField} array, without copying field values
+     * Constructs a new Whiteflag message segment from an array of message fields,
+     * without copying the fields' values
      * @param fields an array of {@link WfMessageField}s
      */
     public WfMessageSegment(final WfMessageField[] fields) {
@@ -44,7 +45,8 @@ public class WfMessageSegment {
     }
 
     /**
-     * Constructs a new Whiteflag message segment from another message segment, also copying values
+     * Constructs a new Whiteflag message segment from another message segment,
+     * also copying the fields' values
      * @param segment the {@link WfMessageSegment} to create the new segment from
      */
     public WfMessageSegment(final WfMessageSegment segment) {
@@ -59,7 +61,7 @@ public class WfMessageSegment {
 
     /**
      * Returns the message segment as a concatinated string of field values
-     * @return String with serialized message segment
+     * @return serialized message segment
      */
     @Override
     public final String toString() {
@@ -92,7 +94,7 @@ public class WfMessageSegment {
 
     /**
      * Checks if the specified field contains valid data
-     * @param fieldname String with the name of the field
+     * @param fieldname the name of the field
      * @return TRUE if the field contains valid data, else FALSE
      */
     public final Boolean isValid(final String fieldname) {
@@ -106,8 +108,8 @@ public class WfMessageSegment {
 
     /**
      * Checks if the provided data is valid for the specified field
-     * @param fieldname String with the name of the field
-     * @param data String with the value to be checked
+     * @param fieldname the name of the field
+     * @param data the value to be checked
      * @return TRUE if the field contains valid data, else FALSE
      */
     public final Boolean isValid(final String fieldname, final String data) {
@@ -121,7 +123,7 @@ public class WfMessageSegment {
 
     /**
      * Gets the number of fields in this message segment
-     * @return integer with the number of fields
+     * @return the number of message segment fields
      */
     public final int getNoFields() {
         return this.fields.length;
@@ -143,8 +145,8 @@ public class WfMessageSegment {
 
     /**
      * Gets the value of the field specified by name
-     * @param fieldname String with the name of the requested field
-     * @return String with the field value, or NULL if field does not exist
+     * @param fieldname the name of the requested field
+     * @return the field value, or NULL if field does not exist
      */
     public final String get(final String fieldname) {
         for (WfMessageField field : fields) {
@@ -155,8 +157,8 @@ public class WfMessageSegment {
 
     /**
      * Gets the value of the field specified by index
-     * @param index integer with the index of the requested field; negative index counts back from last field
-     * @return String with the field value, or NULL if it does not exist
+     * @param index the index of the requested field; negative index counts back from last field
+     * @return the field value, or NULL if it does not exist
      */
     public final String get(final int index) {
         if (index >= 0 && index < fields.length) {
@@ -170,8 +172,8 @@ public class WfMessageSegment {
 
     /**
      * Sets the value of the specified field in the message segment
-     * @param fieldname String with the name of the field
-     * @param data String with data to be set as the field value
+     * @param fieldname the name of the field
+     * @param data data to be set as the field value
      * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
     public final Boolean set(final String fieldname, final String data) {
@@ -183,8 +185,8 @@ public class WfMessageSegment {
 
     /**
      * Sets the value of the field specified by its index in the message segment
-     * @param index integer with the index of the requested field; negative index counts back from last field
-     * @param data String with data to be set as the field value
+     * @param index the index of the requested field; negative index counts back from last field
+     * @param data data to be set as the field value
      * @return TRUE if the data was valid and the field value is set, else FALSE
      */
     public final Boolean set(final int index, final String data) {
@@ -223,8 +225,8 @@ public class WfMessageSegment {
 
     /**
      * Sets all field values of this segment with values from an array
-     * @param data Array of strings with with data to be set as the field values
-     * @param index integer indicating where to start in the data array
+     * @param data array with the data to be set as the field values
+     * @param index starting position in the array
      * @return TRUE if the data was valid and all field values are set
      * @throws WfCoreException if the provided data is invalid
      */
@@ -246,7 +248,7 @@ public class WfMessageSegment {
 
     /**
      * Serializes this message segment
-     * @return a string with the serialized message segment
+     * @return the serialized message segment
      * @throws WfCoreException if the message cannot be serialized
      */
     protected final String serialize() throws WfCoreException {
@@ -265,7 +267,7 @@ public class WfMessageSegment {
 
     /**
      * Deserializes this message segment from the provided serialized message
-     * @param messageStr String with the serialized message
+     * @param messageStr the serialized message
      * @param startByte the byte position where this segment starts in the serialized message
      * @return the byte position where this segment ends in the serialized message
      */
@@ -292,7 +294,7 @@ public class WfMessageSegment {
 
     /**
      * Encodes this message segment
-     * @return a string with the serialized message segment
+     * @return the serialized message segment
      * @throws WfCoreException if the message cannot be encoded
      */
     protected final WfBinaryString encode() throws WfCoreException {
@@ -341,8 +343,8 @@ public class WfMessageSegment {
 
     /**
      * Appends additional fields to this message segment if constructing complex message bodies
-     * @param segment {@link WfMessageSegment} to be added to the message segment
-     * @return The updated message segment object
+     * @param segment the segment to be added to the message segment
+     * @return this {@link WfMessageSegment}
      */
     protected final WfMessageSegment append(final WfMessageSegment segment) {
         // Create new field array and fill with original fields from this segment
@@ -372,8 +374,8 @@ public class WfMessageSegment {
 
     /**
      * Gets the field specified by name
-     * @param fieldname String with the name of the requested field
-     * @return the requested {@link WfMessageField}, or NULL if it does not exist
+     * @param fieldname the name of the requested field
+     * @return the requested message field, or NULL if it does not exist
      */
     protected final WfMessageField getField(final String fieldname) {
         for (WfMessageField field : fields) {
@@ -384,8 +386,8 @@ public class WfMessageSegment {
 
     /**
      * Gets the field specified by index
-     * @param index integer with the index of the requested field; negative index counts back from last field
-     * @return the requested {@link WfMessageField}, or NULL if it does not exist
+     * @param index the index of the requested field; negative index counts back from last field
+     * @return the requested message field, or NULL if it does not exist
      */
     protected final WfMessageField getField(final int index) {
         if (index >= 0 && index < fields.length) {
@@ -399,7 +401,7 @@ public class WfMessageSegment {
 
     /**
      * Gets all fields from this message segment
-     * @return Array of {@link WfMessageField}
+     * @return an array with all message fields
      */
     protected final WfMessageField[] getAllFields() {
         return this.fields;

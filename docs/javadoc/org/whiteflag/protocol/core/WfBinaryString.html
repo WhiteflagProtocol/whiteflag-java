@@ -227,7 +227,7 @@ extends java.lang.Object</pre>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html#length--">length</a></span>()</code>
-<div class="block">Returns the length of the binary string</div>
+<div class="block">Gets the length of the binary string</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -285,25 +285,25 @@ extends java.lang.Object</pre>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html#toBinString--">toBinString</a></span>()</code>
-<div class="block">Returns the binary string value as a binary string without 0b prefix</div>
+<div class="block">Gets the binary string value as a binary string without 0b prefix</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html#toBinString-java.lang.Boolean-">toBinString</a></span>(java.lang.Boolean&nbsp;prefix)</code>
-<div class="block">Returns the binary string value as a binary string</div>
+<div class="block">Gets the binary string value as a binary string</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html#toHexString--">toHexString</a></span>()</code>
-<div class="block">Returns the binary string value as a hexadeciomal string without 0x prefix</div>
+<div class="block">Gets the binary string value as a hexadeciomal string without 0x prefix</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html#toHexString-java.lang.Boolean-">toHexString</a></span>(java.lang.Boolean&nbsp;prefix)</code>
-<div class="block">Returns the binary string value as a hexadeciomal string</div>
+<div class="block">Gets the binary string value as a hexadeciomal string</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
@@ -471,7 +471,7 @@ extends java.lang.Object</pre>
 <div class="block">Constructs a new binary string object from a string with binary encoded data</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - String representing binary encoded data; only characters "0" and "1" are allowed</dd>
+<dd><code>data</code> - string representation of the binary encoded data; only characters "0" and "1" are allowed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalArgumentException</code> - if the provided string is not binary encoded data</dd>
 </dl>
@@ -487,7 +487,7 @@ extends java.lang.Object</pre>
 <div class="block">Constructs a new binary string object from an existing binary string object</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binaryString</code> - the <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a> to create a new binary string from</dd>
+<dd><code>binaryString</code> - the binary string to be copied</dd>
 </dl>
 </li>
 </ul>
@@ -511,7 +511,7 @@ extends java.lang.Object</pre>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with binary representation of the object</dd>
+<dd>binary representation of the object</dd>
 </dl>
 </li>
 </ul>
@@ -536,10 +536,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>length</h4>
 <pre>public final&nbsp;int&nbsp;length()</pre>
-<div class="block">Returns the length of the binary string</div>
+<div class="block">Gets the length of the binary string</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>integer with the length</dd>
+<dd>the length of the binary string, i.e. the number of bits</dd>
 </dl>
 </li>
 </ul>
@@ -553,7 +553,7 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value with the provided binary string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - a string with the binary representation of the value</dd>
+<dd><code>data</code> - the binary representation of the value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a></dd>
 </dl>
@@ -569,7 +569,7 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value with the provided binary string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - a string with the binary representation of the value</dd>
+<dd><code>data</code> - the binary representation of the value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a></dd>
 </dl>
@@ -585,7 +585,7 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value with the provided hexadecimal string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - a string with the hexadecimal representation of the value</dd>
+<dd><code>data</code> - the hexadecimal representation of the value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a></dd>
 </dl>
@@ -598,10 +598,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>toBinString</h4>
 <pre>public final&nbsp;java.lang.String&nbsp;toBinString()</pre>
-<div class="block">Returns the binary string value as a binary string without 0b prefix</div>
+<div class="block">Gets the binary string value as a binary string without 0b prefix</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with binary representation</dd>
+<dd>binary representation of the value</dd>
 </dl>
 </li>
 </ul>
@@ -612,12 +612,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>toBinString</h4>
 <pre>public final&nbsp;java.lang.String&nbsp;toBinString(java.lang.Boolean&nbsp;prefix)</pre>
-<div class="block">Returns the binary string value as a binary string</div>
+<div class="block">Gets the binary string value as a binary string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - if TRUE, the resulting string gets a 0b prefix</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with binary representation</dd>
+<dd>binary representation of the value</dd>
 </dl>
 </li>
 </ul>
@@ -628,10 +628,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>toHexString</h4>
 <pre>public final&nbsp;java.lang.String&nbsp;toHexString()</pre>
-<div class="block">Returns the binary string value as a hexadeciomal string without 0x prefix</div>
+<div class="block">Gets the binary string value as a hexadeciomal string without 0x prefix</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with hexadecimal representation</dd>
+<dd>hexadecimal representation of the value</dd>
 </dl>
 </li>
 </ul>
@@ -642,12 +642,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>toHexString</h4>
 <pre>public final&nbsp;java.lang.String&nbsp;toHexString(java.lang.Boolean&nbsp;prefix)</pre>
-<div class="block">Returns the binary string value as a hexadeciomal string</div>
+<div class="block">Gets the binary string value as a hexadeciomal string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>prefix</code> - if TRUE, the resulting string gets a 0x prefix</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with hexadecimal representation</dd>
+<dd>hexadecimal representation of the value</dd>
 </dl>
 </li>
 </ul>
@@ -665,7 +665,7 @@ extends java.lang.Object</pre>
 <dd><code>startBit</code> - first bit of the requested range (included)</dd>
 <dd><code>endBit</code> - last bit of the range (not included)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>new <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a> with the extracted bit range</dd>
+<dd>new binary string with the extracted bit range</dd>
 </dl>
 </li>
 </ul>
@@ -681,7 +681,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>startBit</code> - first bit of the requested range (included)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>new <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a> with the extracted bit range</dd>
+<dd>new binary string with the extracted bit range</dd>
 </dl>
 </li>
 </ul>
@@ -695,9 +695,9 @@ extends java.lang.Object</pre>
 <div class="block">Appends a binary string to this binary string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binString</code> - the <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a> to be added</dd>
+<dd><code>binString</code> - the binary string to be added</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>The updated binary string object</dd>
+<dd>this <a href="../../../../org/whiteflag/protocol/core/WfBinaryString.html" title="class in org.whiteflag.protocol.core"><code>WfBinaryString</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -712,10 +712,10 @@ extends java.lang.Object</pre>
 <div class="block">Checks for and removes prefix from string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>str</code> - String to be checked</dd>
-<dd><code>prefix</code> - The prefix to be checked for</dd>
+<dd><code>str</code> - string to be checked</dd>
+<dd><code>prefix</code> - the prefix to be checked for</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String without prefix</dd>
+<dd>the string without prefix</dd>
 </dl>
 </li>
 </ul>
@@ -733,7 +733,7 @@ extends java.lang.Object</pre>
 <dd><code>str</code> - the string to be padded</dd>
 <dd><code>n</code> - the field size</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with the padded encoded field</dd>
+<dd>the padded encoded field</dd>
 </dl>
 </li>
 </ul>
@@ -751,7 +751,7 @@ extends java.lang.Object</pre>
 <dd><code>str</code> - the string to be padded</dd>
 <dd><code>n</code> - the field size</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>String with the padded encoded field</dd>
+<dd>the padded encoded field</dd>
 </dl>
 </li>
 </ul>

@@ -8,6 +8,17 @@ class Exception <<Throwable>>
 package org.whiteflag.protocol.core {
     class WfCoreException
 }
+Exception <|- WfCoreException
+
+package org.whiteflag.protocol.util {
+    class WfUtilException
+    enum WfUtilException.ErrorType {
+        WF_UTIL_ERROR
+        WF_JSON_ERROR
+    }
+    WfUtilException +-- WfUtilException.ErrorType
+}
+Exception <|-- WfUtilException
 
 package org.whiteflag.protocol {
     class WfException
@@ -20,10 +31,10 @@ package org.whiteflag.protocol {
         WF_SIGN_ERROR
         WF_ENCRYPTION_ERROR
     }
+    WfException +-- WfException.ErrorType
 }
-
-Exception <|- WfCoreException
 WfCoreException <|- WfException
-WfException +-- WfException.ErrorType
+
+
 
 @enduml

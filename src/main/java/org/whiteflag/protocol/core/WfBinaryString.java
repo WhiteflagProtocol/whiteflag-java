@@ -41,7 +41,7 @@ public class WfBinaryString {
 
     /**
      * Constructs a new binary string object from a string with binary encoded data
-     * @param data String representing binary encoded data; only characters "0" and "1" are allowed
+     * @param data string representation of the binary encoded data; only characters "0" and "1" are allowed
      * @throws IllegalArgumentException if the provided string is not binary encoded data
      */
     public WfBinaryString(final String data) {
@@ -50,7 +50,7 @@ public class WfBinaryString {
 
     /**
      * Constructs a new binary string object from an existing binary string object
-     * @param binaryString the {@link WfBinaryString} to create a new binary string from
+     * @param binaryString the binary string to be copied
      */
     public WfBinaryString(final WfBinaryString binaryString) {
         set(binaryString.toBinString());
@@ -60,7 +60,7 @@ public class WfBinaryString {
 
     /**
      * Returns the binary string object as a binary string
-     * @return String with binary representation of the object
+     * @return binary representation of the object
      */
     @Override
     public final String toString() {
@@ -79,8 +79,8 @@ public class WfBinaryString {
     }
 
     /**
-     * Returns the length of the binary string
-     * @return integer with the length
+     * Gets the length of the binary string
+     * @return the length of the binary string, i.e. the number of bits
      */
     public final int length() {
         return this.value.length();
@@ -90,7 +90,7 @@ public class WfBinaryString {
 
     /**
      * Sets the value with the provided binary string
-     * @param data a string with the binary representation of the value
+     * @param data the binary representation of the value
      * @return this {@link WfBinaryString}
      */
     public final WfBinaryString set(final String data)  {
@@ -99,7 +99,7 @@ public class WfBinaryString {
 
     /**
      * Sets the value with the provided binary string
-     * @param data a string with the binary representation of the value
+     * @param data the binary representation of the value
      * @return this {@link WfBinaryString}
      */
     public final WfBinaryString setBinValue(final String data) {
@@ -117,7 +117,7 @@ public class WfBinaryString {
 
     /**
      * Sets the value with the provided hexadecimal string
-     * @param data a string with the hexadecimal representation of the value
+     * @param data the hexadecimal representation of the value
      * @return this {@link WfBinaryString}
      */
     public final WfBinaryString setHexValue(final String data) {
@@ -139,17 +139,17 @@ public class WfBinaryString {
     }
 
     /**
-     * Returns the binary string value as a binary string without 0b prefix
-     * @return String with binary representation
+     * Gets the binary string value as a binary string without 0b prefix
+     * @return binary representation of the value
      */
     public final String toBinString() {
         return this.toBinString(false);
     }
 
     /**
-     * Returns the binary string value as a binary string
+     * Gets the binary string value as a binary string
      * @param prefix if TRUE, the resulting string gets a 0b prefix
-     * @return String with binary representation
+     * @return binary representation of the value
      */
     public final String toBinString(final Boolean prefix) {
         if (Boolean.TRUE.equals(prefix)) {
@@ -159,17 +159,17 @@ public class WfBinaryString {
     }
 
     /**
-     * Returns the binary string value as a hexadeciomal string without 0x prefix
-     * @return String with hexadecimal representation
+     * Gets the binary string value as a hexadeciomal string without 0x prefix
+     * @return hexadecimal representation of the value
      */
     public final String toHexString() {
         return this.toHexString(false);
     }
 
     /**
-     * Returns the binary string value as a hexadeciomal string
+     * Gets the binary string value as a hexadeciomal string
      * @param prefix if TRUE, the resulting string gets a 0x prefix
-     * @return String with hexadecimal representation
+     * @return hexadecimal representation of the value
      */
     public final String toHexString(final Boolean prefix) {
         StringBuilder hex = new StringBuilder();
@@ -192,7 +192,7 @@ public class WfBinaryString {
      * Extracts the specified bit range of the binary string
      * @param startBit first bit of the requested range (included)
      * @param endBit last bit of the range (not included)
-     * @return new {@link WfBinaryString} with the extracted bit range
+     * @return new binary string with the extracted bit range
      */
     public final WfBinaryString sub(final int startBit, final int endBit) {
         return new WfBinaryString(this.value.substring(startBit, endBit));
@@ -201,7 +201,7 @@ public class WfBinaryString {
     /**
      * Extracts range from the specified starting bit to the end of the binary string
      * @param startBit first bit of the requested range (included)
-     * @return new {@link WfBinaryString} with the extracted bit range
+     * @return new binary string with the extracted bit range
      */
     public final WfBinaryString sub(final int startBit) {
         return new WfBinaryString(this.value.substring(startBit));
@@ -209,8 +209,8 @@ public class WfBinaryString {
 
     /**
      * Appends a binary string to this binary string
-     * @param binString the {@link WfBinaryString} to be added
-     * @return The updated binary string object
+     * @param binString the binary string to be added
+     * @return this {@link WfBinaryString}
      */
     public final WfBinaryString append(final WfBinaryString binString) {
         this.value = this.value + binString.toBinString();
@@ -221,9 +221,9 @@ public class WfBinaryString {
 
     /**
      * Checks for and removes prefix from string
-     * @param str String to be checked
-     * @param prefix The prefix to be checked for
-     * @return String without prefix
+     * @param str string to be checked
+     * @param prefix the prefix to be checked for
+     * @return the string without prefix
      */
     public static final String removePrefix(final String str, final String prefix) {
         if (str.startsWith(prefix)) {
@@ -236,7 +236,7 @@ public class WfBinaryString {
      * Adds 0 to the left to fill the encoded field to its fields size
      * @param str the string to be padded
      * @param n the field size
-     * @return String with the padded encoded field
+     * @return the padded encoded field
      */
     public static final String padRight(final String str, final int n) {
         int pad = str.length() % n;
@@ -248,7 +248,7 @@ public class WfBinaryString {
      * Adds 0 to the left to fill the encoded field to its fields size
      * @param str the string to be padded
      * @param n the field size
-     * @return String with the padded encoded field
+     * @return the padded encoded field
      */
     public static final String padLeft(final String str, final int n) {
         return "00000000".substring(0, n - str.length()) + str;

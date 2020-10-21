@@ -5,10 +5,11 @@ left footer WFJL Message Class Diagram
 
 package org.whiteflag.protocol.core {
     class WfMessageCore {
+        +type : WfMessageType
         +header : WfMessageSegment
         +body : WfMessageSegment
         +serialize() : String
-        +enode() : String
+        +encode() : String
     }
     class WfMessageSegment {
         -fields : WfMessageField[]
@@ -38,7 +39,11 @@ package org.whiteflag.protocol.core {
         LONG
     }
     class WfMessageCreator {
+        __
+        +create()
+        ..
         +type(WfMessageType)
+        +map(Map, Map)
         +deserialize(String)
         +decode(String)
         +compile(String[])
@@ -70,38 +75,46 @@ package org.whiteflag.protocol.core {
     class WfBinaryString <<DataType>>
 }
 
+package org.whiteflag.protocol.util {
+    class WfJsonMessage {
+        +toJson() : String
+        +create(String)
+    }
+}
+
 package org.whiteflag.protocol {
     class WfMessage {
         -metaData : HashMap<>
-        +header : WfMessageSegment
-        +body : WfMessageSegment
-        +serialize() : String
-        +encode() : String
+        +toJson() : String
     }
     class WfMessage.Creator {
         +type(String)
         +copy(WfMessage)
         +deserialize(String)
+        +deserializeJson(String)
         +decode(String)
         +compile(String[])
     }
 }
 
-WfMessageField +- WfMessageField.Encoding
-WfMessageSegment *-- "*" WfMessageField: comprises
-WfMessageCore *-- "2" WfMessageSegment: comprises
-
-WfMessageCreator -> WfMessageCore: creates
-WfMessageCreator --> WfMessageType
-
-WfMessageType --> WfMessageDefinitions
-
-WfMessageCreator ..> WfMessageSegment: <<use>>
-WfMessageDefinitions ..> WfMessageField: <<use>>
+WfJsonMessage <. WfMessage: uses
+WfJsonMessage <. WfMessage.Creator: uses
 
 WfMessage --|> WfMessageCore
 WfMessage +- WfMessage.Creator
-WfMessage.Creator -> WfMessage: creates
+WfMessage <- WfMessage.Creator: uses
 WfMessage.Creator --> WfMessageCreator
+
+WfMessageCore --> WfMessageType
+WfMessageCore *-- "2" WfMessageSegment
+WfMessageSegment *-- "*" WfMessageField
+WfMessageField +- WfMessageField.Encoding
+
+WfMessageCreator -> WfMessageCore: creates
+WfMessageCreator ..> WfMessageType: uses
+WfMessageCreator ..> WfMessageSegment: uses
+
+WfMessageType --> WfMessageDefinitions
+WfMessageDefinitions --> WfMessageField
 
 @enduml

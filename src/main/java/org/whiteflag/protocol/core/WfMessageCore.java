@@ -31,9 +31,9 @@ public class WfMessageCore {
 
     /**
      * Creates a Whiteflag message from a header and a body segment
-     * @param type the {@link WfMessageType} of the message
-     * @param header the {@link WfMessageSegment} message header
-     * @param body the {@link WfMessageSegment} message body
+     * @param type the of the message
+     * @param header the message header
+     * @param body the message body
      */
     protected WfMessageCore(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
         this.type = type;
@@ -45,7 +45,7 @@ public class WfMessageCore {
 
     /**
      * Returns the message as a concatinated string of field values
-     * @return String with serialized message
+     * @return the serialized message
      */
     @Override
     public String toString() {
@@ -74,7 +74,7 @@ public class WfMessageCore {
 
     /**
      * Checks if the specified message field contains valid data
-     * @param fieldname String with the name of the field
+     * @param fieldname the name of the field
      * @return TRUE if the field contains valid data, else FALSE
      */
     public final Boolean isValid(final String fieldname) {
@@ -84,8 +84,8 @@ public class WfMessageCore {
 
     /**
      * Checks if the provided data is valid for the specified message field
-     * @param fieldname String with the name of the field
-     * @param data String with the value to be checked
+     * @param fieldname the name of the field
+     * @param data the value to be checked
      * @return TRUE if the field contains valid data, else FALSE
      */
     public final Boolean isValid(final String fieldname, final String data) {
@@ -95,14 +95,14 @@ public class WfMessageCore {
 
     /**
      * Gets the number of fields in this message
-     * @return integer with the number of fields
+     * @return the number of message fields
      */
     public final int getNoFields() {
         return header.getNoFields() + body.getNoFields();
     }
 
     /**
-     * Returns the field names of this message
+     * Gets the field names of this message
      * @return a string set with all field names
      */
     public Set<String> getFieldNames() {
@@ -115,8 +115,8 @@ public class WfMessageCore {
 
     /**
      * Gets the value of the specified field
-     * @param fieldname String with the name of the requested field
-     * @return String with the field value, or NULL if field does not exist
+     * @param fieldname the name of the requested field
+     * @return the field value, or NULL if field does not exist
      */
     public String get(final String fieldname) {
         String value = header.get(fieldname);
@@ -126,8 +126,8 @@ public class WfMessageCore {
 
     /**
      * Sets the value of the specified field
-     * @param fieldname String with the name of the field
-     * @param data String with data to be set as the field value
+     * @param fieldname the name of the field
+     * @param data data to be set as the field value
      * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
     public Boolean set(final String fieldname, final String data) {
@@ -139,7 +139,7 @@ public class WfMessageCore {
 
     /**
      * Serializes the Whiteflag message
-     * @return String with the serialized message, i.e. the concatinated string of field values
+     * @return the serialized message, i.e. the concatinated string of field values
      * @throws WfCoreException if any of the field does not contain valid data
      */
     public String serialize() throws WfCoreException {
@@ -151,7 +151,7 @@ public class WfMessageCore {
 
     /**
      * Encodes the Whiteflag message without a 0x prefix
-     * @return hexadecimal string with the encoded Whiteflag message
+     * @return the hexadecimal representation of the encoded Whiteflag message
      * @throws WfCoreException if any of the field does not contain valid data
      */
     public String encode() throws WfCoreException {
@@ -161,7 +161,7 @@ public class WfMessageCore {
     /**
      * Encodes the Whiteflag message
      * @param prefix if TRUE, the resulting string gets a 0x prefix
-     * @return hexadecimal string with the encoded Whiteflag message
+     * @return the hexadecimal representation of the encoded Whiteflag message
      * @throws WfCoreException if any of the field does not contain valid data
      */
     public String encode(final Boolean prefix) throws WfCoreException {

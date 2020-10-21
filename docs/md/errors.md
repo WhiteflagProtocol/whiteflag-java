@@ -21,7 +21,7 @@ types are defined by the nested enumeration `WfException.ErrorType`.
 
 The `WfException.ErrorType` enum defines the following error codes:
 
-* `WF_PROTOCOL_ERROR`: generic Whiteflag protocol error
+* `WF_GENERIC_ERROR`: generic Whiteflag error
 * `WF_METADATA_ERROR`: incorrect or missing Whiteflag message metadata
 * `WF_FORMAT_ERROR`: Whiteflag message format error
 * `WF_REFERENCE_ERROR`: Whiteflag message reference error

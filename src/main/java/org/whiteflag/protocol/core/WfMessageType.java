@@ -92,7 +92,7 @@ public enum WfMessageType {
 
     /* Constructor */
     /**
-     * @param messageCode String with message code of the message type
+     * @param messageCode message code of the message type
      * @param bodyFields array of {@link WfMessageField} body fields
      */
     private WfMessageType(final String messageCode, final WfMessageField[] bodyFields) {
@@ -102,7 +102,7 @@ public enum WfMessageType {
 
     /**
      * Returns the {@link WfMessageType} message type
-     * @param messageCode String with the message code
+     * @param messageCode the message code
      */
     public static WfMessageType byCode(final String messageCode) throws WfCoreException {
         if (messageCode == null || messageCode.isEmpty()) return ANY;
@@ -114,7 +114,7 @@ public enum WfMessageType {
 
     /**
      * Returns the message code string
-     * @return String with the message code
+     * @return the message code
      */
     public String getCode() {
         return messageCode;
@@ -137,7 +137,7 @@ public enum WfMessageType {
     /**
      * Returns an array with additional Whiteflag sign/signal message body request fields
      * @param n the number of request objects
-     * @return array with {@link WfMessageField}s
+     * @return an array with the request message fields
      */
     public WfMessageField[] createRequestFields(final int n) {
         // Request fields are only defined for Request message type
