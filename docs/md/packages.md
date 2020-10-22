@@ -1,13 +1,16 @@
 # Whiteflag Java Library
 
+Go back to the [WFJL Documentation Home](../index.md) or visit
+the detailed [WFJL Javadoc API Reference](../javadoc/index.html)
+
 ## Package Structure
 
-As any Java software, the Whiteflag Java Library is organised in packages.
+### Overview
+
+As any Java software, the WFJL is organised in packages.
 Packages help to structure the software by grouping related classes. Packages
 also provide access protection and a name space. The packages structure
 corresponds with the source code directory structure under `src/main/java/`.
-
-### Overview
 
 The WFJL software consists of the following Java packages:
 

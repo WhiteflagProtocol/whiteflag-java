@@ -84,7 +84,7 @@ package org.whiteflag.protocol.util {
 
 package org.whiteflag.protocol {
     class WfMessage {
-        -metaData : HashMap<>
+        -metadata : HashMap<>
         +toJson() : String
     }
     class WfMessage.Creator {
@@ -102,7 +102,7 @@ WfJsonMessage <. WfMessage.Creator: uses
 
 WfMessage --|> WfMessageCore
 WfMessage +- WfMessage.Creator
-WfMessage <- WfMessage.Creator: uses
+WfMessage <- WfMessage.Creator: creates
 WfMessage.Creator --> WfMessageCreator
 
 WfMessageCore --> WfMessageType

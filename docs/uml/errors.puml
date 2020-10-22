@@ -35,6 +35,4 @@ package org.whiteflag.protocol {
 }
 WfCoreException <|- WfException
 
-
-
 @enduml
