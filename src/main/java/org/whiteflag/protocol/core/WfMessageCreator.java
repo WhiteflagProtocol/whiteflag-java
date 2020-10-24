@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Whiteflag message builder class
  * 
- * </p> This is a builder class to create a Whiteflag message. It contains
+ * <p> This is a builder class to create a Whiteflag message. It contains
  * the logic based on the Whiteflag specification to create a Whiteflag message
  * object. For example, it ensures that the message body corresponds with
  * the message type.

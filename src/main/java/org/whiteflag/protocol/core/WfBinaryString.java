@@ -8,9 +8,11 @@ import java.util.regex.Pattern;
 /**
  * Whiteflag binary string object
  * 
- * </p> This class defines a binary string used for the encoding and
+ * <p> This class defines a binary string used for the encoding and
  * conversion of Whiteflag messages and message fields. Instances of
  * this class represent a binary encoded message or binary encoded field.
+ * 
+ * @wfref 4.1 Message Structure
  */
 public class WfBinaryString {
 
@@ -61,6 +63,7 @@ public class WfBinaryString {
     /**
      * Returns the binary string object as a binary string
      * @return binary representation of the object
+     * @see #toBinString()
      */
     @Override
     public final String toString() {
@@ -92,6 +95,7 @@ public class WfBinaryString {
      * Sets the value with the provided binary string
      * @param data the binary representation of the value
      * @return this {@link WfBinaryString}
+     * 
      */
     public final WfBinaryString set(final String data)  {
         return setBinValue(data);
@@ -141,6 +145,7 @@ public class WfBinaryString {
     /**
      * Gets the binary string value as a binary string without 0b prefix
      * @return binary representation of the value
+     * @see #toBinString(Boolean)
      */
     public final String toBinString() {
         return this.toBinString(false);
@@ -161,6 +166,7 @@ public class WfBinaryString {
     /**
      * Gets the binary string value as a hexadeciomal string without 0x prefix
      * @return hexadecimal representation of the value
+     * @see #toHexString(Boolean)
      */
     public final String toHexString() {
         return this.toHexString(false);
@@ -193,6 +199,7 @@ public class WfBinaryString {
      * @param startBit first bit of the requested range (included)
      * @param endBit last bit of the range (not included)
      * @return new binary string with the extracted bit range
+     * @see #sub(int)
      */
     public final WfBinaryString sub(final int startBit, final int endBit) {
         return new WfBinaryString(this.value.substring(startBit, endBit));
@@ -202,6 +209,7 @@ public class WfBinaryString {
      * Extracts range from the specified starting bit to the end of the binary string
      * @param startBit first bit of the requested range (included)
      * @return new binary string with the extracted bit range
+     * @see #sub(int, int)
      */
     public final WfBinaryString sub(final int startBit) {
         return new WfBinaryString(this.value.substring(startBit));

@@ -6,7 +6,7 @@ package org.whiteflag.protocol;
 /**
  * Whiteflag protocol state class
  * 
- * </p> This class defines the Whiteflag state, keeping track of knwon
+ * <p> This class defines the Whiteflag state, keeping track of knwon
  * originators, cryptographic keys and message relations.
  */
 public class WfState {

@@ -9,11 +9,11 @@ import static org.whiteflag.protocol.core.WfMessageDefinitions.*;
 /**
  * Whiteflag message type
  *
- * </p> This enumerable class implements the message types as defined in
- * the Whiteflag standard. 
+ * <p> This enumerable class implements the message types as defined in
+ * the Whiteflag standard.
  * 
- * All message types have the same generic header.
- * The message bodies are defined 
+ * @wfver v1-draft.6
+ * @wfref 2.4.2 Message Functionality
  */
 public enum WfMessageType {
     /**
@@ -23,61 +23,80 @@ public enum WfMessageType {
 
     /** 
      * Authentication message type
+     * @wfref 4.3.4 Management Messages: Authentication
      */
     A("A", authenticationBodyFields),
 
     /** 
      * Cryptographic message type
+     * @wfref 4.3.5 Management Messages: Cryptographic Support
      */
     K("K", cryptoBodyFields),
 
     /** 
      * Test message type
+     * @wfref 4.3.6 Management Messages: Test
      */
     T("T", testBodyFields),
 
     /** 
-     * Free Text message type
-     */
-    F("F", freetextBodyFields),
-
-    /** 
      * Resource message type
+     * @wfref 4.3.2 Functional Messages: Resource
      */
     R("R", resourceBodyFields),
 
     /** 
+     * Free Text message type
+     * @wfref 4.3.3 Functional Messages: Free Text
+     */
+    F("F", freetextBodyFields),
+
+    /** 
      * Protective Sign message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.1 Protective Signs
      */
     P("P", signsignalBodyFields),
 
     /** 
      * Emergency Signal message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.2 Emergency Signals
      */
     E("E", signsignalBodyFields),
 
     /** 
-     * Status Signal message type
-     */
-    S("S", signsignalBodyFields),
-
-    /** 
      * Danger Sign message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.3 Danger & Disaster Signs
      */
     D("D", signsignalBodyFields),
 
     /** 
+     * Status Signal message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.4 Status Signals
+     */
+    S("S", signsignalBodyFields),
+
+    /** 
      * Infrastructure Sign message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.5 Infrastructure Signs
      */
     I("I", signsignalBodyFields),
 
     /** 
      * Mission Sign message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.6 Mission Signals
      */
     M("M", signsignalBodyFields),
 
     /** 
      * Request Signal message type
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1.2.7 Request Signals
      */
     Q("Q", signsignalBodyFields);
 
@@ -138,6 +157,8 @@ public enum WfMessageType {
      * Returns an array with additional Whiteflag sign/signal message body request fields
      * @param n the number of request objects
      * @return an array with the request message fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.1.9 Object Request Fields
      */
     public WfMessageField[] createRequestFields(final int n) {
         // Request fields are only defined for Request message type

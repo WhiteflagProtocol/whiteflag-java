@@ -9,11 +9,26 @@ import static org.whiteflag.protocol.core.WfMessageField.Encoding.*;
 /**
  * Whiteflag message definitions utility class
  *
- * </p> This is a non-instantiatable utility class that holds all message and
+ * <p> This is a non-instantiatable utility class that holds all message and
  * message field definitions in accordance with the Whiteflag specification.
  * No implementation specific properties and methods are defined by this class.
+ * 
+ * @wfver v1-draft.6
+ * 
+ * @wfref 4. Message Format
  */
 public class WfMessageDefinitions {
+
+    /* CONSTRUCTOR */
+
+    /** 
+     * Prevents the utility class to be instantiated
+     */
+    private WfMessageDefinitions() {
+        throw new IllegalStateException("Cannot instantiate Whiteflag message definitions utility class");
+    }
+
+    /* FIELDS */
 
     /**
      *  Undefined fields
@@ -22,6 +37,8 @@ public class WfMessageDefinitions {
 
     /**
      * Generic message header fields
+     * @wfver v1-draft.6
+     * @wfref 4.2.1 Generic Message Header
      */
     protected static final WfMessageField[] genericHeaderFields = new WfMessageField[] {
         new WfMessageField("Prefix", "^WF$", UTF8, 0, 2),
@@ -35,6 +52,8 @@ public class WfMessageDefinitions {
 
     /**
      * Authentication message body fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.4 Management Messages: Authentication
      */
     protected static final WfMessageField[] authenticationBodyFields = new WfMessageField[] {
         new WfMessageField("VerificationMethod", "(?=1|2)^"+HEX.charset()+"{1}$", HEX, 71, 72),
@@ -43,6 +62,8 @@ public class WfMessageDefinitions {
 
     /**
      * Cryptographic message body fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.5 Management Messages: Cryptographic Support
      */
     protected static final WfMessageField[] cryptoBodyFields = new WfMessageField[] {
         new WfMessageField("CryptoDataType", "^"+HEX.charset()+"{2}$", HEX, 71, 73),
@@ -51,6 +72,8 @@ public class WfMessageDefinitions {
 
     /**
      * Free text message body fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.3 Functional Messages: Free Text
      */
     protected static final WfMessageField[] freetextBodyFields = new WfMessageField[] {
         new WfMessageField("Text", "^"+UTF8.charset()+"*$", UTF8, 71, -1)
@@ -58,6 +81,8 @@ public class WfMessageDefinitions {
 
     /**
      * Resource message body fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.2 Functional Messages: Resource
      */
     protected static final WfMessageField[] resourceBodyFields = new WfMessageField[] {
         new WfMessageField("ResourceMethod", "(?=1)^"+HEX.charset()+"{1}$", HEX, 71, 72),
@@ -66,6 +91,8 @@ public class WfMessageDefinitions {
 
     /**
      * Test message body fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.6 Management Messages: Test
      */
     protected static final WfMessageField[] testBodyFields = new WfMessageField[] {
         new WfMessageField("PseudoMessageCode", "^[A-Z]{1}$", UTF8, 71, 72)
@@ -73,6 +100,8 @@ public class WfMessageDefinitions {
 
     /**
      * Sign/signal message body fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.1 Functional Messages: Signs & Signals
      */
     protected static final WfMessageField[] signsignalBodyFields = new WfMessageField[] {
         new WfMessageField("SubjectCode", "^"+HEX.charset()+"{2}$", HEX, 71, 73),
@@ -86,20 +115,13 @@ public class WfMessageDefinitions {
         new WfMessageField("ObjectOrientation", "^"+DEC.charset()+"{3}$", DEC, 132, 135)
     };
 
-    /*
+    /**
      * Request fields
+     * @wfver v1-draft.6
+     * @wfref 4.3.1.9 Object Request Fields
      */
     protected static final WfMessageField[] requestFields = new WfMessageField[] {
         new WfMessageField("ObjectType", "^"+HEX.charset()+"{2}$", HEX, 135, 137),
         new WfMessageField("ObjectTypeQuant", "^"+DEC.charset()+"{2}$", DEC, 137, 139)
     };
-
-    /* CONSTRUCTORS */
-
-    /** 
-     * Prevents the utility class to be instantiated
-     */
-    private WfMessageDefinitions() {
-        throw new IllegalStateException("Cannot instantiate utility class");
-    }
 }

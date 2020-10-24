@@ -18,7 +18,7 @@ import static org.whiteflag.protocol.util.WfUtilException.ErrorType.WF_JSON_ERRO
 /**
  * Whiteflag JSON message representation
  * 
- * </p> This object represents a Whiteflag message represented in the
+ * <p> This object represents a Whiteflag message represented in the
  * JavaScript Object Notation (JSON) format, in accordance with Annex B
  * of the Whiteflag specification. The basic structure is as follows:
  * <code> { "MetaHeader" : {}, "MessageHeader": {}, "MessageBody": {} }</code>

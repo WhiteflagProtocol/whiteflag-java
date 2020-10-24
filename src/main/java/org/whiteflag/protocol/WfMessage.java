@@ -17,7 +17,7 @@ import static org.whiteflag.protocol.WfException.ErrorType.WF_FORMAT_ERROR;
 /**
  * Whiteflag message class
  * 
- * </p> This is a class representing a Whiteflag message. It contains
+ * <p> This is a class representing a Whiteflag message. It contains
  * all methods to handle a Whiteflag message, e.g. to encode, decode, etc. It
  * also provides a nested static class to create Whiteflag messages.
  */
@@ -150,7 +150,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Whiteflag nested message creator class
      * 
-     * </p> This is a nested builder class to create a Whiteflag message. It
+     * <p> This is a nested builder class to create a Whiteflag message. It
      * calls the core builder to create a message i.a.w. the Whiteflag
      * specification.
      */

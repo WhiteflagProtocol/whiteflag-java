@@ -41,7 +41,14 @@ distributions {
     }
 }
 
-// Task to create documentation
+// Javadoc options
+javadoc {
+    options.tags = [ 'wfver:a:Whiteflag version:',
+                     'wfref:a:Whiteflag standard x-reference:' ]
+    options.stylesheetFile = new File("src/javadoc/stylesheet.css")
+}
+
+// Task to publish documentation
 task docs(type: Copy) {
     dependsOn javadoc
     from "$buildDir/docs/javadoc"

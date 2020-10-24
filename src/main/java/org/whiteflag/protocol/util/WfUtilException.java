@@ -20,7 +20,7 @@ public class WfUtilException extends Exception {
     /** 
      * Whiteflag utility error categories
      * 
-     * </p> These error categories are used by the {@link WfUtilException} class to
+     * <p> These error categories are used by the {@link WfUtilException} class to
      * specify the type of error.
      */
     public enum ErrorType {
