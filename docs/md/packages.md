@@ -1,11 +1,9 @@
-# Whiteflag Java Library
+# WFJL Package Structure
 
 Go back to the [WFJL Documentation Home](../index.md) or visit
 the detailed [WFJL Javadoc API Reference](../javadoc/index.html)
 
-## Package Structure
-
-### Overview
+## Overview
 
 As any Java software, the WFJL is organised in packages.
 Packages help to structure the software by grouping related classes. Packages
@@ -20,7 +18,7 @@ The WFJL software consists of the following Java packages:
 |`org.whiteflag.protocol.core`      | Whiteflag core functionality      |
 |`org.whiteflag.protocol.util`      | Whiteflag utilities               |
 
-### Description
+## Description
 
 The `org.whiteflag.protocol` package is the main package providing the
 external programming interface for software using this library.

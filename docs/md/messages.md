@@ -1,11 +1,9 @@
-# Whiteflag Java Library
+# WFJL Whiteflag Messages
 
 Go back to the [WFJL Documentation Home](../index.md) or visit
 the detailed [WFJL Javadoc API Reference](../javadoc/index.html)
 
-## Whiteflag Messages
-
-### Overview
+## Overview
 
 This section describes how Whiteflag messages are implemented by the WFJL.
 
@@ -13,13 +11,13 @@ For implementation in other software applications, only the
 `org.whiteflag.protocol` package with the `WfMessage` class and its nested
 creator class `WfMessage.Creator` are required.
 
-### Detailed Implementation
+## Detailed Implementation
 
-#### Message Class Diagram
+### Message Class Diagram
 
 ![WFJL Message Class Diagram](../uml/messages.png)
 
-#### Message Classes
+### Message Classes
 
 The WFJL implements the Whiteflag messages defined in the Whiteflag standard
 with the `WfMessage` class of the `org.whiteflag.protocol` package. This class
@@ -27,14 +25,14 @@ extends the `WfMessageCore` class from the `org.whiteflag.protocol.core`
 package with additional implementation-sepcific metadata and methods that allow
 for further integration in larger software applications.
 
-#### Message Core, Segment and Field classes
+### Message Core, Segment and Field classes
 
 The `WfMessageCore` class only contains the core elements as specified in the
 Whiteflag standard, i.e. the generic message header and the message type
 specific body. Both are implemented as a `WfMessageSegment` class, which
 comprises a number of message fields implemented as `WfMessageField` class.
 
-#### Message Creator, Type and Definition classes
+### Message Creator, Type and Definition classes
 
 To create Whiteflag messages, creator classes are used: the `WfMessageCreator`
 class creates `WfMessageCore` objects and is instantiated by the nested
@@ -45,9 +43,9 @@ specification, and is used by the `WfMessageCreator` class to create the
 messages. The `WfMessageDefintions` is a utility class wtih all field
 definitions.
 
-### Usage
+## Usage
 
-#### Message Creation and Alteration
+### Message Creation and Alteration
 
 The `WfMessage` class represents a Whiteflag message. The class cannot be
 instantiated directly. Instead, one of the methods from its nested static
@@ -65,7 +63,7 @@ Each of these methods returns a new `WfMessage` object. This object contains
 the message header and body as `WfMessageSegment` objects that contain the
 `WfMessageField` objects.
 
-#### Accessing Message Fields
+### Accessing Message Fields
 
 Message fields may be accessed through the message header or body segments, but
 the `WfMessage` class also provides an interface to get or set a field directly.
@@ -96,7 +94,7 @@ To set all fields values in a segment, use the `setAll` method:
 These methods return `true` if all fields in the segment are correctly set,
 and `false` if one or more fields are not correctly set.
 
-#### Field Data and Validators
+### Field Data and Validators
 
 To support of message creation by application software, the following methods
 are available for both message segments and messages:
@@ -110,7 +108,7 @@ are available for both message segments and messages:
 The following will work as well: `WfMessage.header.isValid()`, and
 `WfMessage.body.getFieldNames()`, etc. etc.
 
-#### Accessing Message Msetadata
+### Accessing Message Msetadata
 
 The message object also holds the metadata associated with the message. The
 metatdata may be accessed with the following methods:

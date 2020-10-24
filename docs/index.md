@@ -1,14 +1,16 @@
-# Whiteflag Java Library
+# General Description and Overview
 
-## Documentation
+## Introduction
 
-The Whiteflag Java Library (WFJL) is to be an implementation of the Whiteflag
-Protocol in Java to support the development of Whiteflag-enabled applications.
-The WFJL is to support the all Whiteflag protocol features, but with minimal
+The [Whiteflag](https://www.whiteflagprotocol.org/) Java Library (WFJL)
+is an implementation of the [Whiteflag Protocol](https://standard.whiteflagprotocol.org/)
+in Java to support the development of Whiteflag-enabled applications.
+
+The WFJL is to support all Whiteflag protocol features, but with minimal
 dependencies. Therefore, the library is independent from any specific
 blockchain, database solution, user interface, etc.
 
-The following documentation is available.
+## Documentation
 
 ### Detailed API and Source Code References
 
@@ -16,6 +18,6 @@ The following documentation is available.
 
 ### Source Code Description
 
-* [Package structure](md/packages.md)
-* [Exception handling](md/errors.md)
-* [Whiteflag messages](md/messages.md)
+* [Package Structure](md/packages.md)
+* [Exception Handling](md/errors.md)
+* [Whiteflag Messages](md/messages.md)
