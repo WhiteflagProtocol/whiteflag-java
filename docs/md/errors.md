@@ -1,11 +1,9 @@
-# Whiteflag Java Library
+# WFJL Error Handling
 
 Go back to the [WFJL Documentation Home](../index.md) or visit
 the detailed [WFJL Javadoc API Reference](../javadoc/index.html)
 
-## Error Handling
-
-### Overview
+## Overview
 
 In addition to the standard Java exception classes, the WFJL extends the
 [Java Exception class](https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html)
@@ -19,13 +17,13 @@ Software using the library should only expect the `WfException` class to be
 thrown, and should only use that class. The `WfCoreException` and
 `WfUtilException` classes are only used internally.
 
-### Detailed Implementation
+## Detailed Implementation
 
-#### Error Class Diagram
+### Error Class Diagram
 
 ![WFJL Error Class Diagram](../uml/errors.png)
 
-#### Error Classes
+### Error Classes
 
 The core package defines the `WfCoreException` class, that is thrown by its
 classes if any request is made that is not in accordance with the Whiteflag
@@ -37,7 +35,7 @@ uses the `WfExcepetion` class that extends the `WfCoreException` class. The
 `WfException` class has a property indicating the type of error. The error
 types are defined by the nested enumeration `WfException.ErrorType`.
 
-#### Error Types
+### Error Types
 
 The `WfException.ErrorType` enum defines the following error codes:
 
@@ -49,9 +47,9 @@ The `WfException.ErrorType` enum defines the following error codes:
 * `WF_SIGN_ERROR`: Whiteflag signature error
 * `WF_ENCRYPTION_ERROR`: Whiteflag encryption error
 
-### Usage
+## Usage
 
-#### Example
+### Example
 
 An example where a Whiteflag exception is thrown during authentication
 of an originator:
