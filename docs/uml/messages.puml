@@ -72,6 +72,10 @@ package org.whiteflag.protocol.core {
         #signsignalFields : WfMessageField[]
         #createRequestFields() : WfMessageField[]
     }
+    class WfMessageCodec <<Utility>> {
+        +encode(String) : WfBinaryString
+        +decode(WfBinaryString) : String
+    }
     class WfBinaryString <<DataType>>
 }
 
@@ -97,8 +101,7 @@ package org.whiteflag.protocol {
     }
 }
 
-WfJsonMessage <. WfMessage: uses
-WfJsonMessage <. WfMessage.Creator: uses
+WfJsonMessage <. WfMessage
 
 WfMessage --|> WfMessageCore
 WfMessage +- WfMessage.Creator
@@ -109,10 +112,11 @@ WfMessageCore --> WfMessageType
 WfMessageCore *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField
 WfMessageField +- WfMessageField.Encoding
+WfMessageCodec <. WfMessageField
 
 WfMessageCreator -> WfMessageCore: creates
-WfMessageCreator ..> WfMessageType: uses
-WfMessageCreator ..> WfMessageSegment: uses
+WfMessageCreator ..> WfMessageType
+WfMessageCreator ..> WfMessageSegment
 
 WfMessageType --> WfMessageDefinitions
 WfMessageDefinitions --> WfMessageField
