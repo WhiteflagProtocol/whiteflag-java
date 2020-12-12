@@ -1,14 +1,14 @@
 # WFJL Whiteflag Messages
 
 Go back to the [WFJL Documentation Home](../index.md) or visit
-the detailed [WFJL Javadoc API Reference](../javadoc/index.html)
+the detailed [WFJL Javadoc API Reference](../javadoc)
 
 ## Overview
 
 This section describes how Whiteflag messages are implemented by the WFJL.
 
 For implementation in other software applications, only the
-`org.whiteflag.protocol` package with the `WfMessage` class and its nested
+`org.whiteflagprotocol.java` package with the `WfMessage` class and its nested
 creator class `WfMessage.Creator` are required.
 
 ## Detailed Implementation
@@ -20,8 +20,8 @@ creator class `WfMessage.Creator` are required.
 ### Message Classes
 
 The WFJL implements the Whiteflag messages defined in the Whiteflag standard
-with the `WfMessage` class of the `org.whiteflag.protocol` package. This class
-extends the `WfMessageCore` class from the `org.whiteflag.protocol.core`
+with the `WfMessage` class of the `org.whiteflagprotocol.java` package. This class
+extends the `WfMessageCore` class from the `org.whiteflagprotocol.java.core`
 package with additional implementation-sepcific metadata and methods that allow
 for further integration in larger software applications.
 

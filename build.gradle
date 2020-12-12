@@ -9,6 +9,7 @@ version = '0.3.0-dev'
 apply plugin: 'java'
 apply plugin: 'java-library'
 apply plugin: 'java-library-distribution'
+apply plugin: 'maven-publish'
 
 // Repositories and Dependencies
 repositories {
@@ -41,14 +42,33 @@ distributions {
     }
 }
 
+// Publishing library as package
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/whiteflagprotocol/whiteflag-javalib")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
 // Javadoc options
 javadoc {
     options.tags = [ 'wfver:a:Whiteflag version:',
                      'wfref:a:Whiteflag standard x-reference:' ]
-    options.stylesheetFile = new File("src/javadoc/stylesheet.css")
+    options.stylesheetFile = new File("src/main/javadoc/style.css")
 }
 
-// Task to publish documentation
+// Task to build documentation
 task docs(type: Copy) {
     dependsOn javadoc
     from "$buildDir/docs/javadoc"

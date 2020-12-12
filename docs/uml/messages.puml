@@ -3,7 +3,7 @@
 
 left footer WFJL Message Class Diagram
 
-package org.whiteflag.protocol.core {
+package org.whiteflagprotocol.java.core {
     class WfMessageCore {
         +type : WfMessageType
         +header : WfMessageSegment
@@ -79,14 +79,14 @@ package org.whiteflag.protocol.core {
     class WfBinaryString <<DataType>>
 }
 
-package org.whiteflag.protocol.util {
+package org.whiteflagprotocol.java.util {
     class WfJsonMessage {
         +toJson() : String
         +create(String)
     }
 }
 
-package org.whiteflag.protocol {
+package org.whiteflagprotocol.java {
     class WfMessage {
         -metadata : HashMap<>
         +toJson() : String

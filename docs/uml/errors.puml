@@ -5,12 +5,12 @@ left footer WFJL Error Class Diagram
 
 class Exception <<Throwable>>
 
-package org.whiteflag.protocol.core {
+package org.whiteflagprotocol.java.core {
     class WfCoreException
 }
 Exception <|- WfCoreException
 
-package org.whiteflag.protocol.util {
+package org.whiteflagprotocol.java.util {
     class WfUtilException
     enum WfUtilException.ErrorType {
         WF_UTIL_ERROR
@@ -20,7 +20,7 @@ package org.whiteflag.protocol.util {
 }
 Exception <|-- WfUtilException
 
-package org.whiteflag.protocol {
+package org.whiteflagprotocol.java {
     class WfException
     enum WfException.ErrorType {
         WF_PROTOCOL_ERROR
