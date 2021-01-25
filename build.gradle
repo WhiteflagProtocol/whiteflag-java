@@ -2,8 +2,16 @@
  * Gradle build file for the Whiteflag Java Library
  */
 
-// Project
+// Project information
 version = '0.3.0-dev'
+group = 'org.whiteflagprotocol.java'
+
+// Display basic information
+println  "Configuration for ${project.rootProject}";
+println  "  project:    ${project.name}"
+println  "  group:      ${project.group}"
+println  "  version:    ${project.version}";
+println  "  directory:  ${project.projectDir}";
 
 // Plugins
 apply plugin: 'java'
@@ -56,7 +64,14 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
             from(components.java)
+            pom {
+                description = 'Implementation of the Whiteflag Protocol for Java development'
+                url = 'https://java.whiteflagprotocol.org'
+            }
         }
     }
 }
@@ -65,7 +80,7 @@ publishing {
 javadoc {
     options.tags = [ 'wfver:a:Whiteflag version:',
                      'wfref:a:Whiteflag standard x-reference:' ]
-    options.stylesheetFile = new File("src/main/javadoc/style.css")
+    options.stylesheetFile = project.file("src/main/javadoc/style.css")
 }
 
 // Task to build documentation
