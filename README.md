@@ -1,9 +1,9 @@
 # Whiteflag Java Library
 
-![GitHub latest release](https://img.shields.io/github/v/release/whiteflagprotocol/whiteflag-javalib?label=latest&logo=github&sort=semver)
-![Ubuntu Test](https://github.com/WhiteflagProtocol/whiteflag-javalib/workflows/Ubuntu%20Test/badge.svg)
-![Windows Test](https://github.com/WhiteflagProtocol/whiteflag-javalib/workflows/Windows%20Test/badge.svg)
-![macOS Test](https://github.com/WhiteflagProtocol/whiteflag-javalib/workflows/macOS%20Test/badge.svg)
+![GitHub latest release](https://img.shields.io/github/v/release/whiteflagprotocol/whiteflag-java?label=latest&logo=github&sort=semver)
+![Ubuntu Test](https://github.com/WhiteflagProtocol/whiteflag-java/workflows/Ubuntu%20Test/badge.svg)
+![Windows Test](https://github.com/WhiteflagProtocol/whiteflag-java/workflows/Windows%20Test/badge.svg)
+![macOS Test](https://github.com/WhiteflagProtocol/whiteflag-java/workflows/macOS%20Test/badge.svg)
 
 ## Introduction
 
@@ -49,7 +49,7 @@ The dependencies of the WFJL itself, specified in the `build.gradle` file, are:
 ## Documentation
 
 More detailed documentation of the WFJL programming interface is available at
-[Github Pages](https://whiteflagprotocol.github.io/whiteflag-javalib/)
+[Github Pages](https://whiteflagprotocol.github.io/whiteflag-java/)
 
 This documentation is also found in the under the `docs/` directory.
 The API documentation may also be generated manually by running

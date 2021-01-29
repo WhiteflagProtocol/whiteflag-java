@@ -6,7 +6,7 @@ of Whiteflag-enabled applications.
 
 ## Issues and Requests
 
-Please report bugs and file requests by creating an issue in the [GitHub repository](https://github.com/WhiteflagProtocol/whiteflag-javalib/issues).
+Please report bugs and file requests by creating an issue in the [GitHub repository](https://github.com/WhiteflagProtocol/whiteflag-java/issues).
 
 ## Repository and Code Structure
 
@@ -16,7 +16,7 @@ and build the WFJL software.
 ## Versioning
 
 [Semantic versioning](https://semver.org/) is used for this project.
-For available versions, see the [version tags](https://github.com/WhiteflagProtocol/whiteflag-javalib/tags)
+For available versions, see the [version tags](https://github.com/WhiteflagProtocol/whiteflag-java/tags)
 on this repository.
 
 Versions in development  use `-dev` as pre-release identifier,

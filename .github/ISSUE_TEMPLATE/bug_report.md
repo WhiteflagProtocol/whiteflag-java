@@ -17,7 +17,7 @@ Please give a short description of the problem in one or two sentences...
 
     * OS:  <name> <version>
     * Java: <version>
-    * whiteflag-javalib: <version>
+    * whiteflag-java: <version>
     * (please list allother relevant software components)
 
 #### Blockchain

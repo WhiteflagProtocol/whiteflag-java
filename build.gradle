@@ -55,7 +55,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/whiteflagprotocol/whiteflag-javalib")
+            url = uri("https://maven.pkg.github.com/whiteflagprotocol/whiteflag-java")
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
                 password = project.findProperty("gpr.key") ?: System.getenv("GPR_TOKEN")
