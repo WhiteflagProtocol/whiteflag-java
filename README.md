@@ -22,7 +22,29 @@ protocol features, but with minimal dependencies. Therefore, the library
 is independent from any specific blockchain, database solution,
 user interface, etc.
 
-The planned WFJL functionality can be found in `SCOPE.md`.
+Version 1 of the WFJL corresponds with version 1 of the protocol.
+The planned WFJL functionality for versions `1.x` can be found in `SCOPE.md`.
+
+## Installation
+
+To use the WFJL, its GitHub package should be added to your project as
+a dependency using the following "group:artifact:version" information:
+
+`org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev`
+
+Please see the GitHub documentation for detailed information about
+installing packages with either
+[Maven](https://docs.github.com/en/packages/guides/configuring-apache-maven-for-use-with-github-packages#installing-a-package
+or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-use-with-github-packages#installing-a-package).
+
+Alternatively, but not recommended, the source code may manually integrated
+into your software, e.g. by copying the source under `src/` into your
+project structure.
+
+The dependencies of the WFJL itself, specified in the `build.gradle` file, are:
+
+* the [JUnit test framework](https://junit.org/) for testing the software
+* the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
 
 ## Documentation
 
@@ -50,17 +72,6 @@ statement. See `LICENSE.md` for details.
 
 The library may require third party software packages, which are not
 part of this distribution and may be licenced differently.
-
-## Installation and Usage
-
-The WFJL software is not yet published in a central Java repository. To use
-the library, integrate the source code manually into your software by cloning
-the `src/` directory.
-
-The dependencies, as specified in the `build.gradle` file, are:
-
-* the [JUnit test framework](https://junit.org/) for testing the software
-* the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
 
 ## Building and Testing
 

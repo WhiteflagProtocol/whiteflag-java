@@ -13,31 +13,30 @@ blockchain, database solution, user interface, etc.
 
 The WFJL should provide message handling i.a.w. `v1-draft.6` of the standard:
 
-* initial design pattern (v0.1)
-* syntax checks of all message types (v0.2)
-* encoding of all message types (v0.2)
-* decoding of all message types (v0.2)
-* encryption/decryption (v0.4)
+* syntax checks of all message types (v1.2)
+* encoding of all message types (v1.0)
+* decoding of all message types (v1.0)
+* encryption/decryption (v1.4)
 
 ### Advanced Protocol Functionality
 
 Advanced protocol features:
 
-* Whiteflag authentication method 2 (token-based) (v0.5)
+* Whiteflag authentication method 2 (token-based) (v1.5)
 * Whiteflag authentication method 1 (signature-based):
-  * create a Whiteflag digital signature (v0.6)
-  * check against internet resource for `A1` messages (v0.6)
+  * create a Whiteflag digital signature (v1.6)
+  * check against internet resource for `A1` messages (v1.6)
 * manage encryption keys for different originators:
-  * pre-shared encryption keys (v0.4)
-  * ECDH negotated encryption keys (v0.4)
+  * pre-shared encryption keys (v1.4)
+  * ECDH negotated encryption keys (v1.4)
 
 ### Semantic message processing
 
 Teh WFJL provides the following to support the processing of messages
 in a meaningful way:
 
-* keeping track of the Whiteflag state (originators, crypto, etc.) (v0.3)
-* a model for real world entities based on and updated by Whiteflag messages (v0.7)
+* keeping track of the Whiteflag state (originators, crypto, etc.) (v1.3)
+* a model for real world entities based on and updated by Whiteflag messages (v1.7)
 
 ## Outside scope
 
@@ -49,7 +48,7 @@ The following Whiteflag protocol features will not be implemented:
 
 ### Other functionality
 
-The following may be implemented in many ways with othre libraries and is
+The following may be implemented in many ways with other libraries and is
 therefore not included in the WFJL:
 
 * blockchain accounts and connectivity functionality
