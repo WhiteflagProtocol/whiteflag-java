@@ -55,6 +55,22 @@ naming conventions may be used:
 
 Testing is implemented with the [JUnit](https://junit.org/) testing framework.
 
+## Documentation
+
+Detailed documentation of the WFJL programming interface is available at
+[Github Pages](https://java.whiteflagprotocol.org/). The source of this
+documentation is found in the `docs/` directory.
+
+The API documentation is generated manually from the [javadoc](https://www.oracle.com/java/technologies/javase/javadoc-tool.html)
+comments in the code by running the following command in the project root:
+
+```shell
+gradlew docs
+```
+
+which creates the HTML documentation in `build/docs/javadoc/`
+and copies it to `docs/javadoc/`.
+
 ## Coding Style
 
 ### Main Style Guide

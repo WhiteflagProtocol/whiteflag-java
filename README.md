@@ -25,41 +25,67 @@ user interface, etc.
 Version 1 of the WFJL corresponds with version 1 of the protocol.
 The planned WFJL functionality for versions `1.x` can be found in `SCOPE.md`.
 
-## Installation
+## Installation and Usage
 
-To use the WFJL, its GitHub package should be added to your project as
-a dependency using the following "group:artifact:version" information:
+To use the WFJL, its [GitHub package](https://github.com/WhiteflagProtocol/whiteflag-java/packages)
+should be added to your project as a dependency using the following
+"group:artifact:version" information:
 
 `org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev`
 
+For example, when using Gradle, the following should be included in your
+`build.gradle` file:
+
+```groovy
+plugins {
+  id 'maven'
+}
+repositories {
+  maven {
+    url = uri("https://maven.pkg.github.com/whiteflagprotocol/whiteflag-java")
+    credentials {
+      username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
+      password = project.findProperty("gpr.key") ?: System.getenv("GPR_TOKEN")
+    }
+  }
+}
+dependencies {
+  implementation 'org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev'
+}
+```
+
 Please see the GitHub documentation for detailed information about
 installing packages with either
-[Maven](https://docs.github.com/en/packages/guides/configuring-apache-maven-for-use-with-github-packages#installing-a-package
+[Maven](https://docs.github.com/en/packages/guides/configuring-apache-maven-for-use-with-github-packages#installing-a-package)
 or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-use-with-github-packages#installing-a-package).
 
-Alternatively, but not recommended, the source code may manually integrated
-into your software, e.g. by copying the source under `src/` into your
-project structure.
+After adding the dependency to your project, the WFJL classes can be used
+in your Java code. Normally, you will only need the classes from the
+`org.whiteflagprotocol.java` package. Your code may look like this:
 
-The dependencies of the WFJL itself, specified in the `build.gradle` file, are:
+```java
+import org.whiteflagprotocol.java.WfMessage;
+import org.whiteflagprotocol.java.WfException;
 
-* the [JUnit test framework](https://junit.org/) for testing the software
-* the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
+public class Example {
+  private WfMessage message;
+
+  public WfMessage createMessage(String messageType) {
+    try {
+      message = WfMessage.Creator.type(messageType);
+    } catch(WfException e) {
+      throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
+    }
+    return message;
+  }
+}
+```
 
 ## Documentation
 
-More detailed documentation of the WFJL programming interface is available at
-[Github Pages](https://whiteflagprotocol.github.io/whiteflag-java/)
-
-This documentation is also found in the under the `docs/` directory.
-The API documentation may also be generated manually by running
-the following command in the project root:
-
-```shell
-gradlew javadoc
-```
-
-which creates the HTML documentation in `build/docs/javadoc/`.
+All detailed documentation of the WFJL programming interface is available at
+[Github Pages](https://java.whiteflagprotocol.org/). The documentation is also
+found in this repository in the `docs/` directory.
 
 The repository structure and development guidelines for the source code are
 described in `CONTRIBUTING.md`.
@@ -74,6 +100,11 @@ The library may require third party software packages, which are not
 part of this distribution and may be licenced differently.
 
 ## Building and Testing
+
+The dependencies of the WFJL itself, specified in the `build.gradle` file, are:
+
+* the [JUnit test framework](https://junit.org/) for testing the software
+* the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
 
 The [Gradle](https://gradle.org/) build tool is used to structure, test
 and build the WFJL software.
