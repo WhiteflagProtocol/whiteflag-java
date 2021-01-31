@@ -101,7 +101,7 @@ public class WfMessageDefinitions {
     /**
      * Sign/signal message body fields
      * @wfver v1-draft.6
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      */
     protected static final WfMessageField[] signsignalBodyFields = new WfMessageField[] {
         new WfMessageField("SubjectCode", "^"+HEX.charset()+"{2}$", HEX, 71, 73),

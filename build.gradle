@@ -81,6 +81,7 @@ javadoc {
     options.tags = [ 'wfver:a:Whiteflag version:',
                      'wfref:a:Whiteflag standard x-reference:' ]
     options.stylesheetFile = project.file("src/main/javadoc/style.css")
+    options.overview = "src/main/javadoc/overview.html"
 }
 
 // Task to build documentation

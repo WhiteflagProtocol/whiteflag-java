@@ -53,49 +53,49 @@ public enum WfMessageType {
 
     /** 
      * Protective Sign message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.1 Protective Signs
      */
     P("P", signsignalBodyFields),
 
     /** 
      * Emergency Signal message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.2 Emergency Signals
      */
     E("E", signsignalBodyFields),
 
     /** 
      * Danger Sign message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
-     * @wfref 4.3.1.2.3 Danger & Disaster Signs
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
+     * @wfref 4.3.1.2.3 Danger and Disaster Signs
      */
     D("D", signsignalBodyFields),
 
     /** 
      * Status Signal message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.4 Status Signals
      */
     S("S", signsignalBodyFields),
 
     /** 
      * Infrastructure Sign message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.5 Infrastructure Signs
      */
     I("I", signsignalBodyFields),
 
     /** 
      * Mission Sign message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.6 Mission Signals
      */
     M("M", signsignalBodyFields),
 
     /** 
      * Request Signal message type
-     * @wfref 4.3.1 Functional Messages: Signs & Signals
+     * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.7 Request Signals
      */
     Q("Q", signsignalBodyFields);

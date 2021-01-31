@@ -39,7 +39,7 @@ public class WfMessage extends WfMessageCore {
     /* CONSTRUCTORS */
 
     /**
-     * Creates a Whiteflag message by calling the super constructor with an array of field values
+     * Creates a Whiteflag message by calling the super constructor
      * @param type the {@link WfMessageType} of the message
      * @param header the {@link WfMessageSegment} message header
      * @param body the {@link WfMessageSegment} message body
@@ -148,10 +148,10 @@ public class WfMessage extends WfMessageCore {
     /* NESTED CLASSES */
 
     /**
-     * Whiteflag nested message creator class
+     * Whiteflag nested static message creator class
      * 
-     * <p> This is a nested builder class to create a Whiteflag message. It
-     * calls the core builder to create a message i.a.w. the Whiteflag
+     * <p> This is a nested static builder class to create a Whiteflag message.
+     * It calls the core builder to create a message i.a.w. the Whiteflag
      * specification.
      */
     public static class Creator {
@@ -172,7 +172,7 @@ public class WfMessage extends WfMessageCore {
          * @param messageCode the code indicating the message type to be created
          * @return a new {@link WfMessage} Whiteflag message
          */
-        public static final WfMessage type(final String messageCode) throws WfException {
+        public static final WfMessage create(final String messageCode) throws WfException {
             WfMessageCore messageCore;
             try {
                 messageCore = new WfMessageCreator().type(WfMessageType.byCode(messageCode)).create();
@@ -183,12 +183,21 @@ public class WfMessage extends WfMessageCore {
         }
 
         /**
-         * Copies a Whiteflag message into new Whiteflag message object
+         * Copies a Whiteflag message into new Whiteflag message object, without metadata
          * @param originalMessage the message to be copied
          * @return a {@link WfMessage} Whiteflag message
          */
         public static final WfMessage copy(final WfMessage originalMessage) {
-            WfMessage message = new WfMessage(originalMessage.type, new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
+            return new WfMessage(originalMessage.type, new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
+        }
+
+        /**
+         * Clones a Whiteflag message into new Whiteflag message object, including metadata
+         * @param originalMessage the message to be copied
+         * @return a {@link WfMessage} Whiteflag message
+         */
+        public static final WfMessage clone(final WfMessage originalMessage) {
+            WfMessage message = copy(originalMessage);
             for (String key : originalMessage.getMetadataKeys()) {
                 message.addMetadata(key, originalMessage.getMetadata(key));
             }

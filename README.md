@@ -72,7 +72,7 @@ public class Example {
 
   public WfMessage createMessage(String messageType) {
     try {
-      message = WfMessage.Creator.type(messageType);
+      message = WfMessage.Creator.create(messageType);
     } catch(WfException e) {
       throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
     }

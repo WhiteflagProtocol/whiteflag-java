@@ -2,8 +2,8 @@
 body {
     background-color:#f2f2f2;
     color:#454545;
-    font-family:Helvetica,Verdana,Arial,sans-serif;
-    font-size:12px;
+    font-family:"Myriad Pro", Calibri, Helvetica, Arial, sans-serif;
+    font-size:13px;
     margin:0;
 }
 a:link, a:visited {
@@ -281,7 +281,7 @@ Page layout container styles
 .contentContainer .description dl dd, .contentContainer .details dl dd, .serializedFormContainer dl dd {
     margin:5px 0 10px 0px;
     font-size:14px;
-    font-family:Georgia,Times,'Times New Roman',serif;
+    font-family:"Myriad Pro", Calibri, Helvetica, Arial, sans-serif;
 }
 .serializedFormContainer dl.nameValue dt {
     margin-left:1px;
@@ -518,7 +518,7 @@ ul.blockList ul.blockList ul.blockList li.blockList h3 {
 
 div.block {
     font-size:14px;
-    font-family:Georgia,Times,'Times New Roman',serif;
+    font-family:"Myriad Pro", Calibri, Helvetica, Arial, sans-serif;
 }
 
 td.colLast div {

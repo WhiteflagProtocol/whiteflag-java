@@ -21,7 +21,7 @@ public class WfMessageTest {
         /* Setup */
         WfMessage message;
         try {
-            message = WfMessage.Creator.type("S");
+            message = WfMessage.Creator.create("S");
         } catch (WfException e) {
             throw e;
         }
@@ -227,6 +227,33 @@ public class WfMessageTest {
         } catch (WfException e) {
             assertTrue(e instanceof WfException);
         }
+    }
+    /**
+     * Tests cloning and copying of resource message
+     */
+    @Test
+    public void testResourceMessageCloning() throws WfException {
+        /* Setup */
+        WfMessage message1;
+        WfMessage message2;
+        final String[] fieldValues = { "WF", "1", "0", "1", "R", "2", "4a4f4e0cfa83122b242234254c1920c769d685dfcc4c670bb53eb6f12843c398",
+                                       "1", "https://example.com/resource-43842342"
+                                    };
+        try {
+            message1 = WfMessage.Creator.compile(fieldValues);
+        } catch (WfException e) {
+            throw e;
+        }
+        message1.addMetadata("transactionHash", "a1b2c3");
+
+        /* Clone */
+        message2 = WfMessage.Creator.clone(message1);
+
+        /* Verify */
+        assertEquals("Metadata should be identical", message1.getMetadata("transactionHash"), message2.getMetadata("transactionHash"));
+        assertEquals("Metadata should have same number of keys", message1.getMetadataKeys().size(), message2.getMetadataKeys().size());
+        assertEquals("Message type should be correct", message1.type, message2.type);
+        assertEquals("Encoding should be identical", message1.encode(), message2.encode());
     }
     /**
      * Tests serialization of sign/signal message
