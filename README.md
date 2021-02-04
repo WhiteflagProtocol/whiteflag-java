@@ -7,12 +7,12 @@
 
 ## Introduction
 
-Whiteflag is a fully neutral and secure communciations protocol based on
-blockchain technology. It enables near real-time communication in armed
-conflicts and disasters to exchange early warning and status information
-to create shared situational awareness.
+[Whiteflag](https://www.whiteflagprotocol.org) is a fully neutral and
+secure communciations protocol based on blockchain technology. It enables
+near real-time communication in armed conflicts and disasters to exchange
+early warning and status information to create shared situational awareness.
 
-The [Whiteflag Protocol specification](https://github.com/WhiteflagProtocol/whiteflag-standard)
+The [Whiteflag Protocol specification](https://standard.whiteflagprotocol.org)
 is an open standard.
 
 The Whiteflag Java Library (WFJL) is an implementation of the Whiteflag
@@ -33,14 +33,14 @@ To use the WFJL, its [GitHub package](https://github.com/WhiteflagProtocol/white
 should be added to your project as a dependency using the following
 "group:artifact:version" information, with the most recently published version:
 
-`org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev`
+`org.whiteflagprotocol.java:whiteflag-java:1.0.0`
 
 For example, when using [Gradle](https://gradle.org/), the following should be
 included in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev'
+  implementation 'org.whiteflagprotocol.java:whiteflag-java:1.0.0'
 }
 ```
 
@@ -50,7 +50,7 @@ or in your `pom.xml` when using [Maven](https://maven.apache.org/):
 <dependency>
   <groupId>org.whiteflagprotocol.java</groupId>
   <artifactId>whiteflag-java</artifactId>
-  <version>0.3.0-dev</version>
+  <version>1.0.0</version>
 </dependency> 
 ```
 

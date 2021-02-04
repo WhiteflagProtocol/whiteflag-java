@@ -55,7 +55,7 @@ gradlew docs
 which creates the HTML documentation in `build/docs/javadoc/`
 and copies it to `docs/javadoc/`.
 
-Additional descriptions and background information is written in [Markdown]
+Additional descriptions and background information is written in [Markdown](https://en.wikipedia.org/wiki/Markdown)
 files, which can be found in `docs/md/`.
 
 ## Versioning
