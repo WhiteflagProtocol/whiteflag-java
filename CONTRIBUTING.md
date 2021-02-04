@@ -6,12 +6,57 @@ of Whiteflag-enabled applications.
 
 ## Issues and Requests
 
-Please report bugs and file requests by creating an issue in the [GitHub repository](https://github.com/WhiteflagProtocol/whiteflag-java/issues).
+Please report bugs and file requests by creating an issue in the
+[GitHub repository](https://github.com/WhiteflagProtocol/whiteflag-java/issues).
 
 ## Repository and Code Structure
 
 The [Gradle](https://gradle.org/) build tool is used to structure, test
 and build the WFJL software.
+
+As any Java software, the WFJL is organised in packages. The repository
+adheres to the standard Maven project structure with `src/main/java/org/whiteflagprotocol/java`
+as the path to the main WFJL package. Please see `docs/md/packages.md`
+for a description of the WFJL packages.
+
+## Building and Testing
+
+A number of automated tests is implemented with the [JUnit](https://junit.org/)
+test framework. To do a full test use the following command
+in the project root:
+
+```shell
+gradlew test
+```
+
+To test and build the software, use:
+
+```shell
+gradlew build
+```
+
+The compiled software, test reports and generated documentation are written
+to the `build/` directory.
+
+## Documentation
+
+Detailed documentation of the WFJL programming interface is available at
+[java.whiteflagprotocol.org](https://java.whiteflagprotocol.org/). The source of this
+documentation is found in the `docs/` directory.
+
+The API documentation is generated manually from the
+[javadoc](https://www.oracle.com/java/technologies/javase/javadoc-tool.html)
+comments in the code by running the following command in the project root:
+
+```shell
+gradlew docs
+```
+
+which creates the HTML documentation in `build/docs/javadoc/`
+and copies it to `docs/javadoc/`.
+
+Additional descriptions and background information is written in [Markdown]
+files, which can be found in `docs/md/`.
 
 ## Versioning
 
@@ -50,26 +95,6 @@ naming conventions may be used:
   specific feature, or longer for larger work over multiple major and minor
   versions (e.g. `dev/crypto`, `dev/blockchain`, `dev/state`); a development
   branch may only be merged into `develop`.
-
-## Testing
-
-Testing is implemented with the [JUnit](https://junit.org/) testing framework.
-
-## Documentation
-
-Detailed documentation of the WFJL programming interface is available at
-[Github Pages](https://java.whiteflagprotocol.org/). The source of this
-documentation is found in the `docs/` directory.
-
-The API documentation is generated manually from the [javadoc](https://www.oracle.com/java/technologies/javase/javadoc-tool.html)
-comments in the code by running the following command in the project root:
-
-```shell
-gradlew docs
-```
-
-which creates the HTML documentation in `build/docs/javadoc/`
-and copies it to `docs/javadoc/`.
 
 ## Coding Style
 

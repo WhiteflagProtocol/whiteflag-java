@@ -14,7 +14,6 @@ import static org.whiteflagprotocol.java.core.WfMessageField.Encoding.*;
  * No implementation specific properties and methods are defined by this class.
  * 
  * @wfver v1-draft.6
- * 
  * @wfref 4. Message Format
  */
 public class WfMessageDefinitions {

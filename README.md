@@ -17,47 +17,50 @@ is an open standard.
 
 The Whiteflag Java Library (WFJL) is an implementation of the Whiteflag
 Protocol in [Java](https://www.java.com/) to support the development of
-Whiteflag-enabled applications. The WFJL is to include all Whiteflag
-protocol features, but with minimal dependencies. Therefore, the library
-is independent from any specific blockchain, database solution,
-user interface, etc.
+Whiteflag-enabled applications. The WFJL is to include all Whiteflag protocol
+features, but with minimal dependencies. Therefore, the library is independent
+from any specific blockchain, database solution, user interface, etc.
 
-Version 1 of the WFJL corresponds with version 1 of the protocol.
-The planned WFJL functionality for versions `1.x` can be found in `SCOPE.md`.
+Version 1 of the WFJL corresponds with version 1 of the protocol, and more
+specifically with `v1-draft.6` of the standard. The planned WFJL functionality
+and corresponding `1.x` subversions are defined as [milestones](https://github.com/WhiteflagProtocol/whiteflag-java/milestones).
 
 ## Installation and Usage
 
+### Defining package dependency
+
 To use the WFJL, its [GitHub package](https://github.com/WhiteflagProtocol/whiteflag-java/packages)
 should be added to your project as a dependency using the following
-"group:artifact:version" information:
+"group:artifact:version" information, with the most recently published version:
 
 `org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev`
 
-For example, when using Gradle, the following should be included in your
-`build.gradle` file:
+For example, when using [Gradle](https://gradle.org/), the following should be
+included in your `build.gradle` file:
 
 ```groovy
-plugins {
-  id 'maven'
-}
-repositories {
-  maven {
-    url = uri("https://maven.pkg.github.com/whiteflagprotocol/whiteflag-java")
-    credentials {
-      username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
-      password = project.findProperty("gpr.key") ?: System.getenv("GPR_TOKEN")
-    }
-  }
-}
 dependencies {
   implementation 'org.whiteflagprotocol.java:whiteflag-java:0.3.0-dev'
 }
 ```
 
-Please see the GitHub documentation for detailed information about
-installing packages with either
+or in your `pom.xml` when using [Maven](https://maven.apache.org/):
+
+```xml
+<dependency>
+  <groupId>org.whiteflagprotocol.java</groupId>
+  <artifactId>whiteflag-java</artifactId>
+  <version>0.3.0-dev</version>
+</dependency> 
+```
+
+Note that you also need to add the GitHub WFJL package repository URL `https://maven.pkg.github.com/whiteflagprotocol/whiteflag-java`
+to your project. Please see the GitHub documentation for detailed information
+about installing packages from the GitHub repository with either
 [Maven](https://docs.github.com/en/packages/guides/configuring-apache-maven-for-use-with-github-packages#installing-a-package)
 or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-use-with-github-packages#installing-a-package).
+
+### Example
 
 After adding the dependency to your project, the WFJL classes can be used
 in your Java code. Normally, you will only need the classes from the
@@ -84,13 +87,13 @@ public class Example {
 ## Documentation
 
 All detailed documentation of the WFJL programming interface is available at
-[Github Pages](https://java.whiteflagprotocol.org/). The documentation is also
-found in this repository in the `docs/` directory.
+[java.whiteflagprotocol.org](https://java.whiteflagprotocol.org/). The
+documentation is also found in this repository in the `docs/` directory.
 
 The repository structure and development guidelines for the source code are
 described in `CONTRIBUTING.md`.
 
-## License
+## License and Third Party Software
 
 The WFJL software is dedicated to the public domain under the
 [Creative Commons CC0-1.0 Universal Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/)
@@ -99,20 +102,7 @@ statement. See `LICENSE.md` for details.
 The library may require third party software packages, which are not
 part of this distribution and may be licenced differently.
 
-## Building and Testing
-
-The dependencies of the WFJL itself, specified in the `build.gradle` file, are:
+The third party software dependencies of the WFJL itself are:
 
 * the [JUnit test framework](https://junit.org/) for testing the software
 * the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
-
-The [Gradle](https://gradle.org/) build tool is used to structure, test
-and build the WFJL software.
-
-A number of automated tests is implemented with the [JUnit](https://junit.org/)
-test framework. To do a full test and run all the tests, use the following
-command in the project root:
-
-```shell
-gradlew test
-```

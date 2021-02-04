@@ -55,5 +55,5 @@ An example where a Whiteflag exception is thrown during authentication
 of an originator:
 
 ```java
-throw new WfException("Invalid authenticated data", WfException.ErrorType.WF_AUTH_ERROR);
+throw new WfException("Invalid authentication data", WfException.ErrorType.WF_AUTH_ERROR);
 ```

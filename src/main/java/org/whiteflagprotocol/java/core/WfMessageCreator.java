@@ -12,6 +12,9 @@ import java.util.Map;
  * the logic based on the Whiteflag specification to create a Whiteflag message
  * object. For example, it ensures that the message body corresponds with
  * the message type.
+ * 
+ * @wfver v1-draft.6
+ * @wfref 4. Message Format
  */
 public class WfMessageCreator {
 

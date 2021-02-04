@@ -5,9 +5,10 @@ the detailed [WFJL Javadoc API Reference](../javadoc)
 
 ## Overview
 
-This section describes how Whiteflag messages are implemented by the WFJL.
+This section describes how Whiteflag messages are implemented internally
+by the WFJL.
 
-For implementation in other software applications, only the
+To use Whiteflag messages in software applications, only the
 `org.whiteflagprotocol.java` package with the `WfMessage` class and its nested
 creator class `WfMessage.Creator` are required.
 
@@ -74,7 +75,8 @@ instantiated directly. Instead, one of the methods from its nested static
 methods to do this are:
 
 * `WfMessage.Creator.type(String messageCode)`: creates a new Whiteflag message of the type specified by the message code with empty field values
-* `WfMessage.Creator.copy(WfMessage)`: copies an existing Whiteflag message, including the metadata
+* `WfMessage.Creator.copy(WfMessage)`: copies an existing Whiteflag message, without the metadata
+* `WfMessage.Creator.clone(WfMessage)`: clones an existing Whiteflag message, including the metadata
 * `WfMessage.Creator.deserialize(String)`: deserializes a string with a serialized message
 * `WfMessage.Creator.deserializeJson(String)`: deserializes a string with a JSON representation of a message
 * `WfMessage.Creator.decode(String)`: decodes a string with the hexadecimal representation of an encoded message
@@ -122,7 +124,7 @@ are available for both message segments and messages:
 
 * `WfMessage.isValid()`: returns a Boolean to indicate if the message is valid, i.e. if all message fields contain valid data
 * `WfMessage.isValid(String fieldname)`: returns a Boolean to indicate if specified field contains valid data
-* `WfMessage.isValid(String fieldname, String data)`: returns a Boolean to indicate if specified data is valid for the specified
+* `WfMessage.isValid(String fieldname, String data)`: returns a Boolean to indicate if specified data would be valid for the specified field
 * `WfMessage.getNoFields()`: returns an interger with the number of fields
 * `WfMessage.getFieldNames()`: returns a Set with all field names
 

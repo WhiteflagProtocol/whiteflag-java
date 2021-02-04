@@ -8,6 +8,8 @@ package org.whiteflagprotocol.java;
  * 
  * <p> This class defines the Whiteflag state, keeping track of knwon
  * originators, cryptographic keys and message relations.
+ * 
+ * @wfver v1-draft.6
  */
 public class WfState {
 

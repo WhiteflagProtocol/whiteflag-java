@@ -20,6 +20,8 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
  * <p> This is a class representing a Whiteflag message. It contains
  * all methods to handle a Whiteflag message, e.g. to encode, decode, etc. It
  * also provides a nested static class to create Whiteflag messages.
+ * 
+ * @wfver v1-draft.6
  */
 public class WfMessage extends WfMessageCore {
 
