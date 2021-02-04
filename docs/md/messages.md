@@ -1,15 +1,37 @@
 # WFJL Whiteflag Messages
 
 Go back to the [WFJL Documentation Home](../index.md) or visit
-the detailed [WFJL Javadoc API Reference](../javadoc/index.html)
+the detailed [WFJL Javadoc API Reference](../javadoc)
 
 ## Overview
 
-This section describes how Whiteflag messages are implemented by the WFJL.
+This section describes how Whiteflag messages are implemented internally
+by the WFJL.
 
-For implementation in other software applications, only the
-`org.whiteflag.protocol` package with the `WfMessage` class and its nested
+To use Whiteflag messages in software applications, only the
+`org.whiteflagprotocol.java` package with the `WfMessage` class and its nested
 creator class `WfMessage.Creator` are required.
+
+A simple example for creating a new Whiteflag message of a type specified by
+a string with the message code:
+
+```java
+import org.whiteflagprotocol.java.WfMessage;
+import org.whiteflagprotocol.java.WfException;
+
+public class Example {
+  private WfMessage message;
+
+  public WfMessage createMessage(String messageType) {
+    try {
+      message = WfMessage.Creator.type(messageType);
+    } catch(WfException e) {
+      throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
+    }
+    return message;
+  }
+}
+```
 
 ## Detailed Implementation
 
@@ -20,8 +42,8 @@ creator class `WfMessage.Creator` are required.
 ### Message Classes
 
 The WFJL implements the Whiteflag messages defined in the Whiteflag standard
-with the `WfMessage` class of the `org.whiteflag.protocol` package. This class
-extends the `WfMessageCore` class from the `org.whiteflag.protocol.core`
+with the `WfMessage` class of the `org.whiteflagprotocol.java` package. This class
+extends the `WfMessageCore` class from the `org.whiteflagprotocol.java.core`
 package with additional implementation-sepcific metadata and methods that allow
 for further integration in larger software applications.
 
@@ -53,7 +75,8 @@ instantiated directly. Instead, one of the methods from its nested static
 methods to do this are:
 
 * `WfMessage.Creator.type(String messageCode)`: creates a new Whiteflag message of the type specified by the message code with empty field values
-* `WfMessage.Creator.copy(WfMessage)`: copies an existing Whiteflag message, including the metadata
+* `WfMessage.Creator.copy(WfMessage)`: copies an existing Whiteflag message, without the metadata
+* `WfMessage.Creator.clone(WfMessage)`: clones an existing Whiteflag message, including the metadata
 * `WfMessage.Creator.deserialize(String)`: deserializes a string with a serialized message
 * `WfMessage.Creator.deserializeJson(String)`: deserializes a string with a JSON representation of a message
 * `WfMessage.Creator.decode(String)`: decodes a string with the hexadecimal representation of an encoded message
@@ -101,7 +124,7 @@ are available for both message segments and messages:
 
 * `WfMessage.isValid()`: returns a Boolean to indicate if the message is valid, i.e. if all message fields contain valid data
 * `WfMessage.isValid(String fieldname)`: returns a Boolean to indicate if specified field contains valid data
-* `WfMessage.isValid(String fieldname, String data)`: returns a Boolean to indicate if specified data is valid for the specified
+* `WfMessage.isValid(String fieldname, String data)`: returns a Boolean to indicate if specified data would be valid for the specified field
 * `WfMessage.getNoFields()`: returns an interger with the number of fields
 * `WfMessage.getFieldNames()`: returns a Set with all field names
 

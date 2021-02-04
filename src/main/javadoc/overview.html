@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Whiteflag Java Library javadoc overview</title>
+    <meta content="text/html; charset=utf-8" />
+</head>  
+<body>
+    <h2>Introduction</h2>
+    <p>The <a href="https://java.whiteflagprotocol.org/" target="_blank">Whiteflag Java Library</a> (WFJL)
+        is an implementation of the <a href="https://www.whiteflagprotocol.org/" target="_blank">Whiteflag Protocol</a>
+        in Java to support the development of Whiteflag-enabled applications. The WFJL is to
+        include all Whiteflag protocol features, but with minimal dependencies. Therefore,
+        the library is independent from any specific blockchain, database solution,
+        user interface, etc.</p>
+
+    <p>The <a href="https://standard.whiteflagprotocol.org/" target="_blank">Whiteflag Protocol specification</a>
+        is an open standard. Version 1 of the WFJL corresponds with version 1 of the
+        protocol, and more specifically with <strong>v1-draft.6</strong> of the standard.
+        Please refer to the <a href="https://github.com/WhiteflagProtocol/whiteflag-java/" target="_blank">GitHub repository</a>
+        for planned WFJL functionality and corresponding `1.x` subversions.</p>
+
+    <h2>Packages</h2>
+    <p>As any Java software, the Whiteflag Java Library (WFJL) is organised in packages.
+        The WFJL software comprises the following Java packages:</p>
+    <ul>
+        <li style="list-style-type: square;"><code>org.whiteflagprotocol.java</code>
+            is the main package providing the external programming interface for
+            software using this library. Normally, this is the only package required
+            to import in your code.</li>
+            <br/>
+        <li style="list-style-type: square;"><code>org.whiteflagprotocol.java.core</code>
+            contains all implementation independent core functionality as defined in
+            the Whiteflag specification, such as the Whiteflag message definitions. This
+            seperates the core protocol functionality from implementation-specific design
+            decisions as much as possible.</li>
+            <br/>
+        <li style="list-style-type: square;"><code>org.whiteflagprotocol.java.util</code>
+            contains utilities used by the main protocol classes, but that are not part
+            of the external interface and also not part of the protocol core, e.g. data
+            conversions, such as conversion of Whiteflag message to and from JSON.</li>
+    </ul>
+
+    <h2>Example</h2>
+    <p>After adding the WFJL as a dependency to your project, the WFJL classes can
+        be used in your Java code. Normally, you will only need the classes from the
+        <code>org.whiteflagprotocol.java</code> package. Your code may look like this:</p>
+    <pre>
+    {@code
+        import org.whiteflagprotocol.java.WfMessage;
+        import org.whiteflagprotocol.java.WfException;
+        
+        public class Example {
+          private WfMessage message;
+        
+          public WfMessage createMessage(String messageType) {
+            try {
+              message = WfMessage.Creator.create(messageType);
+            } catch(WfException e) {
+              throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
+            }
+            return message;
+          }
+        }
+    }
+    </pre>
+</body>
+</html>

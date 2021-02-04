@@ -14,7 +14,7 @@ blockchain, database solution, user interface, etc.
 
 ### Detailed API and Source Code References
 
-* [WFJL Javadoc API Reference](javadoc/index.html)
+* [WFJL Javadoc API Reference](javadoc)
 
 ### Source Code Description
 
