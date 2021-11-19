@@ -34,6 +34,12 @@
             seperates the core protocol functionality from implementation-specific design
             decisions as much as possible.</li>
             <br/>
+        <li style="list-style-type: square;"><code>org.whiteflagprotocol.java.crypto</code>
+            contains all implementation independent cryptogrpahic functionality as defined
+            in the Whiteflag specification, such as encryption, key derivation and negatiation,
+            and authentication. Seperating these critical security functions makes them better
+            inspectable, testable and maintainable.</li>
+            <br/>
         <li style="list-style-type: square;"><code>org.whiteflagprotocol.java.util</code>
             contains utilities used by the main protocol classes, but that are not part
             of the external interface and also not part of the protocol core, e.g. data

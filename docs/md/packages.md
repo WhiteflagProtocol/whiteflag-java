@@ -16,6 +16,7 @@ The WFJL software consists of the following Java packages:
 |-----------------------------------|-----------------------------------|
 |`org.whiteflagprotocol.java`       | Main Whiteflag protocol interface |
 |`org.whiteflagprotocol.java.core`  | Whiteflag core functionality      |
+|`org.whiteflagprotocol.java.crypto`| Whiteflag cryptographic functions |
 |`org.whiteflagprotocol.java.util`  | Whiteflag utilities               |
 
 ## Description
@@ -29,6 +30,12 @@ independent core functionality as defined in the Whiteflag specification,
 such as the Whiteflag message definitions. This seperates the core
 protocol functionality from implementation-specific design decisions
 as much as possible.
+
+The `org.whiteflagprotocol.java.crypto` package contains all implementation
+independent cryptogrpahic functionality as defined in the Whiteflag
+specification, such as encryption, key derivation and negatiation, and
+authentication. Seperating these critical security functions makes them better
+inspectable, testable and maintainable.
 
 The `org.whiteflagprotocol.java.util` package contains utilities used by
 the main protocol classes, but that are not part of the external interface

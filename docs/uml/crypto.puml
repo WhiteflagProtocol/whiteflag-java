@@ -1,0 +1,24 @@
+@startuml crypto
+!include .stylesheet.puml
+
+left footer WFJL Crypto Class Diagram
+
+package org.whiteflagprotocol.java.crypto {
+    class WfAuthToken {
+        +getVerificationData() : String
+    }
+    class WfEncryptionKey {
+        +getEncryptionKey() : byte[]
+    }
+    class WfECDHKeyPair {
+        +getPrivateKey() : byte[]
+        +getPublicKey() : byte[]
+    }
+    class WfHKDF <<Utility>> {
+    }
+}
+
+WfAuthToken ..> WfHKDF
+WfEncryptionKey ..> WfHKDF
+
+@enduml

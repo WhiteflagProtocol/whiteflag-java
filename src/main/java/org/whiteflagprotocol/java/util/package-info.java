@@ -1,5 +1,5 @@
 /**
- * Whiteflag Protocol Utility Java Library
+ * Whiteflag Protocol Utility Library
  * 
  * <p> This package provides a library with support classes for other
  * Whiteflag protocol libraries. These utilities are used by the main
