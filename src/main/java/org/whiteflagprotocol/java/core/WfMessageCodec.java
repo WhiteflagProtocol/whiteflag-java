@@ -87,7 +87,7 @@ public class WfMessageCodec {
     }
 
     /**
-     * Decodes the  the message field into a binary string
+     * Decodes the message field into a binary string
      * @param binData the compressed binary encoded field data
      * @return the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded

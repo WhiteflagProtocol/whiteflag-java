@@ -14,7 +14,7 @@ import java.util.HashSet;
  * <p> This is a class representing a segment of a Whiteflag message, such as a
  * the message header or the message body. A message segment contains a number of
  * message fields, depending on the part and the type of the message. The fields
- * should be ordered without missing or overlapping bytes.
+ * should be ordered, without missing or overlapping bytes.
  * 
  * @wfref 4.2 Message Header
  * @wfref 4.3 Message Body

@@ -6,7 +6,7 @@ package org.whiteflagprotocol.java.core;
 import java.util.Set;
 
 /**
- * Whiteflag basic message core class
+ * Whiteflag message core class
  * 
  * <p> This is a class defining a generic basic Whiteflag message. It
  * includes common properties and methods of all message types, and

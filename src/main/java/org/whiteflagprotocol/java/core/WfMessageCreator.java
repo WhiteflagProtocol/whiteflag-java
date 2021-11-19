@@ -72,7 +72,7 @@ public class WfMessageCreator {
         header.set(FIELD_VERSION, PROTOCOL_VERSION);
         header.set(FIELD_MESSAGETYPE, messageType.getCode());
 
-        // Return new message
+        // Return this builder
         return this;
     }
 

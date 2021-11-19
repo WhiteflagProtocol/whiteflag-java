@@ -3,6 +3,9 @@
  */
 package org.whiteflagprotocol.java.util;
 
+/**
+ * Whiteflag protocol utility exception class
+ */
 public class WfUtilException extends Exception {
 
     /* PROPERTIES */

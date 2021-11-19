@@ -16,12 +16,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_ERROR;
 
 /**
- * Whiteflag JSON message representation
+ * Whiteflag JSON message representation class
  * 
- * <p> This object represents a Whiteflag message represented in the
+ * <p> This class represents a Whiteflag message represented in the
  * JavaScript Object Notation (JSON) format, in accordance with Annex B
- * of the Whiteflag specification. The basic structure is as follows:
- * <code> { "MetaHeader" : {}, "MessageHeader": {}, "MessageBody": {} }</code>
+ * of the Whiteflag specification. The basic JSON structure is as follows:
+ * <code> { "MetaHeader" : {...}, "MessageHeader": {...}, "MessageBody": {...} }</code>
  */
 @JsonPropertyOrder({ "MetaHeader", "MessageHeader", "MessageBody" })
 public class WfJsonMessage {
