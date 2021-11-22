@@ -4,21 +4,34 @@
 left footer WFJL Crypto Class Diagram
 
 package org.whiteflagprotocol.java.crypto {
+    class WfEncryptor {
+        +encrypt(String) : String
+        +decrypt(String) : String
+    }
     class WfAuthToken {
+        {static} +hkdfSalts : String[]
+        {static} +tokenLengths : int[]
         +getVerificationData() : String
     }
     class WfEncryptionKey {
+        {static} +hkdfSalts : String[]
+        {static} +keyLengths : int[]
         +getEncryptionKey() : byte[]
     }
     class WfECDHKeyPair {
-        +getPrivateKey() : byte[]
         +getPublicKey() : byte[]
+        +getSharedKey(byte[]): byte[]
     }
-    class WfHKDF <<Utility>> {
+    class WfCryptoUtil <<Utility>> {
+        +parseHexString(String) : byte[]
+        +toHexString(byte[]) : String
+        +hkdf() : byte[]
     }
 }
 
-WfAuthToken ..> WfHKDF
-WfEncryptionKey ..> WfHKDF
+WfAuthToken ..> WfCryptoUtil
+WfEncryptionKey ..> WfCryptoUtil
+WfEncryptionKey ..> WfECDHKeyPair
+WfEncryptor ..> WfEncryptionKey
 
 @enduml

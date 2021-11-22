@@ -29,6 +29,13 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
 }
 
+// Test behaviour
+test {
+    testLogging {
+        events "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+    }
+}
+
 // Include documentation and source
 java {
     withJavadocJar()

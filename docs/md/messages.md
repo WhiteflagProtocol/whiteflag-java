@@ -20,9 +20,8 @@ import org.whiteflagprotocol.java.WfMessage;
 import org.whiteflagprotocol.java.WfException;
 
 public class Example {
-  private WfMessage message;
-
   public WfMessage createMessage(String messageType) {
+    WfMessage message;
     try {
       message = WfMessage.Creator.type(messageType);
     } catch(WfException e) {

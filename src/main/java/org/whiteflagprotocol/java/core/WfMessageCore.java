@@ -33,7 +33,7 @@ public class WfMessageCore {
 
     /**
      * Creates a Whiteflag message from a header and a body segment
-     * @param type the of the message
+     * @param type the type of the message
      * @param header the message header
      * @param body the message body
      */

@@ -15,3 +15,7 @@ all Whiteflag functionality.
 ## Detailed Implementation
 
 (work in progress)
+
+### Message Class Diagram
+
+![WFJL Message Class Diagram](../uml/crypto.png)
