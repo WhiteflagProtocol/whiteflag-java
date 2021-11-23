@@ -14,7 +14,8 @@ import javax.crypto.spec.SecretKeySpec;
  * Whiteflag cryptographic utility class
  *
  * <p> This is a non-instantiatable utility class that performs
- * cryptographic support functions.
+ * cryptographic support functions. No implementation specific
+ * properties and methods are defined by this class.
  */
 public class WfCryptoUtil {
 

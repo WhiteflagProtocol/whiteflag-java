@@ -104,6 +104,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Adds metadata to the Whiteflag message if not already existing</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#AES_NEGOTIATED">AES_NEGOTIATED</a></span> - org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Encryption Method 2: AES-256-CTR with negotiated key</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#AES_PRESHARED">AES_PRESHARED</a></span> - org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Encryption Method 1: AES-256-CTR with pre-shared key</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageType.html#ANY">ANY</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Undefined message type</div>
@@ -370,6 +378,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gets the value of the field specified by name</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#getAlgorithm()">getAlgorithm()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Returns the encryption algorithm for the encryption method</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#getAllFields()">getAllFields()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Gets all fields from this message segment</div>
@@ -414,6 +426,26 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns an array with the <a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> header fields</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html#getHkdfSalt()">getHkdfSalt()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></dt>
+<dd>
+<div class="block">Returns the salt for validation token derivation for the authentication method</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#getHkdfSalt()">getHkdfSalt()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Returns the salt for key derivation for the encryption method</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html#getIndicator()">getIndicator()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></dt>
+<dd>
+<div class="block">Returns the Whiteflag indicator for the authentication method</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#getIndicator()">getIndicator()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Returns the Whiteflag indicator for the encryption method</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#getKeyLength()">getKeyLength()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Returns the encryption key length for the encryption method</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/util/WfJsonMessage.html#getMetadata()">getMetadata()</a></span> - Method in class org.whiteflagprotocol.java.util.<a href="org/whiteflagprotocol/java/util/WfJsonMessage.html" title="class in org.whiteflagprotocol.java.util">WfJsonMessage</a></dt>
 <dd>
 <div class="block">Gets the message metadata</div>
@@ -442,7 +474,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Calculates the shared secret with an originator</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#getVerificationData(byte%5B%5D)">getVerificationData(byte[])</a></span> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html#getTokenLength()">getTokenLength()</a></span> - Method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></dt>
+<dd>
+<div class="block">Returns the validation token length for the authentication method</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html#getVerificationData(byte%5B%5D)">getVerificationData(byte[])</a></span> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthicationToken</a></dt>
 <dd>
 <div class="block">Generated the Whiteflag verification data from the shared token</div>
 </dd>
@@ -479,14 +515,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfCryptoUtil.html#hkdfExtract(byte%5B%5D,byte%5B%5D)">hkdfExtract(byte[], byte[])</a></span> - Static method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCryptoUtil.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoUtil</a></dt>
 <dd>
 <div class="block">Performs RFC 5869 HKDF Step 1: extract</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#hkdfSalts">hkdfSalts</a></span> - Static variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
-<dd>
-<div class="block">HKDF salts array</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html#hkdfSalts">hkdfSalts</a></span> - Static variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto">WfEncryptionKey</a></dt>
-<dd>
-<div class="block">HKDF salts array</div>
 </dd>
 </dl>
 <a id="I:I">
@@ -552,10 +580,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Cryptographic message type</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html#keyLengths">keyLengths</a></span> - Static variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto">WfEncryptionKey</a></dt>
-<dd>
-<div class="block">HKDF key lengths array</div>
-</dd>
 </dl>
 <a id="I:L">
 <!--   -->
@@ -592,7 +616,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates a new Whiteflag core message object from header and body maps</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#method">method</a></span> - Variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html#method">method</a></span> - Variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthicationToken</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html#method">method</a></span> - Variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto">WfEncryptionKey</a></dt>
 <dd>&nbsp;</dd>
@@ -806,9 +830,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns the serialised JSON representation of the Whiteflag message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#tokenLengths">tokenLengths</a></span> - Static variable in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html#TOKEN_PRESHARED">TOKEN_PRESHARED</a></span> - org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></dt>
 <dd>
-<div class="block">HKDF validation token lengths array</div>
+<div class="block">Authentication Method 2: shared token</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#toMap()">toMap()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
@@ -864,6 +888,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this type with the specified name.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this type with the specified name.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/util/WfUtilException.ErrorType.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum org.whiteflagprotocol.java.util.<a href="org/whiteflagprotocol/java/util/WfUtilException.ErrorType.html" title="enum in org.whiteflagprotocol.java.util">WfUtilException.ErrorType</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
@@ -878,6 +910,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageType.html#values()">values()</a></span> - Static method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum type, in
+the order they are declared.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html#values()">values()</a></span> - Static method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum type, in
+the order they are declared.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#values()">values()</a></span> - Static method in enum org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
@@ -934,15 +976,19 @@ the order they are declared.</div>
 <dd>
 <div class="block">Generic Whiteflag utility error</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto"><span class="typeNameLink">WfAuthToken</span></a> - Class in <a href="org/whiteflagprotocol/java/crypto/package-summary.html">org.whiteflagprotocol.java.crypto</a></dt>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto"><span class="typeNameLink">WfAuthenticationMethod</span></a> - Enum in <a href="org/whiteflagprotocol/java/crypto/package-summary.html">org.whiteflagprotocol.java.crypto</a></dt>
+<dd>
+<div class="block">Whiteflag authentication parameters enum class</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html" title="class in org.whiteflagprotocol.java.crypto"><span class="typeNameLink">WfAuthicationToken</span></a> - Class in <a href="org/whiteflagprotocol/java/crypto/package-summary.html">org.whiteflagprotocol.java.crypto</a></dt>
 <dd>
 <div class="block">Whiteflag authentication token class</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#%3Cinit%3E(byte%5B%5D)">WfAuthToken(byte[])</a></span> - Constructor for class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html#%3Cinit%3E(byte%5B%5D)">WfAuthicationToken(byte[])</a></span> - Constructor for class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthicationToken</a></dt>
 <dd>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#%3Cinit%3E(java.lang.String)">WfAuthToken(String)</a></span> - Constructor for class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html#%3Cinit%3E(java.lang.String)">WfAuthicationToken(String)</a></span> - Constructor for class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthicationToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthicationToken</a></dt>
 <dd>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 </dd>
@@ -1009,6 +1055,10 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)">WfEncryptionKey(String, WfECDHKeyPair)</a></span> - Constructor for class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto">WfEncryptionKey</a></dt>
 <dd>
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto"><span class="typeNameLink">WfEncryptionMethod</span></a> - Enum in <a href="org/whiteflagprotocol/java/crypto/package-summary.html">org.whiteflagprotocol.java.crypto</a></dt>
+<dd>
+<div class="block">Whiteflag encryption parameters enum class</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfException.html" title="class in org.whiteflagprotocol.java"><span class="typeNameLink">WfException</span></a> - Exception in <a href="org/whiteflagprotocol/java/package-summary.html">org.whiteflagprotocol.java</a></dt>
 <dd>&nbsp;</dd>

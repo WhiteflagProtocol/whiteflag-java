@@ -3,6 +3,9 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
+/* Whiteflag authentication methods */
+import static org.whiteflagprotocol.java.crypto.WfAuthenticationMethod.*;
+
 /**
  * Whiteflag authentication token class
  * 
@@ -15,46 +18,13 @@ package org.whiteflagprotocol.java.crypto;
  * @wfref 5.1.2.2 Method 2: Shared Token Validation
  * @wfref 5.2.3 Key and Token Derivation
  */
-public class WfAuthToken {
+public class WfAuthicationToken {
 
     /* PROPERTIES */
 
     /* The secret authentication token */
-    public final int method;
+    public final WfAuthenticationMethod method;
     private final byte[] token;
-
-    /* Constants */
-    private static final int METHOD_AUTHTOKEN = 2;
-
-    /**
-     * HKDF salts array
-     * 
-     * <p> This array contains the HKDF salts, with the elements corresponding
-     * to the valid authentication methods for which this token class may be used.
-     * 
-     * @wfver v1-draft.6
-     * @wfref 5.2.3 Key and Token Derivation
-     */
-    public static final String[] hkdfSalts = {
-        "",   // non-existing authentication method
-        "",   // this authentication method does not use token
-        "420abc48f5d69328c457d61725d3fd7af2883cad8460976167e375b9f2c14081"
-    };
-
-    /**
-     * HKDF validation token lengths array
-     * 
-     * <p> This array contains the output key lengths, with the elements
-     * corresponding to the valid encryption methods for which this key class
-     * may be used.
-     * 
-     * @wfref 5.2.3 Key and Token Derivation
-     */
-    public static final int[] tokenLengths = {
-        0,
-        0,
-        32
-    };
 
     /* CONSTRUCTOR */
 
@@ -62,7 +32,7 @@ public class WfAuthToken {
      * Constructs a new Whiteflag authentication token
      * @param token the shared secret authentication token
      */
-    public WfAuthToken(String token) {
+    public WfAuthicationToken(String token) {
         this(WfCryptoUtil.parseHexString(token));
     }
 
@@ -70,9 +40,9 @@ public class WfAuthToken {
      * Constructs a new Whiteflag authentication token
      * @param token the shared secret authentication token
      */
-    public WfAuthToken(byte[] token) {
+    public WfAuthicationToken(byte[] token) {
         this.token = token;
-        this.method = METHOD_AUTHTOKEN;
+        this.method = TOKEN_PRESHARED;
     }
 
     /* PUBLIC METHODS */
@@ -85,9 +55,9 @@ public class WfAuthToken {
     public byte[] getVerificationData(byte[] blockchainAddress) {
         return WfCryptoUtil.hkdf(
             token,
-            WfCryptoUtil.parseHexString(hkdfSalts[method]),
+            WfCryptoUtil.parseHexString(method.getHkdfSalt()),
             blockchainAddress,
-            tokenLengths[method]
+            method.getTokenLength()
         );
     }
 }

@@ -8,14 +8,17 @@ package org.whiteflagprotocol.java.crypto {
         +encrypt(String) : String
         +decrypt(String) : String
     }
+    enum WfAuthenticationMethod {
+        +TOKEN_PRESHARED
+    }
     class WfAuthToken {
-        {static} +hkdfSalts : String[]
-        {static} +tokenLengths : int[]
         +getVerificationData() : String
     }
+    enum WfEncryptionMethod {
+        +AES_PRESHARED
+        +AES_NEGOTIATED
+    }
     class WfEncryptionKey {
-        {static} +hkdfSalts : String[]
-        {static} +keyLengths : int[]
         +getEncryptionKey() : byte[]
     }
     class WfECDHKeyPair {
@@ -29,9 +32,11 @@ package org.whiteflagprotocol.java.crypto {
     }
 }
 
-WfAuthToken ..> WfCryptoUtil
+WfEncryptor ..> WfEncryptionKey
+WfEncryptionKey --- WfEncryptionMethod
+WfAuthToken --- WfAuthenticationMethod
 WfEncryptionKey ..> WfCryptoUtil
 WfEncryptionKey ..> WfECDHKeyPair
-WfEncryptor ..> WfEncryptionKey
+WfAuthToken ..> WfCryptoUtil
 
 @enduml

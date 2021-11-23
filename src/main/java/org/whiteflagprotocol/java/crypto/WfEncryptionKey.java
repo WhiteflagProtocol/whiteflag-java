@@ -6,8 +6,8 @@ package org.whiteflagprotocol.java.crypto;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 
-/* Required encryption utilities */
-import org.whiteflagprotocol.java.crypto.WfCryptoUtil;
+/* Whiteflag encryption methods */ 
+import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
 
 /**
  * Whiteflag encryption key class
@@ -24,42 +24,8 @@ public class WfEncryptionKey {
     /* PROPERTIES */
 
     /* The encryption method and keys */
-    public final int method;
+    public final WfEncryptionMethod method;
     private final byte[] rawKey;
-
-    /* Constants */
-    private static final int METHOD_PRESHARED = 1;
-    private static final int METHOD_NEGOTIATED = 2;
-
-    /**
-     * HKDF salts array
-     * 
-     * <p> This array contains the HKDF salts, with the elements corresponding
-     * to the valid encryption methods for which this key class may be used.
-     *
-     * @wfver v1-draft.6
-     * @wfref 5.2.3 Key and Token Derivation
-     */
-    public static final String[] hkdfSalts = {
-        "",   // no encryption
-        "8ddb03085a2c15e69c35c224bce2952dca7878770724741cbce5a135328be0c0",
-        "c4d028bd45c876135e80ef7889835822a6f19a31835557d5854d1334e8497b56"
-    };
-
-    /**
-     * HKDF key lengths array
-     * 
-     * <p> This array contains the output key lengths, with the elements
-     * corresponding to the valid encryption methods for which this key class
-     * may be used.
-     * 
-     * @wfref 5.2.3 Key and Token Derivation
-     */
-    public static final int[] keyLengths = {
-        0,   // no encryption
-        32,
-        32
-    };
 
     /* CONSTRUCTOR */
 
@@ -77,7 +43,7 @@ public class WfEncryptionKey {
      */
     public WfEncryptionKey(byte[] rawKey) {
         this.rawKey = rawKey;
-        this.method = METHOD_PRESHARED;
+        this.method = AES_PRESHARED;
     }
 
     /**
@@ -96,7 +62,7 @@ public class WfEncryptionKey {
      */
     public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ownKeyPair) {
         this.rawKey = ownKeyPair.getSharedKey(originatorPublicKey);
-        this.method = METHOD_NEGOTIATED;
+        this.method = AES_NEGOTIATED;
     }
 
     /* PUBLIC METHODS */
@@ -109,9 +75,9 @@ public class WfEncryptionKey {
     public byte[] getEncryptionKey(byte[] blockchainAddress) {
         return WfCryptoUtil.hkdf(
             rawKey,
-            WfCryptoUtil.parseHexString(hkdfSalts[method]),
+            WfCryptoUtil.parseHexString(method.getHkdfSalt()),
             blockchainAddress,
-            keyLengths[method]
+            method.getKeyLength()
         );
     }
 }
