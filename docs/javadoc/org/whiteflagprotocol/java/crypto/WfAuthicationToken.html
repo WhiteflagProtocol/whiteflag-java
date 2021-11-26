@@ -134,7 +134,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends java.lang.Object</pre>
 <div class="block">Whiteflag authentication token class
  
- <p> This class represents a Whiteflag shared secret authentication token.
+ <p> This class represents a Whiteflag shared secret authentication token
  Instances of this class represent the shared secret, and validation data
  for authentication method 2 can be created.</div>
 <dl>
@@ -165,7 +165,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#method">method</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#authMethod">authMethod</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -186,13 +186,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">WfAuthicationToken</a></span>&#8203;(byte[]&nbsp;token)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">WfAuthicationToken</a></span>&#8203;(byte[]&nbsp;authToken)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag authentication token</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">WfAuthicationToken</a></span>&#8203;(java.lang.String&nbsp;token)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">WfAuthicationToken</a></span>&#8203;(java.lang.String&nbsp;authToken)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag authentication token</div>
 </td>
@@ -217,7 +217,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>byte[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVerificationData(byte%5B%5D)">getVerificationData</a></span>&#8203;(byte[]&nbsp;blockchainAddress)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVerificationData(byte%5B%5D)">getVerificationData</a></span>&#8203;(byte[]&nbsp;contextInfo)</code></th>
 <td class="colLast">
 <div class="block">Generated the Whiteflag verification data from the shared token</div>
 </td>
@@ -246,13 +246,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="method">
+<a id="authMethod">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>method</h4>
-<pre>public final&nbsp;<a href="WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a> method</pre>
+<h4>authMethod</h4>
+<pre>public final&nbsp;<a href="WfAuthenticationMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthenticationMethod</a> authMethod</pre>
 </li>
 </ul>
 </li>
@@ -271,11 +271,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>WfAuthicationToken</h4>
-<pre>public&nbsp;WfAuthicationToken&#8203;(java.lang.String&nbsp;token)</pre>
+<pre>public&nbsp;WfAuthicationToken&#8203;(java.lang.String&nbsp;authToken)</pre>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>token</code> - the shared secret authentication token</dd>
+<dd><code>authToken</code> - the shared secret authentication token</dd>
 </dl>
 </li>
 </ul>
@@ -285,11 +285,11 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>WfAuthicationToken</h4>
-<pre>public&nbsp;WfAuthicationToken&#8203;(byte[]&nbsp;token)</pre>
+<pre>public&nbsp;WfAuthicationToken&#8203;(byte[]&nbsp;authToken)</pre>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>token</code> - the shared secret authentication token</dd>
+<dd><code>authToken</code> - the shared secret authentication token</dd>
 </dl>
 </li>
 </ul>
@@ -309,11 +309,11 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getVerificationData</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;getVerificationData&#8203;(byte[]&nbsp;blockchainAddress)</pre>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;getVerificationData&#8203;(byte[]&nbsp;contextInfo)</pre>
 <div class="block">Generated the Whiteflag verification data from the shared token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>blockchainAddress</code> - the blockchain address</dd>
+<dd><code>contextInfo</code> - information to bind the derived key to the intended context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a byte array with the verification data</dd>
 </dl>

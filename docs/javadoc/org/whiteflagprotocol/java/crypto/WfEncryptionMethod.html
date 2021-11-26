@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":9};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -172,13 +172,13 @@ extends java.lang.Enum&lt;<a href="WfEncryptionMethod.html" title="enum in org.w
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AES_NEGOTIATED">AES_NEGOTIATED</a></span></code></th>
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AES_256_CTR_ECDH">AES_256_CTR_ECDH</a></span></code></th>
 <td class="colLast">
 <div class="block">Encryption Method 2: AES-256-CTR with negotiated key</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AES_PRESHARED">AES_PRESHARED</a></span></code></th>
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AES_256_CTR_PSK">AES_256_CTR_PSK</a></span></code></th>
 <td class="colLast">
 <div class="block">Encryption Method 1: AES-256-CTR with pre-shared key</div>
 </td>
@@ -205,38 +205,59 @@ extends java.lang.Enum&lt;<a href="WfEncryptionMethod.html" title="enum in org.w
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAlgorithm()">getAlgorithm</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the encryption algorithm for the encryption method</div>
+<div class="block">Returns the cipher algorithm for the Whiteflag encryption method, i.a.w.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHkdfSalt()">getHkdfSalt</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCipher()">getCipher</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the salt for key derivation for the encryption method</div>
+<div class="block">Returns the cipher for the Whiteflag encryption method i.a.w.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIndicator()">getIndicator</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the Whiteflag indicator for the encryption method</div>
+<div class="block">Returns the indicator for the Whiteflag encryption method</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getKeyLength()">getKeyLength</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the encryption key length for the encryption method</div>
+<div class="block">Returns the encryption key length for the Whiteflag encryption method</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMode()">getMode</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the cipher mode for the Whiteflag encryption method, i.a.w.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPadding()">getPadding</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the cipher padding for the Whiteflag encryption method, i.a.w.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSalt()">getSalt</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the salt for key derivation for the Whiteflag encryption method</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valueOf(java.lang.String)">valueOf</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#values()">values</a></span>()</code></th>
 <td class="colLast">
@@ -275,23 +296,23 @@ the order they are declared.</div>
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
-<a id="AES_PRESHARED">
+<a id="AES_256_CTR_PSK">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>AES_PRESHARED</h4>
-<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_PRESHARED</pre>
+<h4>AES_256_CTR_PSK</h4>
+<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_256_CTR_PSK</pre>
 <div class="block">Encryption Method 1: AES-256-CTR with pre-shared key</div>
 </li>
 </ul>
-<a id="AES_NEGOTIATED">
+<a id="AES_256_CTR_ECDH">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>AES_NEGOTIATED</h4>
-<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_NEGOTIATED</pre>
+<h4>AES_256_CTR_ECDH</h4>
+<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_256_CTR_ECDH</pre>
 <div class="block">Encryption Method 2: AES-256-CTR with negotiated key</div>
 </li>
 </ul>
@@ -354,10 +375,24 @@ not permitted.)</div>
 <li class="blockList">
 <h4>getIndicator</h4>
 <pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getIndicator()</pre>
-<div class="block">Returns the Whiteflag indicator for the encryption method</div>
+<div class="block">Returns the indicator for the Whiteflag encryption method</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>string with value used in a Whiteflag message to indicate the encryption method</dd>
+<dd>string with value used in a Whiteflag message to indicate the Whiteflag encryption method</dd>
+</dl>
+</li>
+</ul>
+<a id="getCipher()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCipher</h4>
+<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getCipher()</pre>
+<div class="block">Returns the cipher for the Whiteflag encryption method i.a.w. Java Cryptography Standard Algorithm Names</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the cipher parameters with algorithm, mode and padding</dd>
 </dl>
 </li>
 </ul>
@@ -368,10 +403,38 @@ not permitted.)</div>
 <li class="blockList">
 <h4>getAlgorithm</h4>
 <pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getAlgorithm()</pre>
-<div class="block">Returns the encryption algorithm for the encryption method</div>
+<div class="block">Returns the cipher algorithm for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the encryption algorithm, mode and padding i.a.w. Java Cryptography Standard Algorithm Names</dd>
+<dd>the encryption algorithm</dd>
+</dl>
+</li>
+</ul>
+<a id="getMode()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMode</h4>
+<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getMode()</pre>
+<div class="block">Returns the cipher mode for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the encryption mode</dd>
+</dl>
+</li>
+</ul>
+<a id="getPadding()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPadding</h4>
+<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getPadding()</pre>
+<div class="block">Returns the cipher padding for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the encryption padding</dd>
 </dl>
 </li>
 </ul>
@@ -382,21 +445,21 @@ not permitted.)</div>
 <li class="blockList">
 <h4>getKeyLength</h4>
 <pre class="methodSignature">public final&nbsp;int&nbsp;getKeyLength()</pre>
-<div class="block">Returns the encryption key length for the encryption method</div>
+<div class="block">Returns the encryption key length for the Whiteflag encryption method</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the length of the encryption key in byes</dd>
 </dl>
 </li>
 </ul>
-<a id="getHkdfSalt()">
+<a id="getSalt()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getHkdfSalt</h4>
-<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getHkdfSalt()</pre>
-<div class="block">Returns the salt for key derivation for the encryption method</div>
+<h4>getSalt</h4>
+<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getSalt()</pre>
+<div class="block">Returns the salt for key derivation for the Whiteflag encryption method</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the salt used in the HKDF function to derive the encryption key</dd>

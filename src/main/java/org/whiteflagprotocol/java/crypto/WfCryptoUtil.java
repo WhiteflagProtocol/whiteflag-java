@@ -79,9 +79,9 @@ public class WfCryptoUtil {
      * 
      * @param ikm the input key material
      * @param salt the cryptographic salt
-     * @param info context and application specific information
+     * @param info nformation to bind the derived key to an intended context
      * @param keyLength the output key length in bytes
-     * @return the output key material, i.e. the generated key
+     * @return the output key material, i.e. the generated secret cryptographic key
      */
     public static final byte[] hkdf(final byte[] ikm, final byte[] salt, final byte[] info, final int keyLength) {
         /*
@@ -97,18 +97,18 @@ public class WfCryptoUtil {
      * @param salt the cryptographic salt
      * @return an intermediate pseudo random key
      */
-    protected static final byte[] hkdfExtract(final byte[] ikm, final byte[] salt) {
+    public static final byte[] hkdfExtract(final byte[] ikm, final byte[] salt) {
         return getHMAC(salt).doFinal(ikm);
     }
 
     /**
      * Performs RFC 5869 HKDF Step 2: expand
-     * @param prk the psudo random key
-     * @param info context and application specific information
+     * @param prk the intermediate pseudo random key
+     * @param info information to bind the derived key to an intended context
      * @param keyLength the output key length in bytes
      * @return the output key material
      */
-    protected static final byte[] hkdfExpand(final byte[] prk, final byte[] info, final int keyLength) {
+    public static final byte[] hkdfExpand(final byte[] prk, final byte[] info, final int keyLength) {
         // Prepare output
         ByteBuffer okm = ByteBuffer.allocate(keyLength);
         int remainder = keyLength;

@@ -24,60 +24,65 @@ public class WfEncryptionKey {
     /* PROPERTIES */
 
     /* The encryption method and keys */
-    public final WfEncryptionMethod method;
-    private final byte[] rawKey;
+    public final WfEncryptionMethod encryptionMethod;
+    private final byte[] encryptionKey;
+    private final byte[] pseudoRandomKey;
 
     /* CONSTRUCTOR */
 
     /**
      * Constructs a new Whiteflag encryption key from a pre-shared key
-     * @param rawKey a hexadecimal string with the raw pre-shared encryption key
+     * @param preSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(String rawKey) {
-        this(WfCryptoUtil.parseHexString(rawKey));
+    public WfEncryptionKey(String preSharedKey) {
+        this(WfCryptoUtil.parseHexString(preSharedKey));
     }
 
     /**
      * Constructs a new Whiteflag encryption key from a pre-shared key
-     * @param rawKey a byte array with the raw pre-shared encryption key
+     * @param preSharedKey a byte array with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(byte[] rawKey) {
-        this.rawKey = rawKey;
-        this.method = AES_PRESHARED;
+    public WfEncryptionKey(byte[] preSharedKey) {
+        this.encryptionKey = preSharedKey;
+        this.encryptionMethod = AES_256_CTR_PSK;
+        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, WfCryptoUtil.parseHexString(encryptionMethod.getSalt()));
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param originatorPublicKey a hexadecimal string with the originator's ECDH public key
-     * @param ownKeyPair the own ECDH key pair object
+     * @param originatorPublicKey a hexadecimal string with an originator's ECDH public key
+     * @param ecdhKeyPair the own ECDH key pair object
      */
-    public WfEncryptionKey(String originatorPublicKey, WfECDHKeyPair ownKeyPair) {
-        this(WfCryptoUtil.parseHexString(originatorPublicKey), ownKeyPair);
+    public WfEncryptionKey(String originatorPublicKey, WfECDHKeyPair ecdhKeyPair) {
+        this(WfCryptoUtil.parseHexString(originatorPublicKey), ecdhKeyPair);
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param originatorPublicKey a byte array with the originator's ECDH public key
-     * @param ownKeyPair the own ECDH key pair object
+     * @param originatorPublicKey a byte array with an originator's ECDH public key
+     * @param ecdhKeyPair the own ECDH key pair object
      */
-    public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ownKeyPair) {
-        this.rawKey = ownKeyPair.getSharedKey(originatorPublicKey);
-        this.method = AES_NEGOTIATED;
+    public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ecdhKeyPair) {
+        this.encryptionKey = ecdhKeyPair.getSharedKey(originatorPublicKey);
+        this.encryptionMethod = AES_256_CTR_ECDH;
+        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, WfCryptoUtil.parseHexString(encryptionMethod.getSalt()));
     }
 
     /* PUBLIC METHODS */
+    /**
+     * Returns the encryption method
+     * @return a string with the encryption method indicator
+     */
+    public WfEncryptionMethod getEncryptionMethod() {
+        return encryptionMethod;
+    }
 
     /**
-     * Constructs a new Whiteflag encryption key from a pre-shared key
-     * @param blockchainAddress the blockchain address
-     * @return a byte array with the cryptographic key
+     * Derive the secret cryptographic key from this Whiteflag encryption key
+     * @param contextInfo information to bind the derived key to the intended context
+     * @return a byte array with the secret cryptographic key
      */
-    public byte[] getEncryptionKey(byte[] blockchainAddress) {
-        return WfCryptoUtil.hkdf(
-            rawKey,
-            WfCryptoUtil.parseHexString(method.getHkdfSalt()),
-            blockchainAddress,
-            method.getKeyLength()
-        );
+    public byte[] getSecretKey(byte[] contextInfo) {
+        return WfCryptoUtil.hkdfExpand(pseudoRandomKey, contextInfo, encryptionMethod.getKeyLength());
     }
 }

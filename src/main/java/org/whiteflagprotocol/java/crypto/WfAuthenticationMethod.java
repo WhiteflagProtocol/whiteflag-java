@@ -60,7 +60,7 @@ public enum WfAuthenticationMethod {
      * Returns the salt for validation token derivation for the authentication method
      * @return the salt used in the HKDF function to derive the validation token
      */
-    public final String getHkdfSalt() {
+    public final String getSalt() {
         return hkdfSalt;
     }
 }

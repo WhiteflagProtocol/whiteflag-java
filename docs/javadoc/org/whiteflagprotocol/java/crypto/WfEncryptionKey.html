@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -165,7 +165,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#method">method</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encryptionMethod">encryptionMethod</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -186,27 +186,27 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">WfEncryptionKey</a></span>&#8203;(byte[]&nbsp;rawKey)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">WfEncryptionKey</a></span>&#8203;(byte[]&nbsp;preSharedKey)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)">WfEncryptionKey</a></span>&#8203;(byte[]&nbsp;originatorPublicKey,
-               <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ownKeyPair)</code></th>
+               <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 </td>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">WfEncryptionKey</a></span>&#8203;(java.lang.String&nbsp;rawKey)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">WfEncryptionKey</a></span>&#8203;(java.lang.String&nbsp;preSharedKey)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)">WfEncryptionKey</a></span>&#8203;(java.lang.String&nbsp;originatorPublicKey,
-               <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ownKeyPair)</code></th>
+               <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 </td>
@@ -230,10 +230,17 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>byte[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEncryptionKey(byte%5B%5D)">getEncryptionKey</a></span>&#8203;(byte[]&nbsp;blockchainAddress)</code></th>
+<td class="colFirst"><code><a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEncryptionMethod()">getEncryptionMethod</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
+<div class="block">Returns the encryption method</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>byte[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSecretKey(byte%5B%5D)">getSecretKey</a></span>&#8203;(byte[]&nbsp;contextInfo)</code></th>
+<td class="colLast">
+<div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
 </td>
 </tr>
 </table>
@@ -260,13 +267,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="method">
+<a id="encryptionMethod">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>method</h4>
-<pre>public final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> method</pre>
+<h4>encryptionMethod</h4>
+<pre>public final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> encryptionMethod</pre>
 </li>
 </ul>
 </li>
@@ -285,11 +292,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>WfEncryptionKey</h4>
-<pre>public&nbsp;WfEncryptionKey&#8203;(java.lang.String&nbsp;rawKey)</pre>
+<pre>public&nbsp;WfEncryptionKey&#8203;(java.lang.String&nbsp;preSharedKey)</pre>
 <div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>rawKey</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
+<dd><code>preSharedKey</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
 </dl>
 </li>
 </ul>
@@ -299,11 +306,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>WfEncryptionKey</h4>
-<pre>public&nbsp;WfEncryptionKey&#8203;(byte[]&nbsp;rawKey)</pre>
+<pre>public&nbsp;WfEncryptionKey&#8203;(byte[]&nbsp;preSharedKey)</pre>
 <div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>rawKey</code> - a byte array with the raw pre-shared encryption key</dd>
+<dd><code>preSharedKey</code> - a byte array with the raw pre-shared encryption key</dd>
 </dl>
 </li>
 </ul>
@@ -314,12 +321,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>WfEncryptionKey</h4>
 <pre>public&nbsp;WfEncryptionKey&#8203;(java.lang.String&nbsp;originatorPublicKey,
-                       <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ownKeyPair)</pre>
+                       <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</pre>
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>originatorPublicKey</code> - a hexadecimal string with the originator's ECDH public key</dd>
-<dd><code>ownKeyPair</code> - the own ECDH key pair object</dd>
+<dd><code>originatorPublicKey</code> - a hexadecimal string with an originator's ECDH public key</dd>
+<dd><code>ecdhKeyPair</code> - the own ECDH key pair object</dd>
 </dl>
 </li>
 </ul>
@@ -330,12 +337,12 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>WfEncryptionKey</h4>
 <pre>public&nbsp;WfEncryptionKey&#8203;(byte[]&nbsp;originatorPublicKey,
-                       <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ownKeyPair)</pre>
+                       <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</pre>
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>originatorPublicKey</code> - a byte array with the originator's ECDH public key</dd>
-<dd><code>ownKeyPair</code> - the own ECDH key pair object</dd>
+<dd><code>originatorPublicKey</code> - a byte array with an originator's ECDH public key</dd>
+<dd><code>ecdhKeyPair</code> - the own ECDH key pair object</dd>
 </dl>
 </li>
 </ul>
@@ -349,19 +356,33 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getEncryptionKey(byte[])">
+<a id="getEncryptionMethod()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEncryptionMethod</h4>
+<pre class="methodSignature">public&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a>&nbsp;getEncryptionMethod()</pre>
+<div class="block">Returns the encryption method</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a string with the encryption method indicator</dd>
+</dl>
+</li>
+</ul>
+<a id="getSecretKey(byte[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getEncryptionKey</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;getEncryptionKey&#8203;(byte[]&nbsp;blockchainAddress)</pre>
-<div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
+<h4>getSecretKey</h4>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;getSecretKey&#8203;(byte[]&nbsp;contextInfo)</pre>
+<div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>blockchainAddress</code> - the blockchain address</dd>
+<dd><code>contextInfo</code> - information to bind the derived key to the intended context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a byte array with the cryptographic key</dd>
+<dd>a byte array with the secret cryptographic key</dd>
 </dl>
 </li>
 </ul>

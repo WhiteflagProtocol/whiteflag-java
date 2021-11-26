@@ -9,7 +9,7 @@ import static org.whiteflagprotocol.java.crypto.WfAuthenticationMethod.*;
 /**
  * Whiteflag authentication token class
  * 
- * <p> This class represents a Whiteflag shared secret authentication token.
+ * <p> This class represents a Whiteflag shared secret authentication token
  * Instances of this class represent the shared secret, and validation data
  * for authentication method 2 can be created.
  * 
@@ -23,41 +23,41 @@ public class WfAuthicationToken {
     /* PROPERTIES */
 
     /* The secret authentication token */
-    public final WfAuthenticationMethod method;
-    private final byte[] token;
+    public final WfAuthenticationMethod authMethod;
+    private final byte[] authToken;
 
     /* CONSTRUCTOR */
 
     /**
      * Constructs a new Whiteflag authentication token
-     * @param token the shared secret authentication token
+     * @param authToken the shared secret authentication token
      */
-    public WfAuthicationToken(String token) {
-        this(WfCryptoUtil.parseHexString(token));
+    public WfAuthicationToken(String authToken) {
+        this(WfCryptoUtil.parseHexString(authToken));
     }
 
     /**
      * Constructs a new Whiteflag authentication token
-     * @param token the shared secret authentication token
+     * @param authToken the shared secret authentication token
      */
-    public WfAuthicationToken(byte[] token) {
-        this.token = token;
-        this.method = TOKEN_PRESHARED;
+    public WfAuthicationToken(byte[] authToken) {
+        this.authToken = authToken;
+        this.authMethod = TOKEN_PRESHARED;
     }
 
     /* PUBLIC METHODS */
 
     /**
      * Generated the Whiteflag verification data from the shared token
-     * @param blockchainAddress the blockchain address
+     * @param contextInfo information to bind the derived key to the intended context
      * @return a byte array with the verification data
      */
-    public byte[] getVerificationData(byte[] blockchainAddress) {
+    public byte[] getVerificationData(byte[] contextInfo) {
         return WfCryptoUtil.hkdf(
-            token,
-            WfCryptoUtil.parseHexString(method.getHkdfSalt()),
-            blockchainAddress,
-            method.getTokenLength()
+            authToken,
+            WfCryptoUtil.parseHexString(authMethod.getSalt()),
+            contextInfo,
+            authMethod.getTokenLength()
         );
     }
 }
