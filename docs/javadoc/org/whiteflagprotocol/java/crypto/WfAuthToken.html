@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -134,7 +134,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends java.lang.Object</pre>
 <div class="block">Whiteflag authentication token class
  
- <p> This class represents a Whiteflag shared secret authentication token.
+ <p> This class represents a Whiteflag shared secret authentication token
  Instances of this class represent the shared secret, and validation data
  for authentication method 2 can be created.</div>
 <dl>
@@ -164,23 +164,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static java.lang.String[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hkdfSalts">hkdfSalts</a></span></code></th>
-<td class="colLast">
-<div class="block">HKDF salts array</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#method">method</a></span></code></th>
+<td class="colFirst"><code><a href="WfAuthMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthMethod</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#authMethod">authMethod</a></span></code></th>
 <td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tokenLengths">tokenLengths</a></span></code></th>
-<td class="colLast">
-<div class="block">HKDF validation token lengths array</div>
-</td>
 </tr>
 </table>
 </li>
@@ -200,13 +186,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">WfAuthToken</a></span>&#8203;(byte[]&nbsp;token)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(byte%5B%5D)">WfAuthToken</a></span>&#8203;(byte[]&nbsp;secret)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag authentication token</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">WfAuthToken</a></span>&#8203;(java.lang.String&nbsp;token)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String)">WfAuthToken</a></span>&#8203;(java.lang.String&nbsp;secret)</code></th>
 <td class="colLast">
 <div class="block">Constructs a new Whiteflag authentication token</div>
 </td>
@@ -231,9 +217,16 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>byte[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVerificationData(byte%5B%5D)">getVerificationData</a></span>&#8203;(byte[]&nbsp;blockchainAddress)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVerificationData(byte%5B%5D)">getVerificationData</a></span>&#8203;(byte[]&nbsp;contextInfo)</code></th>
 <td class="colLast">
-<div class="block">Generated the Whiteflag verification data from the shared token</div>
+<div class="block">Generates the Whiteflag verification data to prove possession of the token</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVerificationData(java.lang.String)">getVerificationData</a></span>&#8203;(java.lang.String&nbsp;contextInfo)</code></th>
+<td class="colLast">
+<div class="block">Generates the Whiteflag verification data to prove possession of the token</div>
 </td>
 </tr>
 </table>
@@ -260,50 +253,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
-<a id="method">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>method</h4>
-<pre>public final&nbsp;int method</pre>
-</li>
-</ul>
-<a id="hkdfSalts">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hkdfSalts</h4>
-<pre>public static final&nbsp;java.lang.String[] hkdfSalts</pre>
-<div class="block">HKDF salts array
- 
- <p> This array contains the HKDF salts, with the elements corresponding
- to the valid authentication methods for which this token class may be used.</div>
-<dl>
-<dt><span class="simpleTagLabel">Whiteflag version:</span></dt>
-<dd>v1-draft.6</dd>
-<dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
-<dd>5.2.3 Key and Token Derivation</dd>
-</dl>
-</li>
-</ul>
-<a id="tokenLengths">
+<a id="authMethod">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>tokenLengths</h4>
-<pre>public static final&nbsp;int[] tokenLengths</pre>
-<div class="block">HKDF validation token lengths array
- 
- <p> This array contains the output key lengths, with the elements
- corresponding to the valid encryption methods for which this key class
- may be used.</div>
-<dl>
-<dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
-<dd>5.2.3 Key and Token Derivation</dd>
-</dl>
+<h4>authMethod</h4>
+<pre>public final&nbsp;<a href="WfAuthMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfAuthMethod</a> authMethod</pre>
 </li>
 </ul>
 </li>
@@ -322,11 +278,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>WfAuthToken</h4>
-<pre>public&nbsp;WfAuthToken&#8203;(java.lang.String&nbsp;token)</pre>
+<pre>public&nbsp;WfAuthToken&#8203;(java.lang.String&nbsp;secret)</pre>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>token</code> - the shared secret authentication token</dd>
+<dd><code>secret</code> - the shared secret used as an authentication token</dd>
 </dl>
 </li>
 </ul>
@@ -336,11 +292,11 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>WfAuthToken</h4>
-<pre>public&nbsp;WfAuthToken&#8203;(byte[]&nbsp;token)</pre>
+<pre>public&nbsp;WfAuthToken&#8203;(byte[]&nbsp;secret)</pre>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>token</code> - the shared secret authentication token</dd>
+<dd><code>secret</code> - the shared secret used as an authentication token</dd>
 </dl>
 </li>
 </ul>
@@ -354,17 +310,33 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getVerificationData(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getVerificationData</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getVerificationData&#8203;(java.lang.String&nbsp;contextInfo)</pre>
+<div class="block">Generates the Whiteflag verification data to prove possession of the token</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>contextInfo</code> - string with information to bind the derived key to the intended context</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a string with the verification data</dd>
+</dl>
+</li>
+</ul>
 <a id="getVerificationData(byte[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getVerificationData</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;getVerificationData&#8203;(byte[]&nbsp;blockchainAddress)</pre>
-<div class="block">Generated the Whiteflag verification data from the shared token</div>
+<pre class="methodSignature">public&nbsp;byte[]&nbsp;getVerificationData&#8203;(byte[]&nbsp;contextInfo)</pre>
+<div class="block">Generates the Whiteflag verification data to prove possession of the token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>blockchainAddress</code> - the blockchain address</dd>
+<dd><code>contextInfo</code> - byte array with information to bind the derived key to the intended context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a byte array with the verification data</dd>
 </dl>

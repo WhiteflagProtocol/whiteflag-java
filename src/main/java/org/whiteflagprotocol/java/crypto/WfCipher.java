@@ -5,7 +5,6 @@ package org.whiteflagprotocol.java.crypto;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
 /* Whiteflag encryption methods */ 
@@ -36,8 +35,7 @@ public class WfCipher {
 
     /**
      * Constructs a new Whiteflag cipher based 
-     * @param cipher a hexadecimal string with the raw pre-shared encryption key
-     * @param key
+     * @param key the {@link WfEncryptionKey} encryption key
      */
     public WfCipher(WfEncryptionKey key) throws WfCryptoException {
         try {
@@ -57,7 +55,7 @@ public class WfCipher {
      */
     public final WfCipher setContext(byte[] context) {
         this.context = context;
-        secretKey = new SecretKeySpec(key.getSecretKey(context), key.encryptionMethod.getAlgorithm());
+        secretKey = key.getSecretKey(context);
         return this;
     }
 
@@ -74,8 +72,8 @@ public class WfCipher {
      * @param initialisationVector a hexadecimal sting with the initialisation vector
      * @return this Whiteflag cipher object
      */
-    public final WfCipher setInitVector(String data) {
-        return setInitVector(WfCryptoUtil.parseHexString(data));
+    public final WfCipher setInitVector(String initialisationVector) {
+        return setInitVector(WfCryptoUtil.parseHexString(initialisationVector));
     }
 
     /**

@@ -13,7 +13,7 @@ package org.whiteflagprotocol.java.crypto;
  * @wfver v1-draft.6
  * @wfref 5.2.3 Key and Token Derivation
  */
-public enum WfAuthenticationMethod {
+public enum WfAuthMethod {
     /**
      * Authentication Method 2: shared token
      */
@@ -34,7 +34,7 @@ public enum WfAuthenticationMethod {
      * @param tokenLength the length of the validation token sent in an authentication message
      * @param hkdfSalt the salt used in the HKDF function to derive the validation token
      */
-    private WfAuthenticationMethod(final String indicator, final int tokenLength, final String hkdfSalt) {
+    private WfAuthMethod(final String indicator, final int tokenLength, final String hkdfSalt) {
         this.indicator = indicator;
         this.tokenLength = tokenLength;
         this.hkdfSalt = hkdfSalt;

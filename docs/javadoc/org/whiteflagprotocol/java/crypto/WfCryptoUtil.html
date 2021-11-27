@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -196,6 +196,16 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hkdf(java.lang.String,java.lang.String,java.lang.String,int)">hkdf</a></span>&#8203;(java.lang.String&nbsp;ikm,
+    java.lang.String&nbsp;salt,
+    java.lang.String&nbsp;info,
+    int&nbsp;keyLength)</code></th>
+<td class="colLast">
+<div class="block">Performs HKDF key and token derivation for Whiteflag</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hkdfExpand(byte%5B%5D,byte%5B%5D,int)">hkdfExpand</a></span>&#8203;(byte[]&nbsp;prk,
           byte[]&nbsp;info,
@@ -204,7 +214,7 @@ extends java.lang.Object</pre>
 <div class="block">Performs RFC 5869 HKDF Step 2: expand</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hkdfExtract(byte%5B%5D,byte%5B%5D)">hkdfExtract</a></span>&#8203;(byte[]&nbsp;ikm,
            byte[]&nbsp;salt)</code></th>
@@ -212,14 +222,14 @@ extends java.lang.Object</pre>
 <div class="block">Performs RFC 5869 HKDF Step 1: extract</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseHexString(java.lang.String)">parseHexString</a></span>&#8203;(java.lang.String&nbsp;hexString)</code></th>
 <td class="colLast">
 <div class="block">Parses a hexadecimal string to a byte array used in crypto functions</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toHexString(byte%5B%5D)">toHexString</a></span>&#8203;(byte[]&nbsp;byteArray)</code></th>
 <td class="colLast">
@@ -335,16 +345,41 @@ extends java.lang.Object</pre>
  HKDF expand and extract.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ikm</code> - the input key material</dd>
-<dd><code>salt</code> - the cryptographic salt</dd>
-<dd><code>info</code> - nformation to bind the derived key to an intended context</dd>
-<dd><code>keyLength</code> - the output key length in bytes</dd>
+<dd><code>ikm</code> - byte array with the input key material</dd>
+<dd><code>salt</code> - byte array with the cryptographic salt</dd>
+<dd><code>info</code> - byte array with information to bind the derived key to an intended context</dd>
+<dd><code>keyLength</code> - integer with the output key length in bytes</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the output key material, i.e. the generated secret cryptographic key</dd>
 <dt><span class="simpleTagLabel">Whiteflag version:</span></dt>
 <dd>v1-draft.6</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>5.2.3 Key and Token Derivation</dd>
+</dl>
+</li>
+</ul>
+<a id="hkdf(java.lang.String,java.lang.String,java.lang.String,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hkdf</h4>
+<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;hkdf&#8203;(java.lang.String&nbsp;ikm,
+                                          java.lang.String&nbsp;salt,
+                                          java.lang.String&nbsp;info,
+                                          int&nbsp;keyLength)</pre>
+<div class="block">Performs HKDF key and token derivation for Whiteflag
+ 
+ <p> This is a wrapper for the HKDF function allowing to provide
+ the input as hexadecimal strings.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>ikm</code> - hexadecimal string with the input key material</dd>
+<dd><code>salt</code> - hexadecimal string the cryptographic salt</dd>
+<dd><code>info</code> - hexadecimal string information to bind the derived key to an intended context</dd>
+<dd><code>keyLength</code> - integer with the output key length in bytes</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the output key material, i.e. the generated secret cryptographic key</dd>
 </dl>
 </li>
 </ul>

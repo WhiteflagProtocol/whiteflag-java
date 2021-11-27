@@ -5,6 +5,7 @@ package org.whiteflagprotocol.java.crypto;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 /* Whiteflag encryption methods */ 
 import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
@@ -69,6 +70,7 @@ public class WfEncryptionKey {
     }
 
     /* PUBLIC METHODS */
+
     /**
      * Returns the encryption method
      * @return a string with the encryption method indicator
@@ -80,9 +82,12 @@ public class WfEncryptionKey {
     /**
      * Derive the secret cryptographic key from this Whiteflag encryption key
      * @param contextInfo information to bind the derived key to the intended context
-     * @return a byte array with the secret cryptographic key
+     * @return a java SecretKey object with the secret cryptographic key
      */
-    public byte[] getSecretKey(byte[] contextInfo) {
-        return WfCryptoUtil.hkdfExpand(pseudoRandomKey, contextInfo, encryptionMethod.getKeyLength());
+    public SecretKey getSecretKey(byte[] contextInfo) {
+        return new SecretKeySpec(
+            WfCryptoUtil.hkdfExpand(pseudoRandomKey, contextInfo, encryptionMethod.getKeyLength()),
+            encryptionMethod.getAlgorithm()
+        );
     }
 }

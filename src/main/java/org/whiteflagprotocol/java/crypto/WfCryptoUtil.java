@@ -64,7 +64,7 @@ public class WfCryptoUtil {
             hexDigits[1] = Character.forDigit((byteArray[i] & 0xF), HEXRADIX);
             hexBuffer.append(new String(hexDigits));
         }
-        return hexBuffer.toString();
+        return hexBuffer.toString().toLowerCase();
     }
 
     /**
@@ -77,10 +77,10 @@ public class WfCryptoUtil {
      * @wfver v1-draft.6
      * @wfref 5.2.3 Key and Token Derivation
      * 
-     * @param ikm the input key material
-     * @param salt the cryptographic salt
-     * @param info nformation to bind the derived key to an intended context
-     * @param keyLength the output key length in bytes
+     * @param ikm byte array with the input key material
+     * @param salt byte array with the cryptographic salt
+     * @param info byte array with information to bind the derived key to an intended context
+     * @param keyLength integer with the output key length in bytes
      * @return the output key material, i.e. the generated secret cryptographic key
      */
     public static final byte[] hkdf(final byte[] ikm, final byte[] salt, final byte[] info, final int keyLength) {
@@ -88,7 +88,26 @@ public class WfCryptoUtil {
          * Step 1. HKDF-Extract(salt, IKM) -> PRK
          * Step 2. HKDF-Expand(PRK, info, L) -> OKM
          */
-        return hkdfExpand(hkdfExtract(salt, ikm), info, keyLength);
+        return hkdfExpand(hkdfExtract(ikm, salt), info, keyLength);
+    };
+
+    /**
+     * Performs HKDF key and token derivation for Whiteflag
+     * 
+     * <p> This is a wrapper for the HKDF function allowing to provide
+     * the input as hexadecimal strings.
+     * @param ikm hexadecimal string with the input key material
+     * @param salt hexadecimal string the cryptographic salt
+     * @param info hexadecimal string information to bind the derived key to an intended context
+     * @param keyLength integer with the output key length in bytes
+     * @return the output key material, i.e. the generated secret cryptographic key
+     */
+    public static final String hkdf(final String ikm, final String salt, final String info, final int keyLength) {
+        /*
+         * Step 1. HKDF-Extract(salt, IKM) -> PRK
+         * Step 2. HKDF-Expand(PRK, info, L) -> OKM
+         */
+        return toHexString(hkdf(parseHexString(ikm), parseHexString(salt), parseHexString(info), keyLength));
     };
 
     /**

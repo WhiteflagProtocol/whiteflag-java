@@ -189,7 +189,7 @@ public class WfBinaryString {
             int dec = Integer.parseInt(bin.substring(i, i + QUADBIT), BINRADIX);
             hex.append(Integer.toString(dec, HEXRADIX));
         }
-        return hex.toString();
+        return hex.toString().toLowerCase();
     }
 
     /* PUBLIC METHODS: operations */

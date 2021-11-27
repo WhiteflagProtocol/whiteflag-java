@@ -136,7 +136,7 @@ extends java.lang.Object</pre>
  
  <p> This class represents a Whiteflag cipher. Instances of this are used
  to encrypt and decrypt a Whiteflag messgae. This class needs to instantiated
- with a Whietflag encryption key instance.</div>
+ with a Whiteflag encryption key instance.</div>
 <dl>
 <dt><span class="simpleTagLabel">Whiteflag version:</span></dt>
 <dd>v1-draft.6</dd>
@@ -244,7 +244,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="WfCipher.html" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInitVector(java.lang.String)">setInitVector</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInitVector(java.lang.String)">setInitVector</a></span>&#8203;(java.lang.String&nbsp;initialisationVector)</code></th>
 <td class="colLast">
 <div class="block">Sets the initialisation vector, which is required by certain Whiteflag encryption methods</div>
 </td>
@@ -284,8 +284,7 @@ extends java.lang.Object</pre>
 <div class="block">Constructs a new Whiteflag cipher based</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>cipher</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
-<dd><code>key</code> - </dd>
+<dd><code>key</code> - the <a href="WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto"><code>WfEncryptionKey</code></a> encryption key</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code></dd>
 </dl>
@@ -337,7 +336,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setInitVector</h4>
-<pre class="methodSignature">public final&nbsp;<a href="WfCipher.html" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a>&nbsp;setInitVector&#8203;(java.lang.String&nbsp;data)</pre>
+<pre class="methodSignature">public final&nbsp;<a href="WfCipher.html" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a>&nbsp;setInitVector&#8203;(java.lang.String&nbsp;initialisationVector)</pre>
 <div class="block">Sets the initialisation vector, which is required by certain Whiteflag encryption methods</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

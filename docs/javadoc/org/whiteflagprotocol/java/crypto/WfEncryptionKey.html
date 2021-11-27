@@ -237,7 +237,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>byte[]</code></td>
+<td class="colFirst"><code>javax.crypto.SecretKey</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSecretKey(byte%5B%5D)">getSecretKey</a></span>&#8203;(byte[]&nbsp;contextInfo)</code></th>
 <td class="colLast">
 <div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
@@ -376,13 +376,13 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSecretKey</h4>
-<pre class="methodSignature">public&nbsp;byte[]&nbsp;getSecretKey&#8203;(byte[]&nbsp;contextInfo)</pre>
+<pre class="methodSignature">public&nbsp;javax.crypto.SecretKey&nbsp;getSecretKey&#8203;(byte[]&nbsp;contextInfo)</pre>
 <div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>contextInfo</code> - information to bind the derived key to the intended context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a byte array with the secret cryptographic key</dd>
+<dd>a java SecretKey object with the secret cryptographic key</dd>
 </dl>
 </li>
 </ul>
