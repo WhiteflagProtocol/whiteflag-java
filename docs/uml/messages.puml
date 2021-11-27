@@ -89,24 +89,24 @@ package org.whiteflagprotocol.java.util {
 package org.whiteflagprotocol.java {
     class WfMessage {
         -metadata : HashMap<>
+        +type : WfMessageType
+        +header : WfMessageSegment
+        +body : WfMessageSegment
+        +type(String) : WfMessage
+        +copy(WfMessage) : WfMessage
+        +deserialize(String) : WfMessage
+        +deserializeJson(String) : WfMessage
+        +decode(String) : WfMessage
+        +compile(String[]) : WfMessage
+        +encode() : String
         +toJson() : String
-    }
-    class WfMessage.Creator {
-        +type(String)
-        +copy(WfMessage)
-        +deserialize(String)
-        +deserializeJson(String)
-        +decode(String)
-        +compile(String[])
     }
 }
 
 WfJsonMessage <. WfMessage
 
 WfMessage --|> WfMessageCore
-WfMessage +- WfMessage.Creator
-WfMessage <- WfMessage.Creator: creates
-WfMessage.Creator --> WfMessageCreator
+WfMessage ---> WfMessageCreator: uses
 
 WfMessageCore --> WfMessageType
 WfMessageCore *-- "2" WfMessageSegment

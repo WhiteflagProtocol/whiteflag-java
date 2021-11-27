@@ -71,14 +71,12 @@ import org.whiteflagprotocol.java.WfMessage;
 import org.whiteflagprotocol.java.WfException;
 
 public class Example {
+  /* Properties */
   private WfMessage message;
 
-  public WfMessage createMessage(String messageType) {
-    try {
-      message = WfMessage.Creator.create(messageType);
-    } catch(WfException e) {
-      throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
-    }
+  /* Methods */
+  public WfMessage createMessage(String messageType) throws WfException {
+    message = WfMessage.type(messageType);
     return message;
   }
 }
