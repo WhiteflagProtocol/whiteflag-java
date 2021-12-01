@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Whiteflag binary string test class
  */
-public class WfEncodedMessageTest {
+public class WfBinaryBufferTest {
 
     /**
      * Tests right shift of byte array
@@ -21,7 +21,7 @@ public class WfEncodedMessageTest {
         final byte[] result = {(byte) 0x0A,(byte) 0x6F,(byte) 0xA0};    // 000010100110111110100000
 
         /* Verify */
-        assertArrayEquals("Byte array should have been correctly shifted right", result, WfEncodedMessage.shiftRight(byteArray, 3));
+        assertArrayEquals("Byte array should have been correctly shifted right", result, WfBinaryBuffer.shiftRight(byteArray, 3));
     }
 
     /**
@@ -34,7 +34,7 @@ public class WfEncodedMessageTest {
         final byte[] result = {(byte) 0x07,(byte) 0xB1,(byte) 0xC3,(byte) 0x68};    // 00000111101100011100001101101000
 
         /* Verify */
-        assertArrayEquals("Byte array should have been correctly shifted right", result, WfEncodedMessage.shiftRight(byteArray, 5));
+        assertArrayEquals("Byte array should have been correctly shifted right", result, WfBinaryBuffer.shiftRight(byteArray, 5));
     }
 
     /**
@@ -47,6 +47,6 @@ public class WfEncodedMessageTest {
         final byte[] result = {(byte) 0x0E,(byte) 0x63,(byte) 0x86,(byte) 0xD8,(byte) 0x40};    // 0000111001100011100001101101100001000000
 
         /* Verify */
-        assertArrayEquals("Byte array should have been correctly shifted right", result, WfEncodedMessage.shiftRight(byteArray, 4));
+        assertArrayEquals("Byte array should have been correctly shifted right", result, WfBinaryBuffer.shiftRight(byteArray, 4));
     }
 }

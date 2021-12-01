@@ -37,8 +37,6 @@ public class WfMessageCodec {
         throw new IllegalStateException("Cannot instantiate Whiteflag codec utility class");
     }
 
-    /* PUBLIC METHODS: operations */
-
     /**
      * Encodes the message field into a binary string
      * @return the compressed binary encoding of the field
@@ -48,7 +46,6 @@ public class WfMessageCodec {
         // Build binary string iaw field encoding type
         StringBuilder binStr = new StringBuilder();
         switch (encoding) {
-
             // Encode UTF 8 field
             case UTF8:
                 binStr.append(encodeUTF(value));

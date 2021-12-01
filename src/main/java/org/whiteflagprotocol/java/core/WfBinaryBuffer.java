@@ -4,6 +4,7 @@
 package org.whiteflagprotocol.java.core;
 
 import java.util.regex.Pattern;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Whiteflag encoded message object
@@ -16,7 +17,7 @@ import java.util.regex.Pattern;
  * 
  * @wfref 4.1 Message Structure
  */
-public class WfEncodedMessage {
+public class WfBinaryBuffer {
 
     /* PROPERTIES */
 
@@ -34,7 +35,7 @@ public class WfEncodedMessage {
     /**
      * A byte array with the encoded message
      */
-    private byte[] message;
+    private byte[] buffer;
 
     /**
      * Encoding and decoding cursor
@@ -44,7 +45,7 @@ public class WfEncodedMessage {
     /**
      * Encoding and decoding cursor
      */
-    private boolean complete = false;
+    private boolean encoded = false;
 
     /* CONSTRUCTOR */
 
@@ -52,29 +53,29 @@ public class WfEncodedMessage {
      * Constructs a new Whiteflag encoded message object from a byte array
      * @param message a byte array
      */
-    private WfEncodedMessage(final byte[] message) {
-        this.message = message;
-        this.complete = true;
+    private WfBinaryBuffer(final byte[] message) {
+        this.buffer = message;
+        this.encoded = true;
         this.bitCursor = 0;
     }
 
-    /* METHODS */
+    /* PUBLIC METHODS: basic interface */
 
     /**
      * Checks if the encoded message is finalised, i.e. if it contains a complete message
      * @return TRUE if message is fully encoded, else FALSE
      */
-    public boolean isComplete() {
-        return this.complete;
+    public boolean isEncoded() {
+        return this.encoded;
     }
 
     /**
      * Completes the encoding of the Whiteflag message
-     * @return this {@link WfEncodedMessage}
+     * @return this {@link WfBinaryBuffer}
      */
-    public WfEncodedMessage encode() {
-        this.complete = true;
+    public WfBinaryBuffer encode() {
         this.bitCursor = 0;
+        this.encoded = true;
         return this;
     }
 
@@ -82,15 +83,15 @@ public class WfEncodedMessage {
      * Constructs a new Whiteflag encoded message object from a byte array
      * @param byteArray a byte array with an encoded message
      */
-    public static WfEncodedMessage fromByteArray(final byte[] byteArray) {
-        return new WfEncodedMessage(byteArray);
+    public static WfBinaryBuffer fromByteArray(final byte[] byteArray) {
+        return new WfBinaryBuffer(byteArray);
     }
 
     /**
      * Constructs a new Whiteflag encoded message object from a byte array
      * @param hexString a hexadecimal string with the encoded message
      */
-    public static WfEncodedMessage fromHexString(final String data) {
+    public static WfBinaryBuffer fromHexString(final String data) {
         if (data == null) throw new IllegalArgumentException("Null is not a valid hexadecimal string");
 
         // Check hexadecimal string
@@ -98,7 +99,7 @@ public class WfEncodedMessage {
         if (!HEXPATTERN.matcher(hexString).matches()) {
             throw new IllegalArgumentException("Invalid hexadecimal string: " + hexString);
         }
-        return new WfEncodedMessage(convertToByteArray(hexString));
+        return new WfBinaryBuffer(convertToByteArray(hexString));
     }
 
     /**
@@ -106,7 +107,7 @@ public class WfEncodedMessage {
      * @return a byte array with an encoded message
      */
     public byte[] toByteArray() {
-        return this.message;
+        return this.buffer;
     }
 
     /**
@@ -114,26 +115,21 @@ public class WfEncodedMessage {
      * @return a hexadecimal string with the encoded message
      */
     public String toHexString() {
-        return convertToHexString(this.message);
+        return convertToHexString(this.buffer);
     }
+
+    /* PUBLIC METHODS: message field operations */
 
     /**
      * Adds the provided number of bits from the provided byte
      */
-    public WfEncodedMessage addMessageField(WfMessageField field) {
-        // TODO: write function
+    public WfBinaryBuffer addMessageField(WfMessageField field) {
+        buffer = addBytes(encodeField(field));
+        bitCursor += field.bitLength();
         return this;
     }
 
-    /**
-     * Adds the provided bytes array
-     */
-    public WfEncodedMessage addBytes(byte[] bin) {
-        // TODO: write function
-        return this;
-    }
-
-    /* PUBLIC UTILITY METHODS */
+    /* PUBLIC STATIC UTILITY METHODS */
 
     /**
      * Converts a hexadecimal string to a byte array
@@ -182,20 +178,79 @@ public class WfEncodedMessage {
         return newByteArray;
     }
 
-    /* PRIVATE METHODS */
-
-    private final void encodeBit(final String value) {}
-
-    private final void encodeBDX(final String value) {}
-
-    private final void encodeUTF(final String value) {}
+    /* PROTECTED METHODS */
 
     /**
-     * Gets the byte cursor from bit cursor
-     * @return the current byte
+     * Encodes a Whiteflag field into a byte array
+     * @param field a {@link WfMessageField}
+     * @return a byte array with the encooded field
      */
-    private final int getByteCursor() {
-        return (bitCursor / BYTE);
+    protected static byte[] encodeField(WfMessageField field) {
+
+        switch (field.encoding) {
+            // Encode UTF 8 field
+            case UTF8:
+                return field.toString().getBytes(StandardCharsets.UTF_8);
+
+            // Encode binary field
+            case BIN:
+                byte[] bin = new byte[1];
+                if (field.toString().equals("0")) bin[0] = (byte) 0x00;
+                if (field.toString().equals("1")) bin[0] = (byte) 0x80;
+                return bin;
+
+            // Encode decimal or hexadecimal field
+            case DEC:
+            case HEX:
+                return convertToByteArray(field.toString());
+
+            // Encode datum field
+            case DATETIME:
+            case DURATION:
+            case LAT:
+            case LONG:
+                // Encode string without fixed characters
+                byte[] datum = convertToByteArray(field.toString().replaceAll("[\\-+:.A-Z]", ""));
+                
+                // Sign of lat long coordinates
+                if (field.toString().substring(0,1).equals("-")) {
+                    datum = shiftRight(datum, 1);
+                }
+                if (field.toString().substring(0,1).equals("+")) {
+                    datum = shiftRight(datum, 1);
+                    datum[0] |= (byte) 0x80;
+                }
+                return datum;
+            // Unknown encoding
+            default:
+                return new byte[0];
+        }
+    }
+
+    /* PRIVATE METHODS */
+
+    /**
+     * Adds the provided bytes array
+     */
+    private final byte[] addBytes(byte[] byteArray) {
+        byte[] newBuffer = new byte[(buffer.length + byteArray.length)];
+        byte[] addBuffer = shiftRight(byteArray, bitCursor);
+        int index = 0;
+
+        /* Add existing buffer to new buffer */
+        for (int i = 0; i < buffer.length; i++) {
+            newBuffer[i] = buffer[i];
+            index = i;
+        }
+        /* Add overlapping byte */
+        newBuffer[index] |= addBuffer[0];
+
+        /* Add the rest of the bytes to new buffer */
+        for (int i = 1; i < newBuffer.length; i++) {
+            index++;
+            newBuffer[index] = buffer[i];
+        }
+        return newBuffer;
     }
 
     /**
