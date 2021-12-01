@@ -69,6 +69,16 @@ public class WfEncodedMessage {
     }
 
     /**
+     * Completes the encoding of the Whiteflag message
+     * @return this {@link WfEncodedMessage}
+     */
+    public WfEncodedMessage encode() {
+        this.complete = true;
+        this.bitCursor = 0;
+        return this;
+    }
+
+    /**
      * Constructs a new Whiteflag encoded message object from a byte array
      * @param byteArray a byte array with an encoded message
      */
@@ -107,20 +117,23 @@ public class WfEncodedMessage {
         return convertToHexString(this.message);
     }
 
-    /* PRIVATE METHODS */
+    /**
+     * Adds the provided number of bits from the provided byte
+     */
+    public WfEncodedMessage addMessageField(WfMessageField field) {
+        // TODO: write function
+        return this;
+    }
 
     /**
-     * Checks for and removes prefix from string
-     * @param str string to be checked
-     * @param prefix the prefix to be checked for
-     * @return the string without prefix
+     * Adds the provided bytes array
      */
-    private static final String removePrefix(final String str, final String prefix) {
-        if (str.startsWith(prefix)) {
-            return str.substring(prefix.length());
-        }
-        return str;
+    public WfEncodedMessage addBytes(byte[] bin) {
+        // TODO: write function
+        return this;
     }
+
+    /* PUBLIC UTILITY METHODS */
 
     /**
      * Converts a hexadecimal string to a byte array
@@ -142,7 +155,7 @@ public class WfEncodedMessage {
      * @param byteArray the byte array
      * @return a hexadecimal string
      */
-    private static final String convertToHexString(final byte[] byteArray) {
+    public static final String convertToHexString(final byte[] byteArray) {
         StringBuffer hexBuffer = new StringBuffer();
         for (int i = 0; i < byteArray.length; i++) {
             char[] hexDigits = new char[2];
@@ -151,5 +164,50 @@ public class WfEncodedMessage {
             hexBuffer.append(new String(hexDigits));
         }
         return hexBuffer.toString().toLowerCase();
+    }
+
+    /**
+     * Bitwise right shift of whole byte array
+     */
+    public static byte[] shiftRight(final byte[] srcByteArray, int shift) {
+        final int mod = shift % BYTE;
+        final byte mask = (byte) (0xFF >>> (BYTE - mod));
+        byte[] newByteArray = new byte[srcByteArray.length + 1];
+
+        // Fill the new new byte array, starting at the end
+        for (int i = srcByteArray.length; i > 0; i--) {
+            newByteArray[i] |= (byte) ((srcByteArray[i - 1] & mask) << (BYTE - mod));;
+            newByteArray[i - 1] = (byte) ((0xFF & srcByteArray[i - 1]) >>> mod);
+        }
+        return newByteArray;
+    }
+
+    /* PRIVATE METHODS */
+
+    private final void encodeBit(final String value) {}
+
+    private final void encodeBDX(final String value) {}
+
+    private final void encodeUTF(final String value) {}
+
+    /**
+     * Gets the byte cursor from bit cursor
+     * @return the current byte
+     */
+    private final int getByteCursor() {
+        return (bitCursor / BYTE);
+    }
+
+    /**
+     * Checks for and removes prefix from string
+     * @param str string to be checked
+     * @param prefix the prefix to be checked for
+     * @return the string without prefix
+     */
+    private static final String removePrefix(final String str, final String prefix) {
+        if (str.startsWith(prefix)) {
+            return str.substring(prefix.length());
+        }
+        return str;
     }
 }
