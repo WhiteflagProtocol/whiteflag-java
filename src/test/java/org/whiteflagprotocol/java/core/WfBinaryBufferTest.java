@@ -6,10 +6,33 @@ package org.whiteflagprotocol.java.core;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/* Field encodings required for field definitions */
+import static org.whiteflagprotocol.java.core.WfMessageField.Encoding.*;
+
 /**
  * Whiteflag binary string test class
  */
 public class WfBinaryBufferTest {
+    /* Fieldname */
+    private final String FIELDNAME = "TESTFIELD";
+
+    /* Regex field begin and end */
+    private final String BEGIN = "^";
+    private final String REPEAT = "*$";
+    private final String END = "$";
+
+    /**
+     * Tests right shift of byte array
+     */
+    @Test
+    public void testByteArrayShiftRight0() {
+        /* Setup */ 
+        final byte[] byteArray = {(byte) 0x53,(byte) 0x7D};
+        final byte[] result = byteArray;
+
+        /* Verify */
+        assertArrayEquals("Byte array should be indentical after zero shift", byteArray, WfBinaryBuffer.shiftRight(byteArray, 0));
+    }
 
     /**
      * Tests right shift of byte array
@@ -48,5 +71,65 @@ public class WfBinaryBufferTest {
 
         /* Verify */
         assertArrayEquals("Byte array should have been correctly shifted right", result, WfBinaryBuffer.shiftRight(byteArray, 4));
+    }
+
+    /**
+     * Tests right shift of byte array
+     */
+    @Test
+    public void testAddBits1() {
+        /* Setup */
+        final byte[] byteArray1 = {(byte) 0xE6,(byte) 0x38,(byte) 0x87};    // 1110 0110 | 0011 1000 | 1000 0111
+        final byte[] byteArray2 = {(byte) 0x6E,(byte) 0x7f};                // 0110 1110 | 0111 1111
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+
+        /* Verify */
+        assertFalse("Message should not yet be encoded", message.isEncoded());
+        assertEquals("Binary buffer should be 0 bits", 0, message.length());
+        message.addBits(byteArray1, 22);         // 1110 0110 | 0011 1000 | 1000 01(00)
+        assertEquals("Binary buffer should now be 22 bits", 22, message.length());
+        System.out.println("Added byte array 1.1: " + message.toHexString());
+        assertTrue("Byte array 1 should have been correctly added to Binary Buffer", message.toHexString().equalsIgnoreCase("e63884"));
+        message.addBits(byteArray2, 13);         // 1110 0110 | 0011 1000 | 1000 0101 | 1011 1001 | 1110 0000
+        assertEquals("Binary buffer should now be 34 bits", 35, message.length());
+        System.out.println("Added byte array 1.2: " + message.toHexString());
+        assertTrue("Byte array 2 should have been correctly added to Binary Buffer", message.toHexString().equalsIgnoreCase("e63885b9e0"));
+    }
+
+    /**
+     * Tests right shift of byte array
+     */
+    @Test
+    public void testAddBits2() {
+        /* Setup */
+        final byte[] byteArray1 = {(byte) 0xE6,(byte) 0x38,(byte) 0x87};    // 1110 0110 | 0011 1000 | 1000 0111
+        final byte[] byteArray2 = {(byte) 0x6E,(byte) 0x6f};                // 0110 1110 | 0110 1111
+        WfBinaryBuffer message = WfBinaryBuffer.fromByteArray(byteArray1, false);
+
+        /* Verify */
+        assertFalse("Message should not yet be encoded", message.isEncoded());
+        assertEquals("Binary buffer should now be 24 bits", 24, message.length());
+        System.out.println("Added byte array 2.1: " + message.toHexString());
+        assertTrue("Byte array 1 should have been correctly added to Binary Buffer", message.toHexString().equalsIgnoreCase("e63887"));
+        message.addBits(byteArray2, 12);         // 1110 0110 | 0011 1000 | 1000 0111 | 0110 1110 | 0110 0000
+        assertEquals("Binary buffer should now be 36 bits", 36, message.length());
+        System.out.println("Added byte array 2.2: " + message.toHexString());
+        assertTrue("Byte array 2 should have been correctly added to Binary Buffer", message.toHexString().equalsIgnoreCase("e638876e60"));
+    }
+
+    /**
+     * Tests basic operations
+     */
+    @Test
+    public void testMessageEncoding1() {
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
+
+        /* Verify */
+        // assertTrue("Should be able to set field value", field.set("text"));
+        // message.addMessageField(field);
+        // assertFalse("Message is not yet encoded", message.isEncoded());
+        // message.encode();
+        // assertTrue("Message is encoded", message.isEncoded());
     }
 }

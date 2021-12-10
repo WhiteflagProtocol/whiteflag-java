@@ -33,63 +33,90 @@ public class WfBinaryBuffer {
     public static final int BIT = 1;
 
     /**
-     * A byte array with the encoded message
+     * A byte array holding the binary buffer
      */
     private byte[] buffer;
 
     /**
-     * Encoding and decoding cursor
+     * The length of the binary buffer in bits
      */
-    private int bitCursor = 0;
+    private int length = 0;
 
     /**
-     * Encoding and decoding cursor
+     * Decoding bit cursor
+     */
+    private int cursor = 0;
+
+    /**
+     * Encoding status
      */
     private boolean encoded = false;
 
     /* CONSTRUCTOR */
 
     /**
-     * Constructs a new Whiteflag encoded message object from a byte array
+     * Constructs a new empty Whiteflag binary encoded message buffer
+     * @param message a byte array
+     */
+    private WfBinaryBuffer() {
+        this.buffer = new byte[0];
+    }
+    
+    /**
+     * Constructs a new Whiteflag binary encoded message buffer from a byte array
      * @param message a byte array
      */
     private WfBinaryBuffer(final byte[] message) {
         this.buffer = message;
         this.encoded = true;
-        this.bitCursor = 0;
+        this.length = message.length * BYTE;
+    }
+
+    /**
+     * Constructs a new Whiteflag binary encoded message buffer from a byte array
+     * @param message a byte array with a (partially) binary encoded message
+     * @param encoded TRUE, if this is a full encoded message, else FALSE
+     */
+    private WfBinaryBuffer(final byte[] message, final boolean encoded) {
+        this.buffer = message;
+        this.encoded = encoded;
+        this.length = message.length * BYTE;
     }
 
     /* PUBLIC METHODS: basic interface */
 
     /**
-     * Checks if the encoded message is finalised, i.e. if it contains a complete message
-     * @return TRUE if message is fully encoded, else FALSE
+     * Creates a new Whiteflag binary buffer
+     * @return a new {@link WfBinaryBuffer}
      */
-    public boolean isEncoded() {
-        return this.encoded;
+    public static WfBinaryBuffer create() {
+        return new WfBinaryBuffer();
     }
 
     /**
-     * Completes the encoding of the Whiteflag message
-     * @return this {@link WfBinaryBuffer}
-     */
-    public WfBinaryBuffer encode() {
-        this.bitCursor = 0;
-        this.encoded = true;
-        return this;
-    }
-
-    /**
-     * Constructs a new Whiteflag encoded message object from a byte array
-     * @param byteArray a byte array with an encoded message
+     * Constructs a new Whiteflag binary encoded message buffer from a byte array
+     * @param byteArray a byte array with a binary encoded Whiteflag message
+     * @return a new {@link WfBinaryBuffer}
      */
     public static WfBinaryBuffer fromByteArray(final byte[] byteArray) {
         return new WfBinaryBuffer(byteArray);
     }
 
     /**
-     * Constructs a new Whiteflag encoded message object from a byte array
-     * @param hexString a hexadecimal string with the encoded message
+     * Constructs a new Whiteflag binary buffer from a byte array
+     * @param byteArray a byte array
+     * @param encoded TRUE, if this is a full encoded message, else FALSE
+     * @return a new {@link WfBinaryBuffer}
+     * @
+     */
+    public static WfBinaryBuffer fromByteArray(final byte[] byteArray, final boolean encoded) {
+        return new WfBinaryBuffer(byteArray, encoded);
+    }
+
+    /**
+     * Constructs a new Whiteflag binary encoded message buffer from a hexadecimal string
+     * @param hexString a hexadecimal string with a binary encoded Whiteflag message
+     * @return a new {@link WfBinaryBuffer}
      */
     public static WfBinaryBuffer fromHexString(final String data) {
         if (data == null) throw new IllegalArgumentException("Null is not a valid hexadecimal string");
@@ -100,6 +127,31 @@ public class WfBinaryBuffer {
             throw new IllegalArgumentException("Invalid hexadecimal string: " + hexString);
         }
         return new WfBinaryBuffer(convertToByteArray(hexString));
+    }
+
+    /**
+     * Returns the bit length of the binary buffer
+     * @return the buffer length in bits
+     */
+    public int length() {
+        return this.length;
+    }
+
+    /**
+     * Completes the encoding of the Whiteflag message
+     * @return this {@link WfBinaryBuffer}
+     */
+    public WfBinaryBuffer encode() {
+        this.encoded = true;
+        return this;
+    }
+
+    /**
+     * Checks if the encoded message is finalised, i.e. if it contains a complete message
+     * @return TRUE if message is fully encoded, else FALSE
+     */
+    public boolean isEncoded() {
+        return this.encoded;
     }
 
     /**
@@ -122,11 +174,12 @@ public class WfBinaryBuffer {
 
     /**
      * Adds the provided number of bits from the provided byte
+     * @param field the next {@link WfMessageField} to be encoded and added to the buffer
+     * @return this {@link WfBinaryBuffer}
      */
     public WfBinaryBuffer addMessageField(WfMessageField field) {
-        buffer = addBytes(encodeField(field));
-        bitCursor += field.bitLength();
-        return this;
+        final byte[] byteArray = encodeField(field);
+        return addBits(byteArray, field.bitLength());
     }
 
     /* PUBLIC STATIC UTILITY METHODS */
@@ -162,23 +215,71 @@ public class WfBinaryBuffer {
         return hexBuffer.toString().toLowerCase();
     }
 
-    /**
-     * Bitwise right shift of whole byte array
-     */
-    public static byte[] shiftRight(final byte[] srcByteArray, int shift) {
-        final int mod = shift % BYTE;
-        final byte mask = (byte) (0xFF >>> (BYTE - mod));
-        byte[] newByteArray = new byte[srcByteArray.length + 1];
+    /* PROTECTED METHODS */
 
-        // Fill the new new byte array, starting at the end
-        for (int i = srcByteArray.length; i > 0; i--) {
-            newByteArray[i] |= (byte) ((srcByteArray[i - 1] & mask) << (BYTE - mod));;
-            newByteArray[i - 1] = (byte) ((0xFF & srcByteArray[i - 1]) >>> mod);
+    /**
+     * Adds the specified number of bits from a bytes array to the binary buffer
+     * @param byteArray the byte array with the bits to be added
+     * @param nAddBits the number of bits to add from the byte array
+     * @return the string without prefix
+     */
+    protected final WfBinaryBuffer addBits(final byte[] byteArray, int nAddBits) {
+        /* Check number of bits */
+        if (nAddBits > (byteArray.length * BYTE)) {
+            throw new IllegalArgumentException("Cannot add " + nAddBits + " from byte array of length " + byteArray.length);
         }
-        return newByteArray;
+        /* Calculate support parameters */
+        final int shiftBits = this.length % BYTE;
+        final int freeBits = (shiftBits == 0 ? 0 : BYTE - shiftBits);
+        final int currentByteLength = (this.length == 0 ? 0 : (this.length / BYTE) + (freeBits == 0 ? 0 : 1));
+        final int newBitLength = this.length + nAddBits;
+        final int newByteLength = (newBitLength / BYTE) + 1;
+
+        /* Add the bits from the byte array */
+        if (freeBits >= nAddBits && newByteLength == currentByteLength) {
+            /* If field is less then a free bits, then put in last byte of buffer */ 
+            this.buffer[buffer.length - 1] |= (byte) (byteArray[0] >>> shiftBits);
+        } else {
+            /* If field is longer, add the old and provided byte arrays to a new buffer */
+            byte[] newBuffer = new byte[newByteLength];
+            byte[] addBuffer = shiftRight(byteArray, shiftBits);
+
+            /* Add existing buffer to new buffer */
+            int newByteIndex = 0;
+            int addByteStart = 0;
+            if (currentByteLength != 0) {
+                for (int i = 0; i < currentByteLength; i++) {
+                    newByteIndex = i;
+                    newBuffer[newByteIndex] = this.buffer[i];
+                }
+                /* Add overlapping byte */
+                if (freeBits > 0) {
+                    newBuffer[newByteIndex] |= addBuffer[0];
+                    addByteStart = 1;
+                }
+                newByteIndex++;
+            }
+            /* Add the rest of the bytes to new buffer */
+            final int nAddBytes = addByteStart + newByteLength - newByteIndex;
+            for (int i = addByteStart; i < nAddBytes; i++) {
+                newBuffer[newByteIndex] = addBuffer[i];
+                newByteIndex++;
+            }
+            this.buffer = newBuffer;
+        }
+        /* Update properties */
+        this.length = newBitLength;
+
+        /* Clear bits after at the end */
+        final int clearBits = BYTE - (this.length % BYTE);
+        if (clearBits < BYTE) {
+            this.buffer[buffer.length - 1] &= (byte) (0xFF << clearBits);
+        }
+        /* Done */
+        return this;
     }
 
-    /* PROTECTED METHODS */
+    /* PROTECTED STATIC UTILITY METHODS */
 
     /**
      * Encodes a Whiteflag field into a byte array
@@ -227,30 +328,25 @@ public class WfBinaryBuffer {
         }
     }
 
-    /* PRIVATE METHODS */
-
     /**
-     * Adds the provided bytes array
+     * Bitwise right shift of whole byte array, returning a new byte array
+     * @param srcByteArray the source byte array to be shifted
+     * @param shift the nummber of bits to be shifted; will be modulo 8 bits
+     * @return a new byte array from the right shifted source byte array
      */
-    private final byte[] addBytes(byte[] byteArray) {
-        byte[] newBuffer = new byte[(buffer.length + byteArray.length)];
-        byte[] addBuffer = shiftRight(byteArray, bitCursor);
-        int index = 0;
+    protected static byte[] shiftRight(final byte[] srcByteArray, int shift) {
+        /* Calculate shift */
+        final int mod = shift % BYTE;
+        if (mod == 0) return srcByteArray;
 
-        /* Add existing buffer to new buffer */
-        for (int i = 0; i < buffer.length; i++) {
-            newBuffer[i] = buffer[i];
-            index = i;
+        /* Create new byte array, starting at the end */
+        final byte mask = (byte) (0xFF >>> (BYTE - mod));
+        byte[] newByteArray = new byte[srcByteArray.length + 1];
+        for (int i = srcByteArray.length; i > 0; i--) {
+            newByteArray[i] |= (byte) ((srcByteArray[i - 1] & mask) << (BYTE - mod));
+            newByteArray[i - 1] = (byte) ((0xFF & srcByteArray[i - 1]) >>> mod);
         }
-        /* Add overlapping byte */
-        newBuffer[index] |= addBuffer[0];
-
-        /* Add the rest of the bytes to new buffer */
-        for (int i = 1; i < newBuffer.length; i++) {
-            index++;
-            newBuffer[index] = buffer[i];
-        }
-        return newBuffer;
+        return newByteArray;
     }
 
     /**
@@ -259,7 +355,7 @@ public class WfBinaryBuffer {
      * @param prefix the prefix to be checked for
      * @return the string without prefix
      */
-    private static final String removePrefix(final String str, final String prefix) {
+    protected static final String removePrefix(final String str, final String prefix) {
         if (str.startsWith(prefix)) {
             return str.substring(prefix.length());
         }
