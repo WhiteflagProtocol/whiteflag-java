@@ -231,14 +231,14 @@ public class WfBinaryBuffer {
         /* Calculate support parameters */
         final int shiftBits = this.length % BYTE;
         final int freeBits = (shiftBits == 0 ? 0 : BYTE - shiftBits);
-        final int currentByteLength = (this.length == 0 ? 0 : (this.length / BYTE) + (freeBits == 0 ? 0 : 1));
+        final int currentByteLength = (this.length / BYTE) + (freeBits == 0 ? 0 : 1);
         final int newBitLength = this.length + nAddBits;
-        final int newByteLength = (newBitLength / BYTE) + 1;
+        final int newByteLength = (newBitLength / BYTE) + (newBitLength % BYTE == 0 ? 0 : 1);
 
         /* Add the bits from the byte array */
         if (freeBits >= nAddBits && newByteLength == currentByteLength) {
             /* If field is less then a free bits, then put in last byte of buffer */ 
-            this.buffer[buffer.length - 1] |= (byte) (byteArray[0] >>> shiftBits);
+            this.buffer[buffer.length - 1] |= (byte) ((0xFF & byteArray[0]) >>> shiftBits);
         } else {
             /* If field is longer, add the old and provided byte arrays to a new buffer */
             byte[] newBuffer = new byte[newByteLength];
@@ -287,7 +287,6 @@ public class WfBinaryBuffer {
      * @return a byte array with the encooded field
      */
     protected static byte[] encodeField(WfMessageField field) {
-
         switch (field.encoding) {
             // Encode UTF 8 field
             case UTF8:
