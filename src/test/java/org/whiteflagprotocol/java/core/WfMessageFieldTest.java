@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /* Field encodings required for field definitions */
-import static org.whiteflagprotocol.java.core.WfMessageField.Encoding.*;
+import static org.whiteflagprotocol.java.core.WfMessageCodec.Encoding.*;
 
 /**
  * Whiteflag field test class

@@ -4,7 +4,7 @@
 package org.whiteflagprotocol.java.core;
 
 /* Field encodings required for field definitions */
-import static org.whiteflagprotocol.java.core.WfMessageField.Encoding.*;
+import static org.whiteflagprotocol.java.core.WfMessageCodec.Encoding.*;
 
 /**
  * Whiteflag message definitions utility class

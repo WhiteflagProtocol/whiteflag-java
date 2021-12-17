@@ -28,16 +28,6 @@ package org.whiteflagprotocol.java.core {
         +encode() : WfBinaryString
         +decode(WfBinaryString) : String
     }
-    enum WfMessageField.Encoding {
-        BIN
-        DEC
-        HEX
-        UTF8
-        DATETIME
-        DURATION
-        LAT
-        LONG
-    }
     class WfMessageCreator {
         __
         +create()
@@ -73,10 +63,23 @@ package org.whiteflagprotocol.java.core {
         #createRequestFields() : WfMessageField[]
     }
     class WfMessageCodec <<Utility>> {
-        +encode(String) : WfBinaryString
-        +decode(WfBinaryString) : String
+        +encodeString(String) : WfBinaryString
+        +decodeString(WfBinaryString) : String
+        +encodeField(WfMessageField) : byte[]
+        +decodeField(byte[]) : String
+    }
+    enum Encoding {
+        BIN
+        DEC
+        HEX
+        UTF8
+        DATETIME
+        DURATION
+        LAT
+        LONG
     }
     class WfBinaryString <<DataType>>
+    class WfBinaryBuffer <<DataType>>
 }
 
 package org.whiteflagprotocol.java.util {
@@ -111,8 +114,8 @@ WfMessage ---> WfMessageCreator: uses
 WfMessageCore --> WfMessageType
 WfMessageCore *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField
-WfMessageField +- WfMessageField.Encoding
 WfMessageCodec <. WfMessageField
+Encoding -+ WfMessageCodec
 
 WfMessageCreator -> WfMessageCore: creates
 WfMessageCreator ..> WfMessageType
