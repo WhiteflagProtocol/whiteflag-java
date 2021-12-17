@@ -4,7 +4,6 @@
 package org.whiteflagprotocol.java.core;
 
 import java.util.regex.Pattern;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Whiteflag encoded message object
@@ -178,7 +177,7 @@ public class WfBinaryBuffer {
      * @return this {@link WfBinaryBuffer}
      */
     public WfBinaryBuffer addMessageField(WfMessageField field) {
-        final byte[] byteArray = encodeField(field);
+        final byte[] byteArray = WfMessageField.encodeField(field);
         return addBits(byteArray, field.bitLength());
     }
 
@@ -205,7 +204,7 @@ public class WfBinaryBuffer {
      * @return a hexadecimal string
      */
     public static final String convertToHexString(final byte[] byteArray) {
-        StringBuffer hexBuffer = new StringBuffer();
+        StringBuilder hexBuffer = new StringBuilder();
         for (int i = 0; i < byteArray.length; i++) {
             char[] hexDigits = new char[2];
             hexDigits[0] = Character.forDigit((byteArray[i] >> QUADBIT) & 0xF, HEXRADIX);
@@ -220,112 +219,20 @@ public class WfBinaryBuffer {
     /**
      * Adds the specified number of bits from a bytes array to the binary buffer
      * @param byteArray the byte array with the bits to be added
-     * @param nAddBits the number of bits to add from the byte array
+     * @param nBits the number of bits to add from the byte array
      * @return the string without prefix
      */
-    protected final WfBinaryBuffer addBits(final byte[] byteArray, int nAddBits) {
+    protected final WfBinaryBuffer addBits(final byte[] byteArray, int nBits) {
         /* Check number of bits */
-        if (nAddBits > (byteArray.length * BYTE)) {
-            throw new IllegalArgumentException("Cannot add " + nAddBits + " from byte array of length " + byteArray.length);
+        if (nBits > (byteArray.length * BYTE)) {
+            throw new IllegalArgumentException("Cannot add " + nBits + " from byte array of length " + byteArray.length);
         }
-        /* Calculate support parameters */
-        final int shiftBits = this.length % BYTE;
-        final int freeBits = (shiftBits == 0 ? 0 : BYTE - shiftBits);
-        final int currentByteLength = (this.length / BYTE) + (freeBits == 0 ? 0 : 1);
-        final int newBitLength = this.length + nAddBits;
-        final int newByteLength = (newBitLength / BYTE) + (newBitLength % BYTE == 0 ? 0 : 1);
-
-        /* Add the bits from the byte array */
-        if (freeBits >= nAddBits && newByteLength == currentByteLength) {
-            /* If field is less then a free bits, then put in last byte of buffer */ 
-            this.buffer[buffer.length - 1] |= (byte) ((0xFF & byteArray[0]) >>> shiftBits);
-        } else {
-            /* If field is longer, add the old and provided byte arrays to a new buffer */
-            byte[] newBuffer = new byte[newByteLength];
-            byte[] addBuffer = shiftRight(byteArray, shiftBits);
-
-            /* Add existing buffer to new buffer */
-            int newByteIndex = 0;
-            int addByteStart = 0;
-            if (currentByteLength != 0) {
-                for (int i = 0; i < currentByteLength; i++) {
-                    newByteIndex = i;
-                    newBuffer[newByteIndex] = this.buffer[i];
-                }
-                /* Add overlapping byte */
-                if (freeBits > 0) {
-                    newBuffer[newByteIndex] |= addBuffer[0];
-                    addByteStart = 1;
-                }
-                newByteIndex++;
-            }
-            /* Add the rest of the bytes to new buffer */
-            final int nAddBytes = addByteStart + newByteLength - newByteIndex;
-            for (int i = addByteStart; i < nAddBytes; i++) {
-                newBuffer[newByteIndex] = addBuffer[i];
-                newByteIndex++;
-            }
-            this.buffer = newBuffer;
-        }
-        /* Update properties */
-        this.length = newBitLength;
-
-        /* Clear bits after at the end */
-        final int clearBits = BYTE - (this.length % BYTE);
-        if (clearBits < BYTE) {
-            this.buffer[buffer.length - 1] &= (byte) (0xFF << clearBits);
-        }
-        /* Done */
+        this.buffer = concatinateBits(this.buffer, this.length, byteArray, nBits);
+        this.length += nBits;
         return this;
     }
 
     /* PROTECTED STATIC UTILITY METHODS */
-
-    /**
-     * Encodes a Whiteflag field into a byte array
-     * @param field a {@link WfMessageField}
-     * @return a byte array with the encooded field
-     */
-    protected static byte[] encodeField(WfMessageField field) {
-        switch (field.encoding) {
-            // Encode UTF 8 field
-            case UTF8:
-                return field.toString().getBytes(StandardCharsets.UTF_8);
-
-            // Encode binary field
-            case BIN:
-                byte[] bin = new byte[1];
-                if (field.toString().equals("0")) bin[0] = (byte) 0x00;
-                if (field.toString().equals("1")) bin[0] = (byte) 0x80;
-                return bin;
-
-            // Encode decimal or hexadecimal field
-            case DEC:
-            case HEX:
-                return convertToByteArray(field.toString());
-
-            // Encode datum field
-            case DATETIME:
-            case DURATION:
-            case LAT:
-            case LONG:
-                // Encode string without fixed characters
-                byte[] datum = convertToByteArray(field.toString().replaceAll("[\\-+:.A-Z]", ""));
-                
-                // Sign of lat long coordinates
-                if (field.toString().substring(0,1).equals("-")) {
-                    datum = shiftRight(datum, 1);
-                }
-                if (field.toString().substring(0,1).equals("+")) {
-                    datum = shiftRight(datum, 1);
-                    datum[0] |= (byte) 0x80;
-                }
-                return datum;
-            // Unknown encoding
-            default:
-                return new byte[0];
-        }
-    }
 
     /**
      * Bitwise right shift of whole byte array, returning a new byte array
@@ -349,15 +256,73 @@ public class WfBinaryBuffer {
     }
 
     /**
+     * Concatinates two bit sets
+     * @param byteArray1 byte array containing the first set of bits 
+     * @param nBit1 number of bits in the first set, i.e. which bits to take from the first byte array
+     * @param byteArray2 byte array containing the second set of bits
+     * @param nBit1 number of bits in the second set, i.e. which bits to take from the second byte array
+     * @return byte array with the concatinated bits
+     */
+    protected static final byte[] concatinateBits(final byte[] byteArray1, final int nBit1, final byte[] byteArray2, final int nBit2) {
+        /* Calculate support parameters */
+        final int shiftBits = nBit1 % BYTE;
+        final int freeBits = (shiftBits == 0 ? 0 : BYTE - shiftBits);
+        final int byteLength1 = (nBit1 / BYTE) + (freeBits == 0 ? 0 : 1);
+        final int bitLength = nBit1 + nBit2;
+        final int byteLength = (bitLength / BYTE) + (bitLength % BYTE == 0 ? 0 : 1);
+
+        /* Prepare byte arrays */
+        byte[] byteArray2shift = shiftRight(byteArray2, shiftBits);
+        byte[] byteArray = new byte[byteLength];
+        
+        /* Concatination */
+        int byteIndex = 0;
+        int startByte2 = 0;
+        if (byteLength1 != 0) {
+            /* Add first byte array */
+            for (int i = 0; i < byteLength1; i++) {
+                byteIndex = i;
+                byteArray[byteIndex] = byteArray1[i];
+            }
+            /* Add overlapping byte from second byte array*/
+            if (freeBits > 0) {
+                byteArray[byteIndex] |= byteArray2shift[0];
+                startByte2 = 1;
+            }
+            byteIndex++;
+        }
+        /* Add the rest of the second byte array */
+        final int endByte2 = startByte2 + byteLength - byteIndex;
+        for (int i = startByte2; i < endByte2; i++) {
+            byteArray[byteIndex] = byteArray2shift[i];
+            byteIndex++;
+        }
+        return clearEndBits(byteArray, bitLength);
+    }
+
+    /**
+     * Clears unused bits in last byte of the byte array
+     * @param byteArray the byte array containing the bit set
+     * @param nBits the number of used bits in the bit set
+     * @return the byte array with the unused bits cleared
+     */
+    protected static final byte[] clearEndBits(byte[] byteArray, final int nBits) {
+        /* Clear bits after at the end */
+        final int clearBits = BYTE - (nBits % BYTE);
+        if (clearBits < BYTE) {
+            byteArray[byteArray.length - 1] &= (byte) (0xFF << clearBits);
+        }
+        return byteArray;
+    }
+
+    /**
      * Checks for and removes prefix from string
      * @param str string to be checked
      * @param prefix the prefix to be checked for
      * @return the string without prefix
      */
     protected static final String removePrefix(final String str, final String prefix) {
-        if (str.startsWith(prefix)) {
-            return str.substring(prefix.length());
-        }
+        if (str.startsWith(prefix)) return str.substring(prefix.length());
         return str;
     }
 }

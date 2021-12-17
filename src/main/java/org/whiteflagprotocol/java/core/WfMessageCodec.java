@@ -6,12 +6,10 @@ package org.whiteflagprotocol.java.core;
 import java.nio.charset.StandardCharsets;
 
 /* Required encoding types and parameters */
-import static org.whiteflagprotocol.java.core.WfMessageField.Encoding.*;
 import static org.whiteflagprotocol.java.core.WfBinaryString.BINRADIX;
 import static org.whiteflagprotocol.java.core.WfBinaryString.HEXRADIX;
 import static org.whiteflagprotocol.java.core.WfBinaryString.QUADBIT;
 import static org.whiteflagprotocol.java.core.WfBinaryString.OCTET;
-import static org.whiteflagprotocol.java.core.WfBinaryString.BIT;
 
 /**
  * Whiteflag codec utility class

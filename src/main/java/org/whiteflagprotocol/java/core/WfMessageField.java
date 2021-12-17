@@ -7,10 +7,10 @@ import java.util.regex.Pattern;
 import java.nio.charset.StandardCharsets;
 
 /* Required encoding types and parameters */
-import static org.whiteflagprotocol.java.core.WfMessageField.Encoding.*;
-import static org.whiteflagprotocol.java.core.WfBinaryString.QUADBIT;
-import static org.whiteflagprotocol.java.core.WfBinaryString.OCTET;
-import static org.whiteflagprotocol.java.core.WfBinaryString.BIT;
+import static org.whiteflagprotocol.java.core.WfBinaryBuffer.HEXRADIX;
+import static org.whiteflagprotocol.java.core.WfBinaryBuffer.QUADBIT;
+import static org.whiteflagprotocol.java.core.WfBinaryBuffer.OCTET;
+import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BIT;
 
 /**
  * Whiteflag message field class
@@ -307,7 +307,6 @@ public class WfMessageField {
         } else {
             pad = binData.length() % encoding.length(1);
         }
-
         // Decode
         String data = WfMessageCodec.decode(binData.sub(0, binData.length() - pad), encoding);
         if (Boolean.FALSE.equals(isValid(data))) return null;
@@ -322,5 +321,154 @@ public class WfMessageField {
      */
     protected String debugString() {
         return this.name + " field [\"" + this.value + "\", /" + this.pattern.toString() + "/, " + this.isValid() + "]";
+    }
+
+    /* PROTECTED STATIC UTILITY METHODS */
+
+    /**
+     * Encodes a Whiteflag field into a byte array
+     * @param field a {@link WfMessageField}
+     * @return a byte array with the encooded field
+     */
+    protected static byte[] encodeField(WfMessageField field) {
+        switch (field.encoding) {
+            // Encode UTF 8 field
+            case UTF8:
+                return field.toString().getBytes(StandardCharsets.UTF_8);
+
+            // Encode binary field
+            case BIN:
+                byte[] bin = {(byte) 0x00};
+                if (field.toString().equals("1")) bin[0] = (byte) 0x80;
+                return bin;
+
+            // Encode decimal or hexadecimal field
+            case DEC:
+            case HEX:
+                return WfBinaryBuffer.convertToByteArray(field.toString());
+
+            // Encode datum field
+            case DATETIME:
+            case DURATION:
+            case LAT:
+            case LONG:
+                // Encode string without fixed characters
+                byte[] datum = WfBinaryBuffer.convertToByteArray(field.toString().replaceAll("[\\-+:.A-Z]", ""));
+                
+                // Sign of lat long coordinates
+                if (field.toString().substring(0,1).equals("-")) {
+                    datum = WfBinaryBuffer.shiftRight(datum, 1);
+                }
+                if (field.toString().substring(0,1).equals("+")) {
+                    datum = WfBinaryBuffer.shiftRight(datum, 1);
+                    datum[0] |= (byte) 0x80;
+                }
+                return datum;
+            // Unknown encoding
+            default:
+                return new byte[0];
+        }
+    }
+
+    /**
+     * Decodes the message field into a binary string
+     * @param binData a byte array with the compressed binary encoded field data
+     * @param nBits the number of bits 
+     * @return the uncompressed value of the field
+     * @throws WfCoreException if the field cannot be decoded
+     */
+    public static final String decodeField(final byte[] binData, final int nBits, final WfMessageField.Encoding encoding) {
+        StringBuilder fieldStrBuilder = new StringBuilder();
+        switch (encoding) {
+
+            /* Decode UTF 8 field */
+            case UTF8:
+                fieldStrBuilder.append(new String(binData, StandardCharsets.UTF_8));
+                break;
+
+            /* Decode binary field */
+            case BIN:
+            if ((binData[0] >> 1 & 1) == 1) {
+                fieldStrBuilder.append("1");
+            } else {
+                fieldStrBuilder.append("0");
+            }
+            break;
+
+            /* Decode decimal or hexadecimal field */
+            case HEX:
+            case DEC:
+                fieldStrBuilder.append(decodeBDX(binData, nBits));    
+                break;
+
+            /* Decode datetime field */
+            case DATETIME:
+                fieldStrBuilder.append(decodeBDX(binData, nBits));
+
+                /* Reinsert fixed characters */
+                fieldStrBuilder.insert(4, "-");
+                fieldStrBuilder.insert(7, "-");
+                fieldStrBuilder.insert(10, "T");
+                fieldStrBuilder.insert(13, ":");
+                fieldStrBuilder.insert(16, ":");
+                fieldStrBuilder.insert(19, "Z");
+                break;
+
+            /* Decode duration field */
+            case DURATION:
+                fieldStrBuilder.append(decodeBDX(binData, nBits));
+
+                /* Reinsert fixed characters */
+                fieldStrBuilder.insert(0, "P");
+                fieldStrBuilder.insert(3, "D");
+                fieldStrBuilder.insert(6, "H");
+                fieldStrBuilder.insert(9, "M");
+                break;
+            
+            /* Decode lat-long fields */
+            case LAT:
+            case LONG:
+                /* Sign of lat long coordinates */
+                if ((binData[0] >> 1 & 1) != 1) fieldStrBuilder.append("-");
+                if ((binData[0] >> 1 & 1) == 1) fieldStrBuilder.append("+");
+
+                /* Decode digits and insert decimal dot */
+                // TODO: Shift byte array bit
+                fieldStrBuilder.append(decodeBDX(binData, nBits - 1));
+                fieldStrBuilder.insert(fieldStrBuilder.length() - 5, ".");
+                break;
+
+            /* Unknown encoding */
+            default:
+                return null;
+        }
+        return fieldStrBuilder.toString();
+    }
+
+    /* PRIVATE STATIC METHODS */
+
+    /**
+     * Converts bits to a hexadecimal string
+     * @param byteArray the byte array containing the bitset
+     * @param nBits the number of bits in the bitset
+     * @return a hexadecimal string
+     */
+    private static final String decodeBDX(final byte[] byteArray, final int nBits) {
+        StringBuilder hexStrBuilder = new StringBuilder();
+        int bitIndex = 0;
+        for (int i = 0; i < byteArray.length; i++) {
+            /* Check if all bits have already been processed */
+            if (bitIndex > nBits) break;
+
+            /* Add first half of byte */
+            hexStrBuilder.append(Character.forDigit((byteArray[i] >> QUADBIT) & 0xF, HEXRADIX));
+            bitIndex += QUADBIT;
+            if (bitIndex < nBits) {
+                /* Add second half of byte */
+                hexStrBuilder.append(Character.forDigit((byteArray[i] & 0xF), HEXRADIX));
+                bitIndex += QUADBIT;
+            }
+        }
+        return hexStrBuilder.toString().toLowerCase();
     }
 }

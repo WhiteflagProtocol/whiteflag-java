@@ -28,7 +28,6 @@ public class WfBinaryBufferTest {
     public void testByteArrayShiftRight0() {
         /* Setup */ 
         final byte[] byteArray = {(byte) 0x53,(byte) 0x7D};
-        final byte[] result = byteArray;
 
         /* Verify */
         assertArrayEquals("Byte array should be indentical after zero shift", byteArray, WfBinaryBuffer.shiftRight(byteArray, 0));
