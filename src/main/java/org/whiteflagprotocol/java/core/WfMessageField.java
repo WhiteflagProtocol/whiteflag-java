@@ -49,17 +49,23 @@ public class WfMessageField {
     /**
      * Constructs a new Whiteflag message field based on provided poperties
      * @param name the name of the Whiteflag field
-     * @param pattern the regex pattern defining allowed values
+     * @param pattern the regex pattern defining allowed values; if null, the generic encoding regex is used
      * @param encoding the encoding of the field
      * @param startByte the starting byte of the field in a serialized / uncompressed message
      * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message
      */
     public WfMessageField(String name, String pattern, WfMessageCodec.Encoding encoding, int startByte, int endByte) {
         this.name = name;
-        this.pattern = Pattern.compile(pattern);
         this.encoding = encoding;
         this.startByte = startByte;
         this.endByte = endByte;
+
+        /* If no regex pattern given, use generic encoding pattern */
+        if (pattern == null) {
+            this.pattern = Pattern.compile(encoding.regex());
+        } else {
+            this.pattern = Pattern.compile(pattern);
+        }
     }
 
     /**

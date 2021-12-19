@@ -16,11 +16,6 @@ public class WfBinaryBufferTest {
     /* Fieldname */
     private final String FIELDNAME = "TESTFIELD";
 
-    /* Regex field begin and end */
-    private final String BEGIN = "^";
-    private final String REPEAT = "*$";
-    private final String END = "$";
-
     /**
      * Tests right shift of byte array
      */
@@ -56,6 +51,7 @@ public class WfBinaryBufferTest {
 
         /* Verify */
         assertArrayEquals("Byte array should have been correctly shifted right by 3 bits", result, WfBinaryBuffer.shiftRight(byteArray, 3));
+        assertArrayEquals("Byte array should have been correctly shifted left by -3 bits", result, WfBinaryBuffer.shiftLeft(byteArray, -3));
     }
 
     /**
@@ -81,7 +77,8 @@ public class WfBinaryBufferTest {
         final byte[] result = {(byte) 0x0E,(byte) 0x63,(byte) 0x86,(byte) 0xD8,(byte) 0x40};    // 0000111001100011100001101101100001000000
 
         /* Verify */
-        assertArrayEquals("Byte array should have been correctly shifted right", result, WfBinaryBuffer.shiftRight(byteArray, 4));
+        assertArrayEquals("Byte array should have been correctly shifted right by 12 bits", result, WfBinaryBuffer.shiftRight(byteArray, 12));
+        assertArrayEquals("Byte array should have been correctly shifted left by -12 bits", result, WfBinaryBuffer.shiftLeft(byteArray, -12));
     }
 
     /**
@@ -94,10 +91,8 @@ public class WfBinaryBufferTest {
         final byte[] result = {(byte) 0x9B,(byte) 0xE8};        // 1001 1011 | 1110 1000
 
         /* Verify */
-        System.out.println("Byte Array 1: " + WfBinaryBuffer.convertToHexString(byteArray));
-        System.out.println("Left shift 1: " + WfBinaryBuffer.convertToHexString(WfBinaryBuffer.shiftLeft(byteArray, 3)));
-        System.out.println("Expected    : " + WfBinaryBuffer.convertToHexString(result));
         assertArrayEquals("Byte array should have been correctly shifted left by 3 bits", result, WfBinaryBuffer.shiftLeft(byteArray, 3));
+        assertArrayEquals("Left by 3 bits should be equal to right shift by -11 bits", result, WfBinaryBuffer.shiftRight(byteArray, -11));
     }
 
     /**
@@ -110,9 +105,6 @@ public class WfBinaryBufferTest {
         final byte[] result = {(byte) 0x1C,(byte) 0x43,(byte) 0x80};        // 0001 1100 | 0100 0011 | 1000 0000
 
         /* Verify */
-        System.out.println("Byte Array 2: " + WfBinaryBuffer.convertToHexString(byteArray));
-        System.out.println("Left shift 2: " + WfBinaryBuffer.convertToHexString(WfBinaryBuffer.shiftLeft(byteArray, 7)));
-        System.out.println("Expected    : " + WfBinaryBuffer.convertToHexString(result));
         assertArrayEquals("Byte array should have been correctly shifted left by 7 bits", result, WfBinaryBuffer.shiftLeft(byteArray, 7));
     }
 
@@ -126,9 +118,6 @@ public class WfBinaryBufferTest {
         final byte[] result = {(byte) 0x89,(byte) 0x72,(byte) 0x72, (byte) 0x60};        // 1000 1001 | 0111 0010 | 0111 0010 | 0110 0000
 
         /* Verify */
-        System.out.println("Byte Array 3: " + WfBinaryBuffer.convertToHexString(byteArray));
-        System.out.println("Left shift 3: " + WfBinaryBuffer.convertToHexString(WfBinaryBuffer.shiftLeft(byteArray, 5)));
-        System.out.println("Expected    : " + WfBinaryBuffer.convertToHexString(result));
         assertArrayEquals("Byte array should have been correctly shifted left by 7 bits", result, WfBinaryBuffer.shiftLeft(byteArray, 5));
     }
 
@@ -142,9 +131,6 @@ public class WfBinaryBufferTest {
         final byte[] result = {(byte) 0x63,(byte) 0x88,(byte) 0x70, (byte) 0xf0};        // 0110 0011 | 1000 1000 | 0111 1000 | 0111 0000
 
         /* Verify */
-        System.out.println("Byte Array 4: " + WfBinaryBuffer.convertToHexString(byteArray));
-        System.out.println("Left shift 4: " + WfBinaryBuffer.convertToHexString(WfBinaryBuffer.shiftLeft(byteArray, 4)));
-        System.out.println("Expected    : " + WfBinaryBuffer.convertToHexString(result));
         assertArrayEquals("Byte array should have been correctly shifted left by 4 bits", result, WfBinaryBuffer.shiftLeft(byteArray, 4));
     }
 
@@ -169,7 +155,7 @@ public class WfBinaryBufferTest {
     }
 
     /**
-     * Tests right shift of byte array
+     * Tests addition of bits
      */
     @Test
     public void testAppendBits2() {
@@ -186,8 +172,8 @@ public class WfBinaryBufferTest {
         assertTrue("Byte array 2 should have been correctly added to the binary buffer", message.toHexString().equalsIgnoreCase("e638876e60"));
     }
 
-        /**
-     * Tests right shift of byte array
+    /**
+     * Tests addition of bits
      */
     @Test
     public void testAppendBits3() {
@@ -207,17 +193,161 @@ public class WfBinaryBufferTest {
     }
 
     /**
-     * Tests basic operations
+     * Tests extraction of bits
      */
     @Test
-    public void testFieldEncodingUTF1() {
+    public void testExtractBits1() {
+        /* Setup */
+        final byte[] byteArray = {(byte) 0xDD,(byte) 0xFF};    // 110|1110111|111111
+        final byte[] result = {(byte) 0xEE};                   //    |1110111|0
+        WfBinaryBuffer message = WfBinaryBuffer.fromByteArray(byteArray);
+
+        /* Verify */
+        System.out.println("Extracted 1: " + WfBinaryBuffer.convertToHexString(message.extractBits(3, 7)));
+        assertArrayEquals("Should have correctly extracted 7 bits from binary buffer", result, message.extractBits(3, 7));
+    }
+
+    /**
+     * Tests extraction of bits
+     */
+    @Test
+    public void testExtractBits2() {
+        /* Setup */
+        final byte[] byteArray = {(byte) 0xDD,(byte) 0xE7,(byte) 0xD0};    // 1101110111100|111|11010000
+        final byte[] result = {(byte) 0xE0};                               //              |111|00000
+        WfBinaryBuffer message = WfBinaryBuffer.fromByteArray(byteArray);
+
+        /* Verify */
+        System.out.println("Extracted 2: " + WfBinaryBuffer.convertToHexString(message.extractBits(13, 3)));
+        assertArrayEquals("Should have correctly extracted 3 bits from binary buffer", result, message.extractBits(13, 3));
+    }
+
+    /**
+     * Tests extraction of bits
+     */
+    @Test
+    public void testExtractBits3() {
+        /* Setup */
+        final byte[] byteArray = {(byte) 0x95, (byte) 0xDD,(byte) 0xFF,(byte) 0xE7};    // 1001010111|0111011111|111111100111
+        final byte[] result = {(byte) 0x77,(byte) 0xC0};                                //           |0111011111|000000
+        WfBinaryBuffer message = WfBinaryBuffer.fromByteArray(byteArray);
+
+        /* Verify */
+        System.out.println("Extracted 3: " + WfBinaryBuffer.convertToHexString(message.extractBits(10, 10)));
+        assertArrayEquals("Should have correctly extracted 10 bits from binary buffer", result, message.extractBits(10, 10));
+    }
+
+    /**
+     * Tests extraction of bits
+     */
+    @Test
+    public void testExtractBits4() {
+        /* Setup */
+        final byte[] byteArray = {(byte) 0x95, (byte) 0xDD,(byte) 0xFF,(byte) 0xE7};    // 100101011101|1101111111111110|0111
+        final byte[] result = {(byte) 0xDF,(byte) 0xFE};                                //             |1101111111111110|
+        WfBinaryBuffer message = WfBinaryBuffer.fromByteArray(byteArray);
+
+        /* Verify */
+        System.out.println("Extracted 4: " + WfBinaryBuffer.convertToHexString(message.extractBits(12, 16)));
+        assertArrayEquals("Should have correctly extracted 10 bits from binary buffer", result, message.extractBits(12, 16));
+    }
+
+    /**
+     * Tests addition / encoding of UTF field
+     */
+    @Test
+    public void testFieldEncodingUTF() {
         WfBinaryBuffer message = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, BEGIN+UTF8.charset()+REPEAT, UTF8, 0, -1);
+        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("text"));
         message.addMessageField(field);
         assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
         assertTrue("Message field (UTF) should be correctly encoded", message.toHexString().equalsIgnoreCase("74657874"));
+    }
+
+    /**
+     * Tests addition / encoding of binary field
+     */
+    @Test
+    public void testFieldEncodingBin1() {
+        /* Setup */
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 2);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.set("01"));
+        message.addMessageField(field);
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
+
+        System.out.println("Buffer: " + message.toHexString());
+        assertTrue("Message field (bin) should be correctly encoded", message.toHexString().equalsIgnoreCase("40"));
+    }
+
+    /**
+     * Tests addition / encoding of binary field
+     */
+    @Test
+    public void testFieldEncodingBin2() {
+        /* Setup */
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 3);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.set("101"));
+        message.addMessageField(field);
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
+
+        System.out.println("Buffer: " + message.toHexString());
+        assertTrue("Message field (bin) should be correctly encoded", message.toHexString().equalsIgnoreCase("a0"));
+    }
+
+    /**
+     * Tests addition / encoding of decimal field
+     */
+    @Test
+    public void testFieldEncodingDec() {
+        /* Setup */
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 4);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.set("1478"));
+        message.addMessageField(field);
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
+        assertTrue("Message field (dec) should be correctly encoded", message.toHexString().equalsIgnoreCase("1478"));
+    }
+
+    /**
+     * Tests addition / encoding of hexadecimal field
+     */
+    @Test
+    public void testFieldEncodingHex() {
+        /* Setup */
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 4);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.set("3f8C"));
+        message.addMessageField(field);
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
+        assertTrue("Message field (hex) should be correctly encoded", message.toHexString().equalsIgnoreCase("3f8c"));
+    }
+
+    /**
+     * Tests addition / encoding of date-time field
+     */
+    @Test
+    public void testFieldEncodingDateTime() {
+        /* Setup */
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, null, DATETIME, 0, -1);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.set("2020-07-01T21:42:23Z"));
+        message.addMessageField(field);
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
+        assertTrue("Message field (datum) should be correctly encoded", message.toHexString().equalsIgnoreCase("20200701214223"));
     }
 }

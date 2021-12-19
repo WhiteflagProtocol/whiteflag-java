@@ -4,10 +4,12 @@
 package org.whiteflagprotocol.java.core;
 
 import java.nio.charset.StandardCharsets;
+import java.util.function.BinaryOperator;
 
 /* Required encoding types and parameters */
 import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BINRADIX;
 import static org.whiteflagprotocol.java.core.WfBinaryBuffer.HEXRADIX;
+import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BYTE;
 import static org.whiteflagprotocol.java.core.WfBinaryBuffer.QUADBIT;
 import static org.whiteflagprotocol.java.core.WfBinaryBuffer.OCTET;
 import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BIT;
@@ -36,29 +38,31 @@ public class WfMessageCodec {
         throw new IllegalStateException("Cannot instantiate Whiteflag codec utility class");
     }
 
+    /* PUBLIC STATIC METHOS */
+
     /**
      * Encodes the message field into a binary string
      * @return the compressed binary encoding of the field
      * @throws WfCoreException if the field cannot be encoded
      */
-    public static final WfBinaryString encodeString(final String value, final Encoding encoding) throws WfCoreException {
+    public static final WfBinaryString encodeString(final String str, final Encoding encoding) throws WfCoreException {
         // Build binary string iaw field encoding type
-        StringBuilder binStr = new StringBuilder();
+        StringBuilder binstr = new StringBuilder();
         switch (encoding) {
             // Encode UTF 8 field
             case UTF8:
-                binStr.append(encodeUTF(value));
+                binstr.append(encodeUTF(str));
                 break;
 
             // Encode binary field
             case BIN:
-                binStr.append(value);
+                binstr.append(str);
                 break;
 
             // Encode decimal or hexadecimal field
             case DEC:
             case HEX:
-                binStr.append(encodeBDX(value));
+                binstr.append(encodeBDX(str));
                 break;
 
             // Encode datum field
@@ -67,11 +71,11 @@ public class WfMessageCodec {
             case LAT:
             case LONG:
                 // Sign of lat long coordinates
-                if (value.substring(0,1).equals("-")) binStr.append("0");
-                if (value.substring(0,1).equals("+")) binStr.append("1");
+                if (str.substring(0,1).equals("-")) binstr.append("0");
+                if (str.substring(0,1).equals("+")) binstr.append("1");
 
                 // Encode string without fixed characters
-                binStr.append(encodeBDX(value.replaceAll("[\\-+:.A-Z]", "")));
+                binstr.append(encodeBDX(str.replaceAll("[\\-+:.A-Z]", "")));
                 break;
 
             // Unknown encoding
@@ -79,76 +83,76 @@ public class WfMessageCodec {
                 throw new WfCoreException("Undefined message encoding: " + encoding);
         }
         // Return binary string with compressed field encoding
-        return new WfBinaryString(binStr.toString());
+        return new WfBinaryString(binstr.toString());
     }
 
     /**
      * Decodes the message field into a binary string
-     * @param binData the compressed binary encoded field data
+     * @param data the compressed binary encoded field data
      * @return the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
      */
-    public static final String decodeString(final WfBinaryString binData, final Encoding encoding) throws WfCoreException {
+    public static final String decodeString(final WfBinaryString data, final Encoding encoding) throws WfCoreException {
         // Get binary string
-        String binStr = binData.toBinString();
+        String binstr = data.toBinString();
 
         // Build value string iaw field encoding type
-        StringBuilder data = new StringBuilder();
+        StringBuilder str = new StringBuilder();
         switch (encoding) {
 
             // Encode UTF 8 field
             case UTF8:
-                data.append(decodeUTF(binStr));
+                str.append(decodeUTF(binstr));
                 break;
 
             // Decode binary field
             case BIN:
                 // A binary string is already a binary string...
-                data.append(binStr);
+                str.append(binstr);
                 break;
 
             // Decode decimal or hexadecimal field
             case HEX:
             case DEC:
-                data.append(decodeBDX(binStr));
+                str.append(decodeBDX(binstr));
                 break;
 
             // Decode datetime field
             case DATETIME:
-                data.append(decodeBDX(binStr));
+                str.append(decodeBDX(binstr));
 
                 // Reinsert fixed characters
-                data.insert(4, "-");
-                data.insert(7, "-");
-                data.insert(10, "T");
-                data.insert(13, ":");
-                data.insert(16, ":");
-                data.insert(19, "Z");
+                str.insert(4, "-");
+                str.insert(7, "-");
+                str.insert(10, "T");
+                str.insert(13, ":");
+                str.insert(16, ":");
+                str.insert(19, "Z");
                 break;
 
             // Decode duration field
             case DURATION:
-                data.append(decodeBDX(binStr));
+            str.append(decodeBDX(binstr));
 
                 // Reinsert fixed characters
-                data.insert(0, "P");
-                data.insert(3, "D");
-                data.insert(6, "H");
-                data.insert(9, "M");
+                str.insert(0, "P");
+                str.insert(3, "D");
+                str.insert(6, "H");
+                str.insert(9, "M");
                 break;
             
             // Decode lat-long fields
             case LAT:
             case LONG:
                 // Sign of lat long coordinates
-                if (binStr.substring(0,1).equals("0")) data.append("-");
-                if (binStr.substring(0,1).equals("1")) data.append("+");
+                if (binstr.substring(0,1).equals("0")) str.append("-");
+                if (binstr.substring(0,1).equals("1")) str.append("+");
 
                 // Decode digits
-                data.append(decodeBDX(binStr.substring(1)));
+                str.append(decodeBDX(binstr.substring(1)));
 
                 // Insert decimal dot
-                data.insert(data.length() - 5, ".");
+                str.insert(str.length() - 5, ".");
                 break;
 
             // Unknown encoding
@@ -156,30 +160,32 @@ public class WfMessageCodec {
                 throw new WfCoreException("Undefined message encoding: " + encoding);
         }
         // Return decoded uncompressed data string
-        return data.toString();
+        return str.toString();
     }
 
     /**
-     * Encodes a Whiteflag field into a byte array
+     * Encodes a Whiteflag field into a binary buffer
      * @param field a {@link WfMessageField}
-     * @return a byte array with the encooded field
+     * @return a binary buffer with the encoded field
      */
     public static byte[] encodeField(WfMessageField field) {
+        byte[] buffer;
         switch (field.encoding) {
             // Encode UTF 8 field
             case UTF8:
-                return field.toString().getBytes(StandardCharsets.UTF_8);
+                buffer = field.toString().getBytes(StandardCharsets.UTF_8);
+                break;
 
             // Encode binary field
             case BIN:
-                byte[] bin = {(byte) 0x00};
-                if (field.toString().equals("1")) bin[0] = (byte) 0x80;
-                return bin;
+                buffer = encodeBIN(field.toString());
+                break;
 
             // Encode decimal or hexadecimal field
             case DEC:
             case HEX:
-                return WfBinaryBuffer.convertToByteArray(field.toString());
+                buffer = WfBinaryBuffer.convertToByteArray(field.toString());
+                break;
 
             // Encode datum field
             case DATETIME:
@@ -187,183 +193,228 @@ public class WfMessageCodec {
             case LAT:
             case LONG:
                 // Encode string without fixed characters
-                byte[] datum = WfBinaryBuffer.convertToByteArray(field.toString().replaceAll("[\\-+:.A-Z]", ""));
+                buffer = WfBinaryBuffer.convertToByteArray(field.toString().replaceAll("[\\-+:.A-Z]", ""));
                 
                 // Sign of lat long coordinates
                 if (field.toString().substring(0,1).equals("-")) {
-                    datum = WfBinaryBuffer.shiftRight(datum, 1);
+                    buffer = WfBinaryBuffer.shiftRight(buffer, 1);
                 }
                 if (field.toString().substring(0,1).equals("+")) {
-                    datum = WfBinaryBuffer.shiftRight(datum, 1);
-                    datum[0] |= (byte) 0x80;
+                    buffer = WfBinaryBuffer.shiftRight(buffer, 1);
+                    buffer[0] |= (byte) 0x80;
                 }
-                return datum;
+                break;
             // Unknown encoding
             default:
-                return new byte[0];
+            buffer = new byte[1];
         }
+        return buffer;
     }
 
     /**
      * Decodes the message field into a binary string
-     * @param binData a byte array with the compressed binary encoded field data
-     * @param nBits the number of bits 
+     * 
+     * @param buffer a binary buffer with the compressed binary encoded field data
      * @return the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
      */
-    public static final String decodeField(final byte[] binData, final int nBits, final Encoding encoding) {
-        StringBuilder fieldStrBuilder = new StringBuilder();
-        switch (encoding) {
+    public static final WfMessageField decodeField(WfMessageField field, final byte[] buffer) {
+        StringBuilder str = new StringBuilder();
+        switch (field.encoding) {
 
             /* Decode UTF 8 field */
             case UTF8:
-                fieldStrBuilder.append(new String(binData, StandardCharsets.UTF_8));
+                str.append(new String(buffer, StandardCharsets.UTF_8));
                 break;
 
             /* Decode binary field */
             case BIN:
-            if ((binData[0] >> 1 & 1) == 1) {
-                fieldStrBuilder.append("1");
-            } else {
-                fieldStrBuilder.append("0");
-            }
-            break;
+                str.append(decodeBIN(buffer, field.bitLength()));
+                break;
 
             /* Decode decimal or hexadecimal field */
             case HEX:
             case DEC:
-                fieldStrBuilder.append(decodeBDX(binData, nBits));    
+                str.append(decodeBDX(buffer, field.bitLength()));
                 break;
 
             /* Decode datetime field */
             case DATETIME:
-                fieldStrBuilder.append(decodeBDX(binData, nBits));
+                str.append(decodeBDX(buffer, field.bitLength()));
 
                 /* Reinsert fixed characters */
-                fieldStrBuilder.insert(4, "-");
-                fieldStrBuilder.insert(7, "-");
-                fieldStrBuilder.insert(10, "T");
-                fieldStrBuilder.insert(13, ":");
-                fieldStrBuilder.insert(16, ":");
-                fieldStrBuilder.insert(19, "Z");
+                str.insert(4, "-");
+                str.insert(7, "-");
+                str.insert(10, "T");
+                str.insert(13, ":");
+                str.insert(16, ":");
+                str.insert(19, "Z");
                 break;
 
             /* Decode duration field */
             case DURATION:
-                fieldStrBuilder.append(decodeBDX(binData, nBits));
+            str.append(decodeBDX(buffer, field.bitLength()));
 
                 /* Reinsert fixed characters */
-                fieldStrBuilder.insert(0, "P");
-                fieldStrBuilder.insert(3, "D");
-                fieldStrBuilder.insert(6, "H");
-                fieldStrBuilder.insert(9, "M");
+                str.insert(0, "P");
+                str.insert(3, "D");
+                str.insert(6, "H");
+                str.insert(9, "M");
                 break;
             
             /* Decode lat-long fields */
             case LAT:
             case LONG:
                 /* Sign of lat long coordinates */
-                if ((binData[0] >> 1 & 1) != 1) fieldStrBuilder.append("-");
-                if ((binData[0] >> 1 & 1) == 1) fieldStrBuilder.append("+");
+                if ((buffer[0] >> 1 & 1) != 1) str.append("-");
+                if ((buffer[0] >> 1 & 1) == 1) str.append("+");
 
                 /* Decode digits and insert decimal dot */
-                fieldStrBuilder.append(decodeBDX(WfBinaryBuffer.shiftLeft(binData, 1), nBits - 1));
-                fieldStrBuilder.insert(fieldStrBuilder.length() - 5, ".");
+                str.append(decodeBDX(WfBinaryBuffer.shiftLeft(buffer, 1), field.bitLength() - 1));
+                str.insert(str.length() - 5, ".");
                 break;
 
             /* Unknown encoding */
             default:
-                return null;
+                break;
         }
-        return fieldStrBuilder.toString();
+        field.set(str.toString());
+        return field;
     }
 
     /* PROTECTED STATIC METHODS */
 
     /**
-     * Encodes a (hexa)decimal string into a binary string
-     * @param value the (hexa)decimal value to encode
-     * @return string representation of the binary encoding
+     * Encodes a binary string into a binary buffer
+     * @param str the binary string to encode
+     * @return a binary buffer containing the bits from the binary string
      */
-    protected static final String encodeBDX(final String value) {
-        StringBuilder binStr = new StringBuilder();
+    protected static final byte[] encodeBIN(final String str) {
+        final int bitLength = str.length();
+        final int byteLength = (bitLength / BYTE) + (bitLength % BYTE == 0 ? 0 : 1);
+        byte[] buffer = new byte[byteLength];
+
+        /* Loop through bits */
+        for (int bitIndex = 0; bitIndex < bitLength; bitIndex += BIT) {
+            if (str.substring(bitIndex, bitIndex + 1).equals("1")) {
+                final int byteCursor = bitIndex / BYTE;
+                final int bitPosition = bitIndex % BYTE;
+                buffer[byteCursor] |= (byte) (0x80 >>> bitPosition);
+            }
+        }
+        return buffer;
+    }
+
+    /**
+     * Decodes a binary buffer into a binary string
+     * @param buffer the binary buffer to decode
+     * @param nBits the number of bits in the buffer to decode
+     * @return a binary string containing the bits from the binary buffer
+     */
+    protected static final String decodeBIN(final byte[] buffer, final int nBits) {
+        StringBuilder str = new StringBuilder();
+        for (int bitIndex = 0; bitIndex > nBits; bitIndex += BIT) {
+            final int byteCursor = bitIndex / BYTE;
+            final int bitPosition = bitIndex % BYTE;
+
+            if ((buffer[byteCursor] >> bitPosition & 1) == 1) {
+                str.append("1");
+            } else {
+                str.append("0");
+            }
+        }
+        return str.toString().toLowerCase();
+    }
+
+    /**
+     * Encodes a (hexa)decimal string into a binary string
+     * @param str the (hexa)decimal string to encode
+     * @return a string representation of the binary encoded (hexa)decimals
+     */
+    protected static final String encodeBDX(final String str) {
+        StringBuilder binstr = new StringBuilder();
 
         // Run through digits of the string and convert to binary string with leading zeros one by one
-        for(char c : value.toCharArray()) {
-            binStr.append(WfBinaryString.padLeft(Integer.toBinaryString(Character.digit(c, HEXRADIX)), QUADBIT));
+        for(char c : str.toCharArray()) {
+            binstr.append(WfBinaryString.padLeft(Integer.toBinaryString(
+                Character.digit(c, HEXRADIX)),
+                QUADBIT
+            ));
         }
-        return binStr.toString();
-    }
-
-    /**
-     * Encodes UTF value into a binary string
-     * @param value the UTF value to encode
-     * @return string representation of the binary encoding
-     */
-    protected static final String encodeUTF(final String value) {
-        StringBuilder binStr = new StringBuilder();
-
-        // Run through bytes of the string and convert to binary string with leading zeros one by one
-        for(byte b : value.getBytes(StandardCharsets.UTF_8)) {
-            binStr.append(WfBinaryString.padLeft(Integer.toBinaryString(b & 0xff), OCTET));
-        }
-        return binStr.toString();
-    }
-
-    /**
-     * Decodes a binary string into a UTF string
-     * @param binStr the binary string to decode
-     * @return the decoded UTF data
-     */
-    protected static final String decodeUTF(final String binStr) {
-        StringBuilder data = new StringBuilder();
-        for (int i = 0; i < binStr.length(); i += OCTET) {
-            // Parse 8 UTF bits from the binary string to an integer, and cast that as a char
-            data.append((char) Integer.parseUnsignedInt(binStr.substring(i, i + OCTET), BINRADIX));
-        }
-        return data.toString();
+        return binstr.toString();
     }
 
     /**
      * Decodes a binary string into a (hexa)decimal string
-     * @param binStr the binary string to decode
-     * @return the decoded (hexa)decimal value
+     * @param binstr the binary string containing the binary encoded (hexa)decimals to decode
+     * @return a (hexa)decimal string with the decoded data
      */
-    protected static final String decodeBDX(final String binStr) {
-        StringBuilder data = new StringBuilder();
-        for (int i = 0; i < binStr.length(); i += QUADBIT) {
+    protected static final String decodeBDX(final String binstr) {
+        StringBuilder str = new StringBuilder();
+        for (int bitIndex = 0; bitIndex < binstr.length(); bitIndex += QUADBIT) {
             // Parse 4 bits from the binary string back to the (hexa)decimal data, and convert that to char
-            data.append(Integer.toHexString(Integer.parseUnsignedInt(binStr.substring(i, i + QUADBIT), BINRADIX)));
+            str.append(Integer.toHexString(Integer.parseUnsignedInt(
+                binstr.substring(bitIndex, bitIndex + QUADBIT),
+                BINRADIX
+            )));
         }
-        return data.toString();
+        return str.toString();
     }
 
     /**
-     * Converts bits into a (hexa)decimal string
-     * @param byteArray the byte array containing the bits to decode
-     * @param nBits the number of bits in the bitset
-     * @return the decoded (hexa)decimal value
+     * Decodes a binary buffer into a (hexa)decimal string
+     * @param buffer the binary buffer containing the binary encoded (hexa)decimals to decode
+     * @param nBits the number of bits in the buffer to decode
+     * @return a (hexa)decimal string with the decoded data
      */
-    protected static final String decodeBDX(final byte[] byteArray, final int nBits) {
-        StringBuilder hexStrBuilder = new StringBuilder();
-        int bitIndex = 0;
-        for (int i = 0; i < byteArray.length; i++) {
-            /* Check if all bits have already been processed */
-            if (bitIndex > nBits) break;
+    protected static final String decodeBDX(final byte[] buffer, final int nBits) {
+        StringBuilder str = new StringBuilder();
+        for (int bitIndex = 0; bitIndex > nBits; bitIndex += BYTE) {
+            final int byteCursor = bitIndex / BYTE;
 
             /* Add first half of byte */
-            hexStrBuilder.append(Character.forDigit((byteArray[i] >> QUADBIT) & 0xF, HEXRADIX));
-            bitIndex += QUADBIT;
-            if (bitIndex < nBits) {
+            str.append(Character.forDigit((buffer[byteCursor] >> QUADBIT) & 0xF, HEXRADIX));
+            if ((bitIndex + QUADBIT) < nBits) {
                 /* Add second half of byte */
-                hexStrBuilder.append(Character.forDigit((byteArray[i] & 0xF), HEXRADIX));
-                bitIndex += QUADBIT;
+                str.append(Character.forDigit((buffer[byteCursor] & 0xF), HEXRADIX));
             }
         }
-        return hexStrBuilder.toString().toLowerCase();
+        return str.toString().toLowerCase();
     }
 
-    /* ENUM */
+    /**
+     * Encodes a UTF-8 string into a binary string
+     * @param str the UTF-8 string to encode
+     * @return a string representation of the binary UTF-8 encoding
+     */
+    protected static final String encodeUTF(final String str) {
+        StringBuilder binstr = new StringBuilder();
+
+        /* Run through bytes of the string and convert to binary string with leading zeros one by one */
+        for(byte b : str.getBytes(StandardCharsets.UTF_8)) {
+            binstr.append(WfBinaryString.padLeft(Integer.toBinaryString(b & 0xFF), OCTET));
+        }
+        return binstr.toString();
+    }
+
+    /**
+     * Decodes a binary string into a UTF string
+     * @param binstr the binary string containing the UTF-8 encoded characters to decode
+     * @return a string with the decoded UTF-8 characters
+     */
+    protected static final String decodeUTF(final String binstr) {
+        StringBuilder str = new StringBuilder();
+        for (int bitIndex = 0; bitIndex < binstr.length(); bitIndex += OCTET) {
+            // Parse 8 UTF bits from the binary string to an integer, and cast that as a char
+            str.append((char) Integer.parseUnsignedInt(
+                binstr.substring(bitIndex, bitIndex + OCTET),
+                BINRADIX
+            ));
+        }
+        return str.toString();
+    }
+
+    /* NESTED CLASSES */
 
     /**
      * Whiteflag message compressed field encodings
@@ -415,6 +466,11 @@ public class WfMessageCodec {
 
         /* PROPERTIES */
 
+        /* Regex field begin and end */
+        private final String BEGIN = "^";
+        private final String REPEAT = "*$";
+        private final String END = "$";
+
         /* The valid regex charset of an unencoded field value */
         private final String charset;
         private final int bitLength;
@@ -435,11 +491,20 @@ public class WfMessageCodec {
         }
 
         /**
-         * Returns the allowed charters for a given encoding in unencoded fields
+         * Returns the allowed charters for a given encoding
          * @return a regex character set, e.g. [0-9]
          */
         public String charset() {
             return charset;
+        }
+
+        /**
+         * Returns the generic regular expression for a given encoding
+         * @return a regex expression
+         */
+        public String regex() {
+            if (Boolean.TRUE.equals(fixedLength)) return BEGIN+charset+END;
+            return BEGIN+charset+REPEAT;
         }
 
         /**
