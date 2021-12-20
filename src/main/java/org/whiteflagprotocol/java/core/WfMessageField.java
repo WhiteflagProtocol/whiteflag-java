@@ -188,40 +188,28 @@ public class WfMessageField {
     /* PUBLIC METHODS: operations */
 
     /**
-     * Encodes the message field into a binary string
-     * @return the compressed binary encoding of the field
+     * Encodes the message field into compressed binary data
+     * @return a byte array with the compressed binary encoded field value
      * @throws WfCoreException if the field cannot be encoded
      */
-    public final WfBinaryString encode() throws WfCoreException {
+    public final byte[] encode() throws WfCoreException {
         // Check if field contains a valid value
         if (Boolean.FALSE.equals(this.isValid())) {
             throw new WfCoreException("Cannot encode " + this.name + debugString());
         }
-        // Encode
-        return WfMessageCodec.encodeString(value, encoding);
+        // Return encoded field
+        return WfMessageCodec.encodeField(this);
     }
 
     /**
-     * Decodes the  the message field into a binary string
-     * @param binData the compressed binary encoding of the field
+     * Decodes the compressed binary data and sets field value
+     * @param data a byte array with the compressed binary encoded field value
      * @return the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
      */
-    public final String decode(final WfBinaryString binData) throws WfCoreException {
-        // Check number of bits in provided binary data
-        int pad = 0;
-        if (this.endByte > 0) {
-            int nFieldBits = encoding.length(endByte - startByte);
-            if (nFieldBits != binData.length()) {
-                throw new WfCoreException("Encoded data is not exactly " + nFieldBits + " bits: " + binData.toHexString());
-            }
-        } else {
-            pad = binData.length() % encoding.length(1);
-        }
-        // Decode
-        String data = WfMessageCodec.decodeString(binData.sub(0, binData.length() - pad), encoding);
-        if (Boolean.FALSE.equals(isValid(data))) return null;
-        return data;
+    public final Boolean decode(final byte[] data) throws WfCoreException {
+        String str = WfMessageCodec.decodeField(this, data);
+        return this.set(str);
     }
 
     /* PROTECTED METHODS */

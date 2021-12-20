@@ -142,7 +142,7 @@ public class WfMessageCore {
     /**
      * Serializes the Whiteflag message
      * @return the serialized message, i.e. the concatinated string of field values
-     * @throws WfCoreException if any of the field does not contain valid data
+     * @throws WfCoreException if any of the fields does not contain valid data
      */
     public String serialize() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
@@ -152,24 +152,14 @@ public class WfMessageCore {
     }
 
     /**
-     * Encodes the Whiteflag message without a 0x prefix
-     * @return the hexadecimal representation of the encoded Whiteflag message
-     * @throws WfCoreException if any of the field does not contain valid data
-     */
-    public String encode() throws WfCoreException {
-        return encode(false);
-    }
-
-    /**
      * Encodes the Whiteflag message
-     * @param prefix if TRUE, the resulting string gets a 0x prefix
-     * @return the hexadecimal representation of the encoded Whiteflag message
-     * @throws WfCoreException if any of the field does not contain valid data
+     * @return a {@link WfBinaryBuffer} with the compressed binary encoded Whiteflag message
+     * @throws WfCoreException if any of the fields does not contain valid data
      */
-    public String encode(final Boolean prefix) throws WfCoreException {
+    public WfBinaryBuffer encode() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }
-        return header.encode().append(body.encode()).toHexString(prefix);
+        return header.encode().append(body.encode());
     }
 }

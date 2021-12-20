@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -148,31 +148,6 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></span></code></th>
-<td class="colLast">
-<div class="block">Whiteflag message compressed field encodings</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- =========== FIELD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -188,10 +163,10 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></code></td>
+<td class="colFirst"><code><a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encoding">encoding</a></span></code></th>
 <td class="colLast">
-<div class="block">The <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageField.Encoding</code></a> encoding type of the field</div>
+<div class="block">The <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageCodec.Encoding</code></a> encoding type of the field</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -240,9 +215,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageField.Encoding,int,int)">WfMessageField</a></span>&#8203;(java.lang.String&nbsp;name,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">WfMessageField</a></span>&#8203;(java.lang.String&nbsp;name,
               java.lang.String&nbsp;pattern,
-              <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a>&nbsp;encoding,
+              <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a>&nbsp;encoding,
               int&nbsp;startByte,
               int&nbsp;endByte)</code></th>
 <td class="colLast">
@@ -302,17 +277,17 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryString)">decode</a></span>&#8203;(<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;binData)</code></th>
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(byte%5B%5D)">decode</a></span>&#8203;(byte[]&nbsp;data)</code></th>
 <td class="colLast">
-<div class="block">Decodes the  the message field into a binary string</div>
+<div class="block">Decodes the compressed binary data and sets field value</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></code></td>
+<td class="colFirst"><code>byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encode()">encode</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Encodes the message field into a binary string</div>
+<div class="block">Encodes the message field into compressed binary data</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -407,8 +382,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>encoding</h4>
-<pre>public final&nbsp;<a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a> encoding</pre>
-<div class="block">The <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageField.Encoding</code></a> encoding type of the field</div>
+<pre>public final&nbsp;<a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a> encoding</pre>
+<div class="block">The <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageCodec.Encoding</code></a> encoding type of the field</div>
 </li>
 </ul>
 <a id="startByte">
@@ -441,7 +416,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageField.Encoding,int,int)">
+<a id="&lt;init&gt;(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -449,14 +424,14 @@ extends java.lang.Object</pre>
 <h4>WfMessageField</h4>
 <pre>public&nbsp;WfMessageField&#8203;(java.lang.String&nbsp;name,
                       java.lang.String&nbsp;pattern,
-                      <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a>&nbsp;encoding,
+                      <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a>&nbsp;encoding,
                       int&nbsp;startByte,
                       int&nbsp;endByte)</pre>
 <div class="block">Constructs a new Whiteflag message field based on provided poperties</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - the name of the Whiteflag field</dd>
-<dd><code>pattern</code> - the regex pattern defining allowed values</dd>
+<dd><code>pattern</code> - the regex pattern defining allowed values; if null, the generic encoding regex is used</dd>
 <dd><code>encoding</code> - the encoding of the field</dd>
 <dd><code>startByte</code> - the starting byte of the field in a serialized / uncompressed message</dd>
 <dd><code>endByte</code> - the ending byte (not included) of the field in a serialized / uncompressed message</dd>
@@ -629,29 +604,29 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>encode</h4>
-<pre class="methodSignature">public final&nbsp;<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;encode()
-                            throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
-<div class="block">Encodes the message field into a binary string</div>
+<pre class="methodSignature">public final&nbsp;byte[]&nbsp;encode()
+                    throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<div class="block">Encodes the message field into compressed binary data</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the compressed binary encoding of the field</dd>
+<dd>a byte array with the compressed binary encoded field value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the field cannot be encoded</dd>
 </dl>
 </li>
 </ul>
-<a id="decode(org.whiteflagprotocol.java.core.WfBinaryString)">
+<a id="decode(byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>decode</h4>
-<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;decode&#8203;(<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;binData)
-                              throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
-<div class="block">Decodes the  the message field into a binary string</div>
+<pre class="methodSignature">public final&nbsp;java.lang.Boolean&nbsp;decode&#8203;(byte[]&nbsp;data)
+                               throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<div class="block">Decodes the compressed binary data and sets field value</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binData</code> - the compressed binary encoding of the field</dd>
+<dd><code>data</code> - a byte array with the compressed binary encoded field value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the uncompressed value of the field</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -724,7 +699,7 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

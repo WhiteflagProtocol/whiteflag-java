@@ -116,22 +116,22 @@ public class WfMessageCreator {
 
     /**
      * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
-     * @param messageStr the uncompressed serialized message
+     * @param serializedMsg the uncompressed serialized message
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the provided values are invalid
      */
-    public final WfMessageCreator deserialize(final String messageStr) throws WfCoreException {
+    public final WfMessageCreator deserialize(final String serializedMsg) throws WfCoreException {
         // Cursor pointing to next field in the serialized message
         int byteCursor = 0;
 
         // Create and deserialize message header, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        byteCursor = header.deserialize(messageStr, byteCursor);
+        byteCursor = header.deserialize(serializedMsg, byteCursor);
         messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
         // Create and deserialize message body
         body = new WfMessageSegment(messageType.getBodyFields());
-        byteCursor = body.deserialize(messageStr, byteCursor);
+        byteCursor = body.deserialize(serializedMsg, byteCursor);
 
         // Add and deserialize additional fields for some message types
         switch (messageType) {
@@ -142,37 +142,37 @@ public class WfMessageCreator {
                 break;
             case Q:
                 // Extend request message body with remaining request fields (calculated with remaining bytes)
-                final int nRequestObjects = (messageStr.length() - byteCursor) / 4;   // One request object requires 2 fields of 2 bytes
+                final int nRequestObjects = (serializedMsg.length() - byteCursor) / 4;   // One request object requires 2 fields of 2 bytes
                 body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
         }
-        body.deserialize(messageStr, byteCursor);
+        body.deserialize(serializedMsg, byteCursor);
         return this;
     }
 
     /**
      * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
-     * @param messageStr the hexadecimal representation of the encoded message
+     * @param encodedMsg a byte array with the compressed binary encoded message
      * @return this {@link WfMessageCreator}
      * @throws WfCoreException if the encoded message is invalid
      */
-    public final WfMessageCreator decode(final String messageStr) throws WfCoreException {
+    public final WfMessageCreator decode(final byte[] encodedMsg) throws WfCoreException {
         // Cursor pointing to next field in the encoded message
         int bitCursor = 0;
 
         // Convert hexadecimal string representation into binary string
-        final WfBinaryString messageBinStr = toBinStr(messageStr);
+        final WfBinaryBuffer msgBuffer = WfBinaryBuffer.fromByteArray(encodedMsg);
 
         // Create and decode message header, and determine message type
         header = new WfMessageSegment(messageType.getHeaderFields());
-        bitCursor = header.decode(messageBinStr, bitCursor);
+        bitCursor = header.decode(msgBuffer, bitCursor);
         messageType = WfMessageType.byCode(header.get(FIELD_MESSAGETYPE));
 
         // Create and decode message body
         body = new WfMessageSegment(messageType.getBodyFields());
-        bitCursor = body.decode(messageBinStr, bitCursor);
+        bitCursor = body.decode(msgBuffer, bitCursor);
 
         // Add and decode additional fields for some message types
         switch (messageType) {
@@ -183,13 +183,13 @@ public class WfMessageCreator {
                 break;
             case Q:
                 // Extend request message body with request fields (calculated with remaining bits)
-                final int nRequestObjects = (messageBinStr.length() - bitCursor) / 16;   // One request object requires 2 fields of 8 bits
+                final int nRequestObjects = (msgBuffer.length() - bitCursor) / 16;   // One request object requires 2 fields of 8 bits
                 body.append(new WfMessageSegment(messageType.createRequestFields(nRequestObjects)));
                 break;
             default:
                 break;
         }
-        body.decode(messageBinStr, bitCursor);
+        body.decode(msgBuffer, bitCursor);
         return this;
     }
 
@@ -226,20 +226,5 @@ public class WfMessageCreator {
         }
         body.setAll(fieldValues, bodyStartIndex);
         return this;
-    }
-
-    /* PRIVATE METHODS: helper functions */
-
-    /**
-     * Converts a hexadecimal string to a {@link WfBinaryString}
-     * @param hex the hexadecimal representation of message
-     * @throws WfCoreException if invalid hexadecimal encoded message
-     */
-    private final WfBinaryString toBinStr(final String hex) throws WfCoreException {
-        try {
-            return new WfBinaryString().setHexValue(hex);
-        } catch (IllegalArgumentException e) {
-            throw new WfCoreException("Invalid hexadecimal encoded message: " + e.getMessage());
-        }
     }
 }

@@ -282,8 +282,8 @@ public class WfMessageTest {
         assertEquals("Message type should be correct", M, message.type);
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
-        assertEquals("Encoding should be correct", messageEncoded, message.encode());
-        assertEquals("Encoding from cache should be correct", messageEncoded, message.encode());
+        assertEquals("Encoding should be correct", messageEncoded, message.encode().toHexString());
+        assertEquals("Encoding from cache should be correct", messageEncoded, message.encode().toHexString());
         assertTrue("Message should be valid", message.isValid());
     }
     /**
@@ -342,9 +342,9 @@ public class WfMessageTest {
             throw e;
         }
         // Encode
-        String messageEncoded;
+        byte[] messageEncoded;
         try {
-            messageEncoded = message.encode();
+            messageEncoded = message.encode().toByteArray();
         } catch (WfException e) {
             throw e;
         }
@@ -415,7 +415,7 @@ public class WfMessageTest {
         // Encode
         String messageEncoded;
         try {
-            messageEncoded = message.encode();
+            messageEncoded = message.encode().toHexString();
         } catch (WfException e) {
             throw e;
         }

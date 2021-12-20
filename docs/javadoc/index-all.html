@@ -100,6 +100,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Authentication message type</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#addMessageField(org.whiteflagprotocol.java.core.WfMessageField)">addMessageField(WfMessageField)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Encodes a Whiteflag message field and adds it to the end of the binary buffer</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#addMetadata(java.lang.String,java.lang.String)">addMetadata(String, String)</a></span> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
 <div class="block">Adds metadata to the Whiteflag message if not already existing</div>
@@ -108,6 +112,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Undefined message type</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#append(org.whiteflagprotocol.java.core.WfBinaryBuffer)">append(WfBinaryBuffer)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Appends a binary buffer to this binary buffer</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#append(org.whiteflagprotocol.java.core.WfBinaryString)">append(WfBinaryString)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Appends a binary string to this binary string</div>
@@ -115,6 +123,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#append(org.whiteflagprotocol.java.core.WfMessageSegment)">append(WfMessageSegment)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Appends additional fields to this message segment if constructing complex message bodies</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#appendBits(byte%5B%5D,int)">appendBits(byte[], int)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Appends the specified number of bits from a bytes array to the binary buffer</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html#authenticationBodyFields">authenticationBodyFields</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html" title="class in org.whiteflagprotocol.java.core">WfMessageDefinitions</a></dt>
 <dd>
@@ -126,15 +138,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">B</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#BIN">BIN</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#BIN">BIN</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">1-bit binary encoded bit</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#BINPATTERN">BINPATTERN</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#BINPREFIX">BINPREFIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#BINPREFIX">BINPREFIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#BINRADIX">BINRADIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#BINRADIX">BINRADIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#BIT">BIT</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#BIT">BIT</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
@@ -148,6 +166,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns the <a href="org/whiteflagprotocol/java/core/WfMessageType.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a> message type</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#BYTE">BYTE</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#byteLength()">byteLength()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
 <div class="block">Gets the byte length of the unencoded field value</div>
@@ -158,9 +178,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">C</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#charset()">charset()</a></span> - Method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#charset()">charset()</a></span> - Method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
-<div class="block">Returns the allowed charters for a given encoding in unencoded fields</div>
+<div class="block">Returns the allowed charters for a given encoding</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#clearUnusedBits(byte%5B%5D,int)">clearUnusedBits(byte[], int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Clears unused bits in last byte of the byte array</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#clone(org.whiteflagprotocol.java.WfMessage)">clone(WfMessage)</a></span> - Static method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
@@ -174,9 +198,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates a new Whiteflag message object from field values</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#concatinateBits(byte%5B%5D,int,byte%5B%5D,int)">concatinateBits(byte[], int, byte[], int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Concatinates two bitsets</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#convertToByteArray(java.lang.String)">convertToByteArray(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Converts a hexadecimal string to a byte array</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#convertToHexString(byte%5B%5D)">convertToHexString(byte[])</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Converts a byte array to a hexadecimal string</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#copy(org.whiteflagprotocol.java.WfMessage)">copy(WfMessage)</a></span> - Static method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
 <div class="block">Copies a Whiteflag message into new Whiteflag message object, without metadata</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#create()">create()</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Creates a new Whiteflag binary buffer</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCreator.html#create()">create()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a></dt>
 <dd>
@@ -208,7 +248,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Danger Sign message type</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#DATETIME">DATETIME</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#DATETIME">DATETIME</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">4-bit binary encoded date-time coordinate</div>
 </dd>
@@ -216,33 +256,49 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gives debug information of the field</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#DEC">DEC</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#DEC">DEC</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">4-bit binary encoded decimal</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCreator.html#decode(java.lang.String)">decode(String)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCreator.html#decode(byte%5B%5D)">decode(byte[])</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a></dt>
 <dd>
 <div class="block">Decodes an encoded Whiteflag message and creates a new Whiteflag core message object</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#decode(byte%5B%5D)">decode(byte[])</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Decodes the compressed binary data and sets field value</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#decode(byte%5B%5D)">decode(byte[])</a></span> - Static method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Creates a new Whiteflag message object from a binary encoded message</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#decode(java.lang.String)">decode(String)</a></span> - Static method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
-<div class="block">Creates a new Whiteflag message object from an encoded message</div>
+<div class="block">Creates a new Whiteflag message object from a hexadecimal string with an encoded message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#decode(org.whiteflagprotocol.java.core.WfBinaryString)">decode(WfBinaryString)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Decodes the  the message field into a binary string</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#decode(org.whiteflagprotocol.java.core.WfBinaryString,int)">decode(WfBinaryString, int)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int)">decode(WfBinaryBuffer, int)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Decodes this message segment from the provided encoded message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decode(org.whiteflagprotocol.java.core.WfBinaryString,org.whiteflagprotocol.java.core.WfMessageField.Encoding)">decode(WfBinaryString, WfMessageField.Encoding)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decodeBDX(byte%5B%5D,int)">decodeBDX(byte[], int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
 <dd>
-<div class="block">Decodes the message field into a binary string</div>
+<div class="block">Decodes a binary buffer into a (hexa)decimal string</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decodeBDX(java.lang.String)">decodeBDX(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
 <dd>
 <div class="block">Decodes a binary string into a (hexa)decimal string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decodeBIN(byte%5B%5D,int)">decodeBIN(byte[], int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dd>
+<div class="block">Decodes a binary buffer into a binary string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decodeField(org.whiteflagprotocol.java.core.WfMessageField,byte%5B%5D)">decodeField(WfMessageField, byte[])</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dd>
+<div class="block">Decodes the message field into a binary string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decodeString(org.whiteflagprotocol.java.core.WfBinaryString,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding)">decodeString(WfBinaryString, WfMessageCodec.Encoding)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dd>
+<div class="block">Decodes the message field into a binary string</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#decodeUTF(java.lang.String)">decodeUTF(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
 <dd>
@@ -264,7 +320,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Creates a new Whiteflag message object from a serialized JSON message</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#DURATION">DURATION</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#DURATION">DURATION</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">4-bit binary encoded time duration</div>
 </dd>
@@ -280,11 +336,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#encode()">encode()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
 <dd>
-<div class="block">Encodes the Whiteflag message without a 0x prefix</div>
+<div class="block">Encodes the Whiteflag message</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#encode()">encode()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
-<div class="block">Encodes the message field into a binary string</div>
+<div class="block">Encodes the message field into compressed binary data</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#encode()">encode()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
@@ -292,31 +348,31 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#encode()">encode()</a></span> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
-<div class="block">Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#encode(java.lang.Boolean)">encode(Boolean)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
-<dd>
-<div class="block">Encodes the Whiteflag message</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#encode(java.lang.Boolean)">encode(Boolean)</a></span> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
-<dd>
 <div class="block">Returns the cached encoded message, or else it encodes and caches Whiteflag message</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encode(java.lang.String,org.whiteflagprotocol.java.core.WfMessageField.Encoding)">encode(String, WfMessageField.Encoding)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
-<dd>
-<div class="block">Encodes the message field into a binary string</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encodeBDX(java.lang.String)">encodeBDX(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
 <dd>
 <div class="block">Encodes a (hexa)decimal string into a binary string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encodeBIN(java.lang.String)">encodeBIN(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dd>
+<div class="block">Encodes a binary string into a binary buffer</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encodeField(org.whiteflagprotocol.java.core.WfMessageField)">encodeField(WfMessageField)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dd>
+<div class="block">Encodes a Whiteflag field into a binary buffer</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encodeString(java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding)">encodeString(String, WfMessageCodec.Encoding)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
+<dd>
+<div class="block">Encodes the message field into a binary string</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encodeUTF(java.lang.String)">encodeUTF(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
 <dd>
-<div class="block">Encodes UTF value into a binary string</div>
+<div class="block">Encodes a UTF-8 string into a binary string</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#encoding">encoding</a></span> - Variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
-<div class="block">The <a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageField.Encoding</code></a> encoding type of the field</div>
+<div class="block">The <a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageCodec.Encoding</code></a> encoding type of the field</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#endByte">endByte</a></span> - Variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
@@ -329,6 +385,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfException.html#errorType">errorType</a></span> - Variable in exception org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></dt>
 <dd>
 <div class="block">Whiteflag error category as defined by <a href="org/whiteflagprotocol/java/WfException.ErrorType.html" title="enum in org.whiteflagprotocol.java"><code>WfException.ErrorType</code></a></div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#extractBits(int,int)">extractBits(int, int)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Returns a byte array with a subset of the bits in the buffer</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#extractMessageField(org.whiteflagprotocol.java.core.WfMessageField,int)">extractMessageField(WfMessageField, int)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Extracts and decodes a Whiteflag message field from the binary buffer</div>
 </dd>
 </dl>
 <a id="I:F">
@@ -343,6 +407,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html#freetextBodyFields">freetextBodyFields</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html" title="class in org.whiteflagprotocol.java.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Free text message body fields</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#fromByteArray(byte%5B%5D)">fromByteArray(byte[])</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Constructs a new Whiteflag binary encoded message buffer from a byte array</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#fromHexString(java.lang.String)">fromHexString(String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Constructs a new Whiteflag binary encoded message buffer from a hexadecimal string</div>
 </dd>
 </dl>
 <a id="I:G">
@@ -438,13 +510,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#header">header</a></span> - Variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#HEX">HEX</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#HEX">HEX</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">4-bit binary encoded hexadecimal</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#HEXPATTERN">HEXPATTERN</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#HEXPATTERN">HEXPATTERN</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#HEXPREFIX">HEXPREFIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#HEXPREFIX">HEXPREFIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#HEXRADIX">HEXRADIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#HEXRADIX">HEXRADIX</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
@@ -518,19 +596,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">L</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#LAT">LAT</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#LAT">LAT</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">4-bit binary encoded latitude coordinate</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#length()">length()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Returns the bit length of the binary buffer</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#length()">length()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Gets the length of the binary string</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#length(int)">length(int)</a></span> - Method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#length(int)">length(int)</a></span> - Method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">Returns the bit length of a field for a given encoding and unencoded field byte length</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#LONG">LONG</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#LONG">LONG</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">4-bit binary encoded longitude coordinate</div>
 </dd>
@@ -564,6 +646,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">O</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#OCTET">OCTET</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#OCTET">OCTET</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/whiteflagprotocol/java/package-summary.html">org.whiteflagprotocol.java</a> - package org.whiteflagprotocol.java</dt>
@@ -610,6 +694,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Request Signal message type</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#QUADBIT">QUADBIT</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#QUADBIT">QUADBIT</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -622,7 +708,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Resource message type</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#regex()">regex()</a></span> - Method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
+<dd>
+<div class="block">Returns the generic regular expression for a given encoding</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#removePrefix(java.lang.String,java.lang.String)">removePrefix(String, String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
+<dd>
+<div class="block">Checks for and removes prefix from string</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#removeStringPrefix(java.lang.String,java.lang.String)">removeStringPrefix(String, String)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
 <div class="block">Checks for and removes prefix from string</div>
 </dd>
@@ -692,6 +786,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the value with the provided hexadecimal string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#shiftLeft(byte%5B%5D,int)">shiftLeft(byte[], int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Shifts bits in a byte array to the left modulo 8</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#shiftRight(byte%5B%5D,int)">shiftRight(byte[], int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Shifts bits in a byte array to the right modulo 8</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html#signsignalBodyFields">signsignalBodyFields</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html" title="class in org.whiteflagprotocol.java.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Sign/signal message body fields</div>
@@ -730,9 +832,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gets the binary string value as a binary string</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#toByteArray()">toByteArray()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Returns the Whiteflag encoded message as a byte array</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#toByteArray()">toByteArray()</a></span> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Returns a byte array with the binary encoded message</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#toHexString()">toHexString()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Returns the Whiteflag encoded message as a hexademical string</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#toHexString()">toHexString()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>
 <div class="block">Gets the binary string value as a hexadeciomal string without 0x prefix</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#toHexString()">toHexString()</a></span> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Returns a hexedimal string representation of the binary encoded message</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryString.html#toHexString(java.lang.Boolean)">toHexString(Boolean)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></dt>
 <dd>
@@ -782,7 +900,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Undefined fields</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#UTF8">UTF8</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#UTF8">UTF8</a></span> - org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">8-bit binary encoded 1-byte UTF-8 character</div>
 </dd>
@@ -792,7 +910,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">V</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </dd>
@@ -808,7 +926,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html#values()">values()</a></span> - Static method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#values()">values()</a></span> - Static method in enum org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
@@ -870,6 +988,10 @@ the order they are declared.</div>
 <dd>
 <div class="block">Generic Whiteflag utility error</div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfBinaryBuffer</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
+<dd>
+<div class="block">Whiteflag encoded message object</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfBinaryString.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfBinaryString</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>
 <div class="block">Whiteflag binary string object</div>
@@ -922,6 +1044,10 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag codec utility class</div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageCodec.Encoding</span></a> - Enum in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
+<dd>
+<div class="block">Whiteflag message compressed field encodings</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageCore</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>
 <div class="block">Whiteflag message core class</div>
@@ -946,7 +1072,7 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag message field class</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#%3Cinit%3E(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageField.Encoding,int,int)">WfMessageField(String, String, WfMessageField.Encoding, int, int)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#%3Cinit%3E(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">WfMessageField(String, String, WfMessageCodec.Encoding, int, int)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
 <div class="block">Constructs a new Whiteflag message field based on provided poperties</div>
 </dd>
@@ -957,10 +1083,6 @@ the order they are declared.</div>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField,int)">WfMessageField(WfMessageField, int)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
 <div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
-</dd>
-<dt><a href="org/whiteflagprotocol/java/core/WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageField.Encoding</span></a> - Enum in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
-<dd>
-<div class="block">Whiteflag message compressed field encodings</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageSegment</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>

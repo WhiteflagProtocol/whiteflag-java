@@ -218,7 +218,7 @@ public class WfMessageCodec {
      * @return the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
      */
-    public static final WfMessageField decodeField(WfMessageField field, final byte[] buffer) {
+    public static final String decodeField(WfMessageField field, final byte[] buffer) {
         StringBuilder str = new StringBuilder();
         switch (field.encoding) {
 
@@ -278,8 +278,7 @@ public class WfMessageCodec {
             default:
                 break;
         }
-        field.set(str.toString());
-        return field;
+        return str.toString();
     }
 
     /* PROTECTED STATIC METHODS */

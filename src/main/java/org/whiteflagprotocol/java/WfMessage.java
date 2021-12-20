@@ -36,8 +36,8 @@ public class WfMessage extends WfMessageCore {
     /**
      * Contains the cached serialzed and encoded message
      */
-    private String messageEncoded;
-    private String messageSerialized;
+    private WfBinaryBuffer binaryMsg = WfBinaryBuffer.create();
+    private String serializedMsg = null;
 
     /* CONSTRUCTORS */
 
@@ -87,55 +87,62 @@ public class WfMessage extends WfMessageCore {
     @Override
     public String serialize() throws WfException {
         try {
-            if (messageSerialized == null) {
-                messageSerialized = super.serialize();
+            if (serializedMsg == null) {
+                serializedMsg = super.serialize();
             }
         } catch (WfCoreException e) {
             throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
-        return messageSerialized;
-    }
-
-    /**
-     * Returns the cached encoded message, or else it encodes and caches Whiteflag message without 0x prefix
-     * @return the hexadecimal representation of he encoded Whiteflag message
-     * @throws WfException if any field does not contain valid data
-     */
-    @Override
-    public String encode() throws WfException {
-        return encode(false);
+        return serializedMsg;
     }
 
     /**
      * Returns the cached encoded message, or else it encodes and caches Whiteflag message
-     * @param prefix if TRUE, the resulting string gets a 0x prefix (or whatever has been cached)
-     * @return the hexadecimal representation of the encoded Whiteflag message
+     * @return a byte array with the compressed binary encoded message
      * @throws WfException if any field does not contain valid data
      */
     @Override
-    public String encode(final Boolean prefix) throws WfException {
+    public WfBinaryBuffer encode() throws WfException {
         try {
-            if (messageEncoded == null) {
-                messageEncoded = super.encode(prefix);
+            if (binaryMsg.length() == 0) {
+                binaryMsg = super.encode();
             }
         } catch (WfCoreException e) {
             throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
-        return messageEncoded;
+        return binaryMsg;
     }
 
     /**
-     * Returns the serialised JSON representation of the Whiteflag message 
+     * Returns a byte array with the binary encoded message
+     * @return a byte array with the binary encoded message
+     * @throws WfException if any field does not contain valid data
+     */
+    public byte[] toByteArray() throws WfException {
+        return encode().toByteArray();
+    }
+
+    /**
+     * Returns a hexedimal string representation of the binary encoded message
+     * @return a hexadecimal string representation of the binary encoded
+     * @throws WfException if any field does not contain valid data
+     */
+    public String toHexString() throws WfException {
+        return encode().toHexString();
+    }
+
+    /**
+     * Returns the serialised JSON representation of the Whiteflag message
      * @return the serialised JSON representation
      */
     public String toJson() throws WfException {
-        String jsonMessageStr;
+        String jsonMsgStr;
         try {
-            jsonMessageStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
+            jsonMsgStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
         } catch (WfUtilException e) {
             throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return jsonMessageStr;
+        return jsonMsgStr;
     }
 
     /* PRIVATE UTILITY METHODS */
@@ -156,94 +163,104 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      */
     public static WfMessage create(final String messageCode) throws WfException {
-        WfMessageCore messageCore;
+        WfMessageCore message;
         try {
-            messageCore = new WfMessageCreator().type(WfMessageType.byCode(messageCode)).create();
+            message = new WfMessageCreator().type(WfMessageType.byCode(messageCode)).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
+        return new WfMessage(message.type, message.header, message.body);
     }
 
     /**
      * Copies a Whiteflag message into new Whiteflag message object, without metadata
-     * @param originalMessage the message to be copied
+     * @param message the message to be copied
      * @return a {@link WfMessage} Whiteflag message
      */
-    public static WfMessage copy(final WfMessage originalMessage) {
-        return new WfMessage(originalMessage.type, new WfMessageSegment(originalMessage.header), new WfMessageSegment(originalMessage.body));
+    public static WfMessage copy(final WfMessage message) {
+        return new WfMessage(message.type, new WfMessageSegment(message.header), new WfMessageSegment(message.body));
     }
 
     /**
      * Clones a Whiteflag message into new Whiteflag message object, including metadata
-     * @param originalMessage the message to be copied
+     * @param message the message to be copied
      * @return a {@link WfMessage} Whiteflag message
      */
-    public static WfMessage clone(final WfMessage originalMessage) {
-        WfMessage message = copy(originalMessage);
-        for (String key : originalMessage.getMetadataKeys()) {
-            message.addMetadata(key, originalMessage.getMetadata(key));
+    public static WfMessage clone(final WfMessage message) {
+        WfMessage newMessage = copy(message);
+        for (String key : message.getMetadataKeys()) {
+            newMessage.addMetadata(key, message.getMetadata(key));
         }
-        return message;
+        return newMessage;
     }
 
     /**
      * Creates a new Whiteflag message object from a serialized message
-     * @param messageSerialized the uncompressed serialized message
+     * @param serializedMsg the uncompressed serialized message
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if the serialization of the message is invalid
      */
-    public static WfMessage deserialize(final String messageSerialized) throws WfException {
-        WfMessageCore messageCore;
+    public static WfMessage deserialize(final String serializedMsg) throws WfException {
+        WfMessageCore message;
         try {
-            messageCore = new WfMessageCreator().deserialize(messageSerialized).create();
+            message = new WfMessageCreator().deserialize(serializedMsg).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot deserialize message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
+        return new WfMessage(message.type, message.header, message.body);
     }
 
     /**
      * Creates a new Whiteflag message object from a serialized JSON message
-     * @param jsonMessageStr the serialized JSON message
+     * @param jsonMessage the serialized JSON message
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if the serialization of the message is invalid
      */
-    public static WfMessage deserializeJson(final String jsonMessageStr) throws WfException {
+    public static WfMessage deserializeJson(final String jsonMessage) throws WfException {
         // Deserialize JSON string
-        WfJsonMessage jsonMessage;
+        WfJsonMessage jsonMsg;
         try {
-            jsonMessage = WfJsonMessage.create(jsonMessageStr);
+            jsonMsg = WfJsonMessage.create(jsonMessage);
         } catch (WfUtilException e) {
             throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
         // Create message core with header and body fieldname-to-value mappings
-        WfMessageCore messageCore;
+        WfMessageCore message;
         try {
-            messageCore = new WfMessageCreator().map(jsonMessage.getHeader(), jsonMessage.getBody()).create();
+            message = new WfMessageCreator().map(jsonMsg.getHeader(), jsonMsg.getBody()).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
         // Create message and add metadata
-        WfMessage message = new WfMessage(messageCore.type, messageCore.header, messageCore.body);
-        message.setMetadata(jsonMessage.getMetadata());
-        return message;
+        WfMessage newMessage = new WfMessage(message.type, message.header, message.body);
+        newMessage.setMetadata(jsonMsg.getMetadata());
+        return newMessage;
     }
 
     /**
-     * Creates a new Whiteflag message object from an encoded message
-     * @param messageEncoded the hexadecimal representation of the encoded message
+     * Creates a new Whiteflag message object from a hexadecimal string with an encoded message
+     * @param hexMessage the hexadecimal string representation of the encoded message
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if the encoding of the message is invalid
      */
-    public static WfMessage decode(final String messageEncoded) throws WfException {
-        WfMessageCore messageCore;
+    public static WfMessage decode(final String hexMessage) throws WfException {
+        return decode(WfBinaryBuffer.convertToByteArray(hexMessage));
+    }
+
+    /**
+     * Creates a new Whiteflag message object from a binary encoded message
+     * @param binMessage the binary encoded message
+     * @return a {@link WfMessage} Whiteflag message
+     * @throws WfException if the encoding of the message is invalid
+     */
+    public static WfMessage decode(final byte[] binMessage) throws WfException {
+        WfMessageCore message;
         try {
-            messageCore = new WfMessageCreator().decode(messageEncoded).create();
+            message = new WfMessageCreator().decode(binMessage).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot decode message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
+        return new WfMessage(message.type, message.header, message.body);
     }
 
     /**
@@ -253,12 +270,12 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if any of the provided values is invalid
      */
     public static WfMessage compile(final String[] fieldValues) throws WfException {
-        WfMessageCore messageCore;
+        WfMessageCore message;
         try {
-            messageCore = new WfMessageCreator().compile(fieldValues).create();
+            message = new WfMessageCreator().compile(fieldValues).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot compile message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return new WfMessage(messageCore.type, messageCore.header, messageCore.body);
+        return new WfMessage(message.type, message.header, message.body);
     }
 }

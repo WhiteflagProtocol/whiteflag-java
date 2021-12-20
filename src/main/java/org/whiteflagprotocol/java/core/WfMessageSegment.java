@@ -299,49 +299,37 @@ public class WfMessageSegment {
 
     /**
      * Encodes this message segment
-     * @return the encoded message segment
+     * @return a binary buffer with the binary encoded message segment
      * @throws WfCoreException if the message cannot be encoded
      */
-    protected final WfBinaryString encode() throws WfCoreException {
+    protected final WfBinaryBuffer encode() throws WfCoreException {
+        WfBinaryBuffer buffer = WfBinaryBuffer.create();
         int byteCursor = fields[0].startByte;
-        WfBinaryString binSegment = new WfBinaryString();
         
         for (WfMessageField field : fields) {
             if (field.startByte != byteCursor) {
                 throw new WfCoreException("Invalid field order while encoding: did not expect field " + field.name + " at byte " + byteCursor);
             }
-            binSegment.append(field.encode());
+            buffer.addMessageField(field);
             byteCursor = field.endByte;
         }
-        return binSegment;
+        return buffer;
     }
 
     /**
      * Decodes this message segment from the provided encoded message
-     * @param binMessage the binary encoded message
+     * @param buffer the binary buffer with the binary encoded message
      * @param startBit the bit position where this segment starts in the encoded message
      * @return the bit position where this segment ends in the encoded message
      */
-    protected final int decode(final WfBinaryString binMessage, final int startBit) throws WfCoreException {
+    protected final int decode(final WfBinaryBuffer buffer, final int startBit) throws WfCoreException {
         int bitCursor = startBit;
-        for (; cursor < this.fields.length; cursor++) {
-            final int endBit = bitCursor + fields[cursor].bitLength();
-
-            // Decode data
-            String data;
-            if (fields[cursor].endByte < 0) {
-                // Undefined field length
-                data = fields[cursor].decode(binMessage.sub(bitCursor));
-            } else {
-                // Fixed field length
-                data = fields[cursor].decode(binMessage.sub(bitCursor, endBit));
+        for (WfMessageField field : fields) {
+            if (Boolean.FALSE.equals(buffer.extractMessageField(field, bitCursor))) {
+                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in encoded binary message at bit " + bitCursor + ": "
+                                                                       + WfBinaryBuffer.convertToHexString(buffer.extractBits(startBit, field.bitLength() < 0 ? buffer.length() : field.bitLength())));
             }
-            // Set the field value
-            if (Boolean.FALSE.equals(fields[cursor].set(data))) {
-                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in encoded binary message at bit " + bitCursor + ": " + data);
-            }
-            // Move to next field in encoded message
-            bitCursor = endBit;
+            bitCursor += field.bitLength();
         }
         return bitCursor;
     }

@@ -256,7 +256,22 @@ public class WfBinaryBufferTest {
      * Tests addition / encoding of UTF field
      */
     @Test
-    public void testFieldEncodingUTF() {
+    public void testFieldEncodingUTF() throws WfCoreException {
+        WfBinaryBuffer message = WfBinaryBuffer.create();
+        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+
+        /* Verify */
+        assertTrue("Should be able to set field value", field.set("text"));
+        message.addMessageField(field);
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), message.length());
+        assertTrue("Message field (UTF) should be correctly encoded", message.toHexString().equalsIgnoreCase("74657874"));
+    }
+
+    /**
+     * Tests addition / encoding of UTF field
+     */
+    @Test
+    public void testFieldDecodingUTF() throws WfCoreException {
         WfBinaryBuffer message = WfBinaryBuffer.create();
         WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
 
@@ -271,7 +286,7 @@ public class WfBinaryBufferTest {
      * Tests addition / encoding of binary field
      */
     @Test
-    public void testFieldEncodingBin1() {
+    public void testFieldEncodingBin1() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer message = WfBinaryBuffer.create();
         WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 2);
@@ -289,7 +304,7 @@ public class WfBinaryBufferTest {
      * Tests addition / encoding of binary field
      */
     @Test
-    public void testFieldEncodingBin2() {
+    public void testFieldEncodingBin2() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer message = WfBinaryBuffer.create();
         WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 3);
@@ -307,7 +322,7 @@ public class WfBinaryBufferTest {
      * Tests addition / encoding of decimal field
      */
     @Test
-    public void testFieldEncodingDec() {
+    public void testFieldEncodingDec() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer message = WfBinaryBuffer.create();
         WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 4);
@@ -323,7 +338,7 @@ public class WfBinaryBufferTest {
      * Tests addition / encoding of hexadecimal field
      */
     @Test
-    public void testFieldEncodingHex() {
+    public void testFieldEncodingHex() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer message = WfBinaryBuffer.create();
         WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 4);
@@ -339,7 +354,7 @@ public class WfBinaryBufferTest {
      * Tests addition / encoding of date-time field
      */
     @Test
-    public void testFieldEncodingDateTime() {
+    public void testFieldEncodingDateTime() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer message = WfBinaryBuffer.create();
         WfMessageField field = new WfMessageField(FIELDNAME, null, DATETIME, 0, -1);

@@ -202,7 +202,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryString,int)">decode</a></span>&#8203;(<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;binMessage,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int)">decode</a></span>&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;buffer,
       int&nbsp;startBit)</code></th>
 <td class="colLast">
 <div class="block">Decodes this message segment from the provided encoded message</div>
@@ -217,7 +217,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected <a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></code></td>
+<td class="colFirst"><code>protected <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encode()">encode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Encodes this message segment</div>
@@ -665,30 +665,30 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>encode</h4>
-<pre class="methodSignature">protected final&nbsp;<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;encode()
+<pre class="methodSignature">protected final&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;encode()
                                throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Encodes this message segment</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the encoded message segment</dd>
+<dd>a binary buffer with the binary encoded message segment</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message cannot be encoded</dd>
 </dl>
 </li>
 </ul>
-<a id="decode(org.whiteflagprotocol.java.core.WfBinaryString,int)">
+<a id="decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>decode</h4>
-<pre class="methodSignature">protected final&nbsp;int&nbsp;decode&#8203;(<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;binMessage,
+<pre class="methodSignature">protected final&nbsp;int&nbsp;decode&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;buffer,
                            int&nbsp;startBit)
                     throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Decodes this message segment from the provided encoded message</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binMessage</code> - the binary encoded message</dd>
+<dd><code>buffer</code> - the binary buffer with the binary encoded message</dd>
 <dd><code>startBit</code> - the bit position where this segment starts in the encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the bit position where this segment ends in the encoded message</dd>

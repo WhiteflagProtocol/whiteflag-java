@@ -72,7 +72,7 @@ public class WfBinaryBuffer {
 
     /**
      * Constructs a new Whiteflag binary encoded message buffer from a byte array
-     * @param byteArray a byte array with a binary encoded Whiteflag message
+     * @param data a byte array with a binary encoded Whiteflag message data
      * @return a new {@link WfBinaryBuffer}
      */
     public static WfBinaryBuffer fromByteArray(final byte[] data) {
@@ -81,7 +81,7 @@ public class WfBinaryBuffer {
 
     /**
      * Constructs a new Whiteflag binary encoded message buffer from a hexadecimal string
-     * @param hexstr a hexadecimal string with a binary encoded Whiteflag message
+     * @param data a hexadecimal string with a binary encoded Whiteflag message data
      * @return a new {@link WfBinaryBuffer}
      */
     public static WfBinaryBuffer fromHexString(final String data) {
@@ -104,6 +104,15 @@ public class WfBinaryBuffer {
     }
 
     /**
+     * Appends a binary buffer to this binary buffer
+     * @param binaryBuffer the {@link WfBinaryBuffer} to append to this binary buffer
+     * @return this {@link WfBinaryBuffer}
+     */
+    public WfBinaryBuffer append(final WfBinaryBuffer binaryBuffer) {
+        return appendBits(binaryBuffer.toByteArray(), binaryBuffer.length());
+    }
+
+    /**
      * Returns the Whiteflag encoded message as a byte array
      * @return a byte array with an encoded message
      */
@@ -122,13 +131,28 @@ public class WfBinaryBuffer {
     /* PUBLIC METHODS: message field operations */
 
     /**
-     * Adds the provided number of bits from the provided byte
+     * Encodes a Whiteflag message field and adds it to the end of the binary buffer
      * @param field the next {@link WfMessageField} to be encoded and added to the buffer
      * @return this {@link WfBinaryBuffer}
      */
-    public WfBinaryBuffer addMessageField(WfMessageField field) {
-        final byte[] byteArray = WfMessageCodec.encodeField(field);
-        return appendBits(byteArray, field.bitLength());
+    public WfBinaryBuffer addMessageField(WfMessageField field) throws WfCoreException {
+        return appendBits(field.encode(), field.bitLength());
+    }
+
+    /**
+     * Extracts and decodes a Whiteflag message field from the binary buffer
+     * @param field the {@link WfMessageField} to be extracted and decoded
+     * @param startBit the bit where the encoded field is located in the buffer
+     * @return TRUE if field value is set, FALSE if field already set or data is invalid
+     */
+    public Boolean extractMessageField(WfMessageField field, final int startBit) throws WfCoreException {
+        byte[] data;
+        if (field.bitLength() == 0) {
+            data = extractBits(startBit, (this.length - startBit));
+        } else {
+            data = extractBits(startBit, field.bitLength());
+        }
+        return field.decode(data);
     }
 
     /* PUBLIC STATIC UTILITY METHODS */
@@ -138,7 +162,8 @@ public class WfBinaryBuffer {
      * @param hexstr the hexadecimal string
      * @return a byte array
      */
-    public static final byte[] convertToByteArray(final String hexstr) {
+    public static final byte[] convertToByteArray(String hexstr) {
+        hexstr = removeStringPrefix(hexstr, HEXPREFIX);
         final int length = hexstr.length();
         byte[] byteArray = new byte[length / 2];
         for (int i = 0; i < length; i += 2) {
@@ -266,7 +291,7 @@ public class WfBinaryBuffer {
      * @param byteArray1 byte array containing the first bitset
      * @param nBits1 number of bits in the first bitset, i.e. which bits to take from the first byte array
      * @param byteArray2 byte array containing the second bitset
-     * @param nBits1 number of bits in the second bitset, i.e. which bits to take from the second byte array
+     * @param nBits2 number of bits in the second bitset, i.e. which bits to take from the second byte array
      * @return a new byte array with the concatinated bits
      */
     protected static final byte[] concatinateBits(final byte[] byteArray1, int nBits1, final byte[] byteArray2, int nBits2) {
