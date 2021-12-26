@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
 /**
  * Whiteflag message field class
  * 
- * <p> This class represents a Whiteflag message field. Instances of this
+ * <p>
+ * This class represents a Whiteflag message field. Instances of this
  * class represent specific fields in specific message types. A field is
  * defined by a number of properties: name, allowed values, encoding,
  * starting byte and ending byte.
@@ -37,7 +38,8 @@ public class WfMessageField {
      */
     public final int startByte;
     /**
-     * The ending byte (not included) of the field in a serialized / uncompressed message
+     * The ending byte (not included) of the field in a serialized / uncompressed
+     * message
      */
     public final int endByte;
 
@@ -48,18 +50,28 @@ public class WfMessageField {
 
     /**
      * Constructs a new Whiteflag message field based on provided poperties
-     * @param name the name of the Whiteflag field
-     * @param pattern the regex pattern defining allowed values; if null, the generic encoding regex is used
-     * @param encoding the encoding of the field
-     * @param startByte the starting byte of the field in a serialized / uncompressed message
-     * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message
+     * 
+     * @param name      the name of the Whiteflag field
+     * @param pattern   the regex pattern defining allowed values; if null, the
+     *                  generic encoding regex is used
+     * @param encoding  the encoding of the field
+     * @param startByte the starting byte of the field in a serialized /
+     *                  uncompressed message
+     * @param endByte   the ending byte (not included) of the field in a serialized
+     *                  / uncompressed message; ignored if encoding requires a fixed
+     *                  field length
      */
     public WfMessageField(String name, String pattern, WfMessageCodec.Encoding encoding, int startByte, int endByte) {
         this.name = name;
         this.encoding = encoding;
         this.startByte = startByte;
-        this.endByte = endByte;
 
+        /* If fixed length encoding, automatically set end byte */
+        if (Boolean.TRUE.equals(encoding.isFixedLength())) {
+            this.endByte = startByte + encoding.byteLength();
+        } else {
+            this.endByte = endByte;
+        }
         /* If no regex pattern given, use generic encoding pattern */
         if (pattern == null) {
             this.pattern = Pattern.compile(encoding.regex());
@@ -69,7 +81,9 @@ public class WfMessageField {
     }
 
     /**
-     * Constructs a new Whiteflag message field from an existing message field, without copying the value
+     * Constructs a new Whiteflag message field from an existing message field,
+     * without copying the value
+     * 
      * @param field the {@link WfMessageField} to copy
      */
     public WfMessageField(final WfMessageField field) {
@@ -77,7 +91,9 @@ public class WfMessageField {
     }
 
     /**
-     * Constructs a new Whiteflag message field from an existing message field, without copying the value
+     * Constructs a new Whiteflag message field from an existing message field,
+     * without copying the value
+     * 
      * @param field the {@link WfMessageField} to copy
      * @param shift number of bytes to shift the field
      */
@@ -97,6 +113,7 @@ public class WfMessageField {
 
     /**
      * Returns the message field as a string
+     * 
      * @return the value of the message field
      * @see #get()
      */
@@ -109,6 +126,7 @@ public class WfMessageField {
 
     /**
      * Checks if the message field value has been set
+     * 
      * @return TRUE if the field has been set, else FALSE
      */
     public final Boolean isSet() {
@@ -118,6 +136,7 @@ public class WfMessageField {
 
     /**
      * Checks if the message field contains a valid value
+     * 
      * @return TRUE if the field contains a valid value, else FALSE
      */
     public final Boolean isValid() {
@@ -126,6 +145,7 @@ public class WfMessageField {
 
     /**
      * Checks if the provided data is a valid value for this field
+     * 
      * @param data The data to be checked
      * @return TRUE if data is a valid value for this field
      */
@@ -136,6 +156,7 @@ public class WfMessageField {
 
     /**
      * Gets the byte length of the unencoded field value
+     * 
      * @return the byte length of the unencoded field value
      */
     public final int byteLength() {
@@ -148,20 +169,22 @@ public class WfMessageField {
 
     /**
      * Gets the bit length of the encoded field
+     * 
      * @return the bit length of the compressed encoded field value
      */
     public final int bitLength() {
         if (this.endByte < 0) {
             if (this.value == null) return 0;
-            return this.encoding.length(this.value.length());
+            return this.encoding.bitLength(this.value.length());
         }
-        return this.encoding.length(this.endByte - this.startByte);
+        return this.encoding.bitLength(this.endByte - this.startByte);
     }
 
     /* PUBLIC METHODS: getters & setters */
 
     /**
      * Gets the value of the message field
+     * 
      * @return the field value
      */
     public final String get() {
@@ -170,13 +193,16 @@ public class WfMessageField {
 
     /**
      * Sets the value of the message field if not already set
+     * 
      * @param data the data representing the field value
-     * @return TRUE if field value is set, FALSE if field already set or data is invalid
+     * @return TRUE if field value is set, FALSE if field already set or data is
+     *         invalid
      */
     public final Boolean set(final String data) {
         // Cannot set value twice
-        if (Boolean.TRUE.equals(this.isSet())) return false;
-
+        if (Boolean.TRUE.equals(this.isSet())) {
+            return false;
+        }
         // Set if data is valid
         if (Boolean.TRUE.equals(isValid(data))) {
             this.value = data;
@@ -189,6 +215,7 @@ public class WfMessageField {
 
     /**
      * Encodes the message field into compressed binary data
+     * 
      * @return a byte array with the compressed binary encoded field value
      * @throws WfCoreException if the field cannot be encoded
      */
@@ -203,6 +230,7 @@ public class WfMessageField {
 
     /**
      * Decodes the compressed binary data and sets field value
+     * 
      * @param data a byte array with the compressed binary encoded field value
      * @return the uncompressed value of the field
      * @throws WfCoreException if the field cannot be decoded
@@ -216,6 +244,7 @@ public class WfMessageField {
 
     /**
      * Gives debug information of the field
+     * 
      * @return field name, value and pattern and validity check
      */
     protected String debugString() {

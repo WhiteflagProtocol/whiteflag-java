@@ -250,14 +250,6 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected static byte[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearUnusedBits(byte%5B%5D,int)">clearUnusedBits</a></span>&#8203;(byte[]&nbsp;byteArray,
-               int&nbsp;nBits)</code></th>
-<td class="colLast">
-<div class="block">Clears unused bits in last byte of the byte array</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>protected static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#concatinateBits(byte%5B%5D,int,byte%5B%5D,int)">concatinateBits</a></span>&#8203;(byte[]&nbsp;byteArray1,
                int&nbsp;nBits1,
                byte[]&nbsp;byteArray2,
@@ -266,25 +258,33 @@ extends java.lang.Object</pre>
 <div class="block">Concatinates two bitsets</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToByteArray(java.lang.String)">convertToByteArray</a></span>&#8203;(java.lang.String&nbsp;hexstr)</code></th>
 <td class="colLast">
 <div class="block">Converts a hexadecimal string to a byte array</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToHexString(byte%5B%5D)">convertToHexString</a></span>&#8203;(byte[]&nbsp;byteArray)</code></th>
 <td class="colLast">
 <div class="block">Converts a byte array to a hexadecimal string</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a new Whiteflag binary buffer</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>protected static byte[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cropBits(byte%5B%5D,int)">cropBits</a></span>&#8203;(byte[]&nbsp;byteArray,
+        int&nbsp;bitLength)</code></th>
+<td class="colLast">
+<div class="block">Shortens the byte array to fit the length of the used bits</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -659,7 +659,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToByteArray</h4>
-<pre class="methodSignature">public static final&nbsp;byte[]&nbsp;convertToByteArray&#8203;(java.lang.String&nbsp;hexstr)</pre>
+<pre class="methodSignature">public static&nbsp;byte[]&nbsp;convertToByteArray&#8203;(java.lang.String&nbsp;hexstr)</pre>
 <div class="block">Converts a hexadecimal string to a byte array</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -675,7 +675,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToHexString</h4>
-<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;convertToHexString&#8203;(byte[]&nbsp;byteArray)</pre>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;convertToHexString&#8203;(byte[]&nbsp;byteArray)</pre>
 <div class="block">Converts a byte array to a hexadecimal string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -727,8 +727,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>appendBits</h4>
-<pre class="methodSignature">protected final&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;appendBits&#8203;(byte[]&nbsp;byteArray,
-                                          int&nbsp;nBits)</pre>
+<pre class="methodSignature">protected&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;appendBits&#8203;(byte[]&nbsp;byteArray,
+                                    int&nbsp;nBits)</pre>
 <div class="block">Appends the specified number of bits from a bytes array to the binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -745,8 +745,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>extractBits</h4>
-<pre class="methodSignature">protected final&nbsp;byte[]&nbsp;extractBits&#8203;(int&nbsp;startBit,
-                                   int&nbsp;bitLength)</pre>
+<pre class="methodSignature">protected&nbsp;byte[]&nbsp;extractBits&#8203;(int&nbsp;startBit,
+                             int&nbsp;bitLength)</pre>
 <div class="block">Returns a byte array with a subset of the bits in the buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -763,10 +763,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>concatinateBits</h4>
-<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;concatinateBits&#8203;(byte[]&nbsp;byteArray1,
-                                              int&nbsp;nBits1,
-                                              byte[]&nbsp;byteArray2,
-                                              int&nbsp;nBits2)</pre>
+<pre class="methodSignature">protected static&nbsp;byte[]&nbsp;concatinateBits&#8203;(byte[]&nbsp;byteArray1,
+                                        int&nbsp;nBits1,
+                                        byte[]&nbsp;byteArray2,
+                                        int&nbsp;nBits2)</pre>
 <div class="block">Concatinates two bitsets</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -779,19 +779,19 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="clearUnusedBits(byte[],int)">
+<a id="cropBits(byte[],int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>clearUnusedBits</h4>
-<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;clearUnusedBits&#8203;(byte[]&nbsp;byteArray,
-                                              int&nbsp;nBits)</pre>
-<div class="block">Clears unused bits in last byte of the byte array</div>
+<h4>cropBits</h4>
+<pre class="methodSignature">protected static&nbsp;byte[]&nbsp;cropBits&#8203;(byte[]&nbsp;byteArray,
+                                 int&nbsp;bitLength)</pre>
+<div class="block">Shortens the byte array to fit the length of the used bits</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>byteArray</code> - the byte array containing the bitset</dd>
-<dd><code>nBits</code> - the number of used bits in the bitset</dd>
+<dd><code>bitLength</code> - the bit length of the buffer (i.e. the number of used bits in the bitset), or, if negative, the number of bits to remove (i.e. the number of unused bits in the bitset)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the byte array with the unused bits cleared</dd>
 </dl>
@@ -803,8 +803,8 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>removeStringPrefix</h4>
-<pre class="methodSignature">protected static final&nbsp;java.lang.String&nbsp;removeStringPrefix&#8203;(java.lang.String&nbsp;str,
-                                                           java.lang.String&nbsp;prefix)</pre>
+<pre class="methodSignature">protected static&nbsp;java.lang.String&nbsp;removeStringPrefix&#8203;(java.lang.String&nbsp;str,
+                                                     java.lang.String&nbsp;prefix)</pre>
 <div class="block">Checks for and removes prefix from string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

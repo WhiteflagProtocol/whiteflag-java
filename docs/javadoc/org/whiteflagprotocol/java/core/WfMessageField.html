@@ -134,7 +134,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends java.lang.Object</pre>
 <div class="block">Whiteflag message field class
  
- <p> This class represents a Whiteflag message field. Instances of this
+ <p>
+ This class represents a Whiteflag message field. Instances of this
  class represent specific fields in specific message types. A field is
  defined by a number of properties: name, allowed values, encoding,
  starting byte and ending byte.</div>
@@ -173,7 +174,8 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#endByte">endByte</a></span></code></th>
 <td class="colLast">
-<div class="block">The ending byte (not included) of the field in a serialized / uncompressed message</div>
+<div class="block">The ending byte (not included) of the field in a serialized / uncompressed
+ message</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -227,14 +229,16 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField)">WfMessageField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</code></th>
 <td class="colLast">
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field,
+ without copying the value</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField,int)">WfMessageField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
               int&nbsp;shift)</code></th>
 <td class="colLast">
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field,
+ without copying the value</div>
 </td>
 </tr>
 </table>
@@ -403,7 +407,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>endByte</h4>
 <pre>public final&nbsp;int endByte</pre>
-<div class="block">The ending byte (not included) of the field in a serialized / uncompressed message</div>
+<div class="block">The ending byte (not included) of the field in a serialized / uncompressed
+ message</div>
 </li>
 </ul>
 </li>
@@ -431,10 +436,14 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - the name of the Whiteflag field</dd>
-<dd><code>pattern</code> - the regex pattern defining allowed values; if null, the generic encoding regex is used</dd>
+<dd><code>pattern</code> - the regex pattern defining allowed values; if null, the
+                  generic encoding regex is used</dd>
 <dd><code>encoding</code> - the encoding of the field</dd>
-<dd><code>startByte</code> - the starting byte of the field in a serialized / uncompressed message</dd>
-<dd><code>endByte</code> - the ending byte (not included) of the field in a serialized / uncompressed message</dd>
+<dd><code>startByte</code> - the starting byte of the field in a serialized /
+                  uncompressed message</dd>
+<dd><code>endByte</code> - the ending byte (not included) of the field in a serialized
+                  / uncompressed message; ignored if encoding requires a fixed
+                  field length</dd>
 </dl>
 </li>
 </ul>
@@ -445,7 +454,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>WfMessageField</h4>
 <pre>public&nbsp;WfMessageField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</pre>
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field,
+ without copying the value</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
@@ -460,7 +470,8 @@ extends java.lang.Object</pre>
 <h4>WfMessageField</h4>
 <pre>public&nbsp;WfMessageField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
                       int&nbsp;shift)</pre>
-<div class="block">Constructs a new Whiteflag message field from an existing message field, without copying the value</div>
+<div class="block">Constructs a new Whiteflag message field from an existing message field,
+ without copying the value</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
@@ -594,7 +605,8 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - the data representing the field value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>TRUE if field value is set, FALSE if field already set or data is invalid</dd>
+<dd>TRUE if field value is set, FALSE if field already set or data is
+         invalid</dd>
 </dl>
 </li>
 </ul>

@@ -3,6 +3,7 @@
  */
 package org.whiteflagprotocol.java.core;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
@@ -147,7 +148,7 @@ public class WfBinaryBuffer {
      */
     public Boolean extractMessageField(WfMessageField field, final int startBit) throws WfCoreException {
         byte[] data;
-        if (field.bitLength() == 0) {
+        if (field.bitLength() < 1) {
             data = extractBits(startBit, (this.length - startBit));
         } else {
             data = extractBits(startBit, field.bitLength());
@@ -162,13 +163,17 @@ public class WfBinaryBuffer {
      * @param hexstr the hexadecimal string
      * @return a byte array
      */
-    public static final byte[] convertToByteArray(String hexstr) {
-        hexstr = removeStringPrefix(hexstr, HEXPREFIX);
-        final int length = hexstr.length();
-        byte[] byteArray = new byte[length / 2];
-        for (int i = 0; i < length; i += 2) {
-            byteArray[i / 2] = (byte) ((Character.digit(hexstr.charAt(i), HEXRADIX) << QUADBIT)
-                                      + Character.digit(hexstr.charAt(i + 1), HEXRADIX));
+    public static byte[] convertToByteArray(final String hexstr) {
+        /* Prepare string by removing prefix and adding trailing 0 */
+        String str = removeStringPrefix(hexstr, HEXPREFIX);
+        final int strLength = str.length();
+        if (strLength % 2 == 1) str = str + "0";
+
+        /* Loop through hexadecimal string and take two chars at a time*/
+        byte[] byteArray = new byte[strLength / 2];
+        for (int i = 0; i < strLength; i += 2) {
+            byteArray[i / 2] = (byte) ((Character.digit(str.charAt(i), HEXRADIX) << QUADBIT)
+                                      + Character.digit(str.charAt(i + 1), HEXRADIX));
         }
         return byteArray;
     }
@@ -178,7 +183,7 @@ public class WfBinaryBuffer {
      * @param byteArray the byte array
      * @return a hexadecimal string
      */
-    public static final String convertToHexString(final byte[] byteArray) {
+    public static String convertToHexString(final byte[] byteArray) {
         StringBuilder hexstr = new StringBuilder();
         for (int byteIndex = 0; byteIndex < byteArray.length; byteIndex++) {
             char[] hexDigits = new char[2];
@@ -234,7 +239,7 @@ public class WfBinaryBuffer {
         for (int byteIndex = 0; byteIndex < (byteArray.length - 1); byteIndex++) {
             newByteArray[byteIndex] |= (byte) ((0xFF & byteArray[byteIndex + 1] & mask) >>> (BYTE - mod));
         }
-        return clearUnusedBits(newByteArray, BYTE - shift);
+        return cropBits(newByteArray, -(shift % BYTE));
     }
 
     /* PROTECTED METHODS */
@@ -245,7 +250,7 @@ public class WfBinaryBuffer {
      * @param nBits the number of bits to be appended from the byte array
      * @return the string without prefix
      */
-    protected final WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) {
+    protected WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) {
         /* Check number of bits */
         if (nBits > (byteArray.length * BYTE)) nBits = byteArray.length * BYTE;
 
@@ -261,11 +266,12 @@ public class WfBinaryBuffer {
      * @param bitLength the length of the subset, i.e. the number of bits to extract
      * @return a byte array with the extracted bits
      */
-    protected final byte[] extractBits(int startBit, int bitLength) {
+    protected byte[] extractBits(int startBit, int bitLength) {
         /* Check subset range */
         if (startBit < 0) startBit = 0;
-        if (bitLength > (this.length - startBit)) bitLength = (this.length - startBit);
-
+        if (bitLength < 1 || bitLength > (this.length - startBit)) {
+            bitLength = (this.length - startBit);
+        }
         /* Calculate parameters */
         final int startByte = startBit / BYTE;
         final int byteLength = (bitLength / BYTE) + ((bitLength % BYTE) == 0 ? 0 : 1);
@@ -274,14 +280,22 @@ public class WfBinaryBuffer {
 
         /* Create new byte array with the subset */ 
         byte[] newByteArray = new byte[byteLength];
-        for (int byteIndex = 0; byteIndex < byteLength; byteIndex++) {
-            newByteArray[byteIndex] = (byte) ((0xFF & this.buffer[startByte + byteIndex]) << shift);
+        if (shift == 0) {
+            // Faster loop if no shitft needed
+            for (int byteIndex = 0; byteIndex < byteLength; byteIndex++) {
+                newByteArray[byteIndex] = this.buffer[startByte + byteIndex];
+            }
+        } else {
+            // Loop through bytes to shift
+            for (int byteIndex = 0; byteIndex < byteLength; byteIndex++) {
+                newByteArray[byteIndex] = (byte) ((0xFF & this.buffer[startByte + byteIndex]) << shift);
+            }
+            final int endByte = byteLength < (this.buffer.length - startByte) ? byteLength : (byteLength - 1);
+            for (int byteIndex = 0; byteIndex < endByte; byteIndex++) {
+                newByteArray[byteIndex] |= (byte) ((0xFF & this.buffer[startByte + byteIndex + 1] & mask) >>> (BYTE - shift));
+            }
         }
-        final int endByte = byteLength < this.buffer.length ? byteLength : (byteLength - 1);
-        for (int byteIndex = 0; byteIndex < endByte; byteIndex++) {
-            newByteArray[byteIndex] |= (byte) ((0xFF & this.buffer[startByte + byteIndex + 1] & mask) >>> (BYTE - shift));
-        }
-        return clearUnusedBits(newByteArray, bitLength);
+        return cropBits(newByteArray, bitLength);
     }
 
     /* PROTECTED STATIC UTILITY METHODS */
@@ -294,7 +308,7 @@ public class WfBinaryBuffer {
      * @param nBits2 number of bits in the second bitset, i.e. which bits to take from the second byte array
      * @return a new byte array with the concatinated bits
      */
-    protected static final byte[] concatinateBits(final byte[] byteArray1, int nBits1, final byte[] byteArray2, int nBits2) {
+    protected static byte[] concatinateBits(final byte[] byteArray1, int nBits1, final byte[] byteArray2, int nBits2) {
         /* Check number of bits */
         if (nBits1 > (byteArray1.length * BYTE)) nBits1 = byteArray1.length * BYTE;
         if (nBits2 > (byteArray2.length * BYTE)) nBits2 = byteArray2.length * BYTE;
@@ -332,24 +346,40 @@ public class WfBinaryBuffer {
             newByteArray[byteCursor] = byteArray2shift[byteIndex];
             byteCursor++;
         }
-        return clearUnusedBits(newByteArray, bitLength);
+        return cropBits(newByteArray, bitLength);
     }
 
     /**
-     * Clears unused bits in last byte of the byte array
+     * Shortens the byte array to fit the length of the used bits
      * @param byteArray the byte array containing the bitset
-     * @param nBits the number of used bits in the bitset
+     * @param bitLength the bit length of the buffer (i.e. the number of used bits in the bitset), or, if negative, the number of bits to remove (i.e. the number of unused bits in the bitset)
      * @return the byte array with the unused bits cleared
      */
-    protected static final byte[] clearUnusedBits(byte[] byteArray, final int nBits) {
-        /* Check number of bits */
-        if (nBits > (byteArray.length * BYTE)) return byteArray;
-        
-        /* Clear bits after at the end */
-        final int clearBits = BYTE - (nBits % BYTE);
+    protected static byte[] cropBits(byte[] byteArray, final int bitLength) {
+        /* Nothing happnes if bit length is 0 */
+        if (bitLength == 0) return byteArray;
+
+        /* Determine resulting byte array length and bits to clear */
+        int byteLength;
+        int clearBits;
+        if (bitLength > 0) {
+            byteLength = (bitLength / BYTE) + ((bitLength % BYTE) > 0 ? 1 : 0);
+            if (byteLength > byteArray.length) return byteArray;
+            clearBits = BYTE - (bitLength % BYTE);
+        } else {
+            byteLength = byteArray.length - (-bitLength / BYTE);
+            if (byteLength < 1) return new byte[0];
+            clearBits = -bitLength;
+        }
+        /* Shorten byte array */
+        if (byteLength < byteArray.length) {
+            byteArray = Arrays.copyOf(byteArray, byteLength);
+        }
+        /* Clear unused bits in last byte */
         if (clearBits < BYTE) {
             byteArray[byteArray.length - 1] &= (byte) (0xFF << clearBits);
         }
+        /* All done */
         return byteArray;
     }
 
@@ -359,7 +389,7 @@ public class WfBinaryBuffer {
      * @param prefix the prefix to be checked for
      * @return a string without prefix
      */
-    protected static final String removeStringPrefix(final String str, final String prefix) {
+    protected static String removeStringPrefix(final String str, final String prefix) {
         if (str.startsWith(prefix)) return str.substring(prefix.length());
         return str;
     }
