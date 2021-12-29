@@ -254,7 +254,7 @@ public class WfBinaryBufferTest {
     @Test
     public void testAddFieldUTF() throws WfCoreException {
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, UTF8, 0, -1);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("text"));
@@ -270,7 +270,7 @@ public class WfBinaryBufferTest {
     public void testExtractFieldUTF() throws WfCoreException {
         final byte[] byteArray = {(byte) 0x95, (byte) 0x74,(byte) 0x78,(byte) 0x74};  //  .......1 10|01 0001 11|11
         WfBinaryBuffer buffer = WfBinaryBuffer.fromByteArray(byteArray);
-        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, UTF8, 0, -1);
 
         /* Verify */
         assertEquals("Extracted message field (UTF) should contain the correct value", "txt", buffer.extractMessageField(field, 8).get());    
@@ -283,7 +283,7 @@ public class WfBinaryBufferTest {
     public void testAddFieldBin1() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 2);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 0, 2);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("01"));
@@ -299,7 +299,7 @@ public class WfBinaryBufferTest {
     public void testAddFieldBin2() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 3);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 0, 3);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("101"));
@@ -315,7 +315,7 @@ public class WfBinaryBufferTest {
     public void testAddFieldDec() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 4);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DEC, 0, 4);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("1478"));
@@ -332,7 +332,7 @@ public class WfBinaryBufferTest {
         /* Setup */
         final byte[] byteArray = {(byte) 0x95, (byte) 0x91,(byte) 0xFF,(byte) 0xE7};  //  .......1 10|01 0001 11|11
         WfBinaryBuffer buffer = WfBinaryBuffer.fromByteArray(byteArray);
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 2);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DEC, 0, 2);
 
         /* Verify */
         assertEquals("Extracted message field (dec) should contain the correct value", "47", buffer.extractMessageField(field, 10).get());
@@ -345,7 +345,7 @@ public class WfBinaryBufferTest {
     public void testAddFieldHex() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 4);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, HEX, 0, 4);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("3f8C"));
@@ -362,7 +362,7 @@ public class WfBinaryBufferTest {
         /* Setup */
         final byte[] byteArray = {(byte) 0x95, (byte) 0xDD,(byte) 0xFF,(byte) 0xE7};  //  ........ 1|1011 1011 |111
         WfBinaryBuffer buffer = WfBinaryBuffer.fromByteArray(byteArray);
-        WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 2);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, HEX, 0, 2);
 
         /* Verify */
         assertEquals("Extracted message field (hex) should contain the correct value", "bb", buffer.extractMessageField(field, 9).get());
@@ -375,7 +375,7 @@ public class WfBinaryBufferTest {
     public void testAddFieldDateTime() throws WfCoreException {
         /* Setup */
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DATETIME, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DATETIME, 0, -1);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("2020-07-01T21:42:23Z"));

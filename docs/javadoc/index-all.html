@@ -308,6 +308,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the field value from a binary buffer</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#define(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">define(String, String, WfMessageCodec.Encoding, int, int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Defines a new Whiteflag message field</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCreator.html#deserialize(java.lang.String)">deserialize(String)</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a></dt>
 <dd>
 <div class="block">Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object</div>
@@ -407,6 +411,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html#freetextBodyFields">freetextBodyFields</a></span> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html" title="class in org.whiteflagprotocol.java.core">WfMessageDefinitions</a></dt>
 <dd>
 <div class="block">Free text message body fields</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#from(org.whiteflagprotocol.java.core.WfMessageField)">from(WfMessageField)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Creates a new Whiteflag message field from an existing field, without copying the value</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#from(org.whiteflagprotocol.java.core.WfMessageField,int)">from(WfMessageField, int)</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
+<dd>
+<div class="block">Creates a new Whiteflag message field from an existing field, without copying the value</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#fromByteArray(byte%5B%5D)">fromByteArray(byte[])</a></span> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
@@ -796,7 +808,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#toHexString()">toHexString()</a></span> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
-<div class="block">Returns the Whiteflag encoded message as a hexademical string</div>
+<div class="block">Returns the Whiteflag encoded message as a hexademical string and caches it if the buffer is marked complete</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/WfMessage.html#toHexString()">toHexString()</a></span> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
@@ -978,9 +990,13 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag message core class</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageCore)">WfMessageCore(WfMessageCore)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
+<dd>
+<div class="block">Creates a Whiteflag message from an existing core message</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageType,org.whiteflagprotocol.java.core.WfMessageSegment,org.whiteflagprotocol.java.core.WfMessageSegment)">WfMessageCore(WfMessageType, WfMessageSegment, WfMessageSegment)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
 <dd>
-<div class="block">Creates a Whiteflag message from a header and a body segment</div>
+<div class="block">Creates a Whiteflag message core from a header and a body segment</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageCreator</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>
@@ -997,20 +1013,6 @@ the order they are declared.</div>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageField</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>
 <div class="block">Whiteflag message field class</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#%3Cinit%3E(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">WfMessageField(String, String, WfMessageCodec.Encoding, int, int)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Constructs a new Whiteflag message field based on provided poperties</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField)">WfMessageField(WfMessageField)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Constructs a new Whiteflag message field from an existing message field,
- without copying the value</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/whiteflagprotocol/java/core/WfMessageField.html#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField,int)">WfMessageField(WfMessageField, int)</a></span> - Constructor for class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
-<dd>
-<div class="block">Constructs a new Whiteflag message field from an existing message field,
- without copying the value</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><span class="typeNameLink">WfMessageSegment</span></a> - Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>

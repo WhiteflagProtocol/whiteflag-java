@@ -48,6 +48,10 @@ public class WfBinaryBuffer {
      * Marks the buffer as complete and makes it read-only
      */
     private Boolean complete = false;
+    /**
+     * The chached hexadecimal string representation of the completed buffer
+     */
+    private String cachedHexString = null;
 
     /* CONSTRUCTOR */
 
@@ -116,7 +120,7 @@ public class WfBinaryBuffer {
      * @return the buffer length in bits
      */
     public int byteLength() {
-        return buffer.length;
+        return this.buffer.length;
     }
 
     /**
@@ -128,11 +132,17 @@ public class WfBinaryBuffer {
     }
 
     /**
-     * Returns the Whiteflag encoded message as a hexademical string
+     * Returns the Whiteflag encoded message as a hexademical string and caches it if the buffer is marked complete
      * @return a hexadecimal string with the encoded message
      */
     public String toHexString() {
-        return convertToHexString(this.buffer);
+        if (Boolean.FALSE.equals(this.complete)) {
+            return convertToHexString(this.buffer);
+        }
+        if (this.cachedHexString == null) {
+            this.cachedHexString = convertToHexString(this.buffer);
+        }
+        return this.cachedHexString;
     }
 
     /**
@@ -140,7 +150,10 @@ public class WfBinaryBuffer {
      * @return this {@link WfBinaryBuffer}
      */
     public WfBinaryBuffer markComplete() {
-        this.complete = true;
+        if (Boolean.FALSE.equals(this.complete)) {
+            this.complete = true;
+            this.cachedHexString = convertToHexString(this.buffer);
+        }
         return this;
     }
 

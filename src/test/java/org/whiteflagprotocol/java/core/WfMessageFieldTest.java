@@ -22,7 +22,7 @@ public class WfMessageFieldTest {
     @Test
     public void testSetFieldValue() {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, UTF8, 0, -1);
 
         /* Verify */
         assertTrue("Should be able to set field value", field.set("some text"));
@@ -35,9 +35,9 @@ public class WfMessageFieldTest {
     @Test
     public void testCopyField() {
         /* Setup */
-        WfMessageField field1 = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+        WfMessageField field1 = WfMessageField.define(FIELDNAME, null, UTF8, 0, -1);
         field1.set("first value");
-        WfMessageField field2 = new WfMessageField(field1, 7);
+        WfMessageField field2 = WfMessageField.from(field1, 7);
 
         /* Verify */
         assertFalse("The copy of the field should not have a set value", field2.isSet());
@@ -52,7 +52,7 @@ public class WfMessageFieldTest {
     @Test
     public void testUtfEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, UTF8, 0, -1);
         field.set("WF");
 
         /* Verify */
@@ -66,7 +66,7 @@ public class WfMessageFieldTest {
     @Test
     public void testUtfDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, UTF8, 0, -1);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("5746");
         final String result = "WF";
 
@@ -80,7 +80,7 @@ public class WfMessageFieldTest {
     @Test
     public void testBinEncoding1() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 0, 8);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 0, 8);
         field.set("10111011");
         
         /* Verify */
@@ -94,7 +94,7 @@ public class WfMessageFieldTest {
     @Test
     public void testBinDecoding1() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 1, 7);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 1, 7);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("aa");
         final String result = "101010";
         
@@ -108,7 +108,7 @@ public class WfMessageFieldTest {
     @Test
     public void testBinEncoding2() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 4, 5);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 4, 5);
         field.set("1");
         
         /* Verify */
@@ -122,7 +122,7 @@ public class WfMessageFieldTest {
     @Test
     public void testBinDecoding2A() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 4, 5);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 4, 5);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("80");
         final String result = "1";
         
@@ -136,7 +136,7 @@ public class WfMessageFieldTest {
     @Test
     public void testBinDecoding2B() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, BIN, 2, 3);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, BIN, 2, 3);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("7f");
         final String result = "0";
         
@@ -150,7 +150,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDecEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 3);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DEC, 0, 3);
         field.set("1230");
         
         /* Verify */
@@ -164,7 +164,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDecDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 3);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DEC, 0, 3);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("1234");
         final String result = "123";
 
@@ -178,7 +178,7 @@ public class WfMessageFieldTest {
     @Test
     public void testHexEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 2);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, HEX, 0, 2);
         field.set("3f");
         
         /* Verify */
@@ -192,7 +192,7 @@ public class WfMessageFieldTest {
     @Test
     public void testHexDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 2);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, HEX, 0, 2);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("0x3f");
         final String result = "3f";
 
@@ -206,7 +206,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDateTimeEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DATETIME, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DATETIME, 0, -1);
         field.set("2020-07-01T21:42:23Z");
 
         /* Verify */
@@ -220,7 +220,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDateTimeDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DATETIME, 0, -1);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DATETIME, 0, -1);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("20200701214223");
         final String result = "2020-07-01T21:42:23Z";
 
@@ -234,7 +234,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDurationEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DURATION, 0, 10);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DURATION, 0, 10);
         field.set("P24D11H30M");
 
         /* Verify */
@@ -248,7 +248,7 @@ public class WfMessageFieldTest {
     @Test
     public void testDurationDecoding() throws WfCoreException {
         /* Test function */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, DURATION, 0, 10);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, DURATION, 0, 10);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("241130");
         final String result = "P24D11H30M";
 
@@ -262,7 +262,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLatitudeEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, LAT, 0, 9);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, LAT, 0, 9);
         field.set("+23.34244"); // 1001 0001 1001 1010 0001 0010 0010 0000
 
         /* Verify */
@@ -276,7 +276,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLatitudeDecoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, LAT, 0, 9);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, LAT, 0, 9);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("919a1220");
         final String result = "+23.34244";
 
@@ -290,7 +290,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLongitudeEncoding() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, LONG, 0, 10);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, LONG, 0, 10);
         field.set("-163.34245");   // 0000 1011 0001 1001 1010 0001 0010 0010 1000
 
         /* Verify */
@@ -304,7 +304,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLongitudeDecoding1() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, LONG, 0, 10);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, LONG, 0, 10);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("8b19a12380");
         final String result = "+163.34247";
 
@@ -318,7 +318,7 @@ public class WfMessageFieldTest {
     @Test
     public void testLongitudeDecoding2() throws WfCoreException {
         /* Setup */
-        WfMessageField field = new WfMessageField(FIELDNAME, null, LONG, 0, 10);
+        WfMessageField field = WfMessageField.define(FIELDNAME, null, LONG, 0, 10);
         byte[] byteArray = WfBinaryBuffer.convertToByteArray("0319a12380");
         final String result = "-063.34247";
 

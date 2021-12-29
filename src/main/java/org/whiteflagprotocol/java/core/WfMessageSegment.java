@@ -40,7 +40,7 @@ public class WfMessageSegment {
     public WfMessageSegment(final WfMessageField[] fields) {
         this.fields = new WfMessageField[fields.length];
         for (int i=0; i < fields.length; i++) {
-            this.fields[i] = new WfMessageField(fields[i]);
+            this.fields[i] = WfMessageField.from(fields[i]);
         }
     }
 
@@ -52,7 +52,7 @@ public class WfMessageSegment {
     public WfMessageSegment(final WfMessageSegment segment) {
         this.fields = new WfMessageField[segment.getNoFields()];
         for (int index = 0; index < this.fields.length; index++) {
-            this.fields[index] = new WfMessageField(segment.getField(index));
+            this.fields[index] = WfMessageField.from(segment.getField(index));
             this.fields[index].set(segment.get(index));
         }
     }
@@ -392,7 +392,7 @@ public class WfMessageSegment {
         // Add new fields from other segment with shifted start and end byte to array
         int i = this.fields.length;
         for (WfMessageField field : segment.getAllFields()) {
-            newFields[i] = new WfMessageField(field, shift);
+            newFields[i] = WfMessageField.from(field, shift);
             i++;
         }
         // Set the fields with new field array

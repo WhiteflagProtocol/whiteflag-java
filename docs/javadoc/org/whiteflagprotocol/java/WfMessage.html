@@ -238,7 +238,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)">decode</a></span>&#8203;(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;msgBuffer)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)">decode</a></span>&#8203;(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;encodedMsg)</code></th>
 <td class="colLast">
 <div class="block">Creates a new Whiteflag message from a binary buffer</div>
 </td>
@@ -404,6 +404,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -442,6 +444,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -461,6 +465,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -470,16 +476,18 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <ul class="blockList">
 <li class="blockList">
 <h4>decode</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;msgBuffer)
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;encodedMsg)
                         throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
 <div class="block">Creates a new Whiteflag message from a binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>msgBuffer</code> - the binary buffer with the encoded message</dd>
+<dd><code>encodedMsg</code> - the binary buffer with the encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -580,6 +588,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>a byte array with the compressed binary encoded message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if any field does not contain valid data</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -597,6 +607,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>a byte array with the binary encoded message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if any field does not contain valid data</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -614,6 +626,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>a hexadecimal string representation of the binary encoded</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if any field does not contain valid data</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>

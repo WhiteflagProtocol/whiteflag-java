@@ -51,57 +51,62 @@ public class WfMessageField {
 
     /**
      * Constructs a new Whiteflag message field based on provided poperties
-     * 
      * @param name the name of the Whiteflag field
+     * @param pattern the regex pattern defining allowed values
+     * @param encoding the encoding of the field
+     * @param startByte the starting byte of the field in a serialized / uncompressed message
+     * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message
+     */
+    private WfMessageField(String name, String pattern, WfMessageCodec.Encoding encoding, int startByte, int endByte) {
+        this.name = name;
+        this.pattern = Pattern.compile(pattern);
+        this.encoding = encoding;
+        this.startByte = startByte;
+        this.endByte = endByte;
+    }
+
+    /* STATIC FACTORY METHODS */
+
+    /**
+     * Defines a new Whiteflag message field
+     * @since 1.1
+     * @param name the name of the message  field
      * @param pattern the regex pattern defining allowed values; if null the generic encoding regex is used
      * @param encoding the encoding of the field
      * @param startByte the starting byte of the field in a serialized / uncompressed message
      * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message; ignored if encoding requires a fixed field length
      */
-    public WfMessageField(String name, String pattern, WfMessageCodec.Encoding encoding, int startByte, int endByte) {
-        this.name = name;
-        this.encoding = encoding;
-        this.startByte = startByte;
-
+    public static final WfMessageField define(final String name, String pattern, final WfMessageCodec.Encoding encoding, int startByte, int endByte) {
         /* If fixed length encoding, automatically set end byte */
         if (Boolean.TRUE.equals(encoding.isFixedLength())) {
-            this.endByte = startByte + encoding.byteLength();
-        } else {
-            this.endByte = endByte;
+            endByte = startByte + encoding.byteLength();
         }
         /* If no regex pattern given, use generic encoding pattern */
         if (pattern == null) {
-            this.pattern = Pattern.compile(encoding.regex());
-        } else {
-            this.pattern = Pattern.compile(pattern);
+            pattern = encoding.regex();
         }
+        /* Call constructor and return new Whiteflag message field object */
+        return new WfMessageField(name, pattern, encoding, startByte, endByte);
     }
 
     /**
-     * Constructs a new Whiteflag message field from an existing message field,
-     * without copying the value
+     * Creates a new Whiteflag message field from an existing field, without copying the value
      * @param field the {@link WfMessageField} to copy
      */
-    public WfMessageField(final WfMessageField field) {
-        this(field, 0);
+    public static final WfMessageField from(final WfMessageField field) {
+        return from(field, 0);
     }
 
     /**
-     * Constructs a new Whiteflag message field from an existing message field,
-     * without copying the value
+     * Creates a new Whiteflag message field from an existing field, without copying the value
      * @param field the {@link WfMessageField} to copy
      * @param shift number of bytes to shift the field
      */
-    public WfMessageField(final WfMessageField field, final int shift) {
-        this.name = field.name;
-        this.pattern = Pattern.compile(field.pattern.toString());
-        this.encoding = field.encoding;
-        this.startByte = field.startByte + shift;
-        if (field.endByte < 0) {
-            this.endByte = field.endByte;
-        } else {
-            this.endByte = field.endByte + shift;
-        }
+    public static final WfMessageField from(final WfMessageField field, final int shift) {
+        int startByte = field.startByte + shift;
+        int endByte = field.endByte;
+        if (field.endByte > -1) endByte += shift;
+        return new WfMessageField(field.name, field.pattern.toString(), field.encoding, startByte, endByte);
     }
 
     /* PUBLIC METHODS */

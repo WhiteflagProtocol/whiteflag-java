@@ -26,8 +26,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":9,"i7":9,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -89,13 +89,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -204,48 +204,6 @@ extends java.lang.Object</pre>
 </li>
 </ul>
 </section>
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">WfMessageField</a></span>&#8203;(java.lang.String&nbsp;name,
-              java.lang.String&nbsp;pattern,
-              <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a>&nbsp;encoding,
-              int&nbsp;startByte,
-              int&nbsp;endByte)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new Whiteflag message field based on provided poperties</div>
-</td>
-</tr>
-<tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField)">WfMessageField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new Whiteflag message field from an existing message field,
- without copying the value</div>
-</td>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageField,int)">WfMessageField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
-              int&nbsp;shift)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new Whiteflag message field from an existing message field,
- without copying the value</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -254,7 +212,7 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -289,48 +247,74 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#define(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">define</a></span>&#8203;(java.lang.String&nbsp;name,
+      java.lang.String&nbsp;pattern,
+      <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a>&nbsp;encoding,
+      int&nbsp;startByte,
+      int&nbsp;endByte)</code></th>
+<td class="colLast">
+<div class="block">Defines a new Whiteflag message field</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encode()">encode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Encodes the message field into compressed binary data</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#from(org.whiteflagprotocol.java.core.WfMessageField)">from</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</code></th>
+<td class="colLast">
+<div class="block">Creates a new Whiteflag message field from an existing field, without copying the value</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#from(org.whiteflagprotocol.java.core.WfMessageField,int)">from</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
+    int&nbsp;shift)</code></th>
+<td class="colLast">
+<div class="block">Creates a new Whiteflag message field from an existing field, without copying the value</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get()">get</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the value of the message field</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSet()">isSet</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Checks if the message field value has been set</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid()">isValid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Checks if the message field contains a valid value</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(java.lang.String)">isValid</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
 <td class="colLast">
 <div class="block">Checks if the provided data is a valid value for this field</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(java.lang.String)">set</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
 <td class="colLast">
 <div class="block">Sets the value of the message field if not already set</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -414,70 +398,6 @@ extends java.lang.Object</pre>
 </li>
 </ul>
 </section>
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>WfMessageField</h4>
-<pre>public&nbsp;WfMessageField&#8203;(java.lang.String&nbsp;name,
-                      java.lang.String&nbsp;pattern,
-                      <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a>&nbsp;encoding,
-                      int&nbsp;startByte,
-                      int&nbsp;endByte)</pre>
-<div class="block">Constructs a new Whiteflag message field based on provided poperties</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - the name of the Whiteflag field</dd>
-<dd><code>pattern</code> - the regex pattern defining allowed values; if null the generic encoding regex is used</dd>
-<dd><code>encoding</code> - the encoding of the field</dd>
-<dd><code>startByte</code> - the starting byte of the field in a serialized / uncompressed message</dd>
-<dd><code>endByte</code> - the ending byte (not included) of the field in a serialized / uncompressed message; ignored if encoding requires a fixed field length</dd>
-</dl>
-</li>
-</ul>
-<a id="&lt;init&gt;(org.whiteflagprotocol.java.core.WfMessageField)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>WfMessageField</h4>
-<pre>public&nbsp;WfMessageField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</pre>
-<div class="block">Constructs a new Whiteflag message field from an existing message field,
- without copying the value</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
-</dl>
-</li>
-</ul>
-<a id="&lt;init&gt;(org.whiteflagprotocol.java.core.WfMessageField,int)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>WfMessageField</h4>
-<pre>public&nbsp;WfMessageField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
-                      int&nbsp;shift)</pre>
-<div class="block">Constructs a new Whiteflag message field from an existing message field,
- without copying the value</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
-<dd><code>shift</code> - number of bytes to shift the field</dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section role="region">
 <ul class="blockList">
@@ -485,6 +405,60 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="define(java.lang.String,java.lang.String,org.whiteflagprotocol.java.core.WfMessageCodec.Encoding,int,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>define</h4>
+<pre class="methodSignature">public static final&nbsp;<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;define&#8203;(java.lang.String&nbsp;name,
+                                          java.lang.String&nbsp;pattern,
+                                          <a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a>&nbsp;encoding,
+                                          int&nbsp;startByte,
+                                          int&nbsp;endByte)</pre>
+<div class="block">Defines a new Whiteflag message field</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - the name of the message  field</dd>
+<dd><code>pattern</code> - the regex pattern defining allowed values; if null the generic encoding regex is used</dd>
+<dd><code>encoding</code> - the encoding of the field</dd>
+<dd><code>startByte</code> - the starting byte of the field in a serialized / uncompressed message</dd>
+<dd><code>endByte</code> - the ending byte (not included) of the field in a serialized / uncompressed message; ignored if encoding requires a fixed field length</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
+</dl>
+</li>
+</ul>
+<a id="from(org.whiteflagprotocol.java.core.WfMessageField)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>from</h4>
+<pre class="methodSignature">public static final&nbsp;<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;from&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</pre>
+<div class="block">Creates a new Whiteflag message field from an existing field, without copying the value</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
+</dl>
+</li>
+</ul>
+<a id="from(org.whiteflagprotocol.java.core.WfMessageField,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>from</h4>
+<pre class="methodSignature">public static final&nbsp;<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;from&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
+                                        int&nbsp;shift)</pre>
+<div class="block">Creates a new Whiteflag message field from an existing field, without copying the value</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
+<dd><code>shift</code> - number of bytes to shift the field</dd>
+</dl>
+</li>
+</ul>
 <a id="toString()">
 <!--   -->
 </a>
@@ -712,13 +686,13 @@ extends java.lang.Object</pre>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

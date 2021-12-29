@@ -189,8 +189,8 @@ public enum WfMessageType {
             final int endByte = splitByte + QUANTFIELDSIZE;
 
             // Add object and quantity field to array
-            fields[i] = new WfMessageField(objectField.name + nField, objectField.pattern.toString(), objectField.encoding, startByte, splitByte);
-            fields[i + 1] = new WfMessageField(objectField.name + nField + "Quant", quantField.pattern.toString(), quantField.encoding, splitByte, endByte);
+            fields[i] = WfMessageField.define(objectField.name + nField, objectField.pattern.toString(), objectField.encoding, startByte, splitByte);
+            fields[i + 1] = WfMessageField.define(objectField.name + nField + "Quant", quantField.pattern.toString(), quantField.encoding, splitByte, endByte);
 
             // Starting byte of next field
             startByte = endByte;

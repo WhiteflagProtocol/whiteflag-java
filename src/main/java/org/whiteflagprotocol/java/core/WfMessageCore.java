@@ -34,15 +34,26 @@ public class WfMessageCore {
     /* CONSTRUCTORS */
 
     /**
-     * Creates a Whiteflag message from a header and a body segment
+     * Creates a Whiteflag message core from a header and a body segment
      * @param type the of the message
      * @param header the message header
      * @param body the message body
      */
     protected WfMessageCore(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
         this.type = type;
-        this.header = new WfMessageSegment(header);
-        this.body = new WfMessageSegment(body);
+        this.header = header;
+        this.body = body;
+    }
+
+    /**
+     * Creates a Whiteflag message from an existing core message
+     * @since 1.1
+     * @param coreMsg the core message
+     */
+    protected WfMessageCore(WfMessageCore coreMsg) {
+        this.type = coreMsg.type;
+        this.header = coreMsg.header;
+        this.body = coreMsg.body;
     }
 
     /* PUBLIC METHODS */

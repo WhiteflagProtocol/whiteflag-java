@@ -203,11 +203,18 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageCore)">WfMessageCore</a></span>&#8203;(<a href="WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a>&nbsp;coreMsg)</code></th>
+<td class="colLast">
+<div class="block">Creates a Whiteflag message from an existing core message</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected </code></td>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.whiteflagprotocol.java.core.WfMessageType,org.whiteflagprotocol.java.core.WfMessageSegment,org.whiteflagprotocol.java.core.WfMessageSegment)">WfMessageCore</a></span>&#8203;(<a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a>&nbsp;type,
              <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;header,
              <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;body)</code></th>
 <td class="colLast">
-<div class="block">Creates a Whiteflag message from a header and a body segment</div>
+<div class="block">Creates a Whiteflag message core from a header and a body segment</div>
 </td>
 </tr>
 </table>
@@ -364,18 +371,34 @@ extends java.lang.Object</pre>
 <a id="&lt;init&gt;(org.whiteflagprotocol.java.core.WfMessageType,org.whiteflagprotocol.java.core.WfMessageSegment,org.whiteflagprotocol.java.core.WfMessageSegment)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>WfMessageCore</h4>
 <pre>protected&nbsp;WfMessageCore&#8203;(<a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a>&nbsp;type,
                         <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;header,
                         <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;body)</pre>
-<div class="block">Creates a Whiteflag message from a header and a body segment</div>
+<div class="block">Creates a Whiteflag message core from a header and a body segment</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - the of the message</dd>
 <dd><code>header</code> - the message header</dd>
 <dd><code>body</code> - the message body</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(org.whiteflagprotocol.java.core.WfMessageCore)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>WfMessageCore</h4>
+<pre>protected&nbsp;WfMessageCore&#8203;(<a href="WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a>&nbsp;coreMsg)</pre>
+<div class="block">Creates a Whiteflag message from an existing core message</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>coreMsg</code> - the core message</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
