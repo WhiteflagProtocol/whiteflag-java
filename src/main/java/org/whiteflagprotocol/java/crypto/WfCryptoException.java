@@ -5,6 +5,8 @@ package org.whiteflagprotocol.java.crypto;
 
 /**
  * Whiteflag protocol cryptographic exception class
+ * 
+ * @since 1.1
  */
 public class WfCryptoException extends Exception {
 

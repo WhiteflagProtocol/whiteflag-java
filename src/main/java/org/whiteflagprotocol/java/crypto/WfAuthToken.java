@@ -17,6 +17,8 @@ import static org.whiteflagprotocol.java.crypto.WfAuthMethod.*;
  * 
  * @wfref 5.1.2.2 Method 2: Shared Token Validation
  * @wfref 5.2.3 Key and Token Derivation
+ * 
+ * @since 1.1
  */
 public class WfAuthToken {
 

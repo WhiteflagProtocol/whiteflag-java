@@ -11,6 +11,8 @@ package org.whiteflagprotocol.java.crypto;
  * 
  * @wfver v1-draft.6
  * @wfref 5.2.2 Key Agreement
+ * 
+ * @since 1.1
  */
 public class WfECDHKeyPair {
 

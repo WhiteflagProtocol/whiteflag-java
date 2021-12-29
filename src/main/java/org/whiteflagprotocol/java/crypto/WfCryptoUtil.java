@@ -16,6 +16,8 @@ import javax.crypto.spec.SecretKeySpec;
  * <p> This is a non-instantiatable utility class that performs
  * cryptographic support functions. No implementation specific
  * properties and methods are defined by this class.
+ * 
+ * @since 1.1
  */
 public class WfCryptoUtil {
 

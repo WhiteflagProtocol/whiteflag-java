@@ -12,6 +12,8 @@ package org.whiteflagprotocol.java.crypto;
  * 
  * @wfver v1-draft.6
  * @wfref 5.2.3 Key and Token Derivation
+ * 
+ * @since 1.1
  */
 public enum WfAuthMethod {
     /**

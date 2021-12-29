@@ -6,5 +6,7 @@
  * implementation independent cryptogrpahic functionality used by the main
  * protocol classes. Seperating these critical security functions makes them
  * better inspectable, testable and maintainable.
+ * 
+ * @since 1.1
  */
 package org.whiteflagprotocol.java.crypto;
