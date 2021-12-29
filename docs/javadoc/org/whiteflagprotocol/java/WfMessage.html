@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var data = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -144,6 +144,8 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
  also provides static factory methods to create Whiteflag messages in
  different ways from various data.</div>
 <dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
 <dt><span class="simpleTagLabel">Whiteflag version:</span></dt>
 <dd>v1-draft.6</dd>
 </dl>
@@ -224,73 +226,80 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <td class="colFirst"><code>static <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(byte%5B%5D)">decode</a></span>&#8203;(byte[]&nbsp;binMessage)</code></th>
 <td class="colLast">
-<div class="block">Creates a new Whiteflag message object from a binary encoded message</div>
+<div class="block">Creates a new Whiteflag message from a byte array with an binary encoded message</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(java.lang.String)">decode</a></span>&#8203;(java.lang.String&nbsp;hexMessage)</code></th>
 <td class="colLast">
-<div class="block">Creates a new Whiteflag message object from a hexadecimal string with an encoded message</div>
+<div class="block">Creates a new Whiteflag message from a hexadecimal string represaentation of an encoded message</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>static <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)">decode</a></span>&#8203;(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;msgBuffer)</code></th>
+<td class="colLast">
+<div class="block">Creates a new Whiteflag message from a binary buffer</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserialize(java.lang.String)">deserialize</a></span>&#8203;(java.lang.String&nbsp;serializedMsg)</code></th>
 <td class="colLast">
 <div class="block">Creates a new Whiteflag message object from a serialized message</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserializeJson(java.lang.String)">deserializeJson</a></span>&#8203;(java.lang.String&nbsp;jsonMessage)</code></th>
 <td class="colLast">
 <div class="block">Creates a new Whiteflag message object from a serialized JSON message</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encode()">encode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the cached encoded message, or else it encodes and caches Whiteflag message</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetadata(java.lang.String)">getMetadata</a></span>&#8203;(java.lang.String&nbsp;key)</code></th>
 <td class="colLast">
 <div class="block">Returns the requested metadata value of the Whiteflag message</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetadataKeys()">getMetadataKeys</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns metadata keys of the Whiteflag message</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the cached serialized message, or else it serialzes and caches Whiteflag message</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toByteArray()">toByteArray</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns a byte array with the binary encoded message</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toHexString()">toHexString</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns a hexedimal string representation of the binary encoded message</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toJson()">toJson</a></span>()</code></th>
 <td class="colLast">
@@ -328,6 +337,171 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="create(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;create&#8203;(java.lang.String&nbsp;messageCode)
+                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new empty Whiteflag message object of the specified type</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>messageCode</code> - the code indicating the message type to be created</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="copy(org.whiteflagprotocol.java.WfMessage)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>copy</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;copy&#8203;(<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;message)</pre>
+<div class="block">Copies a Whiteflag message into new Whiteflag message object, without metadata</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>message</code> - the message to be copied</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+</dl>
+</li>
+</ul>
+<a id="clone(org.whiteflagprotocol.java.WfMessage)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clone</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;clone&#8203;(<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;message)</pre>
+<div class="block">Clones a Whiteflag message into new Whiteflag message object, including metadata</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>message</code> - the message to be copied</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+</dl>
+</li>
+</ul>
+<a id="deserialize(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>deserialize</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;deserialize&#8203;(java.lang.String&nbsp;serializedMsg)
+                             throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new Whiteflag message object from a serialized message</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>serializedMsg</code> - the uncompressed serialized message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
+</dl>
+</li>
+</ul>
+<a id="deserializeJson(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>deserializeJson</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;deserializeJson&#8203;(java.lang.String&nbsp;jsonMessage)
+                                 throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new Whiteflag message object from a serialized JSON message</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>jsonMessage</code> - the serialized JSON message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
+</dl>
+</li>
+</ul>
+<a id="decode(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(java.lang.String&nbsp;hexMessage)
+                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new Whiteflag message from a hexadecimal string represaentation of an encoded message</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>hexMessage</code> - the hexadecimal string representation of the encoded message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
+</dl>
+</li>
+</ul>
+<a id="decode(byte[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(byte[]&nbsp;binMessage)
+                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new Whiteflag message from a byte array with an binary encoded message</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>binMessage</code> - the byte array with the binary encoded message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
+</dl>
+</li>
+</ul>
+<a id="decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decode</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;msgBuffer)
+                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new Whiteflag message from a binary buffer</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>msgBuffer</code> - the binary buffer with the encoded message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
+</dl>
+</li>
+</ul>
+<a id="compile(java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compile</h4>
+<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;compile&#8203;(java.lang.String[]&nbsp;fieldValues)
+                         throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
+<div class="block">Creates a new Whiteflag message object from field values</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fieldValues</code> - String array with the values for the message fields</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if any of the provided values is invalid</dd>
+</dl>
+</li>
+</ul>
 <a id="addMetadata(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
@@ -446,7 +620,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <a id="toJson()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>toJson</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toJson()
@@ -457,152 +631,6 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd>the serialised JSON representation</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="create(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>create</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;create&#8203;(java.lang.String&nbsp;messageCode)
-                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Creates a new empty Whiteflag message object of the specified type</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>messageCode</code> - the code indicating the message type to be created</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="copy(org.whiteflagprotocol.java.WfMessage)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copy</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;copy&#8203;(<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;message)</pre>
-<div class="block">Copies a Whiteflag message into new Whiteflag message object, without metadata</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>message</code> - the message to be copied</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-</dl>
-</li>
-</ul>
-<a id="clone(org.whiteflagprotocol.java.WfMessage)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clone</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;clone&#8203;(<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;message)</pre>
-<div class="block">Clones a Whiteflag message into new Whiteflag message object, including metadata</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>message</code> - the message to be copied</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-</dl>
-</li>
-</ul>
-<a id="deserialize(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>deserialize</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;deserialize&#8203;(java.lang.String&nbsp;serializedMsg)
-                             throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Creates a new Whiteflag message object from a serialized message</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serializedMsg</code> - the uncompressed serialized message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
-</dl>
-</li>
-</ul>
-<a id="deserializeJson(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>deserializeJson</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;deserializeJson&#8203;(java.lang.String&nbsp;jsonMessage)
-                                 throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Creates a new Whiteflag message object from a serialized JSON message</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>jsonMessage</code> - the serialized JSON message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
-</dl>
-</li>
-</ul>
-<a id="decode(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>decode</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(java.lang.String&nbsp;hexMessage)
-                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Creates a new Whiteflag message object from a hexadecimal string with an encoded message</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>hexMessage</code> - the hexadecimal string representation of the encoded message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the encoding of the message is invalid</dd>
-</dl>
-</li>
-</ul>
-<a id="decode(byte[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>decode</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;decode&#8203;(byte[]&nbsp;binMessage)
-                        throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Creates a new Whiteflag message object from a binary encoded message</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binMessage</code> - the binary encoded message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the encoding of the message is invalid</dd>
-</dl>
-</li>
-</ul>
-<a id="compile(java.lang.String[])">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>compile</h4>
-<pre class="methodSignature">public static&nbsp;<a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a>&nbsp;compile&#8203;(java.lang.String[]&nbsp;fieldValues)
-                         throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Creates a new Whiteflag message object from field values</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>fieldValues</code> - String array with the values for the message fields</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if any of the provided values is invalid</dd>
 </dl>
 </li>
 </ul>

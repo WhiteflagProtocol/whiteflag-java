@@ -139,6 +139,8 @@ extends java.lang.Object</pre>
  object. For example, it ensures that the message body corresponds with
  the message type.</div>
 <dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
 <dt><span class="simpleTagLabel">Whiteflag version:</span></dt>
 <dd>v1-draft.6</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
@@ -203,7 +205,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(byte%5B%5D)">decode</a></span>&#8203;(byte[]&nbsp;encodedMsg)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)">decode</a></span>&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;msgBuffer)</code></th>
 <td class="colLast">
 <div class="block">Decodes an encoded Whiteflag message and creates a new Whiteflag core message object</div>
 </td>
@@ -345,25 +347,29 @@ extends java.lang.Object</pre>
 <dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the provided values are invalid</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
-<a id="decode(byte[])">
+<a id="decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>decode</h4>
-<pre class="methodSignature">public final&nbsp;<a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a>&nbsp;decode&#8203;(byte[]&nbsp;encodedMsg)
+<pre class="methodSignature">public final&nbsp;<a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core">WfMessageCreator</a>&nbsp;decode&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;msgBuffer)
                               throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Decodes an encoded Whiteflag message and creates a new Whiteflag core message object</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>encodedMsg</code> - a byte array with the compressed binary encoded message</dd>
+<dd><code>msgBuffer</code> - a <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> with the compressed binary encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the encoded message is invalid</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>

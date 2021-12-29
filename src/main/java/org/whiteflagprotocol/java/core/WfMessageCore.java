@@ -14,6 +14,8 @@ import java.util.Set;
  * All implementation specific logic should be in a derived message subclass.
  * 
  * @wfref 4. Message Format
+ * 
+ * @since 1.0
  */
 public class WfMessageCore {
 
@@ -43,7 +45,7 @@ public class WfMessageCore {
         this.body = new WfMessageSegment(body);
     }
 
-    /* PUBLIC METHODS: basic object interface */
+    /* PUBLIC METHODS */
 
     /**
      * Returns the message as a concatinated string of field values
@@ -59,8 +61,6 @@ public class WfMessageCore {
         }
         return string; 
     }
-
-    /* PUBLIC METHODS: metadata & validators */
 
     /**
      * Checks if this message contains valid data
@@ -113,8 +113,6 @@ public class WfMessageCore {
         return names;
     }
 
-    /* PUBLIC METHODS: getters & setters */
-
     /**
      * Gets the value of the specified field
      * @param fieldname the name of the requested field
@@ -136,8 +134,6 @@ public class WfMessageCore {
         if (Boolean.TRUE.equals(header.set(fieldname, data))) return true;
         return body.set(fieldname, data);
     }
-
-    /* PUBLIC METHODS: operations */
 
     /**
      * Serializes the Whiteflag message

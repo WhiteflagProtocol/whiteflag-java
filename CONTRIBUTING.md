@@ -116,6 +116,21 @@ Google Java Style Guide:
 * indentation of 4 spaces (no tabs!)
 * lines may be 128 characters long
 
+### Class organisation
+
+Classes should be organised as follows:
+
+1. Constant Properties
+2. Variable Properties
+3. Constructors
+4. Static Factory Methods
+5. Public Methods
+6. Public Static Methods
+7. Protected Methods
+8. Protected Static Methods
+9. Private Methods
+10. Nested Classes
+
 ### Additional Coding Guidance
 
 1. Look at the existing code as a guidance and example!

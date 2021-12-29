@@ -5,6 +5,8 @@ package org.whiteflagprotocol.java.core;
 
 /**
  * Whiteflag protocol core exception class
+ * 
+ * @since 1.0
  */
 public class WfCoreException extends Exception {
 

@@ -15,19 +15,12 @@ import static org.whiteflagprotocol.java.core.WfMessageCodec.Encoding.*;
  * 
  * @wfver v1-draft.6
  * @wfref 4. Message Format
+ * 
+ * @since 1.0
  */
 public class WfMessageDefinitions {
 
-    /* CONSTRUCTOR */
-
-    /** 
-     * Prevents the utility class to be instantiated
-     */
-    private WfMessageDefinitions() {
-        throw new IllegalStateException("Cannot instantiate Whiteflag message definitions utility class");
-    }
-
-    /* FIELDS */
+    /* PROPERTIES */
 
     /**
      *  Undefined fields
@@ -123,4 +116,13 @@ public class WfMessageDefinitions {
         new WfMessageField("ObjectType", "^"+HEX.charset()+"{2}$", HEX, 135, 137),
         new WfMessageField("ObjectTypeQuant", "^"+DEC.charset()+"{2}$", DEC, 137, 139)
     };
+
+    /* CONSTRUCTOR */
+
+    /** 
+     * Prevents this utility class to be instantiated
+     */
+    private WfMessageDefinitions() {
+        throw new IllegalStateException("Cannot instantiate Whiteflag message definitions utility class");
+    }
 }

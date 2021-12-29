@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10,"i13":9,"i14":9,"i15":9,"i16":10,"i17":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":10,"i11":10,"i12":9,"i13":9,"i14":10,"i15":10,"i16":9,"i17":9,"i18":9,"i19":10,"i20":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -134,12 +134,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 extends java.lang.Object</pre>
 <div class="block">Whiteflag encoded message object
  
- <p> This class defines represents an encoded message. It can be created
- by appending <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> objects of a Whiteflag message, which
- are encoded when added. Alternatively, an encoded message object may be
- crated by providing a hexadecimal string or byte array with an encoded
- message. The encoded message object can provide a decode message.</div>
+ <p> This class defines a binary buffer to represent encoded messages. It
+ can either be created 1. by appending <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> fields from a
+ Whiteflag message, which are encoded when added, or 2. by providing a
+ hexadecimal string or byte array with an encoded message. The binary buffer
+ can be converted to a hexadecimal string or a byte byffer, e.g. for
+ encryption or embedding the message in a blockchain transaction. After the
+ buffer is marked as complete, it cannot be altered.</div>
 <dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>4.1 Message Structure</dd>
 </dl>
@@ -249,6 +253,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bitLength()">bitLength</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the bit length of the binary buffer</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byteLength()">byteLength</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the byte length of the binary buffer</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#concatinateBits(byte%5B%5D,int,byte%5B%5D,int)">concatinateBits</a></span>&#8203;(byte[]&nbsp;byteArray1,
                int&nbsp;nBits1,
@@ -258,28 +276,28 @@ extends java.lang.Object</pre>
 <div class="block">Concatinates two bitsets</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToByteArray(java.lang.String)">convertToByteArray</a></span>&#8203;(java.lang.String&nbsp;hexstr)</code></th>
 <td class="colLast">
 <div class="block">Converts a hexadecimal string to a byte array</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#convertToHexString(byte%5B%5D)">convertToHexString</a></span>&#8203;(byte[]&nbsp;byteArray)</code></th>
 <td class="colLast">
 <div class="block">Converts a byte array to a hexadecimal string</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Creates a new Whiteflag binary buffer</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cropBits(byte%5B%5D,int)">cropBits</a></span>&#8203;(byte[]&nbsp;byteArray,
         int&nbsp;bitLength)</code></th>
@@ -287,7 +305,7 @@ extends java.lang.Object</pre>
 <div class="block">Shortens the byte array to fit the length of the used bits</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#extractBits(int,int)">extractBits</a></span>&#8203;(int&nbsp;startBit,
            int&nbsp;bitLength)</code></th>
@@ -295,36 +313,43 @@ extends java.lang.Object</pre>
 <div class="block">Returns a byte array with a subset of the bits in the buffer</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.lang.Boolean</code></td>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#extractMessageField(org.whiteflagprotocol.java.core.WfMessageField,int)">extractMessageField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
                    int&nbsp;startBit)</code></th>
 <td class="colLast">
 <div class="block">Extracts and decodes a Whiteflag message field from the binary buffer</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromByteArray(byte%5B%5D)">fromByteArray</a></span>&#8203;(byte[]&nbsp;data)</code></th>
 <td class="colLast">
-<div class="block">Constructs a new Whiteflag binary encoded message buffer from a byte array</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromHexString(java.lang.String)">fromHexString</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
-<td class="colLast">
-<div class="block">Constructs a new Whiteflag binary encoded message buffer from a hexadecimal string</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#length()">length</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the bit length of the binary buffer</div>
+<div class="block">Creates a new Whiteflag binary encoded message buffer from a byte array</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code>static <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#fromHexString(java.lang.String)">fromHexString</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Creates a new Whiteflag binary encoded message buffer from a hexadecimal string</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isComplete()">isComplete</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Checks if the buffer is marked as complete and cannot be altered</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#markComplete()">markComplete</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Marks the buffer as complete and makes it read-only</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeStringPrefix(java.lang.String,java.lang.String)">removeStringPrefix</a></span>&#8203;(java.lang.String&nbsp;str,
                   java.lang.String&nbsp;prefix)</code></th>
@@ -332,7 +357,7 @@ extends java.lang.Object</pre>
 <div class="block">Checks for and removes prefix from string</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shiftLeft(byte%5B%5D,int)">shiftLeft</a></span>&#8203;(byte[]&nbsp;byteArray,
          int&nbsp;shift)</code></th>
@@ -340,7 +365,7 @@ extends java.lang.Object</pre>
 <div class="block">Shifts bits in a byte array to the left modulo 8</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shiftRight(byte%5B%5D,int)">shiftRight</a></span>&#8203;(byte[]&nbsp;byteArray,
           int&nbsp;shift)</code></th>
@@ -348,14 +373,14 @@ extends java.lang.Object</pre>
 <div class="block">Shifts bits in a byte array to the right modulo 8</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toByteArray()">toByteArray</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the Whiteflag encoded message as a byte array</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toHexString()">toHexString</a></span>()</code></th>
 <td class="colLast">
@@ -530,7 +555,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>fromByteArray</h4>
 <pre class="methodSignature">public static&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;fromByteArray&#8203;(byte[]&nbsp;data)</pre>
-<div class="block">Constructs a new Whiteflag binary encoded message buffer from a byte array</div>
+<div class="block">Creates a new Whiteflag binary encoded message buffer from a byte array</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - a byte array with a binary encoded Whiteflag message data</dd>
@@ -546,7 +571,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>fromHexString</h4>
 <pre class="methodSignature">public static&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;fromHexString&#8203;(java.lang.String&nbsp;data)</pre>
-<div class="block">Constructs a new Whiteflag binary encoded message buffer from a hexadecimal string</div>
+<div class="block">Creates a new Whiteflag binary encoded message buffer from a hexadecimal string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - a hexadecimal string with a binary encoded Whiteflag message data</dd>
@@ -555,13 +580,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="length()">
+<a id="bitLength()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>length</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;length()</pre>
+<h4>bitLength</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;bitLength()</pre>
 <div class="block">Returns the bit length of the binary buffer</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -569,19 +594,17 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="append(org.whiteflagprotocol.java.core.WfBinaryBuffer)">
+<a id="byteLength()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>append</h4>
-<pre class="methodSignature">public&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;append&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;binaryBuffer)</pre>
-<div class="block">Appends a binary buffer to this binary buffer</div>
+<h4>byteLength</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;byteLength()</pre>
+<div class="block">Returns the byte length of the binary buffer</div>
 <dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binaryBuffer</code> - the <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> to append to this binary buffer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>the buffer length in bits</dd>
 </dl>
 </li>
 </ul>
@@ -613,6 +636,53 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="markComplete()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>markComplete</h4>
+<pre class="methodSignature">public&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;markComplete()</pre>
+<div class="block">Marks the buffer as complete and makes it read-only</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+</dl>
+</li>
+</ul>
+<a id="isComplete()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isComplete</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;isComplete()</pre>
+<div class="block">Checks if the buffer is marked as complete and cannot be altered</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>TRUE if buffer is marked as complete</dd>
+</dl>
+</li>
+</ul>
+<a id="append(org.whiteflagprotocol.java.core.WfBinaryBuffer)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>append</h4>
+<pre class="methodSignature">public&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;append&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;binaryBuffer)
+                      throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<div class="block">Appends a binary buffer to this binary buffer</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>binaryBuffer</code> - the <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> to append to this binary buffer</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if buffer cannot be altered</dd>
+</dl>
+</li>
+</ul>
 <a id="addMessageField(org.whiteflagprotocol.java.core.WfMessageField)">
 <!--   -->
 </a>
@@ -628,7 +698,7 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code></dd>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if field connot be encoded or if buffer cannot be altered</dd>
 </dl>
 </li>
 </ul>
@@ -638,18 +708,18 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>extractMessageField</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;extractMessageField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
-                                             int&nbsp;startBit)
-                                      throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;extractMessageField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
+                                          int&nbsp;startBit)
+                                   throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Extracts and decodes a Whiteflag message field from the binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to be extracted and decoded</dd>
 <dd><code>startBit</code> - the bit where the encoded field is located in the buffer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>TRUE if field value is set, FALSE if field already set or data is invalid</dd>
+<dd>String with the decoded field value</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code></dd>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if field connot be decoded</dd>
 </dl>
 </li>
 </ul>
@@ -659,7 +729,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToByteArray</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;convertToByteArray&#8203;(java.lang.String&nbsp;hexstr)</pre>
+<pre class="methodSignature">public static final&nbsp;byte[]&nbsp;convertToByteArray&#8203;(java.lang.String&nbsp;hexstr)</pre>
 <div class="block">Converts a hexadecimal string to a byte array</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -675,7 +745,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertToHexString</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;convertToHexString&#8203;(byte[]&nbsp;byteArray)</pre>
+<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;convertToHexString&#8203;(byte[]&nbsp;byteArray)</pre>
 <div class="block">Converts a byte array to a hexadecimal string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -691,8 +761,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>shiftRight</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;shiftRight&#8203;(byte[]&nbsp;byteArray,
-                                int&nbsp;shift)</pre>
+<pre class="methodSignature">public static final&nbsp;byte[]&nbsp;shiftRight&#8203;(byte[]&nbsp;byteArray,
+                                      int&nbsp;shift)</pre>
 <div class="block">Shifts bits in a byte array to the right modulo 8</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -709,8 +779,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>shiftLeft</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;shiftLeft&#8203;(byte[]&nbsp;byteArray,
-                               int&nbsp;shift)</pre>
+<pre class="methodSignature">public static final&nbsp;byte[]&nbsp;shiftLeft&#8203;(byte[]&nbsp;byteArray,
+                                     int&nbsp;shift)</pre>
 <div class="block">Shifts bits in a byte array to the left modulo 8</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -727,8 +797,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>appendBits</h4>
-<pre class="methodSignature">protected&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;appendBits&#8203;(byte[]&nbsp;byteArray,
-                                    int&nbsp;nBits)</pre>
+<pre class="methodSignature">protected final&nbsp;<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;appendBits&#8203;(byte[]&nbsp;byteArray,
+                                          int&nbsp;nBits)
+                                   throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Appends the specified number of bits from a bytes array to the binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -736,6 +807,8 @@ extends java.lang.Object</pre>
 <dd><code>nBits</code> - the number of bits to be appended from the byte array</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the string without prefix</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the buffer is complete and cannot be altered</dd>
 </dl>
 </li>
 </ul>
@@ -745,8 +818,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>extractBits</h4>
-<pre class="methodSignature">protected&nbsp;byte[]&nbsp;extractBits&#8203;(int&nbsp;startBit,
-                             int&nbsp;bitLength)</pre>
+<pre class="methodSignature">protected final&nbsp;byte[]&nbsp;extractBits&#8203;(int&nbsp;startBit,
+                                   int&nbsp;bitLength)</pre>
 <div class="block">Returns a byte array with a subset of the bits in the buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -763,10 +836,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>concatinateBits</h4>
-<pre class="methodSignature">protected static&nbsp;byte[]&nbsp;concatinateBits&#8203;(byte[]&nbsp;byteArray1,
-                                        int&nbsp;nBits1,
-                                        byte[]&nbsp;byteArray2,
-                                        int&nbsp;nBits2)</pre>
+<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;concatinateBits&#8203;(byte[]&nbsp;byteArray1,
+                                              int&nbsp;nBits1,
+                                              byte[]&nbsp;byteArray2,
+                                              int&nbsp;nBits2)</pre>
 <div class="block">Concatinates two bitsets</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -785,8 +858,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>cropBits</h4>
-<pre class="methodSignature">protected static&nbsp;byte[]&nbsp;cropBits&#8203;(byte[]&nbsp;byteArray,
-                                 int&nbsp;bitLength)</pre>
+<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;cropBits&#8203;(byte[]&nbsp;byteArray,
+                                       int&nbsp;bitLength)</pre>
 <div class="block">Shortens the byte array to fit the length of the used bits</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

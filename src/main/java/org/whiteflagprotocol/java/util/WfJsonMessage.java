@@ -22,6 +22,8 @@ import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_
  * JavaScript Object Notation (JSON) format, in accordance with Annex B
  * of the Whiteflag specification. The basic JSON structure is as follows:
  * <code> { "MetaHeader" : {...}, "MessageHeader": {...}, "MessageBody": {...} }</code>
+ * 
+ * @since 1.0
  */
 @JsonPropertyOrder({ "MetaHeader", "MessageHeader", "MessageBody" })
 public class WfJsonMessage {
@@ -51,7 +53,9 @@ public class WfJsonMessage {
     /**
      * Creates a new empty JSON representation of a Whiteflag message
      */
-    private WfJsonMessage() {}
+    private WfJsonMessage() {
+        /* Required for Json annotation declarations */
+    }
 
     /**
      * Creates a new JSON representation of a Whiteflag message
@@ -65,22 +69,7 @@ public class WfJsonMessage {
         this.body = body;
     }
 
-    /* PUBLIC METHODS: object operations */
-
-    /**
-     * Creates a serialized JSON representation of a Whiteflag message
-     * @return the serialized JSON representation of the message
-     * @throws JsonProcessingException if no valid JSON serialization can be created
-     */
-    public String toJson() throws WfUtilException {
-        String jsonStr;
-        try {
-            jsonStr = new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            throw new WfUtilException("Cannot convert message to JSON string: " + e.getMessage(), WF_JSON_ERROR);
-        }
-        return jsonStr;
-    }
+    /* STATIC FACTORY METHODS */
 
     /**
      * Creates a new JSON representation of a Whiteflag message from a serialized JSON string
@@ -99,7 +88,7 @@ public class WfJsonMessage {
         return jsonMessage;
     }
 
-    /* PUBLIC METHODS: getters for mappings */
+    /* PUBLIC METHODS */
 
     /**
      * Gets the message metadata
@@ -126,5 +115,20 @@ public class WfJsonMessage {
     @JsonGetter("MessageBody")
     public Map<String, String> getBody() {
         return body;
+    }
+
+    /**
+     * Creates a serialized JSON representation of a Whiteflag message
+     * @return the serialized JSON representation of the message
+     * @throws JsonProcessingException if no valid JSON serialization can be created
+     */
+    public String toJson() throws WfUtilException {
+        String jsonStr;
+        try {
+            jsonStr = new ObjectMapper().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            throw new WfUtilException("Cannot convert message to JSON string: " + e.getMessage(), WF_JSON_ERROR);
+        }
+        return jsonStr;
     }
 }

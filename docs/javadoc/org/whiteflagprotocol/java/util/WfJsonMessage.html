@@ -138,6 +138,10 @@ extends java.lang.Object</pre>
  JavaScript Object Notation (JSON) format, in accordance with Annex B
  of the Whiteflag specification. The basic JSON structure is as follows:
  <code> { "MetaHeader" : {...}, "MessageHeader": {...}, "MessageBody": {...} }</code></div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -270,24 +274,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="toJson()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toJson</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toJson()
-                        throws <a href="WfUtilException.html" title="class in org.whiteflagprotocol.java.util">WfUtilException</a></pre>
-<div class="block">Creates a serialized JSON representation of a Whiteflag message</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the serialized JSON representation of the message</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>com.fasterxml.jackson.core.JsonProcessingException</code> - if no valid JSON serialization can be created</dd>
-<dd><code><a href="WfUtilException.html" title="class in org.whiteflagprotocol.java.util">WfUtilException</a></code></dd>
-</dl>
-</li>
-</ul>
 <a id="create(java.lang.String)">
 <!--   -->
 </a>
@@ -337,7 +323,7 @@ extends java.lang.Object</pre>
 <a id="getBody()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getBody</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getBody()</pre>
@@ -345,6 +331,24 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the fieldname-to-value mapping of the message body</dd>
+</dl>
+</li>
+</ul>
+<a id="toJson()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>toJson</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toJson()
+                        throws <a href="WfUtilException.html" title="class in org.whiteflagprotocol.java.util">WfUtilException</a></pre>
+<div class="block">Creates a serialized JSON representation of a Whiteflag message</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the serialized JSON representation of the message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>com.fasterxml.jackson.core.JsonProcessingException</code> - if no valid JSON serialization can be created</dd>
+<dd><code><a href="WfUtilException.html" title="class in org.whiteflagprotocol.java.util">WfUtilException</a></code></dd>
 </dl>
 </li>
 </ul>

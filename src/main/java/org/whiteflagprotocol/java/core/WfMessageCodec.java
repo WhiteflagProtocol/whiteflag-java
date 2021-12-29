@@ -24,6 +24,8 @@ import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BIT;
  * @wfref 4 Message Format
  * @wfref 4.1.2 Encoding
  * @wfref 4.1.3 Compression
+ * 
+ * @since 1.0
  */
 public class WfMessageCodec {
 
@@ -40,6 +42,7 @@ public class WfMessageCodec {
 
     /**
      * Encodes a Whiteflag field into a binary buffer
+     * @since 1.1
      * @param field a {@link WfMessageField}
      * @return a binary buffer with the encoded field
      */
@@ -82,6 +85,7 @@ public class WfMessageCodec {
 
     /**
      * Sets the field value from a binary buffer
+     * @since 1.1
      * @param field the field for which to decode the binary value
      * @param buffer a binary buffer with the compressed binary encoded field data
      * @return the uncompressed value of the field
@@ -135,7 +139,7 @@ public class WfMessageCodec {
             case LAT:
             case LONG:
                 /* Sign of lat long coordinates */
-                if (((buffer[0] >> (BYTE - 1)) & 1) == 1) {
+                if (((buffer[0] >>> (BYTE - 1)) & 1) == 1) {
                     str.append("+");
                 } else {
                     str.append("-");
@@ -156,6 +160,7 @@ public class WfMessageCodec {
 
     /**
      * Encodes a binary string into a binary buffer
+     * @since 1.1
      * @param binstr the binary string to encode
      * @return a binary buffer containing the bits from the binary string
      */
@@ -177,6 +182,7 @@ public class WfMessageCodec {
 
     /**
      * Decodes a binary buffer into a binary string
+     * @since 1.1
      * @param buffer the binary buffer to decode
      * @param bitLength the buffer length, i.e. the number of bits in the buffer to decode
      * @return a binary string containing the bits from the binary buffer
@@ -188,8 +194,7 @@ public class WfMessageCodec {
         for (int bitIndex = 0; bitIndex < bitLength; bitIndex += BIT) {
             final int byteCursor = bitIndex / BYTE;
             final int bitPosition = bitIndex % BYTE;
-
-            if ((buffer[byteCursor] >> bitPosition & 1) == 1) {
+            if ((buffer[byteCursor] >>> (BYTE - bitPosition - 1) & 1) == 1) {
                 str.append("1");
             } else {
                 str.append("0");
@@ -200,6 +205,7 @@ public class WfMessageCodec {
 
     /**
      * Encodes a (hexa)decimal string into a binary buffer
+     * @since 1.1
      * @param bdxstr the (hexa)decimal string to encode
      * @return a binary buffer containing the encoded (hexa)decimal string
      */
@@ -220,6 +226,7 @@ public class WfMessageCodec {
 
     /**
      * Decodes a binary buffer into a (hexa)decimal string
+     * @since 1.1
      * @param buffer the binary buffer containing the binary encoded (hexa)decimals to decode
      * @param bitLength the buffer length, i.e. the number of bits in the buffer to decode
      * @return a (hexa)decimal string with the decoded data
@@ -243,6 +250,7 @@ public class WfMessageCodec {
 
     /**
      * Encodes a datum string into binary buffer
+     * @since 1.1
      * @param datumstr the datum string to encode
      * @return a binary buffer containing the encoded datum
      */
@@ -271,6 +279,8 @@ public class WfMessageCodec {
      * 
      * <p> Whiteflag fields use these compressed encodings, as defined for
      * each message field in the Whiteflag specification.
+     * 
+     * @since 1.1
      */
     public enum Encoding {
 

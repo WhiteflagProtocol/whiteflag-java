@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -139,6 +139,8 @@ extends java.lang.Object</pre>
  message fields, depending on the part and the type of the message. The fields
  should be ordered, without missing or overlapping bytes.</div>
 <dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>4.2 Message Header, 4.3 Message Body</dd>
 </dl>
@@ -201,92 +203,107 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int)">decode</a></span>&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;buffer,
-      int&nbsp;startBit)</code></th>
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#bitLength()">bitLength</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the bit length of this segment, excluding the last variable length field if not set</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#byteLength()">byteLength</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Returns the byte length of this segment, excluding the last variable length field if not set</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int,int)">decode</a></span>&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;buffer,
+      int&nbsp;startBit,
+      int&nbsp;fieldIndex)</code></th>
 <td class="colLast">
 <div class="block">Decodes this message segment from the provided encoded message</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>protected int</code></td>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserialize(java.lang.String,int)">deserialize</a></span>&#8203;(java.lang.String&nbsp;messageStr,
-           int&nbsp;startByte)</code></th>
+           int&nbsp;fieldIndex)</code></th>
 <td class="colLast">
 <div class="block">Deserializes this message segment from the provided serialized message</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>protected <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encode()">encode</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Encodes this message segment</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(int)">get</a></span>&#8203;(int&nbsp;index)</code></th>
 <td class="colLast">
 <div class="block">Gets the value of the field specified by index</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String)">get</a></span>&#8203;(java.lang.String&nbsp;fieldname)</code></th>
 <td class="colLast">
 <div class="block">Gets the value of the field specified by name</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllFields()">getAllFields</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets all fields from this message segment</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getField(int)">getField</a></span>&#8203;(int&nbsp;index)</code></th>
 <td class="colLast">
 <div class="block">Gets the field specified by index</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getField(java.lang.String)">getField</a></span>&#8203;(java.lang.String&nbsp;fieldname)</code></th>
 <td class="colLast">
 <div class="block">Gets the field specified by name</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldNames()">getFieldNames</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the field names of the message segment</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNoFields()">getNoFields</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets the number of fields in this message segment</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid()">isValid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Checks if all fields of this message segment contain valid data</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(java.lang.String)">isValid</a></span>&#8203;(java.lang.String&nbsp;fieldname)</code></th>
 <td class="colLast">
 <div class="block">Checks if the specified field contains valid data</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValid(java.lang.String,java.lang.String)">isValid</a></span>&#8203;(java.lang.String&nbsp;fieldname,
        java.lang.String&nbsp;data)</code></th>
@@ -294,14 +311,14 @@ extends java.lang.Object</pre>
 <div class="block">Checks if the provided data is valid for the specified field</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>protected java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serialize()">serialize</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Serializes this message segment</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(int,java.lang.String)">set</a></span>&#8203;(int&nbsp;index,
    java.lang.String&nbsp;data)</code></th>
@@ -309,7 +326,7 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value of the field specified by its index in the message segment</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(java.lang.String,java.lang.String)">set</a></span>&#8203;(java.lang.String&nbsp;fieldname,
    java.lang.String&nbsp;data)</code></th>
@@ -317,29 +334,36 @@ extends java.lang.Object</pre>
 <div class="block">Sets the value of the specified field in the message segment</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAll(java.lang.String%5B%5D,int)">setAll</a></span>&#8203;(java.lang.String[]&nbsp;data,
-      int&nbsp;index)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAll(java.lang.String%5B%5D)">setAll</a></span>&#8203;(java.lang.String[]&nbsp;data)</code></th>
 <td class="colLast">
 <div class="block">Sets all field values of this segment with values from an array</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAll(java.lang.String%5B%5D,int)">setAll</a></span>&#8203;(java.lang.String[]&nbsp;data,
+      int&nbsp;startIndex)</code></th>
+<td class="colLast">
+<div class="block">Sets all field values of this segment with values from an array</div>
+</td>
+</tr>
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAll(java.util.Map)">setAll</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;map)</code></th>
 <td class="colLast">
 <div class="block">Sets all field values of this segment from a fieldname-to-value mapping</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toMap()">toMap</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets a fieldname-to-value mapping of this message segment</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
@@ -474,6 +498,32 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="bitLength()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bitLength</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;bitLength()</pre>
+<div class="block">Returns the bit length of this segment, excluding the last variable length field if not set</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
+<a id="byteLength()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>byteLength</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;byteLength()</pre>
+<div class="block">Returns the byte length of this segment, excluding the last variable length field if not set</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+</dl>
+</li>
+</ul>
 <a id="getNoFields()">
 <!--   -->
 </a>
@@ -534,6 +584,20 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="toMap()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toMap</h4>
+<pre class="methodSignature">public final&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;toMap()</pre>
+<div class="block">Gets a fieldname-to-value mapping of this message segment</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a fieldname-to-value mapping</dd>
+</dl>
+</li>
+</ul>
 <a id="set(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
@@ -570,20 +634,6 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="toMap()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toMap</h4>
-<pre class="methodSignature">public final&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;toMap()</pre>
-<div class="block">Gets a fieldname-to-value mapping of this message segment</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a fieldname-to-value mapping</dd>
-</dl>
-</li>
-</ul>
 <a id="setAll(java.util.Map)">
 <!--   -->
 </a>
@@ -600,6 +650,27 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="setAll(java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setAll</h4>
+<pre class="methodSignature">public final&nbsp;java.lang.Boolean&nbsp;setAll&#8203;(java.lang.String[]&nbsp;data)
+                               throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<div class="block">Sets all field values of this segment with values from an array</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>data</code> - array with the data to be set as the field values</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>TRUE if the data was valid and all field values are set</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the provided data is invalid</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
+</dl>
+</li>
+</ul>
 <a id="setAll(java.lang.String[],int)">
 <!--   -->
 </a>
@@ -607,17 +678,19 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setAll</h4>
 <pre class="methodSignature">public final&nbsp;java.lang.Boolean&nbsp;setAll&#8203;(java.lang.String[]&nbsp;data,
-                                      int&nbsp;index)
+                                      int&nbsp;startIndex)
                                throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Sets all field values of this segment with values from an array</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - array with the data to be set as the field values</dd>
-<dd><code>index</code> - starting position in the array</dd>
+<dd><code>startIndex</code> - starting position in the array</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>TRUE if the data was valid and all field values are set</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the provided data is invalid</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -644,18 +717,18 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>deserialize</h4>
-<pre class="methodSignature">protected final&nbsp;int&nbsp;deserialize&#8203;(java.lang.String&nbsp;messageStr,
-                                int&nbsp;startByte)
-                         throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<pre class="methodSignature">protected final&nbsp;void&nbsp;deserialize&#8203;(java.lang.String&nbsp;messageStr,
+                                 int&nbsp;fieldIndex)
+                          throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Deserializes this message segment from the provided serialized message</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>messageStr</code> - the serialized message</dd>
-<dd><code>startByte</code> - the byte position where this segment starts in the serialized message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the byte position where this segment ends in the serialized message</dd>
+<dd><code>fieldIndex</code> - the index of the next field to be deserialized</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code></dd>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message cannot be deserialized</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -673,27 +746,31 @@ extends java.lang.Object</pre>
 <dd>a binary buffer with the binary encoded message segment</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message cannot be encoded</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
-<a id="decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int)">
+<a id="decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>decode</h4>
-<pre class="methodSignature">protected final&nbsp;int&nbsp;decode&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;buffer,
-                           int&nbsp;startBit)
-                    throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
+<pre class="methodSignature">protected final&nbsp;void&nbsp;decode&#8203;(<a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;buffer,
+                            int&nbsp;startBit,
+                            int&nbsp;fieldIndex)
+                     throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
 <div class="block">Decodes this message segment from the provided encoded message</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>buffer</code> - the binary buffer with the binary encoded message</dd>
 <dd><code>startBit</code> - the bit position where this segment starts in the encoded message</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the bit position where this segment ends in the encoded message</dd>
+<dd><code>fieldIndex</code> - the index of the next field to be decoded</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code></dd>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message cannot be decoded</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>

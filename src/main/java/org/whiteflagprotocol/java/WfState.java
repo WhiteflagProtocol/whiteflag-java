@@ -6,7 +6,7 @@ package org.whiteflagprotocol.java;
 /**
  * Whiteflag state class
  * 
- * <p> This class defines the Whiteflag state, keeping track of knwon
+ * <p> This class defines the Whiteflag state, keeping track of known
  * originators, cryptographic keys and message relations.
  * 
  * @wfver v1-draft.6

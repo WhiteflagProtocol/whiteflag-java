@@ -23,6 +23,8 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
  * different ways from various data.
  * 
  * @wfver v1-draft.6
+ * 
+ * @since 1.0
  */
 public class WfMessage extends WfMessageCore {
 
@@ -51,110 +53,6 @@ public class WfMessage extends WfMessageCore {
         super(type, header, body);
     }
 
-    /* PUBLIC METHODS: getters & setters */
-
-    /**
-     * Adds metadata to the Whiteflag message if not already existing
-     * @return null if successful, otherwise the value of the already existing key
-     */
-    public String addMetadata(final String key, final String value) {
-        return metadata.putIfAbsent(key, value);
-    }
-
-    /**
-     * Returns the requested metadata value of the Whiteflag message
-     * @return the value of the requested metadata key
-     */
-    public String getMetadata(final String key) {
-        return metadata.get(key);
-    }
-
-    /**
-     * Returns metadata keys of the Whiteflag message
-     * @return a string set with all metadata keys
-     */
-    public Set<String> getMetadataKeys() {
-        return metadata.keySet();
-    }
-
-    /* PUBLIC METHODS: operations */
-
-    /**
-     * Returns the cached serialized message, or else it serialzes and caches Whiteflag message
-     * @return the serialized message, i.e. the concatinated string of field values
-     * @throws WfException if any of the field does not contain valid data
-     */
-    @Override
-    public String serialize() throws WfException {
-        try {
-            if (serializedMsg == null) {
-                serializedMsg = super.serialize();
-            }
-        } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
-        }
-        return serializedMsg;
-    }
-
-    /**
-     * Returns the cached encoded message, or else it encodes and caches Whiteflag message
-     * @return a byte array with the compressed binary encoded message
-     * @throws WfException if any field does not contain valid data
-     */
-    @Override
-    public WfBinaryBuffer encode() throws WfException {
-        try {
-            if (binaryMsg.length() == 0) {
-                binaryMsg = super.encode();
-            }
-        } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
-        }
-        return binaryMsg;
-    }
-
-    /**
-     * Returns a byte array with the binary encoded message
-     * @return a byte array with the binary encoded message
-     * @throws WfException if any field does not contain valid data
-     */
-    public byte[] toByteArray() throws WfException {
-        return encode().toByteArray();
-    }
-
-    /**
-     * Returns a hexedimal string representation of the binary encoded message
-     * @return a hexadecimal string representation of the binary encoded
-     * @throws WfException if any field does not contain valid data
-     */
-    public String toHexString() throws WfException {
-        return encode().toHexString();
-    }
-
-    /**
-     * Returns the serialised JSON representation of the Whiteflag message
-     * @return the serialised JSON representation
-     */
-    public String toJson() throws WfException {
-        String jsonMsgStr;
-        try {
-            jsonMsgStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
-        } catch (WfUtilException e) {
-            throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WF_FORMAT_ERROR);
-        }
-        return jsonMsgStr;
-    }
-
-    /* PRIVATE UTILITY METHODS */
-
-    /**
-     * Returns the requested metadata value of the Whiteflag message
-     * @return the value of the requested metadata key
-     */
-    private void setMetadata(final Map<String, String> metadata) {
-        metadata.forEach(this.metadata::put);
-    }
-
     /* STATIC FACTORY METHODS */
 
     /**
@@ -165,7 +63,7 @@ public class WfMessage extends WfMessageCore {
     public static WfMessage create(final String messageCode) throws WfException {
         WfMessageCore message;
         try {
-            message = new WfMessageCreator().type(WfMessageType.byCode(messageCode)).create();
+            message = new WfMessageCreator().type(WfMessageType.fromCode(messageCode)).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WF_FORMAT_ERROR);
         }
@@ -238,25 +136,35 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Creates a new Whiteflag message object from a hexadecimal string with an encoded message
+     * Creates a new Whiteflag message from a hexadecimal string represaentation of an encoded message
      * @param hexMessage the hexadecimal string representation of the encoded message
-     * @return a {@link WfMessage} Whiteflag message
-     * @throws WfException if the encoding of the message is invalid
+     * @return a new {@link WfMessage} Whiteflag message
+     * @throws WfException if the message cannot be decoded
      */
     public static WfMessage decode(final String hexMessage) throws WfException {
-        return decode(WfBinaryBuffer.convertToByteArray(hexMessage));
+        return decode(WfBinaryBuffer.fromHexString(hexMessage));
     }
 
     /**
-     * Creates a new Whiteflag message object from a binary encoded message
-     * @param binMessage the binary encoded message
-     * @return a {@link WfMessage} Whiteflag message
-     * @throws WfException if the encoding of the message is invalid
+     * Creates a new Whiteflag message from a byte array with an binary encoded message
+     * @param binMessage the byte array with the binary encoded message
+     * @return a new {@link WfMessage} Whiteflag message
+     * @throws WfException if the message cannot be decoded
      */
     public static WfMessage decode(final byte[] binMessage) throws WfException {
+        return decode(WfBinaryBuffer.fromByteArray(binMessage));
+    }
+
+    /**
+     * Creates a new Whiteflag message from a binary buffer
+     * @param msgBuffer the binary buffer with the encoded message
+     * @return a new {@link WfMessage} Whiteflag message
+     * @throws WfException if the message cannot be decoded
+     */
+    public static WfMessage decode(final WfBinaryBuffer msgBuffer) throws WfException {
         WfMessageCore message;
         try {
-            message = new WfMessageCreator().decode(binMessage).create();
+            message = new WfMessageCreator().decode(msgBuffer).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot decode message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
@@ -277,5 +185,107 @@ public class WfMessage extends WfMessageCore {
             throw new WfException("Cannot compile message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
         return new WfMessage(message.type, message.header, message.body);
+    }
+
+    /* PUBLIC METHODS */
+
+    /**
+     * Adds metadata to the Whiteflag message if not already existing
+     * @return null if successful, otherwise the value of the already existing key
+     */
+    public String addMetadata(final String key, final String value) {
+        return metadata.putIfAbsent(key, value);
+    }
+
+    /**
+     * Returns the requested metadata value of the Whiteflag message
+     * @return the value of the requested metadata key
+     */
+    public String getMetadata(final String key) {
+        return metadata.get(key);
+    }
+
+    /**
+     * Returns metadata keys of the Whiteflag message
+     * @return a string set with all metadata keys
+     */
+    public Set<String> getMetadataKeys() {
+        return metadata.keySet();
+    }
+
+    /**
+     * Returns the cached serialized message, or else it serialzes and caches Whiteflag message
+     * @return the serialized message, i.e. the concatinated string of field values
+     * @throws WfException if any of the field does not contain valid data
+     */
+    @Override
+    public String serialize() throws WfException {
+        try {
+            if (serializedMsg == null) {
+                serializedMsg = super.serialize();
+            }
+        } catch (WfCoreException e) {
+            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
+        }
+        return serializedMsg;
+    }
+
+    /**
+     * Returns the cached encoded message, or else it encodes and caches Whiteflag message
+     * @return a byte array with the compressed binary encoded message
+     * @throws WfException if any field does not contain valid data
+     */
+    @Override
+    public WfBinaryBuffer encode() throws WfException {
+        try {
+            if (binaryMsg.bitLength() == 0) {
+                binaryMsg = super.encode();
+            }
+        } catch (WfCoreException e) {
+            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
+        }
+        return binaryMsg;
+    }
+
+    /**
+     * Returns a byte array with the binary encoded message
+     * @return a byte array with the binary encoded message
+     * @throws WfException if any field does not contain valid data
+     */
+    public byte[] toByteArray() throws WfException {
+        return encode().toByteArray();
+    }
+
+    /**
+     * Returns a hexedimal string representation of the binary encoded message
+     * @return a hexadecimal string representation of the binary encoded
+     * @throws WfException if any field does not contain valid data
+     */
+    public String toHexString() throws WfException {
+        return encode().toHexString();
+    }
+
+    /**
+     * Returns the serialised JSON representation of the Whiteflag message
+     * @return the serialised JSON representation
+     */
+    public String toJson() throws WfException {
+        String jsonMsgStr;
+        try {
+            jsonMsgStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
+        } catch (WfUtilException e) {
+            throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WF_FORMAT_ERROR);
+        }
+        return jsonMsgStr;
+    }
+
+    /* PRIVATE METHODS */
+
+    /**
+     * Returns the requested metadata value of the Whiteflag message
+     * @return the value of the requested metadata key
+     */
+    private void setMetadata(final Map<String, String> metadata) {
+        metadata.forEach(this.metadata::put);
     }
 }

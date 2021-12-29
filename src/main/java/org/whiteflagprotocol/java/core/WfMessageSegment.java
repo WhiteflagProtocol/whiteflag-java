@@ -18,6 +18,8 @@ import java.util.HashSet;
  * 
  * @wfref 4.2 Message Header
  * @wfref 4.3 Message Body
+ * 
+ * @since 1.0
  */
 public class WfMessageSegment {
 
@@ -28,12 +30,7 @@ public class WfMessageSegment {
      */
     private WfMessageField[] fields;
 
-    /**
-     * Deserialisation, decoding and copying cursor
-     */
-    private int cursor = 0;
-
-    /* CONSTRUCTOR */
+    /* CONSTRUCTORS */
 
     /**
      * Constructs a new Whiteflag message segment from an array of message fields,
@@ -54,13 +51,13 @@ public class WfMessageSegment {
      */
     public WfMessageSegment(final WfMessageSegment segment) {
         this.fields = new WfMessageField[segment.getNoFields()];
-        for (; cursor < this.fields.length; cursor++) {
-            this.fields[cursor] = new WfMessageField(segment.getField(cursor));
-            this.fields[cursor].set(segment.get(cursor));
+        for (int index = 0; index < this.fields.length; index++) {
+            this.fields[index] = new WfMessageField(segment.getField(index));
+            this.fields[index].set(segment.get(index));
         }
     }
 
-    /* PUBLIC METHODS: basic object interface */
+    /* PUBLIC METHODS */
 
     /**
      * Returns the message segment as a concatinated string of field values
@@ -76,8 +73,6 @@ public class WfMessageSegment {
         }
         return string; 
     }
-
-    /* PUBLIC METHODS: metadata & validators */
 
     /**
      * Checks if all fields of this message segment contain valid data
@@ -125,6 +120,26 @@ public class WfMessageSegment {
     }
 
     /**
+     * Returns the bit length of this segment, excluding the last variable length field if not set
+     * @return
+     */
+    public int bitLength() {
+        int bitLength = 0;
+        for (WfMessageField field : fields) {
+            bitLength += field.bitLength();
+        }
+        return bitLength;
+    }
+
+    /**
+     * Returns the byte length of this segment, excluding the last variable length field if not set
+     * @return
+     */
+    public int byteLength() {
+        return getField(-1).endByte - getField(0).startByte;
+    }
+
+    /**
      * Gets the number of fields in this message segment
      * @return the number of message segment fields
      */
@@ -143,8 +158,6 @@ public class WfMessageSegment {
         }
         return names;
     }
-
-    /* PUBLIC METHODS: getters & setters */
 
     /**
      * Gets the value of the field specified by name
@@ -171,6 +184,18 @@ public class WfMessageSegment {
             return fields[fields.length + index].get();
         }
         return null;
+    }
+
+    /**
+     * Gets a fieldname-to-value mapping of this message segment
+     * @return a fieldname-to-value mapping
+     */
+    public final Map<String, String> toMap() {
+        Map<String, String> map = new HashMap<>(this.fields.length + 1, 1);
+        for (WfMessageField field : fields) {
+            map.put(field.name, field.get());
+        }
+        return map;
     }
 
     /**
@@ -202,20 +227,6 @@ public class WfMessageSegment {
         return false;
     }
 
-    /* PUBLIC METHODS: mapping */
-
-    /**
-     * Gets a fieldname-to-value mapping of this message segment
-     * @return a fieldname-to-value mapping
-     */
-    public final Map<String, String> toMap() {
-        Map<String, String> map = new HashMap<>(this.fields.length + 1, 1);
-        for (WfMessageField field : fields) {
-            map.put(field.name, field.get());
-        }
-        return map;
-    }
-
     /**
      * Sets all field values of this segment from a fieldname-to-value mapping
      * @param map a fieldname-to-value mapping
@@ -228,26 +239,41 @@ public class WfMessageSegment {
 
     /**
      * Sets all field values of this segment with values from an array
+     * @since 1.1
      * @param data array with the data to be set as the field values
-     * @param index starting position in the array
      * @return TRUE if the data was valid and all field values are set
      * @throws WfCoreException if the provided data is invalid
      */
-    public final Boolean setAll(final String[] data, final int index) throws WfCoreException {
-        int nFields = data.length - index;
-        if (fields.length == 0 || nFields < fields.length) {
-            throw new WfCoreException("Message segment has " + fields.length + " fields, but received data for " + nFields + " fields");
+    public final Boolean setAll(final String[] data) throws WfCoreException {
+        return setAll(data, 0);
+    }
+
+    /**
+     * Sets all field values of this segment with values from an array
+     * @since 1.1
+     * @param data array with the data to be set as the field values
+     * @param startIndex starting position in the array
+     * @return TRUE if the data was valid and all field values are set
+     * @throws WfCoreException if the provided data is invalid
+     */
+    public final Boolean setAll(final String[] data, final int startIndex) throws WfCoreException {
+        /* Check if data array contains data for all fields */
+        int nItems = data.length - startIndex;
+        if (nItems < fields.length) {
+            throw new WfCoreException("Message segment has " + fields.length + " fields, but received " + nItems + " items in array");
         }
-        for (; cursor < this.fields.length; cursor++) {
-            final int i = index + cursor;
-            if (Boolean.FALSE.equals(fields[cursor].set(data[i]))) {
-                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in array at item " + i + ": " + data[i]);
+        /* Set all fields */
+        int index = startIndex;
+        for (WfMessageField field : fields) {
+            if (Boolean.FALSE.equals(field.set(data[index]))) {
+                throw new WfCoreException("Field " + field.debugInfo() + " already set or array item " + index + " contains invalid data: " + data[index]);
             }
+            index++;
         }
         return this.isValid();
     }
 
-    /* PROTECTED METHODS: operations */
+    /* PROTECTED METHODS */
 
     /**
      * Serializes this message segment
@@ -257,10 +283,9 @@ public class WfMessageSegment {
     protected final String serialize() throws WfCoreException {
         int byteCursor = fields[0].startByte;
         StringBuilder segmentStr = new StringBuilder();
-
         for (WfMessageField field : fields) {
             if (field.startByte != byteCursor) {
-                throw new WfCoreException("Invalid field order while serializing: did not expect field " + field.name + " at byte " + byteCursor);
+                throw new WfCoreException("Invalid field order while serializing: did not expect field " + field.debugInfo() + " at byte " + byteCursor);
             }
             segmentStr.append(field.get());
             byteCursor = field.endByte;
@@ -270,45 +295,47 @@ public class WfMessageSegment {
 
     /**
      * Deserializes this message segment from the provided serialized message
+     * @since 1.1
      * @param messageStr the serialized message
-     * @param startByte the byte position where this segment starts in the serialized message
-     * @return the byte position where this segment ends in the serialized message
+     * @param fieldIndex the index of the next field to be deserialized
+     * @throws WfCoreException if the message cannot be deserialized
      */
-    protected final int deserialize(final String messageStr, final int startByte) throws WfCoreException {
-        int byteCursor = startByte;
-        for (; cursor < this.fields.length; cursor++) {
+    protected final void deserialize(final String messageStr, final int fieldIndex) throws WfCoreException {
+        /* Check if all fields already processed */
+        if (fieldIndex >= this.fields.length) return;
 
-            // Deserialize data
+        /* Continue deserialization of fields */
+        int byteCursor = fields[fieldIndex].startByte;
+        for (int index = fieldIndex; index < this.fields.length; index++) {
+            if (fields[index].startByte != byteCursor) {
+                throw new WfCoreException("Invalid field order while deserializing: did not expect field " + fields[index].debugInfo() + " at byte " + byteCursor);
+            }
             String data;
-            if (fields[cursor].endByte < 0) {
-                // Undefined field length
-                data = messageStr.substring(fields[cursor].startByte);
+            if (fields[index].endByte < 0) {
+                data = messageStr.substring(fields[index].startByte);
             } else {
-                // Fixed field length
-                data = messageStr.substring(fields[cursor].startByte, fields[cursor].endByte);
+                data = messageStr.substring(fields[index].startByte, fields[index].endByte);
             }
-            // Set the field value and check result
-            if (Boolean.FALSE.equals(fields[cursor].set(data))) {
-                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in serialized message at byte " + byteCursor + ": " + data);
+            /* Set field value */
+            if (Boolean.FALSE.equals(fields[index].set(data))) {
+                throw new WfCoreException("Could not set field " + fields[index].debugInfo() + " with deserialized data at byte " + byteCursor + ": " + data);
             }
-            // Move to next field in serialized message
-            byteCursor = fields[cursor].endByte;
+            byteCursor = fields[index].endByte;
         }
-        return byteCursor;
     }
 
     /**
      * Encodes this message segment
+     * @since 1.1
      * @return a binary buffer with the binary encoded message segment
      * @throws WfCoreException if the message cannot be encoded
      */
     protected final WfBinaryBuffer encode() throws WfCoreException {
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
         int byteCursor = fields[0].startByte;
-        
         for (WfMessageField field : fields) {
             if (field.startByte != byteCursor) {
-                throw new WfCoreException("Invalid field order while encoding: did not expect field " + field.name + " at byte " + byteCursor);
+                throw new WfCoreException("Invalid field order while encoding: did not expect field " + field.debugInfo() + " at byte " + byteCursor);
             }
             buffer.addMessageField(field);
             byteCursor = field.endByte;
@@ -318,23 +345,32 @@ public class WfMessageSegment {
 
     /**
      * Decodes this message segment from the provided encoded message
+     * @since 1.1
      * @param buffer the binary buffer with the binary encoded message
      * @param startBit the bit position where this segment starts in the encoded message
-     * @return the bit position where this segment ends in the encoded message
+     * @param fieldIndex the index of the next field to be decoded
+     * @throws WfCoreException if the message cannot be decoded
      */
-    protected final int decode(final WfBinaryBuffer buffer, final int startBit) throws WfCoreException {
-        int bitCursor = startBit;
-        for (WfMessageField field : fields) {
-            if (Boolean.FALSE.equals(buffer.extractMessageField(field, bitCursor))) {
-                throw new WfCoreException(fields[cursor].debugString() + " already set or invalid data in encoded binary message at bit " + bitCursor + ": "
-                                                                       + WfBinaryBuffer.convertToHexString(buffer.extractBits(startBit, field.bitLength() < 0 ? buffer.length() : field.bitLength())));
-            }
-            bitCursor += field.bitLength();
-        }
-        return bitCursor;
-    }
+    protected final void decode(final WfBinaryBuffer buffer, final int startBit, final int fieldIndex) throws WfCoreException {
+        /* Check if all fields already processed */
+        if (fieldIndex >= this.fields.length) return;
 
-    /* PROTECTED METHODS: object operations */
+        /* Continue deserialization of fields */
+        int bitCursor = startBit;
+        int byteCursor = fields[fieldIndex].startByte;
+        for (int index = fieldIndex; index < this.fields.length; index++) {
+            if (fields[index].startByte != byteCursor) {
+                throw new WfCoreException("Invalid field order while decoding: did not expect field " + fields[index].debugInfo() + " at byte " + byteCursor);
+            }
+            try {
+                buffer.extractMessageField(fields[index], bitCursor);
+            } catch (WfCoreException e) {
+                throw new WfCoreException("Could not decode field at bit " + bitCursor + " of buffer: " + buffer.toHexString() + ": " + e.getMessage());
+            }
+            bitCursor += fields[index].bitLength();
+            byteCursor = fields[index].endByte;
+        }
+    }
 
     /**
      * Appends additional fields to this message segment if constructing complex message bodies
@@ -359,11 +395,8 @@ public class WfMessageSegment {
             newFields[i] = new WfMessageField(field, shift);
             i++;
         }
-        // Set the fields with new field array, update cursor if all fields are valid and return this object
+        // Set the fields with new field array
         this.fields = newFields;
-        if (cursor != 0 && Boolean.TRUE.equals(this.isValid())) {
-            cursor = this.fields.length;
-        }
         return this;
     }
 

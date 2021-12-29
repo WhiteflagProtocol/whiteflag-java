@@ -138,19 +138,19 @@ public class WfBinaryBufferTest {
      * Tests addition of bits
      */
     @Test
-    public void testAppendBits1() {
+    public void testAppendBits1() throws WfCoreException {
         /* Setup */
         final byte[] byteArray1 = {(byte) 0xE6,(byte) 0x38,(byte) 0x87};    // 1110 0110 | 0011 1000 | 1000 0111
         final byte[] byteArray2 = {(byte) 0x6E,(byte) 0x7f};                // 0110 1110 | 0111 1111
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
 
         /* Verify */
-        assertEquals("Binary buffer length should be 0 bits", 0, buffer.length());
+        assertEquals("Binary buffer length should be 0 bits", 0, buffer.bitLength());
         buffer.appendBits(byteArray1, 22);         // 1110 0110 | 0011 1000 | 1000 01(00)
-        assertEquals("Binary buffer length should be 22 bits", 22, buffer.length());
+        assertEquals("Binary buffer length should be 22 bits", 22, buffer.bitLength());
         assertTrue("Byte array 1 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("e63884"));
         buffer.appendBits(byteArray2, 13);         // 1110 0110 | 0011 1000 | 1000 0101 | 1011 1001 | 1110 0000
-        assertEquals("Binary buffer length should be 34 bits", 35, buffer.length());
+        assertEquals("Binary buffer length should be 34 bits", 35, buffer.bitLength());
         assertTrue("Byte array 2 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("e63885b9e0"));
     }
 
@@ -158,17 +158,17 @@ public class WfBinaryBufferTest {
      * Tests addition of bits
      */
     @Test
-    public void testAppendBits2() {
+    public void testAppendBits2() throws WfCoreException {
         /* Setup */
         final byte[] byteArray1 = {(byte) 0xE6,(byte) 0x38,(byte) 0x87};    // 1110 0110 | 0011 1000 | 1000 0111
         final byte[] byteArray2 = {(byte) 0x6E,(byte) 0x6f};                // 0110 1110 | 0110 1111
         WfBinaryBuffer buffer = WfBinaryBuffer.fromByteArray(byteArray1);
 
         /* Verify */
-        assertEquals("Binary buffer length should be 24 bits", 24, buffer.length());
+        assertEquals("Binary buffer length should be 24 bits", 24, buffer.bitLength());
         assertTrue("Byte array 1 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("e63887"));
         buffer.appendBits(byteArray2, 12);         // 1110 0110 | 0011 1000 | 1000 0111 | 0110 1110 | 0110 0000
-        assertEquals("Binary buffer length should be 36 bits", 36, buffer.length());
+        assertEquals("Binary buffer length should be 36 bits", 36, buffer.bitLength());
         assertTrue("Byte array 2 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("e638876e60"));
     }
 
@@ -176,19 +176,19 @@ public class WfBinaryBufferTest {
      * Tests addition of bits
      */
     @Test
-    public void testAppendBits3() {
+    public void testAppendBits3() throws WfCoreException {
         /* Setup */
         final byte[] byteArray1 = {(byte) 0xDD,(byte) 0xFF};    // 1101 1101 | 1111 1111
         final byte[] byteArray2 = {(byte) 0xBF};                // 1011 1111
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
 
         /* Verify */
-        assertEquals("Binary buffer length should be 0 bits", 0, buffer.length());
+        assertEquals("Binary buffer length should be 0 bits", 0, buffer.bitLength());
         buffer.appendBits(byteArray1, 4);         // 1101 0000
-        assertEquals("Binary buffer length should be 4 bits", 4, buffer.length());
+        assertEquals("Binary buffer length should be 4 bits", 4, buffer.bitLength());
         assertTrue("Byte array 1 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("d0"));
         buffer.appendBits(byteArray2, 3);         // 1101 1010
-        assertEquals("Binary buffer length should be 7 bits", 7, buffer.length());
+        assertEquals("Binary buffer length should be 7 bits", 7, buffer.bitLength());
         assertTrue("Byte array 2 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("da"));
     }
 
@@ -259,7 +259,7 @@ public class WfBinaryBufferTest {
         /* Verify */
         assertTrue("Should be able to set field value", field.set("text"));
         buffer.addMessageField(field);
-        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.length());
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.bitLength());
         assertTrue("Message field (UTF) should be correctly encoded and added", buffer.toHexString().equalsIgnoreCase("74657874"));
     }
 
@@ -273,8 +273,7 @@ public class WfBinaryBufferTest {
         WfMessageField field = new WfMessageField(FIELDNAME, null, UTF8, 0, -1);
 
         /* Verify */
-        assertTrue("Message field (UTF) should be correctly extracted and decoded", buffer.extractMessageField(field, 8));
-        assertEquals("Message field (UTF) should contain the correct value", "txt", field.get());    
+        assertEquals("Extracted message field (UTF) should contain the correct value", "txt", buffer.extractMessageField(field, 8).get());    
     }
 
     /**
@@ -289,7 +288,7 @@ public class WfBinaryBufferTest {
         /* Verify */
         assertTrue("Should be able to set field value", field.set("01"));
         buffer.addMessageField(field);
-        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.length());
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.bitLength());
         assertTrue("Message field (bin) should be correctly encoded and added", buffer.toHexString().equalsIgnoreCase("40"));
     }
 
@@ -305,7 +304,7 @@ public class WfBinaryBufferTest {
         /* Verify */
         assertTrue("Should be able to set field value", field.set("101"));
         buffer.addMessageField(field);
-        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.length());
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.bitLength());
         assertTrue("Message field (bin) should be correctly encoded and added", buffer.toHexString().equalsIgnoreCase("a0"));
     }
 
@@ -321,7 +320,7 @@ public class WfBinaryBufferTest {
         /* Verify */
         assertTrue("Should be able to set field value", field.set("1478"));
         buffer.addMessageField(field);
-        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.length());
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.bitLength());
         assertTrue("Message field (dec) should be correctly encoded and added", buffer.toHexString().equalsIgnoreCase("1478"));
     }
 
@@ -336,8 +335,7 @@ public class WfBinaryBufferTest {
         WfMessageField field = new WfMessageField(FIELDNAME, null, DEC, 0, 2);
 
         /* Verify */
-        assertTrue("Message field (dec) should be correctly extracted and decoded", buffer.extractMessageField(field, 10));
-        assertEquals("Message field (dec) should contain the correct value", "47", field.get());
+        assertEquals("Extracted message field (dec) should contain the correct value", "47", buffer.extractMessageField(field, 10).get());
     }
 
     /**
@@ -352,7 +350,7 @@ public class WfBinaryBufferTest {
         /* Verify */
         assertTrue("Should be able to set field value", field.set("3f8C"));
         buffer.addMessageField(field);
-        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.length());
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.bitLength());
         assertTrue("Message field (hex) should be correctly encoded and added", buffer.toHexString().equalsIgnoreCase("3f8c"));
     }
 
@@ -367,8 +365,7 @@ public class WfBinaryBufferTest {
         WfMessageField field = new WfMessageField(FIELDNAME, null, HEX, 0, 2);
 
         /* Verify */
-        assertTrue("Message field (hex) should be correctly extracted and decoded", buffer.extractMessageField(field, 9));
-        assertEquals("Message field (hex) should contain the correct value", "bb", field.get());
+        assertEquals("Extracted message field (hex) should contain the correct value", "bb", buffer.extractMessageField(field, 9).get());
     }
 
     /**
@@ -383,7 +380,7 @@ public class WfBinaryBufferTest {
         /* Verify */
         assertTrue("Should be able to set field value", field.set("2020-07-01T21:42:23Z"));
         buffer.addMessageField(field);
-        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.length());
+        assertEquals("Binary buffer length should be equal to field length", field.bitLength(), buffer.bitLength());
         assertTrue("Message field (datum) should be correctly encoded and added", buffer.toHexString().equalsIgnoreCase("20200701214223"));
     }
 }
