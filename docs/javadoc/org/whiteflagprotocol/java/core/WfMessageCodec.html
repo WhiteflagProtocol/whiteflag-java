@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -138,6 +138,8 @@ extends java.lang.Object</pre>
  field encoding and decoding functions, all implemented as static functions.
  No implementation specific properties and methods are defined by this class.</div>
 <dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.0</dd>
 <dt><span class="simpleTagLabel">Whiteflag version:</span></dt>
 <dd>v1-draft.6</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
@@ -149,6 +151,31 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="WfMessageCodec.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></span></code></th>
+<td class="colLast">
+<div class="block">Whiteflag message compressed field encodings</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section role="region">
 <ul class="blockList">
@@ -164,47 +191,55 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryString,org.whiteflagprotocol.java.core.WfMessageField.Encoding)">decode</a></span>&#8203;(<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;binData,
-      <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a>&nbsp;encoding)</code></th>
+<td class="colFirst"><code>protected static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decodeBDX(byte%5B%5D,int)">decodeBDX</a></span>&#8203;(byte[]&nbsp;buffer,
+         int&nbsp;bitLength)</code></th>
 <td class="colLast">
-<div class="block">Decodes the  the message field into a binary string</div>
+<div class="block">Decodes a binary buffer into a (hexa)decimal string</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decodeBDX(java.lang.String)">decodeBDX</a></span>&#8203;(java.lang.String&nbsp;binStr)</code></th>
+<td class="colFirst"><code>protected static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decodeBIN(byte%5B%5D,int)">decodeBIN</a></span>&#8203;(byte[]&nbsp;buffer,
+         int&nbsp;bitLength)</code></th>
 <td class="colLast">
-<div class="block">Decodes a binary string into a (hexa)decimal string</div>
+<div class="block">Decodes a binary buffer into a binary string</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decodeUTF(java.lang.String)">decodeUTF</a></span>&#8203;(java.lang.String&nbsp;binStr)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decodeField(org.whiteflagprotocol.java.core.WfMessageField,byte%5B%5D)">decodeField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
+           byte[]&nbsp;buffer)</code></th>
 <td class="colLast">
-<div class="block">Decodes a binary string into a UTF string</div>
+<div class="block">Sets the field value from a binary buffer</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encode(java.lang.String,org.whiteflagprotocol.java.core.WfMessageField.Encoding)">encode</a></span>&#8203;(java.lang.String&nbsp;value,
-      <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a>&nbsp;encoding)</code></th>
+<td class="colFirst"><code>protected static byte[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encodeBDX(java.lang.String)">encodeBDX</a></span>&#8203;(java.lang.String&nbsp;bdxstr)</code></th>
 <td class="colLast">
-<div class="block">Encodes the message field into a binary string</div>
+<div class="block">Encodes a (hexa)decimal string into a binary buffer</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encodeBDX(java.lang.String)">encodeBDX</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
+<td class="colFirst"><code>protected static byte[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encodeBIN(java.lang.String)">encodeBIN</a></span>&#8203;(java.lang.String&nbsp;binstr)</code></th>
 <td class="colLast">
-<div class="block">Encodes a (hexa)decimal string into a binary string</div>
+<div class="block">Encodes a binary string into a binary buffer</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encodeUTF(java.lang.String)">encodeUTF</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
+<td class="colFirst"><code>static byte[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encodeField(org.whiteflagprotocol.java.core.WfMessageField)">encodeField</a></span>&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</code></th>
 <td class="colLast">
-<div class="block">Encodes UTF value into a binary string</div>
+<div class="block">Encodes a Whiteflag field into a binary buffer</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>protected static byte[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#encodeLatLong(java.lang.String)">encodeLatLong</a></span>&#8203;(java.lang.String&nbsp;datumstr)</code></th>
+<td class="colLast">
+<div class="block">Encodes a datum string into binary buffer</div>
 </td>
 </tr>
 </table>
@@ -231,41 +266,81 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="encode(java.lang.String,org.whiteflagprotocol.java.core.WfMessageField.Encoding)">
+<a id="encodeField(org.whiteflagprotocol.java.core.WfMessageField)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>encode</h4>
-<pre class="methodSignature">public static final&nbsp;<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;encode&#8203;(java.lang.String&nbsp;value,
-                                          <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a>&nbsp;encoding)
-                                   throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
-<div class="block">Encodes the message field into a binary string</div>
+<h4>encodeField</h4>
+<pre class="methodSignature">public static final&nbsp;byte[]&nbsp;encodeField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field)</pre>
+<div class="block">Encodes a Whiteflag field into a binary buffer</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>field</code> - a <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the compressed binary encoding of the field</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the field cannot be encoded</dd>
+<dd>a binary buffer with the encoded field</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
-<a id="decode(org.whiteflagprotocol.java.core.WfBinaryString,org.whiteflagprotocol.java.core.WfMessageField.Encoding)">
+<a id="decodeField(org.whiteflagprotocol.java.core.WfMessageField,byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>decode</h4>
-<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;decode&#8203;(<a href="WfBinaryString.html" title="class in org.whiteflagprotocol.java.core">WfBinaryString</a>&nbsp;binData,
-                                            <a href="WfMessageField.Encoding.html" title="enum in org.whiteflagprotocol.java.core">WfMessageField.Encoding</a>&nbsp;encoding)
-                                     throws <a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></pre>
-<div class="block">Decodes the  the message field into a binary string</div>
+<h4>decodeField</h4>
+<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;decodeField&#8203;(<a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>&nbsp;field,
+                                                 byte[]&nbsp;buffer)</pre>
+<div class="block">Sets the field value from a binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binData</code> - the compressed binary encoded field data</dd>
+<dd><code>field</code> - the field for which to decode the binary value</dd>
+<dd><code>buffer</code> - a binary buffer with the compressed binary encoded field data</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the uncompressed value of the field</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the field cannot be decoded</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
+</dl>
+</li>
+</ul>
+<a id="encodeBIN(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>encodeBIN</h4>
+<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;encodeBIN&#8203;(java.lang.String&nbsp;binstr)</pre>
+<div class="block">Encodes a binary string into a binary buffer</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>binstr</code> - the binary string to encode</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a binary buffer containing the bits from the binary string</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
+</dl>
+</li>
+</ul>
+<a id="decodeBIN(byte[],int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>decodeBIN</h4>
+<pre class="methodSignature">protected static final&nbsp;java.lang.String&nbsp;decodeBIN&#8203;(byte[]&nbsp;buffer,
+                                                  int&nbsp;bitLength)</pre>
+<div class="block">Decodes a binary buffer into a binary string</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>buffer</code> - the binary buffer to decode</dd>
+<dd><code>bitLength</code> - the buffer length, i.e. the number of bits in the buffer to decode</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a binary string containing the bits from the binary buffer</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -275,61 +350,53 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>encodeBDX</h4>
-<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;encodeBDX&#8203;(java.lang.String&nbsp;value)</pre>
-<div class="block">Encodes a (hexa)decimal string into a binary string</div>
+<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;encodeBDX&#8203;(java.lang.String&nbsp;bdxstr)</pre>
+<div class="block">Encodes a (hexa)decimal string into a binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>value</code> - the (hexa)decimal value to encode</dd>
+<dd><code>bdxstr</code> - the (hexa)decimal string to encode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>string representation of the binary encoding</dd>
+<dd>a binary buffer containing the encoded (hexa)decimal string</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
-<a id="encodeUTF(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>encodeUTF</h4>
-<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;encodeUTF&#8203;(java.lang.String&nbsp;value)</pre>
-<div class="block">Encodes UTF value into a binary string</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>value</code> - the UTF value to encode</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>string representation of the binary encoding</dd>
-</dl>
-</li>
-</ul>
-<a id="decodeBDX(java.lang.String)">
+<a id="decodeBDX(byte[],int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>decodeBDX</h4>
-<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;decodeBDX&#8203;(java.lang.String&nbsp;binStr)</pre>
-<div class="block">Decodes a binary string into a (hexa)decimal string</div>
+<pre class="methodSignature">protected static final&nbsp;java.lang.String&nbsp;decodeBDX&#8203;(byte[]&nbsp;buffer,
+                                                  int&nbsp;bitLength)</pre>
+<div class="block">Decodes a binary buffer into a (hexa)decimal string</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binStr</code> - the binary string to decode</dd>
+<dd><code>buffer</code> - the binary buffer containing the binary encoded (hexa)decimals to decode</dd>
+<dd><code>bitLength</code> - the buffer length, i.e. the number of bits in the buffer to decode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the decoded (hexa)decimal value</dd>
+<dd>a (hexa)decimal string with the decoded data</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
-<a id="decodeUTF(java.lang.String)">
+<a id="encodeLatLong(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>decodeUTF</h4>
-<pre class="methodSignature">public static final&nbsp;java.lang.String&nbsp;decodeUTF&#8203;(java.lang.String&nbsp;binStr)</pre>
-<div class="block">Decodes a binary string into a UTF string</div>
+<h4>encodeLatLong</h4>
+<pre class="methodSignature">protected static final&nbsp;byte[]&nbsp;encodeLatLong&#8203;(java.lang.String&nbsp;datumstr)</pre>
+<div class="block">Encodes a datum string into binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binStr</code> - the binary string to decode</dd>
+<dd><code>datumstr</code> - the datum string to encode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the decoded UTF data</dd>
+<dd>a binary buffer containing the encoded datum</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>1.1</dd>
 </dl>
 </li>
 </ul>
@@ -384,7 +451,7 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

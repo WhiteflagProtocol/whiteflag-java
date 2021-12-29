@@ -6,7 +6,7 @@ package org.whiteflagprotocol.java.core;
 import java.util.Set;
 
 /**
- * Whiteflag basic message core class
+ * Whiteflag message core class
  * 
  * <p> This is a class defining a generic basic Whiteflag message. It
  * includes common properties and methods of all message types, and
@@ -14,6 +14,8 @@ import java.util.Set;
  * All implementation specific logic should be in a derived message subclass.
  * 
  * @wfref 4. Message Format
+ * 
+ * @since 1.0
  */
 public class WfMessageCore {
 
@@ -32,18 +34,29 @@ public class WfMessageCore {
     /* CONSTRUCTORS */
 
     /**
-     * Creates a Whiteflag message from a header and a body segment
-     * @param type the type of the message
+     * Creates a Whiteflag message core from a header and a body segment
+     * @param type the of the message
      * @param header the message header
      * @param body the message body
      */
     protected WfMessageCore(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
         this.type = type;
-        this.header = new WfMessageSegment(header);
-        this.body = new WfMessageSegment(body);
+        this.header = header;
+        this.body = body;
     }
 
-    /* PUBLIC METHODS: basic object interface */
+    /**
+     * Creates a Whiteflag message from an existing core message
+     * @since 1.1
+     * @param coreMsg the core message
+     */
+    protected WfMessageCore(WfMessageCore coreMsg) {
+        this.type = coreMsg.type;
+        this.header = coreMsg.header;
+        this.body = coreMsg.body;
+    }
+
+    /* PUBLIC METHODS */
 
     /**
      * Returns the message as a concatinated string of field values
@@ -59,8 +72,6 @@ public class WfMessageCore {
         }
         return string; 
     }
-
-    /* PUBLIC METHODS: metadata & validators */
 
     /**
      * Checks if this message contains valid data
@@ -113,8 +124,6 @@ public class WfMessageCore {
         return names;
     }
 
-    /* PUBLIC METHODS: getters & setters */
-
     /**
      * Gets the value of the specified field
      * @param fieldname the name of the requested field
@@ -137,12 +146,10 @@ public class WfMessageCore {
         return body.set(fieldname, data);
     }
 
-    /* PUBLIC METHODS: operations */
-
     /**
      * Serializes the Whiteflag message
      * @return the serialized message, i.e. the concatinated string of field values
-     * @throws WfCoreException if any of the field does not contain valid data
+     * @throws WfCoreException if any of the fields does not contain valid data
      */
     public String serialize() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
@@ -152,24 +159,14 @@ public class WfMessageCore {
     }
 
     /**
-     * Encodes the Whiteflag message without a 0x prefix
-     * @return the hexadecimal representation of the encoded Whiteflag message
-     * @throws WfCoreException if any of the field does not contain valid data
-     */
-    public String encode() throws WfCoreException {
-        return encode(false);
-    }
-
-    /**
      * Encodes the Whiteflag message
-     * @param prefix if TRUE, the resulting string gets a 0x prefix
-     * @return the hexadecimal representation of the encoded Whiteflag message
-     * @throws WfCoreException if any of the field does not contain valid data
+     * @return a {@link WfBinaryBuffer} with the compressed binary encoded Whiteflag message
+     * @throws WfCoreException if any of the fields does not contain valid data
      */
-    public String encode(final Boolean prefix) throws WfCoreException {
+    public WfBinaryBuffer encode() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
             throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
         }
-        return header.encode().append(body.encode()).toHexString(prefix);
+        return header.encode().append(body.encode());
     }
 }

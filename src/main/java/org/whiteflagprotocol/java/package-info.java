@@ -6,5 +6,7 @@
  * on the Whiteflag protocol core java library, which only contains
  * implementation-independent protocol features as specified by the
  * Whiteflag standard.
+ * 
+ * @since 1.0
  */
 package org.whiteflagprotocol.java;
