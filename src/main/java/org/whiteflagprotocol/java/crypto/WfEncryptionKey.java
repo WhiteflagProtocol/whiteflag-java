@@ -31,14 +31,14 @@ public class WfEncryptionKey {
     private final byte[] encryptionKey;
     private final byte[] pseudoRandomKey;
 
-    /* CONSTRUCTOR */
+    /* CONSTRUCTORS */
 
     /**
      * Constructs a new Whiteflag encryption key from a pre-shared key
      * @param preSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
     public WfEncryptionKey(String preSharedKey) {
-        this(WfCryptoUtil.parseHexString(preSharedKey));
+        this(WfCryptoUtil.convertToByteArray(preSharedKey));
     }
 
     /**
@@ -48,7 +48,7 @@ public class WfEncryptionKey {
     public WfEncryptionKey(byte[] preSharedKey) {
         this.encryptionKey = preSharedKey;
         this.encryptionMethod = AES_256_CTR_PSK;
-        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, WfCryptoUtil.parseHexString(encryptionMethod.getSalt()));
+        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, encryptionMethod.getSalt());
     }
 
     /**
@@ -57,7 +57,7 @@ public class WfEncryptionKey {
      * @param ecdhKeyPair the own ECDH key pair object
      */
     public WfEncryptionKey(String originatorPublicKey, WfECDHKeyPair ecdhKeyPair) {
-        this(WfCryptoUtil.parseHexString(originatorPublicKey), ecdhKeyPair);
+        this(WfCryptoUtil.convertToByteArray(originatorPublicKey), ecdhKeyPair);
     }
 
     /**
@@ -68,7 +68,7 @@ public class WfEncryptionKey {
     public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ecdhKeyPair) {
         this.encryptionKey = ecdhKeyPair.getSharedKey(originatorPublicKey);
         this.encryptionMethod = AES_256_CTR_ECDH;
-        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, WfCryptoUtil.parseHexString(encryptionMethod.getSalt()));
+        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, encryptionMethod.getSalt());
     }
 
     /* PUBLIC METHODS */

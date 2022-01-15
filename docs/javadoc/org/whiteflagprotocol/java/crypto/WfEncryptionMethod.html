@@ -176,13 +176,13 @@ extends java.lang.Enum&lt;<a href="WfEncryptionMethod.html" title="enum in org.w
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AES_256_CTR_ECDH">AES_256_CTR_ECDH</a></span></code></th>
 <td class="colLast">
-<div class="block">Encryption Method 2: AES-256-CTR with negotiated key</div>
+<div class="block">Encryption Method 1: AES-256-CTR with negotiated key</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#AES_256_CTR_PSK">AES_256_CTR_PSK</a></span></code></th>
 <td class="colLast">
-<div class="block">Encryption Method 1: AES-256-CTR with pre-shared key</div>
+<div class="block">Encryption Method : AES-256-CTR with pre-shared key</div>
 </td>
 </tr>
 </table>
@@ -246,7 +246,7 @@ extends java.lang.Enum&lt;<a href="WfEncryptionMethod.html" title="enum in org.w
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSalt()">getSalt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the salt for key derivation for the Whiteflag encryption method</div>
@@ -298,24 +298,24 @@ the order they are declared.</div>
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
-<a id="AES_256_CTR_PSK">
+<a id="AES_256_CTR_ECDH">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>AES_256_CTR_PSK</h4>
-<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_256_CTR_PSK</pre>
-<div class="block">Encryption Method 1: AES-256-CTR with pre-shared key</div>
+<h4>AES_256_CTR_ECDH</h4>
+<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_256_CTR_ECDH</pre>
+<div class="block">Encryption Method 1: AES-256-CTR with negotiated key</div>
 </li>
 </ul>
-<a id="AES_256_CTR_ECDH">
+<a id="AES_256_CTR_PSK">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>AES_256_CTR_ECDH</h4>
-<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_256_CTR_ECDH</pre>
-<div class="block">Encryption Method 2: AES-256-CTR with negotiated key</div>
+<h4>AES_256_CTR_PSK</h4>
+<pre>public static final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> AES_256_CTR_PSK</pre>
+<div class="block">Encryption Method : AES-256-CTR with pre-shared key</div>
 </li>
 </ul>
 </li>
@@ -394,7 +394,7 @@ not permitted.)</div>
 <div class="block">Returns the cipher for the Whiteflag encryption method i.a.w. Java Cryptography Standard Algorithm Names</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the cipher parameters with algorithm, mode and padding</dd>
+<dd>a string indicating the cipher, i.e. the concatinated algorithm, mode and padding parameters</dd>
 </dl>
 </li>
 </ul>
@@ -408,7 +408,7 @@ not permitted.)</div>
 <div class="block">Returns the cipher algorithm for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the encryption algorithm</dd>
+<dd>a string indicating the encryption algorithm</dd>
 </dl>
 </li>
 </ul>
@@ -422,7 +422,7 @@ not permitted.)</div>
 <div class="block">Returns the cipher mode for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the encryption mode</dd>
+<dd>a string indicating the encryption mode</dd>
 </dl>
 </li>
 </ul>
@@ -436,7 +436,7 @@ not permitted.)</div>
 <div class="block">Returns the cipher padding for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the encryption padding</dd>
+<dd>a string indicating the encryption padding</dd>
 </dl>
 </li>
 </ul>
@@ -460,11 +460,11 @@ not permitted.)</div>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSalt</h4>
-<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getSalt()</pre>
+<pre class="methodSignature">public final&nbsp;byte[]&nbsp;getSalt()</pre>
 <div class="block">Returns the salt for key derivation for the Whiteflag encryption method</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the salt used in the HKDF function to derive the encryption key</dd>
+<dd>a byte array with the salt used in the HKDF function to derive the encryption key</dd>
 </dl>
 </li>
 </ul>

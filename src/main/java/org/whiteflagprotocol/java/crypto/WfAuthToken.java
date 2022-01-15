@@ -32,15 +32,15 @@ public class WfAuthToken {
 
     /**
      * Constructs a new Whiteflag authentication token
-     * @param secret the shared secret used as an authentication token
+     * @param secret a hexadecimal string with the shared secret used as an authentication token
      */
     public WfAuthToken(String secret) {
-        this(WfCryptoUtil.parseHexString(secret));
+        this(WfCryptoUtil.convertToByteArray(secret));
     }
 
     /**
      * Constructs a new Whiteflag authentication token
-     * @param secret the shared secret used as an authentication token
+     * @param secret a byte array with the shared secret used as an authentication token
      */
     public WfAuthToken(byte[] secret) {
         this.authToken = secret;
@@ -51,26 +51,21 @@ public class WfAuthToken {
 
     /**
      * Generates the Whiteflag verification data to prove possession of the token
-     * @param contextInfo string with information to bind the derived key to the intended context
-     * @return a string with the verification data
+     * @param contextInfo a hexadecimal string with information to bind the derived key to the intended context
+     * @return a hexadecimal string with the verification data
      */
     public String getVerificationData(String contextInfo) {
-        return WfCryptoUtil.toHexString(
-            getVerificationData(WfCryptoUtil.parseHexString(contextInfo))
+        return WfCryptoUtil.convertToHexString(
+            getVerificationData(WfCryptoUtil.convertToByteArray(contextInfo))
         );
     }
 
     /**
      * Generates the Whiteflag verification data to prove possession of the token
-     * @param contextInfo byte array with information to bind the derived key to the intended context
+     * @param contextInfo a byte array with information to bind the derived key to the intended context
      * @return a byte array with the verification data
      */
     public byte[] getVerificationData(byte[] contextInfo) {
-        return WfCryptoUtil.hkdf(
-            authToken,
-            WfCryptoUtil.parseHexString(this.authMethod.getSalt()),
-            contextInfo,
-            this.authMethod.getTokenLength()
-        );
+        return WfCryptoUtil.hkdf(authToken, authMethod.getSalt(), contextInfo, authMethod.getTokenLength());
     }
 }

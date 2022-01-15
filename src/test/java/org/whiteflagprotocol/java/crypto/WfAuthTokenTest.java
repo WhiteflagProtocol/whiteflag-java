@@ -10,10 +10,7 @@ import static org.junit.Assert.*;
 import static org.whiteflagprotocol.java.crypto.WfAuthMethod.*;
 
 /**
- * Whiteflag HKDF test class
- *
- * <p> This is a test class using RFC 5869 test vectors to test the
- * Whiteflag HKDF implementation.
+ * Whiteflag authentication token test class
  */
 public class WfAuthTokenTest {
 

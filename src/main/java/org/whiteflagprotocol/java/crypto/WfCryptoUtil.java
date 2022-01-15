@@ -25,7 +25,9 @@ public class WfCryptoUtil {
 
     /* Constants */
     public static final String HKDF_HASHALG ="HMACSHA256";
+    public static final String HEXPREFIX = "0x";
     public static final int HEXRADIX = 16;
+    public static final int QUADBIT = 4;
 
     /* CONSTRUCTOR */
 
@@ -33,22 +35,27 @@ public class WfCryptoUtil {
      * Prevents the utility class to be instantiated
      */
     private WfCryptoUtil() {
-        throw new IllegalStateException("Cannot instantiate Whiteflag HKDF utility class");
+        throw new IllegalStateException("Cannot instantiate Whiteflag cryptographic utility class");
     }
 
-    /* PUBLIC METHODS */
+    /* PUBLIC STATIC METHODS */
 
     /**
-     * Parses a hexadecimal string to a byte array used in crypto functions
-     * @param hexString the hexadecimal string
+     * Converts a hexadecimal string to a byte array
+     * @param hexstr the hexadecimal string
      * @return a byte array
      */
-    public static final byte[] parseHexString(final String hexString) {
-        final int length = hexString.length();
-        byte[] byteArray = new byte[length / 2];
-        for (int i = 0; i < length; i += 2) {
-            byteArray[i / 2] = (byte) ((Character.digit(hexString.charAt(i), HEXRADIX) << 4)
-                                      + Character.digit(hexString.charAt(i + 1), HEXRADIX));
+    public static final byte[] convertToByteArray(final String hexstr) {
+        /* Prepare string by removing prefix and adding trailing 0 */
+        String str = removeStringPrefix(hexstr, HEXPREFIX);
+        final int strLength = str.length();
+        if (strLength % 2 == 1) str = str + "0";
+
+        /* Loop through hexadecimal string and take two chars at a time*/
+        byte[] byteArray = new byte[strLength / 2];
+        for (int i = 0; i < strLength; i += 2) {
+            byteArray[i / 2] = (byte) ((Character.digit(str.charAt(i), HEXRADIX) << QUADBIT)
+                                      + Character.digit(str.charAt(i + 1), HEXRADIX));
         }
         return byteArray;
     }
@@ -58,15 +65,15 @@ public class WfCryptoUtil {
      * @param byteArray the byte array
      * @return a hexadecimal string
      */
-    public static final String toHexString(final byte[] byteArray) {
-        StringBuffer hexBuffer = new StringBuffer();
-        for (int i = 0; i < byteArray.length; i++) {
+    public static final String convertToHexString(final byte[] byteArray) {
+        StringBuilder hexstr = new StringBuilder();
+        for (int byteIndex = 0; byteIndex < byteArray.length; byteIndex++) {
             char[] hexDigits = new char[2];
-            hexDigits[0] = Character.forDigit((byteArray[i] >> 4) & 0xF, HEXRADIX);
-            hexDigits[1] = Character.forDigit((byteArray[i] & 0xF), HEXRADIX);
-            hexBuffer.append(new String(hexDigits));
+            hexDigits[0] = Character.forDigit((byteArray[byteIndex] >> QUADBIT) & 0xF, HEXRADIX);
+            hexDigits[1] = Character.forDigit((byteArray[byteIndex] & 0xF), HEXRADIX);
+            hexstr.append(new String(hexDigits));
         }
-        return hexBuffer.toString().toLowerCase();
+        return hexstr.toString().toLowerCase();
     }
 
     /**
@@ -109,8 +116,15 @@ public class WfCryptoUtil {
          * Step 1. HKDF-Extract(salt, IKM) -> PRK
          * Step 2. HKDF-Expand(PRK, info, L) -> OKM
          */
-        return toHexString(hkdf(parseHexString(ikm), parseHexString(salt), parseHexString(info), keyLength));
+        return convertToHexString(hkdf(
+            convertToByteArray(ikm),
+            convertToByteArray(salt),
+            convertToByteArray(info),
+            keyLength
+        ));
     };
+
+    /* PROTECTED STATIC METHODS */
 
     /**
      * Performs RFC 5869 HKDF Step 1: extract
@@ -118,7 +132,7 @@ public class WfCryptoUtil {
      * @param salt the cryptographic salt
      * @return an intermediate pseudo random key
      */
-    public static final byte[] hkdfExtract(final byte[] ikm, final byte[] salt) {
+    protected static final byte[] hkdfExtract(final byte[] ikm, final byte[] salt) {
         return getHMAC(salt).doFinal(ikm);
     }
 
@@ -129,7 +143,7 @@ public class WfCryptoUtil {
      * @param keyLength the output key length in bytes
      * @return the output key material
      */
-    public static final byte[] hkdfExpand(final byte[] prk, final byte[] info, final int keyLength) {
+    protected static final byte[] hkdfExpand(final byte[] prk, final byte[] info, final int keyLength) {
         // Prepare output
         ByteBuffer okm = ByteBuffer.allocate(keyLength);
         int remainder = keyLength;
@@ -155,7 +169,7 @@ public class WfCryptoUtil {
         return okm.array();
     }
 
-    /* PRIVATE METHODS */
+    /* PRIVATE STATIC METHODS */
 
     /**
      * Creates a HMAC object initialised with the provide key
@@ -168,10 +182,21 @@ public class WfCryptoUtil {
             HMAC = Mac.getInstance(HKDF_HASHALG);
             HMAC.init(new SecretKeySpec(key, HKDF_HASHALG));
         } catch(NoSuchAlgorithmException e) {
-            throw new IllegalArgumentException("Wrong hash algorithm in HKDF function: " + e.getMessage());
+            throw new IllegalArgumentException("Invalid hash algorithm " + HKDF_HASHALG + " for HMAC function: " + e.getMessage());
         } catch(InvalidKeyException e) {
-            throw new IllegalArgumentException("Invalid keying material in HKDF function: " + e.getMessage());
+            throw new IllegalArgumentException("Invalid keying material for HMAC function: " + e.getMessage());
         }
         return HMAC;
+    }
+
+    /**
+     * Checks for and removes prefix from string
+     * @param str string to be checked
+     * @param prefix the prefix to be checked for
+     * @return a string without prefix
+     */
+    private static String removeStringPrefix(final String str, final String prefix) {
+        if (str.startsWith(prefix)) return str.substring(prefix.length());
+        return str;
     }
 }

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import static org.whiteflagprotocol.java.core.WfMessageCodec.Encoding.*;
 
 /**
- * Whiteflag binary string test class
+ * Whiteflag binary buffer test class
  */
 public class WfBinaryBufferTest {
     /* Fieldname */

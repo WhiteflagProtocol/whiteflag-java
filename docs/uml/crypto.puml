@@ -7,18 +7,18 @@ package org.whiteflagprotocol.java.crypto {
     class WfCipher {
         +setContext(byte[])
         +setInitVector(byte[])
-        +encrypt(String) : String
-        +decrypt(String) : String
+        +encrypt(byte[]) : byte[]
+        +decrypt(byte[]) : byte[]
     }
     enum WfAuthenticationMethod {
         +TOKEN_PRESHARED
     }
     class WfAuthToken {
-        +getVerificationData() : String
+        +getVerificationData() : byte[]
     }
     enum WfEncryptionMethod {
-        +AES_256_CTR_PSK
         +AES_256_CTR_ECDH
+        +AES_256_CTR_PSK
     }
     class WfEncryptionKey {
         +getEncryptionMethod() : WfEncryptionMethod
@@ -29,11 +29,11 @@ package org.whiteflagprotocol.java.crypto {
         +getSharedKey(byte[]): byte[]
     }
     class WfCryptoUtil <<Utility>> {
-        +parseHexString(String) : byte[]
-        +toHexString(byte[]) : String
+        +convertToByteArray(String) : byte[]
+        +convertToHexString(byte[]) : String
         +hkdf() : byte[]
-        +hkdfExtract() : byte[]
-        +hkdfExpand() : byte[]
+        #hkdfExtract() : byte[]
+        #hkdfExpand() : byte[]
     }
 }
 

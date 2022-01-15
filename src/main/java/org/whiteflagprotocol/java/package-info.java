@@ -7,6 +7,8 @@
  * implementation-independent protocol features as specified by the
  * Whiteflag standard.
  * 
+ * @wfver v1-draft.6
+ * 
  * @since 1.0
  */
 package org.whiteflagprotocol.java;

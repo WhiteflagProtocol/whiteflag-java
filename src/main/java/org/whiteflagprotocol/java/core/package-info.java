@@ -6,6 +6,8 @@
  * a fully functional implementation of the protocol. This is to seperate
  * core protocol features from implementation-specific design decisions.
  * 
+ * @wfver v1-draft.6
+ * 
  * @since 1.0
  */
 package org.whiteflagprotocol.java.core;

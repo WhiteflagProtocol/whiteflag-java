@@ -26,7 +26,7 @@ public enum WfAuthMethod {
     /* The valid regex charset of an unencoded field value */
     private final String indicator;
     private final int tokenLength;
-    private final String hkdfSalt;
+    private final byte[] hkdfSalt;
 
     /* METHODS */
 
@@ -34,17 +34,17 @@ public enum WfAuthMethod {
     /**
      * @param indicator string with value used in a Whiteflag message to indicate the authentication method
      * @param tokenLength the length of the validation token sent in an authentication message
-     * @param hkdfSalt the salt used in the HKDF function to derive the validation token
+     * @param hkdfSalt a hexadecimal string with the salt used in the HKDF function to derive the validation token
      */
     private WfAuthMethod(final String indicator, final int tokenLength, final String hkdfSalt) {
         this.indicator = indicator;
         this.tokenLength = tokenLength;
-        this.hkdfSalt = hkdfSalt;
+        this.hkdfSalt = WfCryptoUtil.convertToByteArray(hkdfSalt);
     }
 
     /**
      * Returns the Whiteflag indicator for the authentication method
-     * @return string with value used in a Whiteflag message to indicate the authentication method
+     * @return a string with value used in a Whiteflag message to indicate the authentication method
      */
     public final String getIndicator() {
         return indicator;
@@ -60,9 +60,9 @@ public enum WfAuthMethod {
 
     /**
      * Returns the salt for validation token derivation for the authentication method
-     * @return the salt used in the HKDF function to derive the validation token
+     * @return a byte array with the salt used in the HKDF function to derive the validation token
      */
-    public final String getSalt() {
+    public final byte[] getSalt() {
         return hkdfSalt;
     }
 }

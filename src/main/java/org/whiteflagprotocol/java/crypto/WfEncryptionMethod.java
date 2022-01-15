@@ -17,14 +17,15 @@ package org.whiteflagprotocol.java.crypto;
  */
 public enum WfEncryptionMethod {
     /**
-     * Encryption Method 1: AES-256-CTR with pre-shared key
+     * Encryption Method 1: AES-256-CTR with negotiated key
      */
-    AES_256_CTR_PSK("1", "AES", "CTR", "NoPadding", 32, "8ddb03085a2c15e69c35c224bce2952dca7878770724741cbce5a135328be0c0"),
+    AES_256_CTR_ECDH("1", "AES", "CTR", "NoPadding", 32, "8ddb03085a2c15e69c35c224bce2952dca7878770724741cbce5a135328be0c0"),
 
     /**
-     * Encryption Method 2: AES-256-CTR with negotiated key
+     * Encryption Method : AES-256-CTR with pre-shared key
      */
-    AES_256_CTR_ECDH("2", "AES", "CTR", "NoPadding", 32, "c4d028bd45c876135e80ef7889835822a6f19a31835557d5854d1334e8497b56");
+    AES_256_CTR_PSK("2", "AES", "CTR", "NoPadding", 32, "c4d028bd45c876135e80ef7889835822a6f19a31835557d5854d1334e8497b56");
+
 
     /* PROPERTIES */
 
@@ -34,7 +35,7 @@ public enum WfEncryptionMethod {
     private final String mode;
     private final String padding;
     private final int keyLength;
-    private final String hkdfSalt;
+    private final byte[] hkdfSalt;
 
     /* METHODS */
 
@@ -60,7 +61,7 @@ public enum WfEncryptionMethod {
         this.mode = mode;
         this.padding = padding;
         this.keyLength = keyLength;
-        this.hkdfSalt = hkdfSalt;
+        this.hkdfSalt = WfCryptoUtil.convertToByteArray(hkdfSalt);
     }
 
     /**
@@ -73,7 +74,7 @@ public enum WfEncryptionMethod {
 
     /**
      * Returns the cipher for the Whiteflag encryption method i.a.w. Java Cryptography Standard Algorithm Names
-     * @return the cipher parameters with algorithm, mode and padding
+     * @return a string indicating the cipher, i.e. the concatinated algorithm, mode and padding parameters
      */
     public final String getCipher() {
         return algorithm + "/" + mode + "/" + padding;
@@ -81,7 +82,7 @@ public enum WfEncryptionMethod {
 
     /**
      * Returns the cipher algorithm for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names
-     * @return the encryption algorithm
+     * @return a string indicating the encryption algorithm
      */
     public final String getAlgorithm() {
         return algorithm;
@@ -89,7 +90,7 @@ public enum WfEncryptionMethod {
 
         /**
      * Returns the cipher mode for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names
-     * @return the encryption mode
+     * @return a string indicating the encryption mode
      */
     public final String getMode() {
         return mode;
@@ -97,7 +98,7 @@ public enum WfEncryptionMethod {
 
     /**
      * Returns the cipher padding for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names
-     * @return the encryption padding
+     * @return a string indicating the encryption padding
      */
     public final String getPadding() {
         return algorithm;
@@ -113,9 +114,9 @@ public enum WfEncryptionMethod {
 
     /**
      * Returns the salt for key derivation for the Whiteflag encryption method
-     * @return the salt used in the HKDF function to derive the encryption key
+     * @return a byte array with the salt used in the HKDF function to derive the encryption key
      */
-    public final String getSalt() {
+    public final byte[] getSalt() {
         return hkdfSalt;
     }
 }

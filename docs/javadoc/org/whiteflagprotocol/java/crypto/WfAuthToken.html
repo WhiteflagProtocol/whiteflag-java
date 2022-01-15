@@ -284,7 +284,7 @@ extends java.lang.Object</pre>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>secret</code> - the shared secret used as an authentication token</dd>
+<dd><code>secret</code> - a hexadecimal string with the shared secret used as an authentication token</dd>
 </dl>
 </li>
 </ul>
@@ -298,7 +298,7 @@ extends java.lang.Object</pre>
 <div class="block">Constructs a new Whiteflag authentication token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>secret</code> - the shared secret used as an authentication token</dd>
+<dd><code>secret</code> - a byte array with the shared secret used as an authentication token</dd>
 </dl>
 </li>
 </ul>
@@ -322,9 +322,9 @@ extends java.lang.Object</pre>
 <div class="block">Generates the Whiteflag verification data to prove possession of the token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>contextInfo</code> - string with information to bind the derived key to the intended context</dd>
+<dd><code>contextInfo</code> - a hexadecimal string with information to bind the derived key to the intended context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a string with the verification data</dd>
+<dd>a hexadecimal string with the verification data</dd>
 </dl>
 </li>
 </ul>
@@ -338,7 +338,7 @@ extends java.lang.Object</pre>
 <div class="block">Generates the Whiteflag verification data to prove possession of the token</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>contextInfo</code> - byte array with information to bind the derived key to the intended context</dd>
+<dd><code>contextInfo</code> - a byte array with information to bind the derived key to the intended context</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a byte array with the verification data</dd>
 </dl>

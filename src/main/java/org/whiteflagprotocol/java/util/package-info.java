@@ -7,6 +7,8 @@
  * not part of the protocol core. These utilities include data conversions,
  * generic helper functions, etc.
  * 
+ * @wfver v1-draft.6
+ * 
  * @since 1.0
  */
 package org.whiteflagprotocol.java.util;

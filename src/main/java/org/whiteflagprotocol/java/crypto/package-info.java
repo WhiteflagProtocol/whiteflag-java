@@ -7,6 +7,8 @@
  * protocol classes. Seperating these critical security functions makes them
  * better inspectable, testable and maintainable.
  * 
+ * @wfver v1-draft.6
+ * 
  * @since 1.1
  */
 package org.whiteflagprotocol.java.crypto;

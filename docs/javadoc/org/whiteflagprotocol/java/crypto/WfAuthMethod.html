@@ -205,7 +205,7 @@ extends java.lang.Enum&lt;<a href="WfAuthMethod.html" title="enum in org.whitefl
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>byte[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSalt()">getSalt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the salt for validation token derivation for the authentication method</div>
@@ -336,7 +336,7 @@ not permitted.)</div>
 <div class="block">Returns the Whiteflag indicator for the authentication method</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>string with value used in a Whiteflag message to indicate the authentication method</dd>
+<dd>a string with value used in a Whiteflag message to indicate the authentication method</dd>
 </dl>
 </li>
 </ul>
@@ -360,11 +360,11 @@ not permitted.)</div>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getSalt</h4>
-<pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;getSalt()</pre>
+<pre class="methodSignature">public final&nbsp;byte[]&nbsp;getSalt()</pre>
 <div class="block">Returns the salt for validation token derivation for the authentication method</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the salt used in the HKDF function to derive the validation token</dd>
+<dd>a byte array with the salt used in the HKDF function to derive the validation token</dd>
 </dl>
 </li>
 </ul>
