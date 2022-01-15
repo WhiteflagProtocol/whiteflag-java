@@ -6,6 +6,8 @@ package org.whiteflagprotocol.java.crypto;
 import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
 import java.security.InvalidKeyException;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -26,6 +28,7 @@ public class WfCryptoUtil {
     /* Constants */
     public static final String HKDF_HASHALG ="HMACSHA256";
     public static final String HEXPREFIX = "0x";
+    public static final Pattern HEXPATTERN = Pattern.compile("^[a-fA-F0-9]*$");
     public static final int HEXRADIX = 16;
     public static final int QUADBIT = 4;
 
@@ -41,17 +44,34 @@ public class WfCryptoUtil {
     /* PUBLIC STATIC METHODS */
 
     /**
+     * Zeroises a byte array
+     * @param byteArray the byte array to be zeroised
+     */
+    public static final void zeroise(byte[] byteArray) {
+        Arrays.fill(byteArray, (byte) 0xFF);    // 1111 1111
+        Arrays.fill(byteArray, (byte) 0xAA);    // 1010 1010
+        Arrays.fill(byteArray, (byte) 0x55);    // 0101 0101
+        Arrays.fill(byteArray, (byte) 0x00);    // 0000 0000
+    }
+
+    /**
      * Converts a hexadecimal string to a byte array
      * @param hexstr the hexadecimal string
      * @return a byte array
+     * @throws IllegalArgumentException if argument is not a hexadecimal string
      */
     public static final byte[] convertToByteArray(final String hexstr) {
-        /* Prepare string by removing prefix and adding trailing 0 */
+        /* Prepare hexadecimal input string by removing prefix, checking characters and adding trailing 0 */
+        if (hexstr == null) {
+            throw new IllegalArgumentException("Null is not a valid hexadecimal string");
+        }
         String str = removeStringPrefix(hexstr, HEXPREFIX);
-        final int strLength = str.length();
-        if (strLength % 2 == 1) str = str + "0";
-
+        if (str.length() % 2 == 1) str = str + "0";
+        if (!HEXPATTERN.matcher(str).matches()) {
+            throw new IllegalArgumentException("Invalid hexadecimal string");
+        }
         /* Loop through hexadecimal string and take two chars at a time*/
+        final int strLength = str.length();
         byte[] byteArray = new byte[strLength / 2];
         for (int i = 0; i < strLength; i += 2) {
             byteArray[i / 2] = (byte) ((Character.digit(str.charAt(i), HEXRADIX) << QUADBIT)
@@ -98,7 +118,7 @@ public class WfCryptoUtil {
          * Step 2. HKDF-Expand(PRK, info, L) -> OKM
          */
         return hkdfExpand(hkdfExtract(ikm, salt), info, keyLength);
-    };
+    }
 
     /**
      * Performs HKDF key and token derivation for Whiteflag
@@ -122,7 +142,7 @@ public class WfCryptoUtil {
             convertToByteArray(info),
             keyLength
         ));
-    };
+    }
 
     /* PROTECTED STATIC METHODS */
 
@@ -149,21 +169,21 @@ public class WfCryptoUtil {
         int remainder = keyLength;
 
         // Prepare hashing function
-        Mac HMAC = getHMAC(prk);
-        byte[] T = new byte[0];
-        final int N = (int) Math.ceil((double) keyLength / (double) HMAC.getMacLength());
+        Mac hmac = getHMAC(prk);
+        byte[] t = new byte[0];
+        final int N = (int) Math.ceil((double) keyLength / (double) hmac.getMacLength());
 
         // Interations to calculate okm
         for (int i = 1; i <= N; i++) {
             // Concatinate and hash previous hash T, info and counter i
-            HMAC.update(T);
-            HMAC.update(info);
-            HMAC.update((byte) i);
-            T = HMAC.doFinal();
+            hmac.update(t);
+            hmac.update(info);
+            hmac.update((byte) i);
+            t = hmac.doFinal();
 
             // Add hash to (remainder of) okm buffer
-            final int length = Math.min(remainder, T.length);
-            okm.put(T, 0, length);
+            final int length = Math.min(remainder, t.length);
+            okm.put(t, 0, length);
             remainder -= length;
         }
         return okm.array();
@@ -177,16 +197,16 @@ public class WfCryptoUtil {
      * @return an initialised HMAC object
      */
     private static final Mac getHMAC(byte[] key) {
-        Mac HMAC;
+        Mac hmac;
         try {
-            HMAC = Mac.getInstance(HKDF_HASHALG);
-            HMAC.init(new SecretKeySpec(key, HKDF_HASHALG));
+            hmac = Mac.getInstance(HKDF_HASHALG);
+            hmac.init(new SecretKeySpec(key, HKDF_HASHALG));
         } catch(NoSuchAlgorithmException e) {
             throw new IllegalArgumentException("Invalid hash algorithm " + HKDF_HASHALG + " for HMAC function: " + e.getMessage());
         } catch(InvalidKeyException e) {
             throw new IllegalArgumentException("Invalid keying material for HMAC function: " + e.getMessage());
         }
-        return HMAC;
+        return hmac;
     }
 
     /**

@@ -53,6 +53,7 @@ public class WfJsonMessage {
     /**
      * Creates a new empty JSON representation of a Whiteflag message
      */
+    @SuppressWarnings("unused")
     private WfJsonMessage() {
         /* Required for Json annotation declarations */
     }
@@ -74,7 +75,7 @@ public class WfJsonMessage {
     /**
      * Creates a new JSON representation of a Whiteflag message from a serialized JSON string
      * @param jsonStr a JSON representation of a Whiteflag message
-     * @throws JsonProcessingException if JSON is invalid
+     * @throws WfUtilException if JSON is invalid
      */
     public static WfJsonMessage create(String jsonStr) throws WfUtilException {
         WfJsonMessage jsonMessage;
@@ -120,7 +121,7 @@ public class WfJsonMessage {
     /**
      * Creates a serialized JSON representation of a Whiteflag message
      * @return the serialized JSON representation of the message
-     * @throws JsonProcessingException if no valid JSON serialization can be created
+     * @throws WfUtilException if no valid JSON serialization can be created
      */
     public String toJson() throws WfUtilException {
         String jsonStr;

@@ -121,7 +121,7 @@ public class WfMessageSegment {
 
     /**
      * Returns the bit length of this segment, excluding the last variable length field if not set
-     * @return
+     * @return the bit length
      */
     public int bitLength() {
         int bitLength = 0;
@@ -133,9 +133,11 @@ public class WfMessageSegment {
 
     /**
      * Returns the byte length of this segment, excluding the last variable length field if not set
-     * @return
+     * @return the byte length
      */
+    @SuppressWarnings("java:S2259")
     public int byteLength() {
+        if (this.fields.length == 0) return 0;
         return getField(-1).endByte - getField(0).startByte;
     }
 

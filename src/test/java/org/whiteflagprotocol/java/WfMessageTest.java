@@ -224,7 +224,7 @@ public class WfMessageTest {
             WfMessage message = WfMessage.compile(fieldValues);
             fail("Expected a WfException to be thrown");
             assertFalse("Message should not be valid", message.isValid());
-        } catch (WfException e) {
+        } catch (Exception e) {
             assertTrue(e instanceof WfException);
         }
     }

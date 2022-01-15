@@ -14,10 +14,10 @@ import static org.whiteflagprotocol.java.crypto.WfAuthMethod.*;
  */
 public class WfAuthTokenTest {
 
-    @Test
     /**
      * Tests Hexadecimal String to Byte Array parser
      */
+    @Test
     public void testAuthToken1() {
         /* Setup */
         final String secret = "000102030405060708090a0b0c";

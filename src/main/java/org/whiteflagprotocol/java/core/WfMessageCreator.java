@@ -51,7 +51,6 @@ public class WfMessageCreator {
     /**
      * Creates the Whiteflag core message
      * @return a new {@link WfMessageCore}
-     * @throws WfCoreException if the message cannot be created
      */
     public final WfMessageCore create() {
         return new WfMessageCore(messageType, header, body);
@@ -61,7 +60,6 @@ public class WfMessageCreator {
      * Creates a new empty Whiteflag core message object of the specified type
      * @param messageType the {@link WfMessageType} of the new message
      * @return this {@link WfMessageCreator}
-     * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCreator type(final WfMessageType messageType) {
         /* Create header and body based on message code */
@@ -83,7 +81,6 @@ public class WfMessageCreator {
      * @param headerValues a fieldname-to-value mapping of the message header fields
      * @param bodyValues a fieldname-to-value mapping of the message body fields
      * @return this {@link WfMessageCreator}
-     * @throws WfCoreException if the provided fields and/or values are invalid
      */
     public final WfMessageCreator map(final Map<String, String> headerValues, final Map<String, String> bodyValues) throws WfCoreException {
         /* Create message header, set field values, and determine message type */

@@ -3,9 +3,9 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
-import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.security.auth.Destroyable;
 
 /* Whiteflag encryption methods */ 
 import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
@@ -22,9 +22,12 @@ import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
  * 
  * @since 1.1
  */
-public class WfEncryptionKey {
+public class WfEncryptionKey implements Destroyable {
 
     /* PROPERTIES */
+
+    /* Status of the instance */
+    private boolean destroyed = false;
 
     /* The encryption method and keys */
     public final WfEncryptionMethod encryptionMethod;
@@ -74,6 +77,25 @@ public class WfEncryptionKey {
     /* PUBLIC METHODS */
 
     /**
+     * Destroys this Whiteflag cipher by clearing the encryption key
+     */
+    @Override
+    public void destroy() {
+        WfCryptoUtil.zeroise(encryptionKey);
+        WfCryptoUtil.zeroise(pseudoRandomKey);
+        this.destroyed = true;
+    }
+
+    /**
+     * Determine if this Whiteflag cipher has been destroyed.
+     * @return TRUE if destroyed, else FALSE
+     */
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    /**
      * Returns the encryption method
      * @return a string with the encryption method indicator
      */
@@ -85,8 +107,12 @@ public class WfEncryptionKey {
      * Derive the secret cryptographic key from this Whiteflag encryption key
      * @param contextInfo information to bind the derived key to the intended context
      * @return a java SecretKey object with the secret cryptographic key
+     * @throws IllegalArgumentException if this Whiteflag encryption key has been destroyed 
      */
     public SecretKey getSecretKey(byte[] contextInfo) {
+        if (destroyed) {
+            throw new IllegalArgumentException("Cannot create a secret key from a destroyed Whiteflag encryption key");
+        }
         return new SecretKeySpec(
             WfCryptoUtil.hkdfExpand(pseudoRandomKey, contextInfo, encryptionMethod.getKeyLength()),
             encryptionMethod.getAlgorithm()

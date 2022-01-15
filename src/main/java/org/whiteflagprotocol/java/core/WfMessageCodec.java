@@ -89,7 +89,6 @@ public class WfMessageCodec {
      * @param field the field for which to decode the binary value
      * @param buffer a binary buffer with the compressed binary encoded field data
      * @return the uncompressed value of the field
-     * @throws WfCoreException if the field cannot be decoded
      */
     public static final String decodeField(WfMessageField field, final byte[] buffer) {
         StringBuilder str = new StringBuilder();
@@ -282,6 +281,7 @@ public class WfMessageCodec {
      * 
      * @since 1.1
      */
+    @SuppressWarnings("java:S116")
     public enum Encoding {
 
         /**

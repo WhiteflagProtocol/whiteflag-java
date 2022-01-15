@@ -12,30 +12,19 @@ To use Whiteflag messages in software applications, only the
 `org.whiteflagprotocol.java` package with the `WfMessage` class and its nested
 creator class `WfMessage.Creator` are required.
 
-A simple example for creating a new Whiteflag message of a type specified by
-a string with the message code:
+A simple example for creating a new Whiteflag message of a type specified by a string with the message code:
 
 ```java
 import org.whiteflagprotocol.java.WfMessage;
 import org.whiteflagprotocol.java.WfException;
 
 public class Example {
-<<<<<<< HEAD
-  public WfMessage createMessage(String messageType) {
-    WfMessage message;
-    try {
-      message = WfMessage.Creator.type(messageType);
-    } catch(WfException e) {
-      throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
-    }
-=======
   /* Properties */
   private WfMessage message;
 
   /* Methods */
   public WfMessage createMessage(String messageType) throws WfException {
     message = WfMessage.type(messageType);
->>>>>>> develop
     return message;
   }
 }

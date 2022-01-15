@@ -123,7 +123,7 @@ public enum WfMessageType {
     /* STATIC FACTORY METHODS */
 
     /**
-     * Returns the {@link WfMessageType} message type
+     * Creates the {@link WfMessageType} message type from the mesaage code
      * @since 1.1
      * @param messageCode the message code
      */

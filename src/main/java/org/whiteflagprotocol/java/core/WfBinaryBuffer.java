@@ -97,12 +97,7 @@ public class WfBinaryBuffer {
      * @return a new {@link WfBinaryBuffer}
      */
     public static WfBinaryBuffer fromHexString(final String data) {
-        if (data == null) throw new IllegalArgumentException("Null is not a valid hexadecimal string");
-        String hexstr = removeStringPrefix(data, HEXPREFIX);
-        if (!HEXPATTERN.matcher(hexstr).matches()) {
-            throw new IllegalArgumentException("Invalid hexadecimal string: " + hexstr);
-        }
-        return new WfBinaryBuffer(convertToByteArray(hexstr));
+        return new WfBinaryBuffer(convertToByteArray(data));
     }
 
     /* PUBLIC METHODS */
@@ -208,17 +203,33 @@ public class WfBinaryBuffer {
     /* PUBLIC STATIC METHODS */
 
     /**
+     * Checks for and removes prefix from string
+     * @param str string to be checked
+     * @param prefix the prefix to be checked for
+     * @return a string without prefix
+     */
+    public static String removeStringPrefix(final String str, final String prefix) {
+        if (str == null) return "";
+        if (prefix == null) return str;
+        if (str.startsWith(prefix)) return str.substring(prefix.length());
+        return str;
+    }
+
+    /**
      * Converts a hexadecimal string to a byte array
      * @param hexstr the hexadecimal string
      * @return a byte array
+     * @throws IllegalArgumentException if argument is not a hexadecimal string
      */
     public static final byte[] convertToByteArray(final String hexstr) {
         /* Prepare string by removing prefix and adding trailing 0 */
         String str = removeStringPrefix(hexstr, HEXPREFIX);
-        final int strLength = str.length();
-        if (strLength % 2 == 1) str = str + "0";
-
+        if (str.length() % 2 == 1) str = str + "0";
+        if (!HEXPATTERN.matcher(str).matches()) {
+            throw new IllegalArgumentException("Invalid hexadecimal string");
+        }
         /* Loop through hexadecimal string and take two chars at a time*/
+        final int strLength = str.length();
         byte[] byteArray = new byte[strLength / 2];
         for (int i = 0; i < strLength; i += 2) {
             byteArray[i / 2] = (byte) ((Character.digit(str.charAt(i), HEXRADIX) << QUADBIT)
@@ -434,17 +445,6 @@ public class WfBinaryBuffer {
         }
         /* All done */
         return byteArray;
-    }
-
-    /**
-     * Checks for and removes prefix from string
-     * @param str string to be checked
-     * @param prefix the prefix to be checked for
-     * @return a string without prefix
-     */
-    protected static String removeStringPrefix(final String str, final String prefix) {
-        if (str.startsWith(prefix)) return str.substring(prefix.length());
-        return str;
     }
 
     /* PRIVATE STATIC METHODS */

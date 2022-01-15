@@ -6,8 +6,6 @@ package org.whiteflagprotocol.java.crypto;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Arrays;
-
 /**
  * Whiteflag crypto util test class
  *
@@ -16,11 +14,11 @@ import java.util.Arrays;
  */
 public class WfCryptoUtilTest {
 
-    @Test
     /**
      * Tests Hexadecimal String to Byte Array parser
      */
-    public void testParseHexString1() {
+    @Test
+    public void testConvertToByteArray1() {
         /* Setup */
         final String inputHexString = "000102030405060708090a0b0c";
 
@@ -30,11 +28,11 @@ public class WfCryptoUtilTest {
         assertEquals("Input and output hexadecimal strings should be equal ", inputHexString, outputHexString);
     }
 
-    @Test
     /**
      * Tests Hexadecimal String to Byte Array parser
      */
-    public void testParseHexString2() {
+    @Test
+    public void testConvertToByteArray2() {
         /* Setup */
         final String inputHexString = "f0f1f2f3f4f5f6f7f8f9";
 
@@ -44,6 +42,21 @@ public class WfCryptoUtilTest {
 
         final String outputHexString = WfCryptoUtil.convertToHexString(byteArray);
         assertEquals("Input and output hexadecimal strings should be equal ", inputHexString, outputHexString);
+    }
+
+
+    /**
+     * Tests Hexadecimal String to Byte Array parser
+     */
+    @Test
+    public void testZeroise1() {
+        /* Setup */
+        final byte[] byteArray = WfCryptoUtil.convertToByteArray("f0f1f2f3f4f5f6f7f8f9");
+        final byte[] zero = new byte[byteArray.length];
+
+        /* Verify */
+        WfCryptoUtil.zeroise(byteArray);
+        assertArrayEquals("Input and output hexadecimal strings should be equal ", zero, byteArray);
     }
 
     /**
