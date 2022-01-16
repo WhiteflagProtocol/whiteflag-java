@@ -10,6 +10,8 @@ import javax.security.auth.Destroyable;
 /* Whiteflag encryption methods */ 
 import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
 
+import java.security.GeneralSecurityException;
+
 /**
  * Whiteflag encryption key class
  * 
@@ -37,7 +39,7 @@ public class WfEncryptionKey implements Destroyable {
     /* CONSTRUCTORS */
 
     /**
-     * Constructs a new Whiteflag encryption key from a pre-shared key
+     * Constructs a new Whiteflag encryption key from a raw pre-shared key
      * @param preSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
     public WfEncryptionKey(String preSharedKey) {
@@ -45,7 +47,7 @@ public class WfEncryptionKey implements Destroyable {
     }
 
     /**
-     * Constructs a new Whiteflag encryption key from a pre-shared key
+     * Constructs a new Whiteflag encryption key from a raw pre-shared key
      * @param preSharedKey a byte array with the raw pre-shared encryption key
      */
     public WfEncryptionKey(byte[] preSharedKey) {
@@ -56,19 +58,19 @@ public class WfEncryptionKey implements Destroyable {
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param originatorPublicKey a hexadecimal string with an originator's ECDH public key
+     * @param originatorPublicKey a hexadecimal string with an originator's raw ECDH public key
      * @param ecdhKeyPair the own ECDH key pair object
      */
-    public WfEncryptionKey(String originatorPublicKey, WfECDHKeyPair ecdhKeyPair) {
+    public WfEncryptionKey(String originatorPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
         this(WfCryptoUtil.convertToByteArray(originatorPublicKey), ecdhKeyPair);
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param originatorPublicKey a byte array with an originator's ECDH public key
+     * @param originatorPublicKey a byte array with an originator's raw ECDH public key
      * @param ecdhKeyPair the own ECDH key pair object
      */
-    public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ecdhKeyPair) {
+    public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
         this.encryptionKey = ecdhKeyPair.getSharedKey(originatorPublicKey);
         this.encryptionMethod = AES_256_CTR_ECDH;
         this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, encryptionMethod.getSalt());
