@@ -26,7 +26,7 @@ public class WfAuthTokenTest {
 
         /* Verify */
         final WfAuthToken token = new WfAuthToken(secret);
-        assertEquals("Authentication token should have the correct authentication indicator", TOKEN_PRESHARED.getIndicator(), token.authMethod.getIndicator());
+        assertEquals("Authentication token should have the correct authentication indicator", TOKEN_PRESHARED.getIndicator(), token.method.getIndicator());
         assertEquals("Authentication token should give the correct verification data", verificationData, token.getVerificationData(context));
     }
 }

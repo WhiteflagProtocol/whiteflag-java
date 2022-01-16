@@ -32,48 +32,48 @@ public class WfEncryptionKey implements Destroyable {
     private boolean destroyed = false;
 
     /* The encryption method and keys */
-    public final WfEncryptionMethod encryptionMethod;
-    private final byte[] encryptionKey;
-    private final byte[] pseudoRandomKey;
+    public final WfEncryptionMethod method;
+    private final byte[] rawkey;
+    private final byte[] prk;
 
     /* CONSTRUCTORS */
 
     /**
      * Constructs a new Whiteflag encryption key from a raw pre-shared key
-     * @param preSharedKey a hexadecimal string with the raw pre-shared encryption key
+     * @param rawSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(String preSharedKey) {
-        this(WfCryptoUtil.convertToByteArray(preSharedKey));
+    public WfEncryptionKey(String rawSharedKey) {
+        this(WfCryptoUtil.convertToByteArray(rawSharedKey));
     }
 
     /**
      * Constructs a new Whiteflag encryption key from a raw pre-shared key
-     * @param preSharedKey a byte array with the raw pre-shared encryption key
+     * @param rawSharedKey a byte array with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(byte[] preSharedKey) {
-        this.encryptionKey = preSharedKey;
-        this.encryptionMethod = AES_256_CTR_PSK;
-        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, encryptionMethod.getSalt());
+    public WfEncryptionKey(byte[] rawSharedKey) {
+        this.rawkey = rawSharedKey;
+        this.method = AES_256_CTR_PSK;
+        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.getSalt());
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param originatorPublicKey a hexadecimal string with an originator's raw ECDH public key
+     * @param rawPublicKey a hexadecimal string with an originator's raw 264-bit compressed public ECDH key
      * @param ecdhKeyPair the own ECDH key pair object
      */
-    public WfEncryptionKey(String originatorPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
-        this(WfCryptoUtil.convertToByteArray(originatorPublicKey), ecdhKeyPair);
+    public WfEncryptionKey(String rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
+        this(WfCryptoUtil.convertToByteArray(rawPublicKey), ecdhKeyPair);
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param originatorPublicKey a byte array with an originator's raw ECDH public key
+     * @param rawPublicKey a byte array with an originator's raw 264-bit compressed public ECDH key
      * @param ecdhKeyPair the own ECDH key pair object
      */
-    public WfEncryptionKey(byte[] originatorPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
-        this.encryptionKey = ecdhKeyPair.getSharedKey(originatorPublicKey);
-        this.encryptionMethod = AES_256_CTR_ECDH;
-        this.pseudoRandomKey = WfCryptoUtil.hkdfExtract(encryptionKey, encryptionMethod.getSalt());
+    public WfEncryptionKey(byte[] rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
+        this.rawkey = ecdhKeyPair.getSharedKey(rawPublicKey);
+        this.method = AES_256_CTR_ECDH;
+        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.getSalt());
     }
 
     /* PUBLIC METHODS */
@@ -83,8 +83,8 @@ public class WfEncryptionKey implements Destroyable {
      */
     @Override
     public void destroy() {
-        WfCryptoUtil.zeroise(encryptionKey);
-        WfCryptoUtil.zeroise(pseudoRandomKey);
+        WfCryptoUtil.zeroise(rawkey);
+        WfCryptoUtil.zeroise(prk);
         this.destroyed = true;
     }
 
@@ -102,22 +102,22 @@ public class WfEncryptionKey implements Destroyable {
      * @return a string with the encryption method indicator
      */
     public WfEncryptionMethod getEncryptionMethod() {
-        return encryptionMethod;
+        return method;
     }
 
     /**
      * Derive the secret cryptographic key from this Whiteflag encryption key
-     * @param contextInfo information to bind the derived key to the intended context
+     * @param context byte array with information to bind the derived key to the intended context
      * @return a java SecretKey object with the secret cryptographic key
      * @throws IllegalArgumentException if this Whiteflag encryption key has been destroyed 
      */
-    public SecretKey getSecretKey(byte[] contextInfo) {
+    public SecretKey getSecretKey(byte[] context) {
         if (destroyed) {
             throw new IllegalArgumentException("Cannot create a secret key from a destroyed Whiteflag encryption key");
         }
         return new SecretKeySpec(
-            WfCryptoUtil.hkdfExpand(pseudoRandomKey, contextInfo, encryptionMethod.getKeyLength()),
-            encryptionMethod.getAlgorithm()
+            WfCryptoUtil.hkdfExpand(prk, context, method.getKeyLength()),
+            method.getAlgorithm()
         );
     }
 }

@@ -53,7 +53,7 @@ public class WfCipher implements Destroyable {
     private WfCipher(WfEncryptionKey key) throws WfCryptoException {
         this.key = key;
         try {
-            this.cipher = Cipher.getInstance(key.encryptionMethod.getCipher());
+            this.cipher = Cipher.getInstance(key.method.getCipher());
         } catch(Exception e) {
             throw new WfCryptoException(e.getMessage());
         }

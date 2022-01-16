@@ -25,8 +25,8 @@ public class WfAuthToken {
     /* PROPERTIES */
 
     /* The secret authentication token */
-    public final WfAuthMethod authMethod;
-    private final byte[] authToken;
+    public final WfAuthMethod method;
+    private final byte[] token;
 
     /* CONSTRUCTOR */
 
@@ -43,8 +43,8 @@ public class WfAuthToken {
      * @param secret a byte array with the shared secret used as an authentication token
      */
     public WfAuthToken(byte[] secret) {
-        this.authToken = secret;
-        this.authMethod = TOKEN_PRESHARED;
+        this.token = secret;
+        this.method = TOKEN_PRESHARED;
     }
 
     /* PUBLIC METHODS */
@@ -66,6 +66,6 @@ public class WfAuthToken {
      * @return a byte array with the verification data
      */
     public byte[] getVerificationData(byte[] contextInfo) {
-        return WfCryptoUtil.hkdf(authToken, authMethod.getSalt(), contextInfo, authMethod.getTokenLength());
+        return WfCryptoUtil.hkdf(token, method.getSalt(), contextInfo, method.getTokenLength());
     }
 }
