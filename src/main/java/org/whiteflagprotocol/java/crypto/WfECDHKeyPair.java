@@ -5,6 +5,7 @@ package org.whiteflagprotocol.java.crypto;
 
 import java.math.BigInteger;
 import java.security.Security;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -47,7 +48,12 @@ public class WfECDHKeyPair {
     /* PROPERTIES */
 
     /* Constants */
+    /**
+     * The name of the elleptic curve used by Whiteflag for ECDH hey negotiation
+     * @wfref 5.2.2 Key Agreement
+     */
     public static final String CURVENAME = "brainpoolP256R1";
+
     private static final String ALGORITHM = "ECDH";
     private static final String PROVIDER = "BC";
     private static final int PUBKEYLENGTH = 33;
@@ -63,16 +69,26 @@ public class WfECDHKeyPair {
 
     /**
      * Constructs a new Whiteflag ECDH key pair
+     * @throws GeneralSecurityException if the key pair could not be created
      */
     public WfECDHKeyPair() throws GeneralSecurityException {
         this.keypair = createKeyPair();
+    }
+
+    /**
+     * Constructs a new Whiteflag ECDH key pair from an existing private key
+     * @param ecPrivateKey the private key object
+     * @throws GeneralSecurityException if the private key is invalid or the key pair could not be created
+     */
+    public WfECDHKeyPair(final ECPrivateKey ecPrivateKey) throws GeneralSecurityException {
+        this.keypair = createKeyPair(ecPrivateKey);
     }
 
     /* PUBLIC METHODS */
 
     /**
      * Returns the public key of this key pair
-     * @return the {@java.security.interfaces.ECPublicKey} object
+     * @return a public key object
      */
     public ECPublicKey getPublicKey() {
         return (ECPublicKey) keypair.getPublic();
@@ -93,18 +109,28 @@ public class WfECDHKeyPair {
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
     public final byte[] getSharedKey(final byte[] rawPublicKey) throws GeneralSecurityException {
+		return getSharedKey(createPublicKey(rawPublicKey));
+    }
+
+    /**
+     * Calculates the shared secret with an originator
+     * @param ecPublicKey the originator's ECDH public key
+     * @return a byte array with the shared secret
+     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     */
+    public final byte[] getSharedKey(final ECPublicKey ecPublicKey) throws GeneralSecurityException {
 		KeyAgreement ka = KeyAgreement.getInstance(ALGORITHM, PROVIDER);
 		ka.init(keypair.getPrivate());
-		ka.doPhase(createPublicKey(rawPublicKey), true);
+		ka.doPhase(ecPublicKey, true);
 		return ka.generateSecret();
     }
 
-    /* PUBLIC STATIUC METHODS */
+    /* PUBLIC STATIC METHODS */
 
     /**
      * Creates a new random ECDH key pair with the curve specified for Whiteflag key negotiation
-     * @return a {@link java.security.KeyPair} object with the new key pair
-     * @throws GeneralSecurityException
+     * @return a key pair object
+     * @throws GeneralSecurityException if the key pair could not be created
      */
     public static KeyPair createKeyPair() throws GeneralSecurityException {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
@@ -114,43 +140,31 @@ public class WfECDHKeyPair {
 
     /**
      * Creates an ECDH key pair from an existing private key with the curve specified for Whiteflag key negotiation
-     * @param ecPrivateKey {@link java.security.ECPrivateKey} object with the private key
-     * @return a {@link java.security.KeyPair} object with the new key pair
-     * @throws GeneralSecurityException
+     * @param ecPrivateKey the ECDH private key object
+     * @return a key pair object
+     * @throws GeneralSecurityException if the private key is invalid
      */
     public static KeyPair createKeyPair(ECPrivateKey ecPrivateKey) throws GeneralSecurityException {
         KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
         ECPoint point = ecParamSpec.getG().multiply(ecPrivateKey.getS());
         ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(point.getEncoded(false));
-        return new KeyPair((ECPublicKey) kf.generatePublic(ecPubkeySpec), ecPrivateKey);
-    }
-
-    /**
-     * Compresses an ECDH public key
-     * @param rawPublicKey
-     * @return a byte array with the raw 264-bit compressed public ECDH key
-     */
-    public static byte[] compressPublicKey(ECPublicKey ecPublicKey) {
-        // Get coordinates of public key
-        final BigInteger y = ecPublicKey.getW().getAffineY();
-        final BigInteger x = ecPublicKey.getW().getAffineX();
-
-        // Set first byte of compressed key
-        byte[] compressedPubkey = new byte[PUBKEYLENGTH];
-        if (y.testBit(0)) compressedPubkey[0] = 0x03;   // y is odd
-        else compressedPubkey[0] = 0x02;                // y is even
-
-        // Copy x-coordinate and return compressed key
-        byte[] xBytes = x.toByteArray();
-        final int startByte = compressedPubkey.length - xBytes.length;
-        System.arraycopy(xBytes, 0, compressedPubkey, startByte, xBytes.length);
-        return compressedPubkey;
+        return new KeyPair(kf.generatePublic(ecPubkeySpec), ecPrivateKey);
     }
 
     /**
      * Creates an ECDH public key object from a byte array
+     * @param rawPublicKey a string with the raw 264-bit compressed public ECDH key
+     * @return an ECDH public key object
+     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     */
+	public static ECPublicKey createPublicKey(String rawPublicKey) throws GeneralSecurityException {
+        return createPublicKey(WfCryptoUtil.convertToByteArray(rawPublicKey));
+	}
+
+    /**
+     * Creates an ECDH public key object from a byte array
      * @param rawPublicKey a byte array with the raw 264-bit compressed public ECDH key
-     * @return a {@link java.security.interface.ECPublicKey} object
+     * @return an ECDH public key object
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
 	public static ECPublicKey createPublicKey(byte[] rawPublicKey) throws GeneralSecurityException {
@@ -162,7 +176,7 @@ public class WfECDHKeyPair {
     /**
      * Creates an ECDH private key object from a byte array
      * @param rawPrivateKey a byte array with the raw private ECDH key
-     * @return a {@link java.security.interface.ECPrivateKey} object 
+     * @return an ECDH private key object
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
     public static ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws GeneralSecurityException {
@@ -171,14 +185,36 @@ public class WfECDHKeyPair {
 		return (ECPrivateKey) kf.generatePrivate(ecPrivkeySpec);
 	}
 
+    /**
+     * Compresses an ECDH public key to a raw 264-bit compressed public ECDH key
+     * @param ecPublicKey an ECDH public key object
+     * @return a byte array with the raw 264-bit compressed public ECDH key
+     */
+    public static byte[] compressPublicKey(ECPublicKey ecPublicKey) {
+        // Get coordinates of public key
+        final BigInteger y = ecPublicKey.getW().getAffineY();
+        final BigInteger x = ecPublicKey.getW().getAffineX();
+
+        // Copy x-coordinate into byte array 
+        byte[] compressedPubkey = new byte[PUBKEYLENGTH];
+        byte[] xBytes = x.toByteArray();
+        final int startByte = compressedPubkey.length - xBytes.length;
+        System.arraycopy(xBytes, 0, compressedPubkey, startByte, xBytes.length);
+
+        // Set first byte of compressed key and return compressed key
+        if (y.testBit(0)) compressedPubkey[0] = 0x03;   // y is odd
+            else compressedPubkey[0] = 0x02;            // y is even
+        return compressedPubkey;
+    }
+
     /* PRIVATE STATIC METHODS */
 
     /**
      * Calculates the point on the curve and returns public key specification
      * @param coordinates a byte array with the ASN.1 encoded coordinates
-     * @return the {@linkl  } with the public key specification
+     * @return the {@link org.bouncycastle.jce.spec.ECPublicKeySpec} with the public key specification
      */
-    public static ECPublicKeySpec getPublicKeySpec(byte[] coordinates) {
+    private static ECPublicKeySpec getPublicKeySpec(byte[] coordinates) {
         ECPoint point = curve.decodePoint(coordinates);
         return new ECPublicKeySpec(point, ecParamSpec);
     }

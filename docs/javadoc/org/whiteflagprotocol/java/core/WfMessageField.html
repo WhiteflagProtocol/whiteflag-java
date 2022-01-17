@@ -292,8 +292,12 @@ loadScripts(document, 'script');</script>
 <dd><code>encoding</code> - the encoding of the field</dd>
 <dd><code>startByte</code> - the starting byte of the field in a serialized / uncompressed message</dd>
 <dd><code>endByte</code> - the ending byte (not included) of the field in a serialized / uncompressed message; ignored if encoding requires a fixed field length</dd>
+<dt>Returns:</dt>
+<dd>a <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a></dd>
 <dt>Since:</dt>
 <dd>1.1</dd>
+<dt>Whiteflag standard x-reference:</dt>
+<dd>4.1.2 Encoding</dd>
 </dl>
 </section>
 </li>
@@ -305,6 +309,8 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
+<dt>Returns:</dt>
+<dd>a new <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a></dd>
 </dl>
 </section>
 </li>
@@ -318,6 +324,8 @@ loadScripts(document, 'script');</script>
 <dt>Parameters:</dt>
 <dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to copy</dd>
 <dd><code>shift</code> - number of bytes to shift the field</dd>
+<dt>Returns:</dt>
+<dd>a new <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a></dd>
 </dl>
 </section>
 </li>
@@ -449,7 +457,7 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>TRUE is the field could be correctly decoded and set, else FALSE</dd>
 <dt>Throws:</dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code></dd>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if decoding is not possible</dd>
 <dt>Since:</dt>
 <dd>1.1</dd>
 </dl>

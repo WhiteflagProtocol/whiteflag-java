@@ -82,6 +82,7 @@ public class WfMessage extends WfMessageCore {
      * Creates a new empty Whiteflag message object of the specified type
      * @param messageCode the code indicating the message type to be created
      * @return a new {@link WfMessage} Whiteflag message
+     * @throws WfException if the message cannot be created
      */
     public static WfMessage create(final String messageCode) throws WfException {
         WfMessageCore coreMsg;
@@ -218,6 +219,8 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Adds metadata to the Whiteflag message if not already existing
+     * @param key a string with the metadata key
+     * @param value a string with the metadata value
      * @return null if successful, otherwise the value of the already existing key
      */
     public String addMetadata(final String key, final String value) {
@@ -226,7 +229,8 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Returns the requested metadata value of the Whiteflag message
-     * @return the value of the requested metadata key
+     * @param key a string with the metadata key
+     * @return the value associated with the requested metadata key
      */
     public String getMetadata(final String key) {
         return metadata.get(key);
@@ -298,6 +302,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Returns the serialised JSON representation of the Whiteflag message
      * @return the serialised JSON representation
+     * @throws WfException if the message cannot be serialised
      */
     public String toJson() throws WfException {
         String jsonMsgStr;

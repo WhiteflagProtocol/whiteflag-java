@@ -93,7 +93,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dt>Whiteflag version:</dt>
 <dd>v1-draft.6</dd>
 <dt>Whiteflag standard x-reference:</dt>
-<dd>5.2.3 Key and Token Derivation</dd>
+<dd>5.2.3 Key and Token Derivation, 5.2.4 Message Encryption</dd>
 </dl>
 </section>
 <section class="summary">
@@ -108,8 +108,10 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></div>
-<div class="col-second even-row-color"><code><a href="#encryptionMethod" class="member-name-link">encryptionMethod</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="#method" class="member-name-link">method</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto"><code>WfEncryptionMethod</code></a> for which this key is valid</div>
+</div>
 </div>
 </section>
 </li>
@@ -121,22 +123,27 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">WfEncryptionKey</a><wbr>(byte[]&nbsp;preSharedKey)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">WfEncryptionKey</a><wbr>(byte[]&nbsp;rawSharedKey)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
+<div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)" class="member-name-link">WfEncryptionKey</a><wbr>(byte[]&nbsp;originatorPublicKey,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)" class="member-name-link">WfEncryptionKey</a><wbr>(byte[]&nbsp;rawPublicKey,
  <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 </div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;preSharedKey)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawSharedKey)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
+<div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;originatorPublicKey,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPublicKey,
  <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
+</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.security.interfaces.ECPublicKey,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a>&nbsp;ecPublicKey,
+ <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 </div>
 </div>
@@ -164,7 +171,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="block">Returns the encryption method</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/SecretKey.html" title="class or interface in javax.crypto" class="external-link">SecretKey</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSecretKey(byte%5B%5D)" class="member-name-link">getSecretKey</a><wbr>(byte[]&nbsp;contextInfo)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSecretKey(byte%5B%5D)" class="member-name-link">getSecretKey</a><wbr>(byte[]&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
 </div>
@@ -191,9 +198,10 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="encryptionMethod">
-<h3>encryptionMethod</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></span>&nbsp;<span class="element-name">encryptionMethod</span></div>
+<section class="detail" id="method">
+<h3>method</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></span>&nbsp;<span class="element-name">method</span></div>
+<div class="block">The <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto"><code>WfEncryptionMethod</code></a> for which this key is valid</div>
 </section>
 </li>
 </ul>
@@ -207,48 +215,70 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>WfEncryptionKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;preSharedKey)</span></div>
-<div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawSharedKey)</span></div>
+<div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>preSharedKey</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
+<dd><code>rawSharedKey</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>WfEncryptionKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(byte[]&nbsp;preSharedKey)</span></div>
-<div class="block">Constructs a new Whiteflag encryption key from a pre-shared key</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(byte[]&nbsp;rawSharedKey)</span></div>
+<div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>preSharedKey</code> - a byte array with the raw pre-shared encryption key</dd>
+<dd><code>rawSharedKey</code> - a byte array with the raw pre-shared encryption key</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)">
 <h3>WfEncryptionKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;originatorPublicKey,
- <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPublicKey,
+ <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</span>
+                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>originatorPublicKey</code> - a hexadecimal string with an originator's ECDH public key</dd>
+<dd><code>rawPublicKey</code> - a hexadecimal string with an originator's raw 264-bit compressed public ECDH key</dd>
 <dd><code>ecdhKeyPair</code> - the own ECDH key pair object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the encryption key cannot be created</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[],org.whiteflagprotocol.java.crypto.WfECDHKeyPair)">
 <h3>WfEncryptionKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(byte[]&nbsp;originatorPublicKey,
- <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPublicKey,
+ <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</span>
+                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>originatorPublicKey</code> - a byte array with an originator's ECDH public key</dd>
+<dd><code>rawPublicKey</code> - a byte array with an originator's raw 264-bit compressed public ECDH key</dd>
 <dd><code>ecdhKeyPair</code> - the own ECDH key pair object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the encryption key cannot be created</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.security.interfaces.ECPublicKey,org.whiteflagprotocol.java.crypto.WfECDHKeyPair)">
+<h3>WfEncryptionKey</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a>&nbsp;ecPublicKey,
+ <a href="WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a>&nbsp;ecdhKeyPair)</span>
+                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ecPublicKey</code> - a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link"><code>ECPublicKey</code></a> ECDH public key</dd>
+<dd><code>ecdhKeyPair</code> - the own ECDH key pair object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the encryption key cannot be created</dd>
 </dl>
 </section>
 </li>
@@ -298,11 +328,11 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <li>
 <section class="detail" id="getSecretKey(byte[])">
 <h3>getSecretKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/SecretKey.html" title="class or interface in javax.crypto" class="external-link">SecretKey</a></span>&nbsp;<span class="element-name">getSecretKey</span><wbr><span class="parameters">(byte[]&nbsp;contextInfo)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/SecretKey.html" title="class or interface in javax.crypto" class="external-link">SecretKey</a></span>&nbsp;<span class="element-name">getSecretKey</span><wbr><span class="parameters">(byte[]&nbsp;context)</span></div>
 <div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>contextInfo</code> - information to bind the derived key to the intended context</dd>
+<dd><code>context</code> - byte array with information to bind the derived key to the intended context</dd>
 <dt>Returns:</dt>
 <dd>a java SecretKey object with the secret cryptographic key</dd>
 <dt>Throws:</dt>

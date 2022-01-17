@@ -81,6 +81,7 @@ public class WfMessageCreator {
      * @param headerValues a fieldname-to-value mapping of the message header fields
      * @param bodyValues a fieldname-to-value mapping of the message body fields
      * @return this {@link WfMessageCreator}
+     * @throws WfCoreException if the fieldname-to-value mapping is incorrect
      */
     public final WfMessageCreator map(final Map<String, String> headerValues, final Map<String, String> bodyValues) throws WfCoreException {
         /* Create message header, set field values, and determine message type */

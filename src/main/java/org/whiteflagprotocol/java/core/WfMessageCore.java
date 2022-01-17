@@ -22,10 +22,22 @@ public class WfMessageCore {
     /* PROPERTIES */
 
     /* Message type */
+    /**
+     * The {@link WfMessageType} indoicating the type of the message
+     * @wfref 2.4.2 Message Functionality
+     */
     public final WfMessageType type;
 
     /* Message parts */
+    /**
+     * The {@link WfMessageSegment} representing the message header
+     * @wfref 4.2 Message Header
+     */
     public final WfMessageSegment header;
+    /**
+     * The {@link WfMessageSegment} representing the message body
+     * @wfref 4.3 Message Body
+     */
     public final WfMessageSegment body;
 
     /* Constants */

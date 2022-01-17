@@ -75,6 +75,8 @@ public class WfMessageField {
      * @param encoding the encoding of the field
      * @param startByte the starting byte of the field in a serialized / uncompressed message
      * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message; ignored if encoding requires a fixed field length
+     * @return a {@link WfMessageField}
+     * @wfref 4.1.2 Encoding
      */
     public static final WfMessageField define(final String name, String pattern, final WfMessageCodec.Encoding encoding, int startByte, int endByte) {
         /* If fixed length encoding, automatically set end byte */
@@ -92,6 +94,7 @@ public class WfMessageField {
     /**
      * Creates a new Whiteflag message field from an existing field, without copying the value
      * @param field the {@link WfMessageField} to copy
+     * @return a new {@link WfMessageField}
      */
     public static final WfMessageField from(final WfMessageField field) {
         return from(field, 0);
@@ -101,6 +104,7 @@ public class WfMessageField {
      * Creates a new Whiteflag message field from an existing field, without copying the value
      * @param field the {@link WfMessageField} to copy
      * @param shift number of bytes to shift the field
+     * @return a new {@link WfMessageField}
      */
     public static final WfMessageField from(final WfMessageField field, final int shift) {
         int startByte = field.startByte + shift;
@@ -216,6 +220,7 @@ public class WfMessageField {
      * @since 1.1
      * @param data a byte array with the compressed binary encoded field value
      * @return TRUE is the field could be correctly decoded and set, else FALSE
+     * @throws WfCoreException if decoding is not possible
      */
     public final String decode(final byte[] data) throws WfCoreException {
         /* Check if field already set */

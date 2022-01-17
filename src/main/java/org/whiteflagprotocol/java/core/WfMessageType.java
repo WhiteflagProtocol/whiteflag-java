@@ -123,9 +123,11 @@ public enum WfMessageType {
     /* STATIC FACTORY METHODS */
 
     /**
-     * Creates the {@link WfMessageType} message type from the mesaage code
+     * Creates the message type from the message code
      * @since 1.1
      * @param messageCode the message code
+     * @return a {@link WfMessageType}
+     * @throws WfCoreException if the message type is invalid
      */
     public static WfMessageType fromCode(final String messageCode) throws WfCoreException {
         if (messageCode == null || messageCode.isEmpty()) return ANY;
@@ -146,14 +148,16 @@ public enum WfMessageType {
     }
 
     /**
-     * Returns an array with the {@link WfMessageField} header fields
+     * Returns an array with the header fields
+     * @return an array of the {@link WfMessageField}s from the message header
      */
     public WfMessageField[] getHeaderFields() {
         return headerFields;
     }
 
     /**
-     * Returns an array with the {@link WfMessageField} body fields
+     * Returns an array with the body fields
+     * @return an array with the {@link WfMessageField}s from the message body
      */
     public WfMessageField[] getBodyFields() {
         return bodyFields;

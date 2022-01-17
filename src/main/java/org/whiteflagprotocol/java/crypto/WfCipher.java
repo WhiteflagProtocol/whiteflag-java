@@ -28,6 +28,9 @@ public class WfCipher implements Destroyable {
     /* PROPERTIES */
 
     /* Constants */
+    /**
+     * The byte length of an initialisation vector
+     */
     public static final int IVBYTELENGTH = 16;
 
     /* Random number generator */
@@ -64,6 +67,7 @@ public class WfCipher implements Destroyable {
     /**
      * Creates a new Whiteflag cipher instance from a Whiteflag encryption key
      * @param key the {@link WfEncryptionKey} encryption key
+     * @return a new {@link WfCipher} instance
      * @throws IllegalArgumentException if the encryption key is invalid
      * @throws WfCryptoException if the cipher could not be created
      */

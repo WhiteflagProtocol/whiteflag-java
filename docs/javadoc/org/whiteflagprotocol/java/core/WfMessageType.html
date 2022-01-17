@@ -189,12 +189,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromCode(java.lang.String)" class="member-name-link">fromCode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageCode)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates the <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a> message type from the mesaage code</div>
+<div class="block">Creates the message type from the message code</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBodyFields()" class="member-name-link">getBodyFields</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns an array with the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> body fields</div>
+<div class="block">Returns an array with the body fields</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCode()" class="member-name-link">getCode</a>()</code></div>
@@ -204,7 +204,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeaderFields()" class="member-name-link">getHeaderFields</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns an array with the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> header fields</div>
+<div class="block">Returns an array with the header fields</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
@@ -420,12 +420,14 @@ not permitted.)</div>
 <h3>fromCode</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></span>&nbsp;<span class="element-name">fromCode</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageCode)</span>
                               throws <span class="exceptions"><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></span></div>
-<div class="block">Creates the <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a> message type from the mesaage code</div>
+<div class="block">Creates the message type from the message code</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>messageCode</code> - the message code</dd>
+<dt>Returns:</dt>
+<dd>a <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a></dd>
 <dt>Throws:</dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code></dd>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message type is invalid</dd>
 <dt>Since:</dt>
 <dd>1.1</dd>
 </dl>
@@ -446,14 +448,22 @@ not permitted.)</div>
 <section class="detail" id="getHeaderFields()">
 <h3>getHeaderFields</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>[]</span>&nbsp;<span class="element-name">getHeaderFields</span>()</div>
-<div class="block">Returns an array with the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> header fields</div>
+<div class="block">Returns an array with the header fields</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an array of the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a>s from the message header</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getBodyFields()">
 <h3>getBodyFields</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a>[]</span>&nbsp;<span class="element-name">getBodyFields</span>()</div>
-<div class="block">Returns an array with the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> body fields</div>
+<div class="block">Returns an array with the body fields</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an array with the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a>s from the message body</dd>
+</dl>
 </section>
 </li>
 <li>

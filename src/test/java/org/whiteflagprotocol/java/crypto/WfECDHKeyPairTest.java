@@ -14,23 +14,22 @@ import java.security.GeneralSecurityException;
 public class WfECDHKeyPairTest {
 
     /**
-     * Tests Hexadecimal String to Byte Array parser
+     * Tests ECDH key negotiation
      */
     @Test
-    public void testCreateSharedSecret1() throws GeneralSecurityException {
-        /* Setup */
-        WfECDHKeyPair keypair1 = new WfECDHKeyPair();
-        WfECDHKeyPair keypair2 = new WfECDHKeyPair();
+    public void testNegotiateKey1() throws GeneralSecurityException {
+        // Repeat to encouter different coordinate lengths
+        for(int i = 0; i < 10; i++) {
+            /* Setup */
+            WfECDHKeyPair keypair1 = new WfECDHKeyPair();
+            WfECDHKeyPair keypair2 = new WfECDHKeyPair();
+            byte[] pubkey1 = keypair1.getRawPublicKey();
+            byte[] pubkey2 = keypair2.getRawPublicKey();
 
-        byte[] pubkey1 = keypair1.getRawPublicKey();
-        System.out.println("Pubkey1: " + WfCryptoUtil.convertToHexString(pubkey1));
-
-        byte[] pubkey2 = keypair2.getRawPublicKey();
-        System.out.println("Pubkey2: " + WfCryptoUtil.convertToHexString(pubkey2));
-
-        /* Verify */
-        byte[] sharedSecret1 = keypair1.getSharedKey(pubkey2);
-        byte[] sharedSecret2 = keypair2.getSharedKey(pubkey1);
-        assertArrayEquals("Shared secrets should be indentical", sharedSecret1, sharedSecret2);
+            /* Verify */
+            byte[] sharedSecret1 = keypair1.getSharedKey(pubkey2);
+            byte[] sharedSecret2 = keypair2.getSharedKey(pubkey1);
+            assertArrayEquals("Shared secrets should be indentical", sharedSecret1, sharedSecret2);
+        }
     }
 }

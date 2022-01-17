@@ -232,7 +232,7 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt>Throws:</dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code></dd>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be created</dd>
 </dl>
 </section>
 </li>
@@ -373,6 +373,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
 <div class="block">Adds metadata to the Whiteflag message if not already existing</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>key</code> - a string with the metadata key</dd>
+<dd><code>value</code> - a string with the metadata value</dd>
 <dt>Returns:</dt>
 <dd>null if successful, otherwise the value of the already existing key</dd>
 </dl>
@@ -384,8 +387,10 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getMetadata</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Returns the requested metadata value of the Whiteflag message</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>key</code> - a string with the metadata key</dd>
 <dt>Returns:</dt>
-<dd>the value of the requested metadata key</dd>
+<dd>the value associated with the requested metadata key</dd>
 </dl>
 </section>
 </li>
@@ -476,7 +481,7 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>the serialised JSON representation</dd>
 <dt>Throws:</dt>
-<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code></dd>
+<dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be serialised</dd>
 </dl>
 </section>
 </li>

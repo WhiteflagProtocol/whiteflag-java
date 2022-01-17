@@ -109,7 +109,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#IVBYTELENGTH" class="member-name-link">IVBYTELENGTH</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The byte length of an initialisation vector</div>
+</div>
 </div>
 </section>
 </li>
@@ -220,6 +222,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="IVBYTELENGTH">
 <h3>IVBYTELENGTH</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">IVBYTELENGTH</span></div>
+<div class="block">The byte length of an initialisation vector</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -247,6 +250,8 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>key</code> - the <a href="WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto"><code>WfEncryptionKey</code></a> encryption key</dd>
+<dt>Returns:</dt>
+<dd>a new <a href="WfCipher.html" title="class in org.whiteflagprotocol.java.crypto"><code>WfCipher</code></a> instance</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the encryption key is invalid</dd>
 <dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the cipher could not be created</dd>

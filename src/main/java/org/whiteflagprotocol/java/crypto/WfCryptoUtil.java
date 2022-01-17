@@ -26,10 +26,25 @@ public class WfCryptoUtil {
     /* PROPERTIES */
 
     /* Constants */
+    /**
+     * The hash algorithm for the HKDF function
+     */
     public static final String HKDF_HASHALG ="HMACSHA256";
-    public static final String HEXPREFIX = "0x";
+    /**
+     * The regex pattern describing a valid hexadecimnal string
+     */
     public static final Pattern HEXPATTERN = Pattern.compile("^[a-fA-F0-9]*$");
+    /**
+     * The "0x" prefix of a hexadecimal string
+     */
+    public static final String HEXPREFIX = "0x";
+    /**
+     * The radix of a hexadecimal digit
+     */
     public static final int HEXRADIX = 16;
+    /**
+     * The bit size of a quadbit
+     */
     public static final int QUADBIT = 4;
 
     /* CONSTRUCTOR */

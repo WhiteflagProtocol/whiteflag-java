@@ -23,9 +23,12 @@ import static org.whiteflagprotocol.java.crypto.WfAuthMethod.*;
 public class WfAuthToken {
 
     /* PROPERTIES */
-
-    /* The secret authentication token */
+    /**
+     * The {@link WfAuthMethod} for which this token is valid
+     */
     public final WfAuthMethod method;
+
+    /* The secret authentication token */    
     private final byte[] token;
 
     /* CONSTRUCTOR */

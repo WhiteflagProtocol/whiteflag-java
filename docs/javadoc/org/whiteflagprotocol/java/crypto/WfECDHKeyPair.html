@@ -44,13 +44,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -80,7 +80,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Whiteflag ECDH Key Pair class
 
  <p> This class represents an Elleptic Curve Diffie-Hellmann key pair
- used by Whiteflag for cryptographic key negotiation.</div>
+ used by Whiteflag for cryptographic key negotiation. The elliptic curve
+ parameters that must be used for Whiteflag are defined by the
+ brainpoolP256r1 curve as specified in RFC 5639. Public keys are shared
+ as raw 264-bit compressed public ECDH keys.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>1.1</dd>
@@ -92,6 +95,23 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#CURVENAME" class="member-name-link">CURVENAME</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The name of the elleptic curve used by Whiteflag for ECDH hey negotiation</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -104,6 +124,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Constructs a new Whiteflag ECDH key pair</div>
 </div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.security.interfaces.ECPrivateKey)" class="member-name-link">WfECDHKeyPair</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a>&nbsp;ecPrivateKey)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a new Whiteflag ECDH key pair from an existing private key</div>
+</div>
 </div>
 </section>
 </li>
@@ -112,19 +136,59 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final byte[]</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compressPublicKey(java.security.interfaces.ECPublicKey)" class="member-name-link">compressPublicKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a>&nbsp;ecPublicKey)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Compresses an ECDH public key to a raw 264-bit compressed public ECDH key</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyPair.html" title="class or interface in java.security" class="external-link">KeyPair</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createKeyPair()" class="member-name-link">createKeyPair</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a new random ECDH key pair with the curve specified for Whiteflag key negotiation</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyPair.html" title="class or interface in java.security" class="external-link">KeyPair</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createKeyPair(java.security.interfaces.ECPrivateKey)" class="member-name-link">createKeyPair</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a>&nbsp;ecPrivateKey)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an ECDH key pair from an existing private key with the curve specified for Whiteflag key negotiation</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPrivateKey(byte%5B%5D)" class="member-name-link">createPrivateKey</a><wbr>(byte[]&nbsp;rawPrivateKey)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an ECDH private key object from a byte array</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPublicKey(byte%5B%5D)" class="member-name-link">createPublicKey</a><wbr>(byte[]&nbsp;rawPublicKey)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an ECDH public key object from a byte array</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createPublicKey(java.lang.String)" class="member-name-link">createPublicKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPublicKey)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an ECDH public key object from a byte array</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPublicKey()" class="member-name-link">getPublicKey</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the public key of the ECDH key pair</div>
+<div class="block">Returns the public key of this key pair</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final byte[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSharedKey(byte%5B%5D)" class="member-name-link">getSharedKey</a><wbr>(byte[]&nbsp;originatorPublicKey)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRawPublicKey()" class="member-name-link">getRawPublicKey</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the raw public key of the ECDH key pair</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSharedKey(byte%5B%5D)" class="member-name-link">getSharedKey</a><wbr>(byte[]&nbsp;rawPublicKey)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Calculates the shared secret with an originator</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSharedKey(java.security.interfaces.ECPublicKey)" class="member-name-link">getSharedKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a>&nbsp;ecPublicKey)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Calculates the shared secret with an originator</div>
 </div>
@@ -140,6 +204,31 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="CURVENAME">
+<h3>CURVENAME</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CURVENAME</span></div>
+<div class="block">The name of the elleptic curve used by Whiteflag for ECDH hey negotiation</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../constant-values.html#org.whiteflagprotocol.java.crypto.WfECDHKeyPair.CURVENAME">Constant Field Values</a></li>
+</ul>
+</dd>
+<dt>Whiteflag standard x-reference:</dt>
+<dd>5.2.2 Key Agreement</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -148,8 +237,27 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>WfECDHKeyPair</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfECDHKeyPair</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfECDHKeyPair</span>()
+              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
 <div class="block">Constructs a new Whiteflag ECDH key pair</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the key pair could not be created</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.security.interfaces.ECPrivateKey)">
+<h3>WfECDHKeyPair</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfECDHKeyPair</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a>&nbsp;ecPrivateKey)</span>
+              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Constructs a new Whiteflag ECDH key pair from an existing private key</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ecPrivateKey</code> - the private key object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the private key is invalid or the key pair could not be created</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -163,24 +271,145 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPublicKey()">
 <h3>getPublicKey</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">getPublicKey</span>()</div>
-<div class="block">Returns the public key of the ECDH key pair</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></span>&nbsp;<span class="element-name">getPublicKey</span>()</div>
+<div class="block">Returns the public key of this key pair</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>a byte array with the ECDH public key</dd>
+<dd>a public key object</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRawPublicKey()">
+<h3>getRawPublicKey</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">getRawPublicKey</span>()</div>
+<div class="block">Returns the raw public key of the ECDH key pair</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a byte array with the raw 264-bit compressed public ECDH key</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getSharedKey(byte[])">
 <h3>getSharedKey</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">getSharedKey</span><wbr><span class="parameters">(byte[]&nbsp;originatorPublicKey)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">getSharedKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPublicKey)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
 <div class="block">Calculates the shared secret with an originator</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>originatorPublicKey</code> - the originator's public key</dd>
+<dd><code>rawPublicKey</code> - the originator's raw 264-bit compressed public ECDH key</dd>
 <dt>Returns:</dt>
 <dd>a byte array with the shared secret</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSharedKey(java.security.interfaces.ECPublicKey)">
+<h3>getSharedKey</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">getSharedKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a>&nbsp;ecPublicKey)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Calculates the shared secret with an originator</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ecPublicKey</code> - the originator's ECDH public key</dd>
+<dt>Returns:</dt>
+<dd>a byte array with the shared secret</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createKeyPair()">
+<h3>createKeyPair</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyPair.html" title="class or interface in java.security" class="external-link">KeyPair</a></span>&nbsp;<span class="element-name">createKeyPair</span>()
+                             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Creates a new random ECDH key pair with the curve specified for Whiteflag key negotiation</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a key pair object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the key pair could not be created</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createKeyPair(java.security.interfaces.ECPrivateKey)">
+<h3>createKeyPair</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyPair.html" title="class or interface in java.security" class="external-link">KeyPair</a></span>&nbsp;<span class="element-name">createKeyPair</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a>&nbsp;ecPrivateKey)</span>
+                             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Creates an ECDH key pair from an existing private key with the curve specified for Whiteflag key negotiation</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ecPrivateKey</code> - the ECDH private key object</dd>
+<dt>Returns:</dt>
+<dd>a key pair object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the private key is invalid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createPublicKey(java.lang.String)">
+<h3>createPublicKey</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></span>&nbsp;<span class="element-name">createPublicKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPublicKey)</span>
+                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Creates an ECDH public key object from a byte array</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rawPublicKey</code> - a string with the raw 264-bit compressed public ECDH key</dd>
+<dt>Returns:</dt>
+<dd>an ECDH public key object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createPublicKey(byte[])">
+<h3>createPublicKey</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></span>&nbsp;<span class="element-name">createPublicKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPublicKey)</span>
+                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Creates an ECDH public key object from a byte array</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rawPublicKey</code> - a byte array with the raw 264-bit compressed public ECDH key</dd>
+<dt>Returns:</dt>
+<dd>an ECDH public key object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createPrivateKey(byte[])">
+<h3>createPrivateKey</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a></span>&nbsp;<span class="element-name">createPrivateKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPrivateKey)</span>
+                                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+<div class="block">Creates an ECDH private key object from a byte array</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rawPrivateKey</code> - a byte array with the raw private ECDH key</dd>
+<dt>Returns:</dt>
+<dd>an ECDH private key object</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="compressPublicKey(java.security.interfaces.ECPublicKey)">
+<h3>compressPublicKey</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">compressPublicKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a>&nbsp;ecPublicKey)</span></div>
+<div class="block">Compresses an ECDH public key to a raw 264-bit compressed public ECDH key</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ecPublicKey</code> - an ECDH public key object</dd>
+<dt>Returns:</dt>
+<dd>a byte array with the raw 264-bit compressed public ECDH key</dd>
 </dl>
 </section>
 </li>

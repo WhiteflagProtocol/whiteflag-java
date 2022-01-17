@@ -26,16 +26,44 @@ public class WfBinaryBuffer {
     /* PROPERTIES */
 
     /* Constants */
+    /**
+     * The regex pattern describing a valid hexadecimnal string
+     */
     public static final Pattern HEXPATTERN = Pattern.compile("^[a-fA-F0-9]*$");
+    /**
+     * The "0b" prefix of a binary string
+     */
     public static final String BINPREFIX = "0b";
+    /**
+     * The "0x" prefix of a hexadecimal string
+     */
     public static final String HEXPREFIX = "0x";
+    /**
+     * The radic of a binary digit
+     */
     public static final int BINRADIX = 2;
+    /**
+     * The radix of a hexadecimal digit
+     */
     public static final int HEXRADIX = 16;
+    /**
+     * The bit size of a byte
+     */
     public static final int BYTE = 8;
+    /**
+     * The bit size of an octet
+     */
     public static final int OCTET = 8;
+    /**
+     * The bit size of a quadbit
+     */
     public static final int QUADBIT = 4;
+    /**
+     * The bit size of a bit
+     */
     public static final int BIT = 1;
 
+    /* Main variables */
     /**
      * A byte array holding the binary buffer
      */
@@ -53,7 +81,7 @@ public class WfBinaryBuffer {
      */
     private String cachedHexString = null;
 
-    /* CONSTRUCTOR */
+    /* CONSTRUCTORS */
 
     /**
      * Constructs a new empty Whiteflag binary encoded message buffer

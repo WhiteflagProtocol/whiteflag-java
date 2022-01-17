@@ -11,6 +11,7 @@ import javax.security.auth.Destroyable;
 import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
 
 import java.security.GeneralSecurityException;
+import java.security.interfaces.ECPublicKey;
 
 /**
  * Whiteflag encryption key class
@@ -21,6 +22,7 @@ import java.security.GeneralSecurityException;
  * 
  * @wfver v1-draft.6
  * @wfref 5.2.3 Key and Token Derivation
+ * @wfref 5.2.4 Message Encryption
  * 
  * @since 1.1
  */
@@ -32,7 +34,12 @@ public class WfEncryptionKey implements Destroyable {
     private boolean destroyed = false;
 
     /* The encryption method and keys */
+    /**
+     * The {@link WfEncryptionMethod} for which this key is valid
+     */
     public final WfEncryptionMethod method;
+
+    /* The raw key materials */
     private final byte[] rawkey;
     private final byte[] prk;
 
@@ -60,6 +67,7 @@ public class WfEncryptionKey implements Destroyable {
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
      * @param rawPublicKey a hexadecimal string with an originator's raw 264-bit compressed public ECDH key
      * @param ecdhKeyPair the own ECDH key pair object
+     * @throws GeneralSecurityException if the encryption key cannot be created
      */
     public WfEncryptionKey(String rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
         this(WfCryptoUtil.convertToByteArray(rawPublicKey), ecdhKeyPair);
@@ -69,9 +77,20 @@ public class WfEncryptionKey implements Destroyable {
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
      * @param rawPublicKey a byte array with an originator's raw 264-bit compressed public ECDH key
      * @param ecdhKeyPair the own ECDH key pair object
+     * @throws GeneralSecurityException if the encryption key cannot be created
      */
     public WfEncryptionKey(byte[] rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
-        this.rawkey = ecdhKeyPair.getSharedKey(rawPublicKey);
+        this(WfECDHKeyPair.createPublicKey(rawPublicKey), ecdhKeyPair);
+    }
+
+        /**
+     * Constructs a new Whiteflag encryption key through ECDH key negotiation
+     * @param ecPublicKey a {@link java.security.interfaces.ECPublicKey} ECDH public key
+     * @param ecdhKeyPair the own ECDH key pair object
+     * @throws GeneralSecurityException if the encryption key cannot be created
+     */
+    public WfEncryptionKey(ECPublicKey ecPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
+        this.rawkey = ecdhKeyPair.getSharedKey(ecPublicKey);
         this.method = AES_256_CTR_ECDH;
         this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.getSalt());
     }
