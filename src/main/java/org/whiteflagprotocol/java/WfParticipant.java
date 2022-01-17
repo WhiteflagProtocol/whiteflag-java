@@ -14,7 +14,7 @@ import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 
 /**
- * Whiteflag participoant class
+ * Whiteflag participant class
  * 
  * <p> This class represents a Whiteflag participant. It is used to
  * keep track of originators, their messages and shared cryptographic
@@ -137,7 +137,7 @@ public class WfParticipant {
         try {
             this.setEcdhPublicKey(WfECDHKeyPair.createPublicKey(rawPublicKey));
         } catch(GeneralSecurityException e) {
-            throw new WfException("Invalid public key: " + e.getLocalizedMessage(), ErrorType.WF_ENCRYPTION_ERROR);
+            throw new WfException("Cannot accept raw ECDH public key: " + e.getLocalizedMessage(), ErrorType.WF_ENCRYPTION_ERROR);
         }
     }
 

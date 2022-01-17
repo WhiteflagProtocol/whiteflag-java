@@ -17,7 +17,7 @@ public class WfECDHKeyPairTest {
      * Tests ECDH key negotiation
      */
     @Test
-    public void testNegotiateKey1() throws GeneralSecurityException {
+    public void testNegotiateKey1() throws WfCryptoException, GeneralSecurityException {
         // Repeat to encouter different coordinate lengths
         for(int i = 0; i < 10; i++) {
             /* Setup */
@@ -27,8 +27,8 @@ public class WfECDHKeyPairTest {
             byte[] pubkey2 = keypair2.getRawPublicKey();
 
             /* Verify */
-            byte[] sharedSecret1 = keypair1.getSharedKey(pubkey2);
-            byte[] sharedSecret2 = keypair2.getSharedKey(pubkey1);
+            byte[] sharedSecret1 = keypair1.negotiateKey(pubkey2);
+            byte[] sharedSecret2 = keypair2.negotiateKey(pubkey1);
             assertArrayEquals("Shared secrets should be indentical", sharedSecret1, sharedSecret2);
         }
     }

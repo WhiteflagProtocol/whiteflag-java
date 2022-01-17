@@ -12,7 +12,10 @@ To use Whiteflag messages in software applications, only the
 `org.whiteflagprotocol.java` package with the `WfMessage` class and its nested
 creator class `WfMessage.Creator` are required.
 
-A simple example for creating a new Whiteflag message of a type specified by a string with the message code:
+### Example
+
+A simplified example for creating a new Whiteflag message of a type specified
+by a string with the message code:
 
 ```java
 import org.whiteflagprotocol.java.WfMessage;
@@ -30,11 +33,15 @@ public class Example {
 }
 ```
 
-## Detailed Implementation
+### Class Diagram
 
-### Message Class Diagram
+The class diagram gives a rough overview of the package. It is not intended as
+a complete or an accurate reference for the classes. Please see the
+[WFJL Javadoc API Reference](../javadoc) for all details.
 
 ![WFJL Message Class Diagram](../uml/messages.png)
+
+## Detailed Implementation
 
 ### Message Classes
 

@@ -3,6 +3,9 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
+import java.security.GeneralSecurityException;
+import java.security.interfaces.ECPublicKey;
+
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.security.auth.Destroyable;
@@ -10,8 +13,8 @@ import javax.security.auth.Destroyable;
 /* Whiteflag encryption methods */ 
 import static org.whiteflagprotocol.java.crypto.WfEncryptionMethod.*;
 
-import java.security.GeneralSecurityException;
-import java.security.interfaces.ECPublicKey;
+/* Static import of cryptographic utility functions */
+import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
 
 /**
  * Whiteflag encryption key class
@@ -50,7 +53,7 @@ public class WfEncryptionKey implements Destroyable {
      * @param rawSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
     public WfEncryptionKey(String rawSharedKey) {
-        this(WfCryptoUtil.convertToByteArray(rawSharedKey));
+        this(convertToByteArray(rawSharedKey));
     }
 
     /**
@@ -60,39 +63,44 @@ public class WfEncryptionKey implements Destroyable {
     public WfEncryptionKey(byte[] rawSharedKey) {
         this.rawkey = rawSharedKey;
         this.method = AES_256_CTR_PSK;
-        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.getSalt());
+        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
      * @param rawPublicKey a hexadecimal string with an originator's raw 264-bit compressed public ECDH key
      * @param ecdhKeyPair the own ECDH key pair object
-     * @throws GeneralSecurityException if the encryption key cannot be created
+     * @throws WfCryptoException if the encryption key cannot be created
+     * @throws IllegalStateException if the key pair has been destroyed
      */
-    public WfEncryptionKey(String rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
-        this(WfCryptoUtil.convertToByteArray(rawPublicKey), ecdhKeyPair);
+    public WfEncryptionKey(String rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
+        this(convertToByteArray(rawPublicKey), ecdhKeyPair);
     }
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
      * @param rawPublicKey a byte array with an originator's raw 264-bit compressed public ECDH key
      * @param ecdhKeyPair the own ECDH key pair object
-     * @throws GeneralSecurityException if the encryption key cannot be created
+     * @throws WfCryptoException if the encryption key cannot be created
+     * @throws IllegalStateException if the key pair has been destroyed
      */
-    public WfEncryptionKey(byte[] rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
-        this(WfECDHKeyPair.createPublicKey(rawPublicKey), ecdhKeyPair);
+    public WfEncryptionKey(byte[] rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
+        this.rawkey = ecdhKeyPair.negotiateKey(rawPublicKey);
+        this.method = AES_256_CTR_ECDH;
+        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
     }
 
-        /**
+    /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
      * @param ecPublicKey a {@link java.security.interfaces.ECPublicKey} ECDH public key
      * @param ecdhKeyPair the own ECDH key pair object
-     * @throws GeneralSecurityException if the encryption key cannot be created
+     * @throws WfCryptoException if the encryption key cannot be created
+     * @throws IllegalStateException if the key pair has been destroyed
      */
-    public WfEncryptionKey(ECPublicKey ecPublicKey, WfECDHKeyPair ecdhKeyPair) throws GeneralSecurityException {
-        this.rawkey = ecdhKeyPair.getSharedKey(ecPublicKey);
+    public WfEncryptionKey(ECPublicKey ecPublicKey, WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
+        this.rawkey = ecdhKeyPair.negotiateKey(ecPublicKey);
         this.method = AES_256_CTR_ECDH;
-        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.getSalt());
+        this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
     }
 
     /* PUBLIC METHODS */
@@ -126,17 +134,35 @@ public class WfEncryptionKey implements Destroyable {
 
     /**
      * Derive the secret cryptographic key from this Whiteflag encryption key
-     * @param context byte array with information to bind the derived key to the intended context
+     * @param context a hexadecimal string with information to bind the derived key to the intended context
      * @return a java SecretKey object with the secret cryptographic key
-     * @throws IllegalArgumentException if this Whiteflag encryption key has been destroyed 
+     * @throws IllegalArgumentException if the encryption key has been destroyed 
+     */
+    public SecretKey getSecretKey(String context) {
+        return getSecretKey(convertToByteArray(context));
+    }
+
+    /**
+     * Derive the secret cryptographic key from this Whiteflag encryption key
+     * @param context a byte array with information to bind the derived key to the intended context
+     * @return a java SecretKey object with the secret cryptographic key
+     * @throws IllegalArgumentException if the encryption key has been destroyed
      */
     public SecretKey getSecretKey(byte[] context) {
-        if (destroyed) {
-            throw new IllegalArgumentException("Cannot create a secret key from a destroyed Whiteflag encryption key");
-        }
+        checkState();
         return new SecretKeySpec(
-            WfCryptoUtil.hkdfExpand(prk, context, method.getKeyLength()),
-            method.getAlgorithm()
+            WfCryptoUtil.hkdfExpand(prk, context, method.keyLength),
+            method.algorithmName
         );
+    }
+
+    /* PRIVATE METHODS */
+
+    /**
+     * Checks the state of this encryption key
+     * @throws IllegalStateException if in an illegal state
+     */
+    private void checkState() {
+        if (destroyed) throw new IllegalStateException("Encryption key has been destroyed");
     }
 }

@@ -3,6 +3,9 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
+/* Static import of cryptographic utility functions */
+import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
+
 /**
  * Whiteflag encryption parameters enum class
  *
@@ -30,93 +33,61 @@ public enum WfEncryptionMethod {
     /* PROPERTIES */
 
     /* The valid regex charset of an unencoded field value */
-    private final String indicator;
-    private final String algorithm;
-    private final String mode;
-    private final String padding;
-    private final int keyLength;
-    private final byte[] hkdfSalt;
+    /**
+     * The value used in a Whiteflag message to indicate the encryption method
+     */
+    public final String indicatorValue;
+    /**
+     * The name of the algorithm for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
+     */
+    public final String algorithmName;
+    /**
+     * The mode of operation for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
+     */
+    public final String operationMode;
+    /**
+     * The padding scheme for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
+     */
+    public final String paddingScheme;
+    /**
+     * The cipher name for this encryption method i.a.w. Java Cryptography Standard Algorithm Names
+     */
+    public final String cipherName;
+    /**
+     * The byte length of the encryption key for this encryption method
+     */
+    public final int keyLength;
+    /**
+     * The salt used by this encryption method in the HKDF function to derive the encryption key
+     */
+    public final byte[] hkdfSalt;
 
     /* METHODS */
 
     /* Constructor */
     /**
-     * @param indicator string with value used in a Whiteflag message to indicate the encryption method
-     * @param algorithm the encryption algorithm, i.a.w. Java Cryptography Standard Algorithm Names
-     * @param mode the encryption mode, i.a.w. Java Cryptography Standard Algorithm Names
-     * @param padding the padding, i.a.w. Java Cryptography Standard Algorithm Names
-     * @param keyLength the length of the encryption key in byes
+     * Sets the properties of the encryption methods
+     * @param indicatorValue the value used in a Whiteflag message to indicate the encryption method
+     * @param algorithmName the name of the encryption algorithm, i.a.w. Java Cryptography Standard Algorithm Names
+     * @param operationMode the encryption mode of operation, i.a.w. Java Cryptography Standard Algorithm Names
+     * @param paddingScheme the padding scheme, i.a.w. Java Cryptography Standard Algorithm Names
+     * @param keyLength the length of the encryption key in bytes
      * @param hkdfSalt the salt used in the HKDF function to derive the encryption key
      */
     private WfEncryptionMethod(
-        final String indicator,
-        final String algorithm,
-        final String mode,
-        final String padding,
+        final String indicatorValue,
+        final String algorithmName,
+        final String operationMode,
+        final String paddingScheme,
         final int keyLength,
         final String hkdfSalt
     ) {
-        this.indicator = indicator;
-        this.algorithm = algorithm;
-        this.mode = mode;
-        this.padding = padding;
+        this.indicatorValue = indicatorValue;
+        this.algorithmName = algorithmName;
+        this.operationMode = operationMode;
+        this.paddingScheme = paddingScheme;
+        this.cipherName = algorithmName + "/" + operationMode + "/" + paddingScheme;
         this.keyLength = keyLength;
-        this.hkdfSalt = WfCryptoUtil.convertToByteArray(hkdfSalt);
-    }
-
-    /**
-     * Returns the indicator for the Whiteflag encryption method
-     * @return string with value used in a Whiteflag message to indicate the Whiteflag encryption method
-     */
-    public final String getIndicator() {
-        return indicator;
-    }
-
-    /**
-     * Returns the cipher for the Whiteflag encryption method i.a.w. Java Cryptography Standard Algorithm Names
-     * @return a string indicating the cipher, i.e. the concatinated algorithm, mode and padding parameters
-     */
-    public final String getCipher() {
-        return algorithm + "/" + mode + "/" + padding;
-    }
-
-    /**
-     * Returns the cipher algorithm for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names
-     * @return a string indicating the encryption algorithm
-     */
-    public final String getAlgorithm() {
-        return algorithm;
-    }
-
-        /**
-     * Returns the cipher mode for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names
-     * @return a string indicating the encryption mode
-     */
-    public final String getMode() {
-        return mode;
-    }
-
-    /**
-     * Returns the cipher padding for the Whiteflag encryption method, i.a.w. Java Cryptography Standard Algorithm Names
-     * @return a string indicating the encryption padding
-     */
-    public final String getPadding() {
-        return algorithm;
-    }
-
-    /**
-     * Returns the encryption key length for the Whiteflag encryption method
-     * @return the length of the encryption key in byes
-     */
-    public final int getKeyLength() {
-        return keyLength;
-    }
-
-    /**
-     * Returns the salt for key derivation for the Whiteflag encryption method
-     * @return a byte array with the salt used in the HKDF function to derive the encryption key
-     */
-    public final byte[] getSalt() {
-        return hkdfSalt;
+        this.hkdfSalt = convertToByteArray(hkdfSalt);
     }
 }

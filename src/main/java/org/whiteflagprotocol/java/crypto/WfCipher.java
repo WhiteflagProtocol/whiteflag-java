@@ -4,6 +4,7 @@
 package org.whiteflagprotocol.java.crypto;
 
 import java.security.SecureRandom;
+import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -11,12 +12,16 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.security.auth.Destroyable;
 import javax.security.auth.DestroyFailedException;
 
+/* Static import of cryptographic utility functions */
+import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
+import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToHexString;
+
 /**
  * Whiteflag cipher class
  * 
  * <p> This class represents a Whiteflag cipher. Instances of this are used
- * to encrypt and decrypt a Whiteflag messages. This class needs to instantiated
- * with a Whiteflag encryption key instance.
+ * to encrypt and decrypt a Whiteflag messages. This class needs to be 
+ * instantiated with a Whiteflag encryption key instance.
  * 
  * @wfver v1-draft.6
  * @wfref 5.2.3 Key and Token Derivation
@@ -32,9 +37,6 @@ public class WfCipher implements Destroyable {
      * The byte length of an initialisation vector
      */
     public static final int IVBYTELENGTH = 16;
-
-    /* Random number generator */
-    SecureRandom random = new SecureRandom();
 
     /* Status of the instance */
     private boolean destroyed = false;
@@ -56,7 +58,7 @@ public class WfCipher implements Destroyable {
     private WfCipher(WfEncryptionKey key) throws WfCryptoException {
         this.key = key;
         try {
-            this.cipher = Cipher.getInstance(key.method.getCipher());
+            this.cipher = Cipher.getInstance(key.method.cipherName);
         } catch(Exception e) {
             throw new WfCryptoException(e.getMessage());
         }
@@ -107,7 +109,7 @@ public class WfCipher implements Destroyable {
      * @return this Whiteflag cipher object
      */
     public WfCipher setContext(String context) {
-        return setContext(WfCryptoUtil.convertToByteArray(context));
+        return setContext(convertToByteArray(context));
     }
 
     /**
@@ -131,13 +133,15 @@ public class WfCipher implements Destroyable {
 
     /** 
      * Generates a new random initialisation vector. This should be used when encrypting a new message.
-     * @return this Whiteflag cipher object
+     * @return a byte array with the random initialisation vector
+     * @throws NoSuchAlgorithmException if no strong random generator algorithm is available
      */
-    public WfCipher setInitVector() {
+    public byte[] setInitVector() throws NoSuchAlgorithmException {
+        /* Random number generator */
         byte[] initialisationVector = new byte[IVBYTELENGTH];
-        random.nextBytes(initialisationVector);
+        SecureRandom.getInstanceStrong().nextBytes(initialisationVector);
         this.iv = new IvParameterSpec(initialisationVector);
-        return this;
+        return initialisationVector;
     }
 
     /**
@@ -146,7 +150,7 @@ public class WfCipher implements Destroyable {
      * @return this Whiteflag cipher object
      */
     public WfCipher setInitVector(String initialisationVector) {
-        return setInitVector(WfCryptoUtil.convertToByteArray(initialisationVector));
+        return setInitVector(convertToByteArray(initialisationVector));
     }
 
     /**
@@ -185,7 +189,7 @@ public class WfCipher implements Destroyable {
      * @throws WfCryptoException if data could not be encrypted
      */
     public String encrypt(final String data) throws WfCryptoException {
-        return WfCryptoUtil.convertToHexString(encrypt(WfCryptoUtil.convertToByteArray(data)));
+        return convertToHexString(encrypt(convertToByteArray(data)));
     }
 
     /**
@@ -212,7 +216,7 @@ public class WfCipher implements Destroyable {
      * @throws WfCryptoException if data could not be decrypted
      */
     public String decrypt(final String data) throws WfCryptoException {
-        return WfCryptoUtil.convertToHexString(decrypt(WfCryptoUtil.convertToByteArray(data)));
+        return convertToHexString(decrypt(convertToByteArray(data)));
     }
 
     /**
@@ -236,7 +240,7 @@ public class WfCipher implements Destroyable {
 
     /**
      * Checks the state of this cipher
-     * @throws IllegalStateException if in an illegal state 
+     * @throws IllegalStateException if in an illegal state
      */
     private void checkState() {
         if (destroyed) {

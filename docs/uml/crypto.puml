@@ -4,42 +4,61 @@
 left footer WFJL Crypto Class Diagram
 
 package org.whiteflagprotocol.java.crypto {
-    class WfCipher {
+    class WfCipher <<Destroyable>> {
+        {static} +fromKey(WfEncryptionKey)
+        +destroy()
+        +isDestroyed() : boolean
         +setContext(byte[])
+        +setContext(String)
+        +setInitVector()
         +setInitVector(byte[])
+        +isSet()
         +encrypt(byte[]) : byte[]
+        +encrypt(String) : String
         +decrypt(byte[]) : byte[]
+        +decrypt(String) : String
     }
-    enum WfAuthenticationMethod {
+    enum WfAuthMethod {
         +TOKEN_PRESHARED
     }
-    class WfAuthToken {
-        +getVerificationData() : byte[]
+    class WfAuthToken <<Destroyable>> {
+        +method
+        +destroy()
+        +isDestroyed() : boolean
+        +getVerificationData(byte[]) : byte[]
+        +getVerificationData(String) : String
     }
     enum WfEncryptionMethod {
         +AES_256_CTR_ECDH
         +AES_256_CTR_PSK
     }
-    class WfEncryptionKey {
-        +getEncryptionMethod() : WfEncryptionMethod
-        +getSecretKey() : byte[]
+    class WfEncryptionKey <<Destroyable>> {
+        +method
+        +destroy()
+        +isDestroyed() : boolean
+        +getSecretKey(byte[]) : SecretKey
+        +getSecretKey(String) : SecretKey
     }
-    class WfECDHKeyPair {
-        +getPublicKey() : byte[]
+    class WfECDHKeyPair <<Destroyable>> {
+        +destroy()
+        +isDestroyed() : boolean
+        +getPublicKey() : ECPublicKey
+        +getRawPublicKey() : byte[]
         +getSharedKey(byte[]): byte[]
+        +getSharedKey(ECPublicKey): byte[]
     }
     class WfCryptoUtil <<Utility>> {
-        +convertToByteArray(String) : byte[]
-        +convertToHexString(byte[]) : String
-        +hkdf() : byte[]
-        #hkdfExtract() : byte[]
-        #hkdfExpand() : byte[]
+        {static} +convertToByteArray(String) : byte[]
+        {static} +convertToHexString(byte[]) : String
+        {static} +hkdf() : byte[]
+        {static} #hkdfExtract() : byte[]
+        {static} #hkdfExpand() : byte[]
     }
 }
 
-WfCipher ..> WfEncryptionKey
+WfCipher --- WfEncryptionKey
 WfEncryptionKey --- WfEncryptionMethod
-WfAuthToken --- WfAuthenticationMethod
+WfAuthToken --- WfAuthMethod
 WfEncryptionKey ..> WfCryptoUtil
 WfEncryptionKey ..> WfECDHKeyPair
 WfAuthToken ..> WfCryptoUtil

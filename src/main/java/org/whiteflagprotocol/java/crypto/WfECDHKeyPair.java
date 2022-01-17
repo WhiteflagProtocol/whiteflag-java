@@ -13,6 +13,8 @@ import java.security.interfaces.ECPrivateKey;
 import java.security.interfaces.ECPublicKey;
 
 import javax.crypto.KeyAgreement;
+import javax.security.auth.Destroyable;
+import javax.security.auth.DestroyFailedException;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.ECNamedCurveTable;
@@ -21,6 +23,9 @@ import org.bouncycastle.jce.spec.ECPrivateKeySpec;
 import org.bouncycastle.jce.spec.ECPublicKeySpec;
 import org.bouncycastle.math.ec.ECCurve;
 import org.bouncycastle.math.ec.ECPoint;
+
+/* Static import of cryptographic utility functions */
+import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
 
 /**
  * Whiteflag ECDH Key Pair class
@@ -36,7 +41,7 @@ import org.bouncycastle.math.ec.ECPoint;
  * 
  * @since 1.1
  */
-public class WfECDHKeyPair {
+public class WfECDHKeyPair implements Destroyable {
 
     /* STATIC CLAUSE */
     static {
@@ -61,6 +66,9 @@ public class WfECDHKeyPair {
     /* Static ECDH parameter classes */
     private static final ECNamedCurveParameterSpec ecParamSpec = ECNamedCurveTable.getParameterSpec(CURVENAME);
     private static final ECCurve curve = ecParamSpec.getCurve();
+
+    /* Status of the instance */
+    private boolean destroyed = false;
 
     /* Main key pair properties */
     private KeyPair keypair;
@@ -87,42 +95,77 @@ public class WfECDHKeyPair {
     /* PUBLIC METHODS */
 
     /**
+     * Destroys this Whiteflag ECDH key pair by clearing the private key
+     * @throws DestroyFailedException if the destroy operation fails
+     * @throws IllegalStateException if the encryption key has already been destroyed
+     */
+    @Override
+    public void destroy() throws DestroyFailedException {
+        keypair.getPrivate().destroy();    // Destroy derived key; throws exceptions
+        this.destroyed = true;
+    }
+
+    /**
+     * Determine if this Whiteflag cipher has been destroyed.
+     * @return TRUE if destroyed, else FALSE
+     */
+    @Override
+    public boolean isDestroyed() {
+        return destroyed;
+    }
+
+    /**
      * Returns the public key of this key pair
      * @return a public key object
+     * @throws IllegalStateException if the key pair has been destroyed
      */
     public ECPublicKey getPublicKey() {
+        checkState();
         return (ECPublicKey) keypair.getPublic();
     }
 
     /**
      * Returns the raw public key of the ECDH key pair
      * @return a byte array with the raw 264-bit compressed public ECDH key
+     * @throws IllegalStateException if the key pair has been destroyed
      */
     public final byte[] getRawPublicKey() {
+        checkState();
         return compressPublicKey(getPublicKey());
     }
 
     /**
-     * Calculates the shared secret with an originator
+     * Calculates the negotiated shared key with an originator
      * @param rawPublicKey the originator's raw 264-bit compressed public ECDH key
-     * @return a byte array with the shared secret
-     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     * @return a byte array with the negotiated secret key
+     * @throws WfCryptoException if the raw key or any of the parameters is invalid
+     * @throws IllegalStateException if the key pair has been destroyed
      */
-    public final byte[] getSharedKey(final byte[] rawPublicKey) throws GeneralSecurityException {
-		return getSharedKey(createPublicKey(rawPublicKey));
+    public final byte[] negotiateKey(final byte[] rawPublicKey) throws WfCryptoException {
+        try {
+            return negotiateKey(createPublicKey(rawPublicKey));
+        } catch (GeneralSecurityException e) {
+            throw new WfCryptoException("Cannot create negotiated key from public key: " + e.getMessage());
+        }
     }
 
     /**
-     * Calculates the shared secret with an originator
+     * Calculates the negotiated shared key with an originator
      * @param ecPublicKey the originator's ECDH public key
-     * @return a byte array with the shared secret
-     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     * @return a byte array with the negotiated secret key
+     * @throws WfCryptoException if the raw key or any of the parameters is invalid
+     * @throws IllegalStateException if the key pair has been destroyed
      */
-    public final byte[] getSharedKey(final ECPublicKey ecPublicKey) throws GeneralSecurityException {
-		KeyAgreement ka = KeyAgreement.getInstance(ALGORITHM, PROVIDER);
-		ka.init(keypair.getPrivate());
-		ka.doPhase(ecPublicKey, true);
-		return ka.generateSecret();
+    public final byte[] negotiateKey(final ECPublicKey ecPublicKey) throws WfCryptoException {
+        checkState();
+        try {
+            KeyAgreement ka = KeyAgreement.getInstance(ALGORITHM, PROVIDER);
+            ka.init(keypair.getPrivate());
+            ka.doPhase(ecPublicKey, true);
+            return ka.generateSecret();
+        } catch (GeneralSecurityException e) {
+            throw new WfCryptoException("Cannot create negotiated key from public key: " + e.getMessage());
+        }
     }
 
     /* PUBLIC STATIC METHODS */
@@ -157,9 +200,9 @@ public class WfECDHKeyPair {
      * @return an ECDH public key object
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
-	public static ECPublicKey createPublicKey(String rawPublicKey) throws GeneralSecurityException {
-        return createPublicKey(WfCryptoUtil.convertToByteArray(rawPublicKey));
-	}
+    public static ECPublicKey createPublicKey(String rawPublicKey) throws GeneralSecurityException {
+        return createPublicKey(convertToByteArray(rawPublicKey));
+    }
 
     /**
      * Creates an ECDH public key object from a byte array
@@ -180,10 +223,10 @@ public class WfECDHKeyPair {
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
     public static ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws GeneralSecurityException {
-		KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
-		ECPrivateKeySpec ecPrivkeySpec = new ECPrivateKeySpec(new BigInteger(rawPrivateKey), ecParamSpec);
-		return (ECPrivateKey) kf.generatePrivate(ecPrivkeySpec);
-	}
+        KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
+        ECPrivateKeySpec ecPrivkeySpec = new ECPrivateKeySpec(new BigInteger(rawPrivateKey), ecParamSpec);
+        return (ECPrivateKey) kf.generatePrivate(ecPrivkeySpec);
+    }
 
     /**
      * Compresses an ECDH public key to a raw 264-bit compressed public ECDH key
@@ -205,6 +248,16 @@ public class WfECDHKeyPair {
         if (y.testBit(0)) compressedPubkey[0] = 0x03;   // y is odd
             else compressedPubkey[0] = 0x02;            // y is even
         return compressedPubkey;
+    }
+
+    /* PRIVATE METHODS */
+
+    /**
+     * Checks the state of this key pair
+     * @throws IllegalStateException if in an illegal state
+     */
+    private void checkState() {
+        if (destroyed) throw new IllegalStateException("Cipher has been destroyed");
     }
 
     /* PRIVATE STATIC METHODS */

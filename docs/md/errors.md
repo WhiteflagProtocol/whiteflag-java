@@ -11,17 +11,21 @@ for Whiteflag specific errors:
 
 * `WfException`: used by the `org.whiteflagprotocol.java` to indicate errors to other software components while processing WHiteflag data
 * `WfCoreException`: used internally by the `org.whiteflagprotocol.java.core` package for incompatibilities with the Whiteflag specification
+* `WfCryptoException`: used internally by the `org.whiteflagprotocol.java.crypto` package for incompatibilities with the Whiteflag specification
 * `WfUtilException`: used internally by the `org.whiteflagprotocol.java.util` package to wrap error thrown by other packages
 
-Software using the library should only expect the `WfException` class to be
-thrown, and should only use that class. The `WfCoreException` and
-`WfUtilException` classes are only used internally.
-
-## Detailed Implementation
+Software using the library should typcially only expect the `WfException` class
+to be thrown. The other error classes are primarily used internally.
 
 ### Error Class Diagram
 
+The class diagram gives a rough overview of the error classes. It is not
+intended as a complete or an accurate reference Please see the
+[WFJL Javadoc API Reference](../javadoc) for all details.
+
 ![WFJL Error Class Diagram](../uml/errors.png)
+
+## Detailed Implementation
 
 ### Error Classes
 

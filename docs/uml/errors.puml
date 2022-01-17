@@ -10,16 +10,6 @@ package org.whiteflagprotocol.java.core {
 }
 Exception <|- WfCoreException
 
-package org.whiteflagprotocol.java.util {
-    class WfUtilException
-    enum WfUtilException.ErrorType {
-        WF_UTIL_ERROR
-        WF_JSON_ERROR
-    }
-    WfUtilException +-- WfUtilException.ErrorType
-}
-Exception <|-- WfUtilException
-
 package org.whiteflagprotocol.java {
     class WfException
     enum WfException.ErrorType {
@@ -34,5 +24,20 @@ package org.whiteflagprotocol.java {
     WfException +-- WfException.ErrorType
 }
 WfCoreException <|- WfException
+
+package org.whiteflagprotocol.java.crypto {
+    class WfCryptoException
+}
+Exception <|- WfCryptoException
+
+package org.whiteflagprotocol.java.util {
+    class WfUtilException
+    enum WfUtilException.ErrorType {
+        WF_UTIL_ERROR
+        WF_JSON_ERROR
+    }
+    WfUtilException +-- WfUtilException.ErrorType
+}
+Exception <|-- WfUtilException
 
 @enduml
