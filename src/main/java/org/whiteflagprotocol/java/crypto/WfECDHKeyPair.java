@@ -5,7 +5,6 @@ package org.whiteflagprotocol.java.crypto;
 
 import java.math.BigInteger;
 import java.security.Security;
-import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -54,11 +53,12 @@ public class WfECDHKeyPair {
      */
     public static final String CURVENAME = "brainpoolP256R1";
 
+    /* Cryptographic parameters */
     private static final String ALGORITHM = "ECDH";
     private static final String PROVIDER = "BC";
     private static final int PUBKEYLENGTH = 33;
 
-    /* ECDH Parameters */
+    /* Static ECDH parameter classes */
     private static final ECNamedCurveParameterSpec ecParamSpec = ECNamedCurveTable.getParameterSpec(CURVENAME);
     private static final ECCurve curve = ecParamSpec.getCurve();
 
