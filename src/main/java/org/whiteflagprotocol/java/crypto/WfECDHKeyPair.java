@@ -120,7 +120,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @throws IllegalStateException if the key pair has been destroyed
      */
     public ECPublicKey getPublicKey() {
-        checkState();
+        checkDestroyed();
         return (ECPublicKey) keypair.getPublic();
     }
 
@@ -130,7 +130,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @throws IllegalStateException if the key pair has been destroyed
      */
     public final byte[] getRawPublicKey() {
-        checkState();
+        checkDestroyed();
         return compressPublicKey(getPublicKey());
     }
 
@@ -157,7 +157,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @throws IllegalStateException if the key pair has been destroyed
      */
     public final byte[] negotiateKey(final ECPublicKey ecPublicKey) throws WfCryptoException {
-        checkState();
+        checkDestroyed();
         try {
             KeyAgreement ka = KeyAgreement.getInstance(ALGORITHM, PROVIDER);
             ka.init(keypair.getPrivate());
@@ -253,11 +253,11 @@ public class WfECDHKeyPair implements Destroyable {
     /* PRIVATE METHODS */
 
     /**
-     * Checks the state of this key pair
-     * @throws IllegalStateException if in an illegal state
+     * Checks and throws exception if this key pair has been destroyed
+     * @throws IllegalStateException if this key pair has been destroyed
      */
-    private void checkState() {
-        if (destroyed) throw new IllegalStateException("Cipher has been destroyed");
+    private void checkDestroyed() {
+        if (destroyed) throw new IllegalStateException("Key pair has been destroyed");
     }
 
     /* PRIVATE STATIC METHODS */

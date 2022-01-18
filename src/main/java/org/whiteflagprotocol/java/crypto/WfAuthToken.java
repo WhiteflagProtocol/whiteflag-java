@@ -97,17 +97,17 @@ public class WfAuthToken implements Destroyable {
      * @throws IllegalArgumentException if the authentication token has been destroyed
      */
     public byte[] getVerificationData(byte[] context) {
-        checkState();
+        checkDestroyed();
         return WfCryptoUtil.hkdf(token, method.hkdfSalt, context, method.tokenLength);
     }
 
     /* PRIVATE METHODS */
 
     /**
-     * Checks the state of this authentication token
-     * @throws IllegalStateException if in an illegal state
+     * Checks and throws exception if this authentication token has been destroyed
+     * @throws IllegalStateException if this authentication token has been destroyed
      */
-    private void checkState() {
+    private void checkDestroyed() {
         if (destroyed) throw new IllegalStateException("Authentication token has been destroyed");
     }
 }

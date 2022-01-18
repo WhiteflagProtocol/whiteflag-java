@@ -3,7 +3,6 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
-import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPublicKey;
 
 import javax.crypto.SecretKey;
@@ -149,7 +148,7 @@ public class WfEncryptionKey implements Destroyable {
      * @throws IllegalArgumentException if the encryption key has been destroyed
      */
     public SecretKey getSecretKey(byte[] context) {
-        checkState();
+        checkDestroyed();
         return new SecretKeySpec(
             WfCryptoUtil.hkdfExpand(prk, context, method.keyLength),
             method.algorithmName
@@ -159,10 +158,10 @@ public class WfEncryptionKey implements Destroyable {
     /* PRIVATE METHODS */
 
     /**
-     * Checks the state of this encryption key
-     * @throws IllegalStateException if in an illegal state
+     * Checks and throws exception if this encryption key has been destroyed
+     * @throws IllegalStateException if this encryption key has been destroyed
      */
-    private void checkState() {
+    private void checkDestroyed() {
         if (destroyed) throw new IllegalStateException("Encryption key has been destroyed");
     }
 }

@@ -89,8 +89,10 @@ public class WfCipher implements Destroyable {
      */
     @Override
     public void destroy() throws DestroyFailedException {
-        secretKey.destroy();    // Destroy derived key; throws exceptions
-        this.key = null;        // Only delete reference
+        if (this.secretKey != null) {
+            this.secretKey.destroy();   // Destroy derived key; throws exceptions
+        }
+        this.key = null;                // Only delete reference
         this.destroyed = true;
     }
 
@@ -118,6 +120,7 @@ public class WfCipher implements Destroyable {
      * @return this Whiteflag cipher object
      */
     public WfCipher setContext(byte[] context) {
+        checkDestroyed();
         this.context = context;
         this.secretKey = key.getSecretKey(context);
         return this;
@@ -137,7 +140,7 @@ public class WfCipher implements Destroyable {
      * @throws NoSuchAlgorithmException if no strong random generator algorithm is available
      */
     public byte[] setInitVector() throws NoSuchAlgorithmException {
-        /* Random number generator */
+        checkDestroyed();
         byte[] initialisationVector = new byte[IVBYTELENGTH];
         SecureRandom.getInstanceStrong().nextBytes(initialisationVector);
         this.iv = new IvParameterSpec(initialisationVector);
@@ -160,6 +163,7 @@ public class WfCipher implements Destroyable {
      */
     @SuppressWarnings("java:S3329")
     public WfCipher setInitVector(byte[] initialisationVector) {
+        checkDestroyed();
         this.iv = new IvParameterSpec(initialisationVector, 0, IVBYTELENGTH);
         return this;
     }
@@ -200,7 +204,8 @@ public class WfCipher implements Destroyable {
      * @throws WfCryptoException if data could not be encrypted
      */
     public byte[] encrypt(final byte[] data) throws WfCryptoException {
-        checkState();
+        checkDestroyed();
+        checkSet();
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
             return cipher.doFinal(data);
@@ -227,7 +232,8 @@ public class WfCipher implements Destroyable {
      * @throws WfCryptoException if data could not be decrypted
      */
     public byte[] decrypt(final byte[] data) throws WfCryptoException {
-        checkState();
+        checkDestroyed();
+        checkSet();
         try {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
             return cipher.doFinal(data);
@@ -239,13 +245,20 @@ public class WfCipher implements Destroyable {
     /* PRIVATE METHODS */
 
     /**
-     * Checks the state of this cipher
-     * @throws IllegalStateException if in an illegal state
+     * Checks and throws exception if this cipher has been destroyed
+     * @throws IllegalStateException if this cipher has been destroyed
      */
-    private void checkState() {
+    private void checkDestroyed() {
         if (destroyed) {
             throw new IllegalStateException("Cipher has been destroyed");
         }
+    }
+
+    /**
+     * Checks and throws exception if this cipher has not been fully set up
+     * @throws IllegalStateException if this cipher has not been set up
+     */
+    private void checkSet() {
         if (Boolean.FALSE.equals(isSet())) {
             throw new IllegalStateException("Cipher has not been fully set up to perform encryption or decryption");
         }
