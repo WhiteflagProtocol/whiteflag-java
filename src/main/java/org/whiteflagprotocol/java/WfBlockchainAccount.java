@@ -6,6 +6,8 @@ package org.whiteflagprotocol.java;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.security.GeneralSecurityException;
+import java.security.KeyPair;
+import java.security.PublicKey;
 import java.security.interfaces.ECPublicKey;
 
 import org.whiteflagprotocol.java.WfException.ErrorType;
@@ -14,26 +16,41 @@ import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 
 /**
- * Whiteflag participant class
+ * Whiteflag account abstract class
  * 
- * <p> This class represents a Whiteflag participant. It is used to
- * keep track of originators, their messages and shared cryptographic
- * keys.
+ * <p> This class represents a blockchain account to or from which Whiteflag
+ * messages are sent. It may correspond with an actual blockchain account for
+ * blockchains that use accounts. For bockchains that lack the concept of
+ * accounts, such as Bitcoin, instances of this account class must be seen as
+ * a virtual account, i.e. a container to hold a Whiteflag originator's
+ * authentication data and encryption keys.
+ * 
+ * This class is an abstract class, because its actual implementation depends
+ * on the blockchain (e.g.key pair, address, etc.). The Whiteflag specification
+ * assumes that a blockchain account is identified by a blockchain address;
+ * therefore, this class implements the {@link WfAddress} interface.
  * 
  * @since 1.1
  */
-public class WfParticipant {
+abstract class WfBlockchainAccount implements WfBlockchainAddress {
 
     /* PROPERTIES */
 
     /* Basic Properties */
     private String name;
 
-    /* Authentication & Crytptograpy Properties */
-    URL authURL;
-    WfAuthToken authToken;
-    WfEncryptionKey sharedKey;
-    ECPublicKey ecdhPublicKey;
+    /* Whiteflag Authentication & Crytptography */
+    /**
+     * The URL used for authentication in A1 message
+     */
+    private URL authURL;
+    /**
+     * The URL used for authentication in A1 message
+     */
+    private WfAuthToken authToken;
+    private WfEncryptionKey sharedKey;
+    private WfECDHKeyPair ecdhKeyPair;
+    private ECPublicKey ecdhPublicKey;
 
     /* CONSTRUCTORS */
 
@@ -41,8 +58,8 @@ public class WfParticipant {
      * Constructs a new participant with the specified name
      * @param name the name of the participant
      */
-    public WfParticipant(final String name) {
-        this.name = name;
+    public WfBlockchainAccount(final String name) {
+        setName(name);
     }
 
     /* PUBLIC METHODS */
@@ -125,6 +142,24 @@ public class WfParticipant {
      */
     public WfEncryptionKey getSharedKey() {
         return this.sharedKey;
+    }
+
+    /**
+     * Sets the ECDH key pair used to derrive a negotiated key with another participant (typically used if an instance represents)
+     * @wfref 5.2.4 Message Encryption
+     * @param ecdhKeyPair a {@link org.whiteflagprotocol.java.crypto.WfECDHKeyPair} ECDH key pair
+     */
+    public void setEcdhKeyPair(final WfECDHKeyPair ecdhKeyPair) {
+        this.ecdhKeyPair = ecdhKeyPair;
+    }
+
+    /**
+     * Gets the ECDH public key used to derrive the negotiated key with this participant
+     * @wfref 5.2.4 Message Encryption
+     * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key
+     */
+    public WfECDHKeyPair getEcdhKeyPair() {
+        return this.ecdhKeyPair;
     }
 
     /**

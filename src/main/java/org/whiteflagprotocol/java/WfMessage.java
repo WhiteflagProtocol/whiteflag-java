@@ -8,8 +8,13 @@ import java.util.Map;
 import java.util.HashMap;
 
 /* Required Whiteflag core and util classes */
-import org.whiteflagprotocol.java.core.*;
-import org.whiteflagprotocol.java.util.*;
+import org.whiteflagprotocol.java.core.WfBinaryBuffer;
+import org.whiteflagprotocol.java.core.WfCoreException;
+import org.whiteflagprotocol.java.core.WfMessageCore;
+import org.whiteflagprotocol.java.core.WfMessageCreator;
+import org.whiteflagprotocol.java.core.WfMessageType;
+import org.whiteflagprotocol.java.util.WfJsonMessage;
+import org.whiteflagprotocol.java.util.WfUtilException;
 
 /* Required error types */
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
@@ -30,10 +35,17 @@ public class WfMessage extends WfMessageCore {
 
     /* PROPERTIES */
 
+    /* Constants */
+    private final String ADDRESSKEY = "originatorAddress";
+
     /**
      * Implementation specific message metadata
      */
     private Map<String, String> metadata = new HashMap<>();
+    /**
+     * The blockchain address that will transmit or has transmitted this message
+     */
+    private WfBlockchainAddress address;
     /**
      * The binary encoded message
      */
@@ -242,6 +254,24 @@ public class WfMessage extends WfMessageCore {
      */
     public Set<String> getMetadataKeys() {
         return metadata.keySet();
+    }
+
+    /**
+     * Sets the blockchain address used to send this message and adds it to the metadata
+     * @param address the {@link WfBlockchainAddress} used to send this message
+     * @return null if address newly added to metadata, otherwise the existing value that was replaced
+     */
+    public String setAddress(WfBlockchainAccount account) {
+        this.address = account;
+        return metadata.put(ADDRESSKEY, address.getAddressString());
+    }
+
+    /**
+     * Gets the blockchain address used to send this message
+     * @param address the {@link WfBlockchainAddress} used to send this message
+     */
+    public WfBlockchainAddress getAddress() {
+        return this.address;
     }
 
     /**
