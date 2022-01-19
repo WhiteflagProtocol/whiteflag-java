@@ -120,23 +120,6 @@ public enum WfMessageType {
         this.bodyFields = bodyFields;
     }
 
-    /* STATIC FACTORY METHODS */
-
-    /**
-     * Creates the message type from the message code
-     * @since 1.1
-     * @param messageCode the message code
-     * @return a {@link WfMessageType}
-     * @throws WfCoreException if the message type is invalid
-     */
-    public static WfMessageType fromCode(final String messageCode) throws WfCoreException {
-        if (messageCode == null || messageCode.isEmpty()) return ANY;
-        for (WfMessageType type : WfMessageType.values()) {
-            if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
-        }
-        throw new WfCoreException("Invalid message type: " + messageCode);
-    }
-
     /* PUBLIC METHODS */
 
     /**
@@ -200,5 +183,22 @@ public enum WfMessageType {
             startByte = endByte;
         }
         return fields;
+    }
+
+    /* PUBLIC STATIC METHODS */
+
+    /**
+     * Creates the message type from the message code
+     * @since 1.1
+     * @param messageCode the message code
+     * @return a {@link WfMessageType}
+     * @throws WfCoreException if the message type is invalid
+     */
+    public static final WfMessageType fromCode(final String messageCode) throws WfCoreException {
+        if (messageCode == null || messageCode.isEmpty()) return ANY;
+        for (WfMessageType type : values()) {
+            if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
+        }
+        throw new WfCoreException("Invalid message type: " + messageCode);
     }
 }

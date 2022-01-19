@@ -50,18 +50,18 @@ public final class WfEncryptionKey implements Destroyable {
 
     /**
      * Constructs a new Whiteflag encryption key from a raw pre-shared key
-     * @param rawSharedKey a hexadecimal string with the raw pre-shared encryption key
+     * @param rawPreSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(String rawSharedKey) {
-        this(convertToByteArray(rawSharedKey));
+    public WfEncryptionKey(String rawPreSharedKey) {
+        this(convertToByteArray(rawPreSharedKey));
     }
 
     /**
      * Constructs a new Whiteflag encryption key from a raw pre-shared key
-     * @param rawSharedKey a byte array with the raw pre-shared encryption key
+     * @param rawPreSharedKey a byte array with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(byte[] rawSharedKey) {
-        this.rawkey = rawSharedKey;
+    public WfEncryptionKey(byte[] rawPreSharedKey) {
+        this.rawkey = rawPreSharedKey;
         this.method = AES_256_CTR_PSK;
         this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
     }

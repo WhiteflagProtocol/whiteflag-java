@@ -5,6 +5,7 @@ package org.whiteflagprotocol.java;
 
 import java.util.Set;
 import java.util.Map;
+import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
 
 /* Required Whiteflag core and util classes */
@@ -13,11 +14,16 @@ import org.whiteflagprotocol.java.core.WfCoreException;
 import org.whiteflagprotocol.java.core.WfMessageCore;
 import org.whiteflagprotocol.java.core.WfMessageCreator;
 import org.whiteflagprotocol.java.core.WfMessageType;
+import org.whiteflagprotocol.java.crypto.WfCipher;
+import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
+import org.whiteflagprotocol.java.crypto.WfEncryptionMethod;
+import org.whiteflagprotocol.java.crypto.WfCryptoException;
 import org.whiteflagprotocol.java.util.WfJsonMessage;
 import org.whiteflagprotocol.java.util.WfUtilException;
 
 /* Required error types */
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
+import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
 
 /**
  * Whiteflag message class
@@ -43,26 +49,21 @@ public class WfMessage extends WfMessageCore {
     /* Constants */
     private static final String METAKEY_ORIGINATOR = "originatorAddress";
     private static final String METAKEY_RECIPIENT = "recipientAddress";
+    private static final String FIELD_ENCRYPTIONINDICATOR = "EncryptionIndicator";
 
-    /**
-     * Implementation specific message metadata
-     */
+    /* Metadata */
     private Map<String, String> metadata = new HashMap<>();
-    /**
-     * The originator of the message, identified by its account
-     */
+
+    /* Originator and Recipient */
     private WfBlockchainAccount originator;
-    /**
-     * The intended recipient of the message, identified by it account
-     */
     private WfBlockchainAccount recipient;
-    /**
-     * The binary encoded message
-     */
-    private WfBinaryBuffer encodedMsg = WfBinaryBuffer.create();
-    /**
-     * The serialized message cache
-     */
+
+    /* Encryption */
+    private WfEncryptionMethod encryptionMethod;
+    private byte[] initialisationVector;        //TODO: Expose iv
+
+    /* Cached messge representations */
+    private WfBinaryBuffer cachedMsg = WfBinaryBuffer.create();
     private String cachedSerializedMsg = null;
 
     /* CONSTRUCTORS */
@@ -80,11 +81,11 @@ public class WfMessage extends WfMessageCore {
      * Creates a Whiteflag message from a decoded core message by calling the super constructor
      * @since 1.1
      * @param coreMsg the {@link WfMessageCore} core message
-     * @param encodedMsg the {@link WfBinaryBuffer} with the source binary encoded message to be preserved
+     * @param cachedMsg the {@link WfBinaryBuffer} with the source binary encoded message to be preserved
      */
-    private WfMessage(final WfMessageCore coreMsg, final WfBinaryBuffer encodedMsg) {
+    private WfMessage(final WfMessageCore coreMsg, final WfBinaryBuffer cachedMsg) {
         super(coreMsg);
-        this.encodedMsg = encodedMsg.markComplete();
+        this.cachedMsg = cachedMsg.markComplete();
     }
 
     /**
@@ -102,7 +103,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Creates a new empty Whiteflag message object of the specified type
-     * @param messageCode the code indicating the message type to be created
+     * @param messageCode a string with the code indicating the message type to be created
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be created
      */
@@ -185,7 +186,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new Whiteflag message from a hexadecimal string represaentation of an encoded message
      * @since 1.1
-     * @param hexMessage the hexadecimal string representation of the encoded message
+     * @param hexMessage a hexadecimal string representation of the encoded message
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
@@ -196,7 +197,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new Whiteflag message from a byte array with an binary encoded message
      * @since 1.1
-     * @param binMessage the byte array with the binary encoded message
+     * @param binMessage a byte array with the binary encoded message
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
@@ -207,23 +208,23 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new Whiteflag message from a binary buffer
      * @since 1.1
-     * @param encodedMsg the binary buffer with the encoded message
+     * @param cachedMsg a binary buffer with the encoded message
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
-    public static final WfMessage decode(final WfBinaryBuffer encodedMsg) throws WfException {
+    public static final WfMessage decode(final WfBinaryBuffer cachedMsg) throws WfException {
         WfMessageCore coreMsg;
         try {
-            coreMsg = new WfMessageCreator().decode(encodedMsg).create();
+            coreMsg = new WfMessageCreator().decode(cachedMsg).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot decode message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return new WfMessage(coreMsg, encodedMsg);
+        return new WfMessage(coreMsg, cachedMsg);
     }
 
     /**
      * Creates a new Whiteflag message object from field values
-     * @param fieldValues String array with the values for the message fields
+     * @param fieldValues a string array with the values for the message fields
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if any of the provided values is invalid
      */
@@ -237,7 +238,7 @@ public class WfMessage extends WfMessageCore {
         return new WfMessage(coreMsg);
     }
 
-    /* PUBLIC METHODS */
+    /* PUBLIC METHODS: Getters & Setters */
 
     /**
      * Adds metadata to the Whiteflag message if not already existing
@@ -306,6 +307,8 @@ public class WfMessage extends WfMessageCore {
         return this.recipient;
     }
 
+    /* PUBLIC METHODS: Operations */
+
     /**
      * Returns the cached serialized message, or else it serialzes and caches Whiteflag message
      * @return the serialized message, i.e. the concatinated string of field values
@@ -324,21 +327,39 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Returns the cached encoded message, or else it encodes and caches Whiteflag message
+     * Returns the cached encoded/encrypted message, or else it encodes/encrypts and caches Whiteflag message
      * @since 1.1
      * @return a byte array with the compressed binary encoded message
      * @throws WfException if any field does not contain valid data
      */
     @Override
     public final WfBinaryBuffer encode() throws WfException {
-        if (Boolean.FALSE.equals(encodedMsg.isComplete())) {
-            try {
-                this.encodedMsg = super.encode().markComplete();
-            } catch (WfCoreException e) {
-                throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
-            }
+        /* Return encoded/encrypted message if already cached */
+        if (Boolean.TRUE.equals(cachedMsg.isComplete())) return this.cachedMsg;
+
+        /* Check encryption method */
+        try {
+            this.encryptionMethod = WfEncryptionMethod.fromFieldValue(header.get(FIELD_ENCRYPTIONINDICATOR));
+        } catch (WfCryptoException e) {
+            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
-        return this.encodedMsg;
+        /* Encode message */
+        WfBinaryBuffer encodedMsg;
+        try {
+            encodedMsg = super.encode();
+        } catch (WfCoreException e) {
+            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
+        }
+        /* Encrypt the encoded message */
+        WfBinaryBuffer encryptedMsg;
+        try {
+            encryptedMsg = encrypt(encodedMsg);
+        } catch (WfCryptoException e) {
+            throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
+        }
+        /* Done. Cache and return the result */
+        this.cachedMsg = encryptedMsg.markComplete();
+        return encryptedMsg;
     }
 
     /**
@@ -384,5 +405,37 @@ public class WfMessage extends WfMessageCore {
      */
     private final void setMetadata(final Map<String, String> metadata) {
         metadata.forEach(this.metadata::put);
+    }
+
+    /**
+     * Encrypts the message
+     * @since 1.1
+     * @param encodedMessage a {@link WfBinaryBuffer} with an encoded message
+     * @return a {@link WfBinaryBuffer} with the encrypted message
+     * @throws IllegalStateException if originator and recipient of this message are unknown
+     * @throws WfCryptoException if message cannot be encrypted
+     */
+    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException {
+        if (encryptionMethod == WfEncryptionMethod.NO_ENCRYPTION) return encodedMsg;
+
+        /* Perform encryption */
+        WfCipher cipher  = WfCipher.fromKey(getEncryptionKey());
+        cipher.setContext(originator.getBinaryAddress());
+        this.initialisationVector = cipher.getInitVector();
+
+        //TODO: Get the correct part of the message
+        return WfBinaryBuffer.fromByteArray(cipher.encrypt(encodedMsg.toByteArray()));
+    }
+
+    /**
+     * Retrieves the encryption key from the key store
+     * @param method the encryption method
+     * @return the requested {@link WfEncryptionKey}
+     * @throws IllegalStateException if originator and recipient of this message are unknown
+     */
+    private final WfEncryptionKey getEncryptionKey() {
+        if (originator == null) throw new IllegalStateException("Cannot encrypt message if originator is not set");
+        if (recipient == null) throw new IllegalStateException("Cannot encrypt message if recipient is not set");
+        return new WfEncryptionKey("a1b2c3d4e5f6");  //TODO: implement key store
     }
 }

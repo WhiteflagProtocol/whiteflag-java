@@ -59,22 +59,25 @@ public final class WfMessageCodec {
                 buffer = encodeBIN(field.toString());
                 break;
 
-            // Encode decimal or hexadecimal field
+            // Encode decimal or hexadecimal fields
             case DEC:
             case HEX:
                 buffer = encodeBDX(field.toString());
                 break;
 
-            // Encode datum field
+            // Encode date-time and duration fields
             case DATETIME:
             case DURATION:
                 // Encode string without fixed characters
                 buffer = encodeBDX(field.toString().replaceAll("[\\-+:.A-Z]", ""));
                 break;
+
+            // Encode lat-long coordinate fields
             case LAT:
             case LONG:
                 buffer = encodeLatLong(field.toString());
                 break;
+
             // Unknown encoding
             default:
                 buffer = new byte[0];
@@ -134,7 +137,7 @@ public final class WfMessageCodec {
                 str.insert(9, "M");
                 break;
             
-            /* Decode lat-long fields */
+            /* Decode lat-long coordinate fields */
             case LAT:
             case LONG:
                 /* Sign of lat long coordinates */
