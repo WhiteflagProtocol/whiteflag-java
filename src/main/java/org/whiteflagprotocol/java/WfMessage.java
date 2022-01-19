@@ -81,11 +81,11 @@ public class WfMessage extends WfMessageCore {
      * Creates a Whiteflag message from a decoded core message by calling the super constructor
      * @since 1.1
      * @param coreMsg the {@link WfMessageCore} core message
-     * @param cachedMsg the {@link WfBinaryBuffer} with the source binary encoded message to be preserved
+     * @param encodedMsg the {@link WfBinaryBuffer} with the source binary encoded message to be preserved
      */
-    private WfMessage(final WfMessageCore coreMsg, final WfBinaryBuffer cachedMsg) {
+    private WfMessage(final WfMessageCore coreMsg, final WfBinaryBuffer encodedMsg) {
         super(coreMsg);
-        this.cachedMsg = cachedMsg.markComplete();
+        this.cachedMsg = encodedMsg.markComplete();
     }
 
     /**
@@ -208,18 +208,18 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new Whiteflag message from a binary buffer
      * @since 1.1
-     * @param cachedMsg a binary buffer with the encoded message
+     * @param encodedMsg a binary buffer with the encoded message
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
-    public static final WfMessage decode(final WfBinaryBuffer cachedMsg) throws WfException {
+    public static final WfMessage decode(final WfBinaryBuffer encodedMsg) throws WfException {
         WfMessageCore coreMsg;
         try {
-            coreMsg = new WfMessageCreator().decode(cachedMsg).create();
+            coreMsg = new WfMessageCreator().decode(encodedMsg).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot decode message: " + e.getMessage(), WF_FORMAT_ERROR);
         }
-        return new WfMessage(coreMsg, cachedMsg);
+        return new WfMessage(coreMsg, encodedMsg);
     }
 
     /**
@@ -351,15 +351,14 @@ public class WfMessage extends WfMessageCore {
             throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
         /* Encrypt the encoded message */
-        WfBinaryBuffer encryptedMsg;
         try {
-            encryptedMsg = encrypt(encodedMsg);
+            encodedMsg = encrypt(encodedMsg);
         } catch (WfCryptoException e) {
             throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
         }
         /* Done. Cache and return the result */
-        this.cachedMsg = encryptedMsg.markComplete();
-        return encryptedMsg;
+        this.cachedMsg = encodedMsg.markComplete();
+        return encodedMsg;
     }
 
     /**
