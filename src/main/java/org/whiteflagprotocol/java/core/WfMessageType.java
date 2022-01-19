@@ -143,7 +143,7 @@ public enum WfMessageType {
      * Returns the message code string
      * @return the message code
      */
-    public String getCode() {
+    public final String getCode() {
         return messageCode;
     }
 
@@ -151,7 +151,7 @@ public enum WfMessageType {
      * Returns an array with the header fields
      * @return an array of the {@link WfMessageField}s from the message header
      */
-    public WfMessageField[] getHeaderFields() {
+    public final WfMessageField[] getHeaderFields() {
         return headerFields;
     }
 
@@ -159,7 +159,7 @@ public enum WfMessageType {
      * Returns an array with the body fields
      * @return an array with the {@link WfMessageField}s from the message body
      */
-    public WfMessageField[] getBodyFields() {
+    public final WfMessageField[] getBodyFields() {
         return bodyFields;
     }
 
@@ -170,7 +170,7 @@ public enum WfMessageType {
      * @wfver v1-draft.6
      * @wfref 4.3.1.9 Object Request Fields
      */
-    public WfMessageField[] createRequestFields(final int n) {
+    public final WfMessageField[] createRequestFields(final int n) {
         // Request fields are only defined for Request message type
         if (!this.equals(Q)) return WfMessageDefinitions.UNDEFINED;
 

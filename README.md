@@ -97,10 +97,10 @@ The WFJL software is dedicated to the public domain under the
 [Creative Commons CC0-1.0 Universal Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/)
 statement. See `LICENSE.md` for details.
 
-The library may require third party software packages, which are not
-part of this distribution and may be licenced differently.
-
-The third party software dependencies of the WFJL itself are:
+The library may require third party software packages, which are not part of
+this distribution and may be licenced differently. The third party software
+dependencies of the WFJL itself are:
 
 * the [JUnit test framework](https://junit.org/) for testing the software
+* the [Bouncycastle Crypto API](https://bouncycastle.org/) used as the cryptographic provider for the Whiteflag Elliptic Curve Diffie-Hellman implementation
 * the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages

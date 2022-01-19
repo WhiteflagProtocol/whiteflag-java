@@ -18,7 +18,7 @@ import java.util.Map;
  * 
  * @since 1.0
  */
-public class WfMessageCreator {
+public final class WfMessageCreator {
 
     /* PROPERTIES */
 

@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * 
  * @since 1.0
  */
-public class WfMessageField {
+public final class WfMessageField {
 
     /* PROPERTIES */
 
@@ -244,7 +244,7 @@ public class WfMessageField {
      * Gives debug information of the field
      * @return field name, value and pattern and validity check
      */
-    protected String debugInfo() {
+    protected final String debugInfo() {
         return this.name + " [data valid: " + this.isValid()
                          + ", regex: /" + this.pattern.toString() + "/"
                          + ", bytes: " + startByte + "-" + endByte + "]";

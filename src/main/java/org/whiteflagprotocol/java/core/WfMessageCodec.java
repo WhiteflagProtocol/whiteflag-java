@@ -27,7 +27,7 @@ import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BIT;
  * 
  * @since 1.0
  */
-public class WfMessageCodec {
+public final class WfMessageCodec {
 
     /* CONSTRUCTOR */
 

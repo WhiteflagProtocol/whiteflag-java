@@ -21,7 +21,7 @@ import javax.crypto.spec.SecretKeySpec;
  * 
  * @since 1.1
  */
-public class WfCryptoUtil {
+public final class WfCryptoUtil {
 
     /* PROPERTIES */
 
@@ -230,7 +230,7 @@ public class WfCryptoUtil {
      * @param prefix the prefix to be checked for
      * @return a string without prefix
      */
-    private static String removeStringPrefix(final String str, final String prefix) {
+    private static final String removeStringPrefix(final String str, final String prefix) {
         if (str.startsWith(prefix)) return str.substring(prefix.length());
         return str;
     }

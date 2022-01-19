@@ -22,10 +22,15 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
 /**
  * Whiteflag message class
  * 
- * <p> This is a class representing a Whiteflag message. It contains
- * all methods to handle a Whiteflag message, e.g. to encode, decode, etc. It
- * also provides static factory methods to create Whiteflag messages in
- * different ways from various data.
+ * <p> This is a class representing a Whiteflag message. It contains all
+ * methods to handle a Whiteflag message, e.g. to encode, decode, etc. It also
+ * provides static factory methods to create Whiteflag messages in different
+ * ways from various data.
+ * 
+ * A Whiteflag message is put on a blockchain by embedding it in a transaction
+ * in encoded, and possibly also encrypted, form. The blockchain account of the
+ * message originator is virtually represented by a {@link WfBlockchainAccount}
+ * object. 
  * 
  * @wfver v1-draft.6
  * 
@@ -36,16 +41,21 @@ public class WfMessage extends WfMessageCore {
     /* PROPERTIES */
 
     /* Constants */
-    private final String ADDRESSKEY = "originatorAddress";
+    private static final String METAKEY_ORIGINATOR = "originatorAddress";
+    private static final String METAKEY_RECIPIENT = "recipientAddress";
 
     /**
      * Implementation specific message metadata
      */
     private Map<String, String> metadata = new HashMap<>();
     /**
-     * The blockchain address that will transmit or has transmitted this message
+     * The originator of the message, identified by its account
      */
-    private WfBlockchainAddress address;
+    private WfBlockchainAccount originator;
+    /**
+     * The intended recipient of the message, identified by it account
+     */
+    private WfBlockchainAccount recipient;
     /**
      * The binary encoded message
      */
@@ -96,7 +106,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be created
      */
-    public static WfMessage create(final String messageCode) throws WfException {
+    public static final WfMessage create(final String messageCode) throws WfException {
         WfMessageCore coreMsg;
         try {
             coreMsg = new WfMessageCreator().type(WfMessageType.fromCode(messageCode)).create();
@@ -111,7 +121,7 @@ public class WfMessage extends WfMessageCore {
      * @param message the message to be copied
      * @return a {@link WfMessage} Whiteflag message
      */
-    public static WfMessage copy(final WfMessage message) {
+    public static final WfMessage copy(final WfMessage message) {
         return new WfMessage(message);
     }
 
@@ -120,7 +130,7 @@ public class WfMessage extends WfMessageCore {
      * @param message the message to be copied
      * @return a {@link WfMessage} Whiteflag message
      */
-    public static WfMessage clone(final WfMessage message) {
+    public static final WfMessage clone(final WfMessage message) {
         WfMessage newMessage = copy(message);
         for (String key : message.getMetadataKeys()) {
             newMessage.addMetadata(key, message.getMetadata(key));
@@ -135,7 +145,7 @@ public class WfMessage extends WfMessageCore {
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if the serialization of the message is invalid
      */
-    public static WfMessage deserialize(final String serializedMsg) throws WfException {
+    public static final WfMessage deserialize(final String serializedMsg) throws WfException {
         WfMessageCore coreMsg;
         try {
             coreMsg = new WfMessageCreator().deserialize(serializedMsg).create();
@@ -151,7 +161,7 @@ public class WfMessage extends WfMessageCore {
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if the serialization of the message is invalid
      */
-    public static WfMessage deserializeJson(final String jsonMessage) throws WfException {
+    public static final WfMessage deserializeJson(final String jsonMessage) throws WfException {
         // Deserialize JSON string
         WfJsonMessage jsonMsg;
         try {
@@ -179,7 +189,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
-    public static WfMessage decode(final String hexMessage) throws WfException {
+    public static final WfMessage decode(final String hexMessage) throws WfException {
         return decode(WfBinaryBuffer.fromHexString(hexMessage));
     }
 
@@ -190,7 +200,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
-    public static WfMessage decode(final byte[] binMessage) throws WfException {
+    public static final WfMessage decode(final byte[] binMessage) throws WfException {
         return decode(WfBinaryBuffer.fromByteArray(binMessage));
     }
 
@@ -201,7 +211,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
-    public static WfMessage decode(final WfBinaryBuffer encodedMsg) throws WfException {
+    public static final WfMessage decode(final WfBinaryBuffer encodedMsg) throws WfException {
         WfMessageCore coreMsg;
         try {
             coreMsg = new WfMessageCreator().decode(encodedMsg).create();
@@ -217,7 +227,7 @@ public class WfMessage extends WfMessageCore {
      * @return a {@link WfMessage} Whiteflag message
      * @throws WfException if any of the provided values is invalid
      */
-    public static WfMessage compile(final String[] fieldValues) throws WfException {
+    public static final WfMessage compile(final String[] fieldValues) throws WfException {
         WfMessageCore coreMsg;
         try {
             coreMsg = new WfMessageCreator().compile(fieldValues).create();
@@ -257,21 +267,43 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Sets the blockchain address used to send this message and adds it to the metadata
-     * @param address the {@link WfBlockchainAddress} used to send this message
+     * Sets the originator sending this message and adds its blockchain address to the metadata
+     * @since 1.1
+     * @param originator the {@link WfBlockchainAccount} of the originator sending this message
      * @return null if address newly added to metadata, otherwise the existing value that was replaced
      */
-    public String setAddress(WfBlockchainAccount account) {
-        this.address = account;
-        return metadata.put(ADDRESSKEY, address.getAddressString());
+    public final String setOriginator(WfBlockchainAccount originator) {
+        this.originator = originator;
+        return metadata.put(METAKEY_ORIGINATOR, originator.getAddressString());
     }
 
     /**
-     * Gets the blockchain address used to send this message
-     * @param address the {@link WfBlockchainAddress} used to send this message
+     * Gets the originator of this message
+     * @since 1.1
+     * @return the {@link WfBlockchainAccount} of the originator
      */
-    public WfBlockchainAddress getAddress() {
-        return this.address;
+    public final WfBlockchainAccount getOriginator() {
+        return this.originator;
+    }
+
+    /**
+     * Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata
+     * @since 1.1
+     * @param recipient the {@link WfBlockchainAccount} of the recipient of this message
+     * @return null if address newly added to metadata, otherwise the existing value that was replaced
+     */
+    public final String setRecipient(WfBlockchainAccount recipient) {
+        this.recipient = originator;
+        return metadata.put(METAKEY_RECIPIENT, recipient.getAddressString());
+    }
+
+    /**
+     * Gets the recipient of this message
+     * @since 1.1
+     * @return the {@link WfBlockchainAccount} of the recipient
+     */
+    public final WfBlockchainAccount getRecipient() {
+        return this.recipient;
     }
 
     /**
@@ -280,7 +312,7 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if any of the field does not contain valid data
      */
     @Override
-    public String serialize() throws WfException {
+    public final String serialize() throws WfException {
         if (this.cachedSerializedMsg == null) {
             try {
                 this.cachedSerializedMsg = super.serialize();
@@ -298,7 +330,7 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if any field does not contain valid data
      */
     @Override
-    public WfBinaryBuffer encode() throws WfException {
+    public final WfBinaryBuffer encode() throws WfException {
         if (Boolean.FALSE.equals(encodedMsg.isComplete())) {
             try {
                 this.encodedMsg = super.encode().markComplete();
@@ -315,7 +347,7 @@ public class WfMessage extends WfMessageCore {
      * @return a byte array with the binary encoded message
      * @throws WfException if any field does not contain valid data
      */
-    public byte[] toByteArray() throws WfException {
+    public final byte[] toByteArray() throws WfException {
         return this.encode().toByteArray();
     }
 
@@ -325,7 +357,7 @@ public class WfMessage extends WfMessageCore {
      * @return a hexadecimal string representation of the binary encoded
      * @throws WfException if any field does not contain valid data
      */
-    public String toHexString() throws WfException {
+    public final String toHexString() throws WfException {
         return this.encode().toHexString();
     }
 
@@ -334,7 +366,7 @@ public class WfMessage extends WfMessageCore {
      * @return the serialised JSON representation
      * @throws WfException if the message cannot be serialised
      */
-    public String toJson() throws WfException {
+    public final String toJson() throws WfException {
         String jsonMsgStr;
         try {
             jsonMsgStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
@@ -350,7 +382,7 @@ public class WfMessage extends WfMessageCore {
      * Returns the requested metadata value of the Whiteflag message
      * @return the value of the requested metadata key
      */
-    private void setMetadata(final Map<String, String> metadata) {
+    private final void setMetadata(final Map<String, String> metadata) {
         metadata.forEach(this.metadata::put);
     }
 }

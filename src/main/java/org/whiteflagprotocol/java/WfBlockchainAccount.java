@@ -6,8 +6,6 @@ package org.whiteflagprotocol.java;
 import java.net.URL;
 import java.net.MalformedURLException;
 import java.security.GeneralSecurityException;
-import java.security.KeyPair;
-import java.security.PublicKey;
 import java.security.interfaces.ECPublicKey;
 
 import org.whiteflagprotocol.java.WfException.ErrorType;
@@ -36,52 +34,53 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
 
     /* PROPERTIES */
 
-    /* Basic Properties */
-    private String name;
+    /* General properties */
+    /**
+     * Indicator if this is an own account
+     */
+    private final boolean self;
 
     /* Whiteflag Authentication & Crytptography */
     /**
-     * The URL used for authentication in A1 message
+     * The URL for Authentication Method 1
      */
     private URL authURL;
     /**
-     * The URL used for authentication in A1 message
+     * The token for Authentication Method 2
      */
     private WfAuthToken authToken;
-    private WfEncryptionKey sharedKey;
+    /**
+     * The ECDH keys used to negotiate the key for Encryption Method 1
+     */
     private WfECDHKeyPair ecdhKeyPair;
     private ECPublicKey ecdhPublicKey;
+    /**
+     * The encryption key for Encryption Method 2
+     */
+    private WfEncryptionKey sharedKey;
 
-    /* CONSTRUCTORS */
+    /* CONSTRUCTOR */
 
     /**
-     * Constructs a new participant with the specified name
-     * @param name the name of the participant
+     * Constructs a Whiteflag blockchain account
+     * @param self boolean to indicate if this is an own account
      */
-    public WfBlockchainAccount(final String name) {
-        setName(name);
+    protected WfBlockchainAccount(boolean self) {
+        this.self = self;
     }
-
+    
     /* PUBLIC METHODS */
 
     /**
-     * Sets the name of the participant
-     * @param name the name of the participant
+     * Checks if this is an own account
+     * @return TRUE if own accopunt, else if associated wiht another originator
      */
-    public void setName(final String name) {
-        this.name = name;
+    public boolean isSelf() {
+        return self;
     }
 
     /**
-     * Gets the name of the participant
-     * @return a string with the name of the participant
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * Sets the authentication URL from an A1 message used to identify the participant
+     * Sets the authentication URL sent with an A1 message used to identify the originator associted with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
      * @param url a string with an URL pointinng to the authentication data
      * @throws MalformedURLException if the string does not contain a valid URL
@@ -91,7 +90,7 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Sets the authentication URL from an A1 message used to identify the participant
+     * Sets the authentication URL sent with an A1 message used to identify the originator associted with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
      * @param url a {@link java.net.URL} pointinng to the authentication data
      */
@@ -100,7 +99,7 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Gets the authentication URL from an A1 message used to identify the participant
+     * Gets the authentication URL sent with an A1 message used to identify the originator associted with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
      * @return a {@link java.net.URL} pointinng to the authentication data
      */
@@ -109,7 +108,7 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Sets the authentication token used to identify the participant by an A2 message
+     * Sets the authentication token sent with an A2 message to identify the originator associted with this account 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
      * @param token a {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token
      */
@@ -118,7 +117,7 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Sets the authentication token used to identify the participant by an A2 message
+     * Gets the authentication token sent with an A2 message to identify the originator associted with this account 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
      * @return the {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token
      */
@@ -127,7 +126,23 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Sets the shared encryption key for this participant
+     * Constructs and sets a new Whiteflag encryption key from a raw pre-shared key
+     * @param rawSharedKey a hexadecimal string with the raw pre-shared encryption key
+     */
+    public void setSharedKey(String rawSharedKey) {
+        setSharedKey(new WfEncryptionKey(rawSharedKey));
+    }
+
+    /**
+     * Constructs and sets a new Whiteflag encryption key from a raw pre-shared key
+     * @param rawSharedKey a byte array with the raw pre-shared encryption key
+     */
+    public void setSharedKey(byte[] rawSharedKey) {
+        setSharedKey(new WfEncryptionKey(rawSharedKey));
+    }
+
+    /**
+     * Sets the shared encryption key for this account
      * @wfref 5.2.4 Message Encryption
      * @param key a pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key
      */
@@ -136,7 +151,7 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Gets the shared encryption key for this participant
+     * Gets the shared encryption key for this account
      * @wfref 5.2.4 Message Encryption
      * @return the pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key
      */
@@ -145,16 +160,19 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Sets the ECDH key pair used to derrive a negotiated key with another participant (typically used if an instance represents)
+     * Sets the ECDH key pair used to derrive a negotiated key with another originator
      * @wfref 5.2.4 Message Encryption
      * @param ecdhKeyPair a {@link org.whiteflagprotocol.java.crypto.WfECDHKeyPair} ECDH key pair
+     * @throws IllegalStateException if this is not an own account
      */
     public void setEcdhKeyPair(final WfECDHKeyPair ecdhKeyPair) {
+        if (!self) throw new IllegalStateException("Cannot set ECDH key pair on other's account");
         this.ecdhKeyPair = ecdhKeyPair;
+        this.ecdhPublicKey = ecdhKeyPair.getPublicKey();
     }
 
     /**
-     * Gets the ECDH public key used to derrive the negotiated key with this participant
+     * Gets the ECDH public key used to derrive the negotiated key with this originator
      * @wfref 5.2.4 Message Encryption
      * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key
      */
@@ -163,30 +181,32 @@ abstract class WfBlockchainAccount implements WfBlockchainAddress {
     }
 
     /**
-     * Sets the ECDH public key used to derrive the negotiated key with this participant
+     * Sets the ECDH public key used to derrive the negotiated key with this account
      * @wfref 5.2.4 Message Encryption
      * @param rawPublicKey a string with the raw 264-bit compressed public ECDH key
      * @throws WfException if the provided raw public key is invalid
      */
     public void setEcdhPublicKey(final String rawPublicKey) throws WfException {
         try {
-            this.setEcdhPublicKey(WfECDHKeyPair.createPublicKey(rawPublicKey));
+            setEcdhPublicKey(WfECDHKeyPair.createPublicKey(rawPublicKey));
         } catch(GeneralSecurityException e) {
-            throw new WfException("Cannot accept raw ECDH public key: " + e.getLocalizedMessage(), ErrorType.WF_ENCRYPTION_ERROR);
+            throw new WfException("Cannot process raw ECDH public key: " + e.getLocalizedMessage(), ErrorType.WF_CRYPTO_ERROR);
         }
     }
 
     /**
-     * Sets the ECDH public key used to derrive the negotiated key with this participant
+     * Sets the ECDH public key used to derrive the negotiated key with this account
      * @wfref 5.2.4 Message Encryption
      * @param ecdhPublicKey a {@link java.security.interfaces.ECPublicKey} ECDH public key
+     * @throws IllegalStateException if this is an own account, in which case the ECDH public key is defined by the ECDH key pair
      */
     public void setEcdhPublicKey(final ECPublicKey ecdhPublicKey) {
+        if (self) throw new IllegalStateException("Cannot set ECDH public key on own account");
         this.ecdhPublicKey = ecdhPublicKey;
     }
 
     /**
-     * Gets the ECDH public key used to derrive the negotiated key with this participant
+     * Gets the ECDH public key used to derrive the negotiated key with this account
      * @wfref 5.2.4 Message Encryption
      * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key
      */

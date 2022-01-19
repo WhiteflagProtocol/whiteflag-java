@@ -41,7 +41,7 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
  * 
  * @since 1.1
  */
-public class WfECDHKeyPair implements Destroyable {
+public final class WfECDHKeyPair implements Destroyable {
 
     /* STATIC CLAUSE */
     static {
@@ -100,7 +100,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @throws IllegalStateException if the encryption key has already been destroyed
      */
     @Override
-    public void destroy() throws DestroyFailedException {
+    public final void destroy() throws DestroyFailedException {
         keypair.getPrivate().destroy();    // Destroy derived key; throws exceptions
         this.destroyed = true;
     }
@@ -110,7 +110,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return TRUE if destroyed, else FALSE
      */
     @Override
-    public boolean isDestroyed() {
+    public final boolean isDestroyed() {
         return destroyed;
     }
 
@@ -119,7 +119,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return a public key object
      * @throws IllegalStateException if the key pair has been destroyed
      */
-    public ECPublicKey getPublicKey() {
+    public final ECPublicKey getPublicKey() {
         checkState();
         return (ECPublicKey) keypair.getPublic();
     }
@@ -175,7 +175,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return a key pair object
      * @throws GeneralSecurityException if the key pair could not be created
      */
-    public static KeyPair createKeyPair() throws GeneralSecurityException {
+    public static final KeyPair createKeyPair() throws GeneralSecurityException {
         KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
         kpg.initialize(ecParamSpec);
         return kpg.generateKeyPair();
@@ -187,7 +187,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return a key pair object
      * @throws GeneralSecurityException if the private key is invalid
      */
-    public static KeyPair createKeyPair(ECPrivateKey ecPrivateKey) throws GeneralSecurityException {
+    public static final KeyPair createKeyPair(ECPrivateKey ecPrivateKey) throws GeneralSecurityException {
         KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
         ECPoint point = ecParamSpec.getG().multiply(ecPrivateKey.getS());
         ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(point.getEncoded(false));
@@ -200,7 +200,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return an ECDH public key object
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
-    public static ECPublicKey createPublicKey(String rawPublicKey) throws GeneralSecurityException {
+    public static final ECPublicKey createPublicKey(String rawPublicKey) throws GeneralSecurityException {
         return createPublicKey(convertToByteArray(rawPublicKey));
     }
 
@@ -210,7 +210,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return an ECDH public key object
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
-	public static ECPublicKey createPublicKey(byte[] rawPublicKey) throws GeneralSecurityException {
+	public static final ECPublicKey createPublicKey(byte[] rawPublicKey) throws GeneralSecurityException {
         KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
         ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(rawPublicKey);
         return (ECPublicKey) kf.generatePublic(ecPubkeySpec);
@@ -222,7 +222,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @return an ECDH private key object
      * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
      */
-    public static ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws GeneralSecurityException {
+    public static final ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws GeneralSecurityException {
         KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
         ECPrivateKeySpec ecPrivkeySpec = new ECPrivateKeySpec(new BigInteger(rawPrivateKey), ecParamSpec);
         return (ECPrivateKey) kf.generatePrivate(ecPrivkeySpec);
@@ -233,7 +233,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @param ecPublicKey an ECDH public key object
      * @return a byte array with the raw 264-bit compressed public ECDH key
      */
-    public static byte[] compressPublicKey(ECPublicKey ecPublicKey) {
+    public static final byte[] compressPublicKey(ECPublicKey ecPublicKey) {
         // Get coordinates of public key
         final BigInteger y = ecPublicKey.getW().getAffineY();
         final BigInteger x = ecPublicKey.getW().getAffineX();
@@ -256,7 +256,7 @@ public class WfECDHKeyPair implements Destroyable {
      * Checks the state of this key pair
      * @throws IllegalStateException if in an illegal state
      */
-    private void checkState() {
+    private final void checkState() {
         if (destroyed) throw new IllegalStateException("Cipher has been destroyed");
     }
 
@@ -267,7 +267,7 @@ public class WfECDHKeyPair implements Destroyable {
      * @param coordinates a byte array with the ASN.1 encoded coordinates
      * @return the {@link org.bouncycastle.jce.spec.ECPublicKeySpec} with the public key specification
      */
-    private static ECPublicKeySpec getPublicKeySpec(byte[] coordinates) {
+    private static final ECPublicKeySpec getPublicKeySpec(byte[] coordinates) {
         ECPoint point = curve.decodePoint(coordinates);
         return new ECPublicKeySpec(point, ecParamSpec);
     }

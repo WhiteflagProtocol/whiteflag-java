@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * 
  * @since 1.1
  */
-public class WfBinaryBuffer {
+public final class WfBinaryBuffer {
 
     /* PROPERTIES */
 
@@ -106,7 +106,7 @@ public class WfBinaryBuffer {
      * Creates a new Whiteflag binary buffer
      * @return a new {@link WfBinaryBuffer}
      */
-    public static WfBinaryBuffer create() {
+    public static final WfBinaryBuffer create() {
         return new WfBinaryBuffer();
     }
 
@@ -115,7 +115,7 @@ public class WfBinaryBuffer {
      * @param data a byte array with a binary encoded Whiteflag message data
      * @return a new {@link WfBinaryBuffer}
      */
-    public static WfBinaryBuffer fromByteArray(final byte[] data) {
+    public static final WfBinaryBuffer fromByteArray(final byte[] data) {
         return new WfBinaryBuffer(data);
     }
 
@@ -124,7 +124,7 @@ public class WfBinaryBuffer {
      * @param data a hexadecimal string with a binary encoded Whiteflag message data
      * @return a new {@link WfBinaryBuffer}
      */
-    public static WfBinaryBuffer fromHexString(final String data) {
+    public static final WfBinaryBuffer fromHexString(final String data) {
         return new WfBinaryBuffer(convertToByteArray(data));
     }
 
@@ -134,7 +134,7 @@ public class WfBinaryBuffer {
      * Returns the bit length of the binary buffer
      * @return the buffer length in bits
      */
-    public int bitLength() {
+    public final int bitLength() {
         return this.length;
     }
 
@@ -142,7 +142,7 @@ public class WfBinaryBuffer {
      * Returns the byte length of the binary buffer
      * @return the buffer length in bits
      */
-    public int byteLength() {
+    public final int byteLength() {
         return this.buffer.length;
     }
 
@@ -150,7 +150,7 @@ public class WfBinaryBuffer {
      * Returns the Whiteflag encoded message as a byte array
      * @return a byte array with an encoded message
      */
-    public byte[] toByteArray() {
+    public final byte[] toByteArray() {
         return this.buffer;
     }
 
@@ -158,7 +158,7 @@ public class WfBinaryBuffer {
      * Returns the Whiteflag encoded message as a hexademical string and caches it if the buffer is marked complete
      * @return a hexadecimal string with the encoded message
      */
-    public String toHexString() {
+    public final String toHexString() {
         if (Boolean.FALSE.equals(this.complete)) {
             return convertToHexString(this.buffer);
         }
@@ -172,7 +172,7 @@ public class WfBinaryBuffer {
      * Marks the buffer as complete and makes it read-only
      * @return this {@link WfBinaryBuffer}
      */
-    public WfBinaryBuffer markComplete() {
+    public final WfBinaryBuffer markComplete() {
         if (Boolean.FALSE.equals(this.complete)) {
             this.complete = true;
             this.cachedHexString = convertToHexString(this.buffer);
@@ -184,7 +184,7 @@ public class WfBinaryBuffer {
      * Checks if the buffer is marked as complete and cannot be altered
      * @return TRUE if buffer is marked as complete
      */
-    public Boolean isComplete() {
+    public final Boolean isComplete() {
         return this.complete;
     }
 
@@ -194,7 +194,7 @@ public class WfBinaryBuffer {
      * @return this {@link WfBinaryBuffer}
      * @throws WfCoreException if buffer cannot be altered
      */
-    public WfBinaryBuffer append(final WfBinaryBuffer binaryBuffer) throws WfCoreException {
+    public final WfBinaryBuffer append(final WfBinaryBuffer binaryBuffer) throws WfCoreException {
         return appendBits(binaryBuffer.toByteArray(), binaryBuffer.bitLength());
     }
 
@@ -204,7 +204,7 @@ public class WfBinaryBuffer {
      * @return this {@link WfBinaryBuffer}
      * @throws WfCoreException if field connot be encoded or if buffer cannot be altered
      */
-    public WfBinaryBuffer addMessageField(WfMessageField field) throws WfCoreException {
+    public final WfBinaryBuffer addMessageField(WfMessageField field) throws WfCoreException {
         return appendBits(field.encode(), field.bitLength());
     }
 
@@ -215,7 +215,7 @@ public class WfBinaryBuffer {
      * @return String with the decoded field value
      * @throws WfCoreException if field connot be decoded
      */
-    public WfMessageField extractMessageField(WfMessageField field, final int startBit) throws WfCoreException {
+    public final WfMessageField extractMessageField(WfMessageField field, final int startBit) throws WfCoreException {
         byte[] data;
         if (field.bitLength() < 1) {
             int bitLength = this.length - startBit;
@@ -236,7 +236,7 @@ public class WfBinaryBuffer {
      * @param prefix the prefix to be checked for
      * @return a string without prefix
      */
-    public static String removeStringPrefix(final String str, final String prefix) {
+    public static final String removeStringPrefix(final String str, final String prefix) {
         if (str == null) return "";
         if (prefix == null) return str;
         if (str.startsWith(prefix)) return str.substring(prefix.length());
@@ -482,7 +482,7 @@ public class WfBinaryBuffer {
      * @param bitLength the bit length of a buffer
      * @return the byte length of the buffer
      */
-    private static int byteLength(final int bitLength) {
+    private static final int byteLength(final int bitLength) {
         return (bitLength / BYTE) + ((bitLength % BYTE) > 0 ? 1 : 0);
     }
 }

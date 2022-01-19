@@ -26,7 +26,7 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToHexString;
  * 
  * @since 1.1
  */
-public class WfAuthToken implements Destroyable {
+public final class WfAuthToken implements Destroyable {
 
     /* PROPERTIES */
     /**
@@ -65,7 +65,7 @@ public class WfAuthToken implements Destroyable {
      * Destroys this Whiteflag authentication token by clearing the shared secret
      */
     @Override
-    public void destroy() {
+    public final void destroy() {
         WfCryptoUtil.zeroise(token);
         this.destroyed = true;
     }
@@ -75,7 +75,7 @@ public class WfAuthToken implements Destroyable {
      * @return TRUE if destroyed, else FALSE
      */
     @Override
-    public boolean isDestroyed() {
+    public final boolean isDestroyed() {
         return destroyed;
     }
 
@@ -85,7 +85,7 @@ public class WfAuthToken implements Destroyable {
      * @return a hexadecimal string with the verification data
      * @throws IllegalArgumentException if the authentication token has been destroyed
      */
-    public String getVerificationData(String context) {
+    public final String getVerificationData(String context) {
         byte[] verificationData = getVerificationData(convertToByteArray(context));
         return convertToHexString(verificationData);
     }
@@ -96,7 +96,7 @@ public class WfAuthToken implements Destroyable {
      * @return a byte array with the verification data
      * @throws IllegalArgumentException if the authentication token has been destroyed
      */
-    public byte[] getVerificationData(byte[] context) {
+    public final byte[] getVerificationData(byte[] context) {
         checkState();
         return WfCryptoUtil.hkdf(token, method.hkdfSalt, context, method.tokenLength);
     }
@@ -107,7 +107,7 @@ public class WfAuthToken implements Destroyable {
      * Checks the state of this authentication token
      * @throws IllegalStateException if in an illegal state
      */
-    private void checkState() {
+    private final void checkState() {
         if (destroyed) throw new IllegalStateException("Authentication token has been destroyed");
     }
 }

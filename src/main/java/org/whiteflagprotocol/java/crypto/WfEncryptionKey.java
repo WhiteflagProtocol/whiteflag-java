@@ -29,7 +29,7 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
  * 
  * @since 1.1
  */
-public class WfEncryptionKey implements Destroyable {
+public final class WfEncryptionKey implements Destroyable {
 
     /* PROPERTIES */
 
@@ -109,7 +109,7 @@ public class WfEncryptionKey implements Destroyable {
      * Destroys this Whiteflag cipher by clearing the encryption key
      */
     @Override
-    public void destroy() {
+    public final void destroy() {
         WfCryptoUtil.zeroise(rawkey);
         WfCryptoUtil.zeroise(prk);
         this.destroyed = true;
@@ -120,7 +120,7 @@ public class WfEncryptionKey implements Destroyable {
      * @return TRUE if destroyed, else FALSE
      */
     @Override
-    public boolean isDestroyed() {
+    public final boolean isDestroyed() {
         return destroyed;
     }
 
@@ -128,7 +128,7 @@ public class WfEncryptionKey implements Destroyable {
      * Returns the encryption method
      * @return a string with the encryption method indicator
      */
-    public WfEncryptionMethod getEncryptionMethod() {
+    public final WfEncryptionMethod getEncryptionMethod() {
         return method;
     }
 
@@ -138,7 +138,7 @@ public class WfEncryptionKey implements Destroyable {
      * @return a java SecretKey object with the secret cryptographic key
      * @throws IllegalArgumentException if the encryption key has been destroyed 
      */
-    public SecretKey getSecretKey(String context) {
+    public final SecretKey getSecretKey(String context) {
         return getSecretKey(convertToByteArray(context));
     }
 
@@ -148,7 +148,7 @@ public class WfEncryptionKey implements Destroyable {
      * @return a java SecretKey object with the secret cryptographic key
      * @throws IllegalArgumentException if the encryption key has been destroyed
      */
-    public SecretKey getSecretKey(byte[] context) {
+    public final SecretKey getSecretKey(byte[] context) {
         checkState();
         return new SecretKeySpec(
             WfCryptoUtil.hkdfExpand(prk, context, method.keyLength),
@@ -162,7 +162,7 @@ public class WfEncryptionKey implements Destroyable {
      * Checks the state of this encryption key
      * @throws IllegalStateException if in an illegal state
      */
-    private void checkState() {
+    private final void checkState() {
         if (destroyed) throw new IllegalStateException("Encryption key has been destroyed");
     }
 }

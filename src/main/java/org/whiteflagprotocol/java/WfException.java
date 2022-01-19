@@ -54,7 +54,7 @@ public class WfException extends WfCoreException {
         WF_REFERENCE_ERROR,
 
         /**
-         * Whiteflag message authentication error
+         * Whiteflag authentication error
          */
         WF_AUTH_ERROR,
 
@@ -64,9 +64,9 @@ public class WfException extends WfCoreException {
         WF_SIGN_ERROR,
 
         /**
-         * Whiteflag encryption error
+         * Whiteflag cryptographic error
          */
-        WF_ENCRYPTION_ERROR
+        WF_CRYPTO_ERROR
     }
 
     /* CONSTRUCTORS */
