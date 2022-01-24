@@ -1,4 +1,4 @@
-@startuml messages
+@startuml overview
 !include .stylesheet.puml
 
 left footer WFJL Overview Class Diagram
@@ -7,8 +7,8 @@ package org.whiteflagprotocol.java {
     class WfMessage {
         -metadata : HashMap<>
         ..
-        -originator : WfBlockchainAccount
-        -recipient : WfBlockchainAccount
+        -originator : WfParticipant
+        -recipient : WfParticipant
         ..
         +type : WfMessageType
         +header : WfMessageSegment
@@ -21,27 +21,21 @@ package org.whiteflagprotocol.java {
         +decode(String) : WfMessage
         +compile(String[]) : WfMessage
         ..
-        +encode() : String
+        +encode() : WfBinaryBuffer
         +toJson() : String
     }
 
-    class WfBlockchainAccount <<abstract>> {
-        -self : boolean
+    class WfParticipant <<interface>> {
+        +isSelf() : boolean
         ..
-        -authURL : URL
-        -authToken : WfAuthToken
-        -ecdhKeyPair : WfECDHKeyPair
-        -ecdhPublicKey : ECPublicKey
-        -sharedKey : WfEncryptionKey
-    }
-
-    class WfBlockchainAddress <<interface>> {
-        +getAddressTring() : String
+        +getAddress() : String
         +getBinaryAddress() : byte[]
+        +getAuthURL() : URL
+        +getAuthToken() : WfAuthToken
+        +getEcdhKeyPair() : WfECDHKeyPair
+        +getEcdhPublicKey() : ECPublicKey
+        +getSharedKey() : WfEncryptionKey
     }
 }
-
-WfMessage --> WfBlockchainAccount
-WfBlockchainAccount ..|> WfBlockchainAddress
 
 @enduml

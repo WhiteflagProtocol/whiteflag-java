@@ -36,7 +36,7 @@ public class Example {
 ### Class Diagram
 
 The class diagram gives a rough overview of the package. It is not intended as
-a complete or an accurate reference for the classes. Please see the
+a complete or accurate reference for the classes. Instead, please see the
 [WFJL Javadoc API Reference](../javadoc) for all details.
 
 ![WFJL Message Class Diagram](../uml/messages.png)

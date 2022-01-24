@@ -9,6 +9,8 @@ import org.whiteflagprotocol.java.core.WfCoreException;
 /**
  * Whiteflag protocol exception class
  * 
+ * TODO: Make use of cause to chain exceptions
+ * 
  * @since 1.0
  */
 public class WfException extends WfCoreException {

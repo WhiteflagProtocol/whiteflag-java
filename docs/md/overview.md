@@ -11,15 +11,13 @@ defines:
 
 * the `WfMessage` class, representing a Whiteflag message with its operations
   (e.g. encoding, encryption, decoding, decryption).
-  
-* the `WfBlockchainAccount` abstract class, representing a (virtual) blockchain
-  account to or from which Whiteflag messages are sent. This is an abstract
-  class, because its actual implementation depends on the blockchain.
 
-* the `WfBlockchainAddress` interface, defining how a blockchain address must
-  be represented. Adresses are blockchain specific, but Whiteflag is
-  blockchain agnostic. This interface defines how classes implementing
-  blockchain functionality should provide Whiteflag with a blockchain address.
+* the `WfParticipant` interface, defining how an organisation, department,
+  individual, or any grouping thereof must be represented. All these sorts of
+  participant typically have one or more attributes such as a blockchain
+  addresses, authentication information and encryption keys. This interface
+  defines how these attributes are provided to instances of WFJL classes
+  such as a `WfMessage`.
 
 ### Example
 
@@ -45,7 +43,7 @@ public class Example {
 ### Class Diagram
 
 The class diagram gives a rough overview of the package. It is not intended as
-a complete or an accurate reference for the classes. Please see the
+a complete or accurate reference for the classes. Instead, please see the
 [WFJL Javadoc API Reference](../javadoc) for all details.
 
 ![WFJL Message Class Diagram](../uml/overview.png)

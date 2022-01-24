@@ -18,10 +18,12 @@ import org.whiteflagprotocol.java.crypto.WfCipher;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 import org.whiteflagprotocol.java.crypto.WfEncryptionMethod;
 import org.whiteflagprotocol.java.crypto.WfCryptoException;
+import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.util.WfJsonMessage;
 import org.whiteflagprotocol.java.util.WfUtilException;
 
 /* Required error types */
+import static org.whiteflagprotocol.java.WfException.ErrorType.WF_GENERIC_ERROR;
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
 
@@ -34,9 +36,11 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
  * ways from various data.
  * 
  * A Whiteflag message is put on a blockchain by embedding it in a transaction
- * in encoded, and possibly also encrypted, form. The blockchain account of the
- * message originator is virtually represented by a {@link WfBlockchainAccount}
- * object. 
+ * in encoded, and possibly also encrypted, form. Information from the message
+ * originmator and recipient (if any) is provided through the {@link WfParticipant}
+ * interface.
+ * 
+ * TODO: Review code for safe return values and references
  * 
  * @wfver v1-draft.6
  * 
@@ -50,24 +54,25 @@ public class WfMessage extends WfMessageCore {
     private static final String METAKEY_ORIGINATOR = "originatorAddress";
     private static final String METAKEY_RECIPIENT = "recipientAddress";
     private static final String FIELD_ENCRYPTIONINDICATOR = "EncryptionIndicator";
+    private static final int BITLENGTH_UNENCRYPTED_HEADER = 24;
 
     /* Metadata */
     private Map<String, String> metadata = new HashMap<>();
 
     /* Originator and Recipient */
-    private WfBlockchainAccount originator;
-    private WfBlockchainAccount recipient;
+    private WfParticipant originator;
+    private WfParticipant recipient;
 
     /* Encryption */
     private WfEncryptionMethod encryptionMethod;
-    private byte[] initialisationVector;        //TODO: Expose iv
+    private byte[] initVector;
 
     /* Cached messge representations */
+    private String cachedMsgStr;
     private WfBinaryBuffer cachedMsg = WfBinaryBuffer.create();
-    private String cachedSerializedMsg = null;
-
+    
     /* CONSTRUCTORS */
-
+    
     /**
      * Creates a Whiteflag message from a core message by calling the super constructor
      * @since 1.1
@@ -76,9 +81,10 @@ public class WfMessage extends WfMessageCore {
     private WfMessage(final WfMessageCore coreMsg) {
         super(coreMsg);
     }
-
+    
     /**
      * Creates a Whiteflag message from a decoded core message by calling the super constructor
+     private String cachedMsgStr = null;
      * @since 1.1
      * @param coreMsg the {@link WfMessageCore} core message
      * @param encodedMsg the {@link WfBinaryBuffer} with the source binary encoded message to be preserved
@@ -96,7 +102,7 @@ public class WfMessage extends WfMessageCore {
      */
     private WfMessage(final WfMessageCore coreMsg, final String serializedMsg) {
         super(coreMsg);
-        this.cachedSerializedMsg = serializedMsg;
+        this.cachedMsgStr = serializedMsg;
     }
 
     /* STATIC FACTORY METHODS */
@@ -207,6 +213,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Creates a new Whiteflag message from a binary buffer
+     * TODO: Add decryption
      * @since 1.1
      * @param encodedMsg a binary buffer with the encoded message
      * @return a new {@link WfMessage} Whiteflag message
@@ -270,41 +277,63 @@ public class WfMessage extends WfMessageCore {
     /**
      * Sets the originator sending this message and adds its blockchain address to the metadata
      * @since 1.1
-     * @param originator the {@link WfBlockchainAccount} of the originator sending this message
+     * @param originator the originator information
      * @return null if address newly added to metadata, otherwise the existing value that was replaced
      */
-    public final String setOriginator(WfBlockchainAccount originator) {
+    public final String setOriginator(WfParticipant originator) {
         this.originator = originator;
-        return metadata.put(METAKEY_ORIGINATOR, originator.getAddressString());
+        return metadata.put(METAKEY_ORIGINATOR, originator.getAddress());
     }
 
     /**
      * Gets the originator of this message
      * @since 1.1
-     * @return the {@link WfBlockchainAccount} of the originator
+     * @return the {@link WfParticipant} of the originator
      */
-    public final WfBlockchainAccount getOriginator() {
+    public final WfParticipant getOriginator() {
         return this.originator;
     }
 
     /**
      * Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata
      * @since 1.1
-     * @param recipient the {@link WfBlockchainAccount} of the recipient of this message
+     * @param recipient the {@link WfParticipant} of the recipient of this message
      * @return null if address newly added to metadata, otherwise the existing value that was replaced
      */
-    public final String setRecipient(WfBlockchainAccount recipient) {
-        this.recipient = originator;
-        return metadata.put(METAKEY_RECIPIENT, recipient.getAddressString());
+    public final String setRecipient(WfParticipant recipient) {
+        this.recipient = recipient;
+        return metadata.put(METAKEY_RECIPIENT, recipient.getAddress());
     }
 
     /**
      * Gets the recipient of this message
      * @since 1.1
-     * @return the {@link WfBlockchainAccount} of the recipient
+     * @return the {@link WfParticipant} of the recipient
      */
-    public final WfBlockchainAccount getRecipient() {
+    public final WfParticipant getRecipient() {
         return this.recipient;
+    }
+
+    /**
+     * Sets the non-secret initialisation vector used for encryption and decryption, if not already set
+     * @since 1.1
+     * @param initVector a byte array with the initialisation vector
+     * @return a byte array with the initialisation vector; if already set this is the existing initialisation vector
+     */
+    public final byte[] setInitVector(byte[] initVector) {
+        if (this.initVector != null) {
+            this.initVector = initVector;
+        }
+        return initVector;
+    }
+
+    /**
+     * Gets the non-secret initialisation vector used for encryption and decryption
+     * @since 1.1
+     * @return a byte array with the initialisation vector
+     */
+    public final byte[] getInitVector() {
+        return this.initVector;
     }
 
     /* PUBLIC METHODS: Operations */
@@ -316,14 +345,14 @@ public class WfMessage extends WfMessageCore {
      */
     @Override
     public final String serialize() throws WfException {
-        if (this.cachedSerializedMsg == null) {
+        if (this.cachedMsgStr == null) {
             try {
-                this.cachedSerializedMsg = super.serialize();
+                this.cachedMsgStr = super.serialize();
             } catch (WfCoreException e) {
                 throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
             }
         }
-        return this.cachedSerializedMsg;
+        return this.cachedMsgStr;
     }
 
     /**
@@ -355,6 +384,8 @@ public class WfMessage extends WfMessageCore {
             encodedMsg = encrypt(encodedMsg);
         } catch (WfCryptoException e) {
             throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
+        } catch (WfCoreException e) {
+            throw new WfException(e.getMessage(), WF_GENERIC_ERROR);
         }
         /* Done. Cache and return the result */
         this.cachedMsg = encodedMsg.markComplete();
@@ -414,16 +445,19 @@ public class WfMessage extends WfMessageCore {
      * @throws IllegalStateException if originator and recipient of this message are unknown
      * @throws WfCryptoException if message cannot be encrypted
      */
-    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException {
+    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException, WfCoreException {
         if (encryptionMethod == WfEncryptionMethod.NO_ENCRYPTION) return encodedMsg;
 
-        /* Perform encryption */
+        /* Prepare encryption */
         WfCipher cipher  = WfCipher.fromKey(getEncryptionKey());
         cipher.setContext(originator.getBinaryAddress());
-        this.initialisationVector = cipher.getInitVector();
+        this.initVector = setInitVector(cipher.getInitVector());
 
-        //TODO: Get the correct part of the message
-        return WfBinaryBuffer.fromByteArray(cipher.encrypt(encodedMsg.toByteArray()));
+        /* Perform encryption on the correct message part */
+        WfBinaryBuffer buffer = WfBinaryBuffer.create();
+        buffer.appendBits(encodedMsg.extractBits(0, BITLENGTH_UNENCRYPTED_HEADER));
+        buffer.appendBits(cipher.encrypt(encodedMsg.extractBits(BITLENGTH_UNENCRYPTED_HEADER)));
+        return buffer;
     }
 
     /**
@@ -431,10 +465,38 @@ public class WfMessage extends WfMessageCore {
      * @param method the encryption method
      * @return the requested {@link WfEncryptionKey}
      * @throws IllegalStateException if originator and recipient of this message are unknown
+     * @throws WfException if 
+     * @throws WfCryptoException if a cryptographic key cannot be negotiated
      */
-    private final WfEncryptionKey getEncryptionKey() {
-        if (originator == null) throw new IllegalStateException("Cannot encrypt message if originator is not set");
+    private final WfEncryptionKey getEncryptionKey() throws WfException, WfCryptoException {
         if (recipient == null) throw new IllegalStateException("Cannot encrypt message if recipient is not set");
-        return new WfEncryptionKey("a1b2c3d4e5f6");  //TODO: implement key store
+        switch (encryptionMethod) {
+
+            /* No key if no encryption */
+            case NO_ENCRYPTION:
+                break;
+
+            /* Encryption method 1: negotiate key with other participant */
+            case AES_256_CTR_ECDH:
+                if (originator == null) throw new IllegalStateException("Cannot encrypt message if originator is not set");
+                if (!originator.isSelf() && !recipient.isSelf()) {
+                    throw new WfException("Cannot encrypt message because we are neither originator nor recipient" + encryptionMethod.fieldValue, WF_CRYPTO_ERROR);
+                }
+                WfECDHKeyPair ecdhKeypair;
+                ECPublicKey ecdhPublicKey;
+                if (originator.isSelf()) {
+                    ecdhKeypair = originator.getEcdhKeyPair();
+                    ecdhPublicKey = recipient.getEcdhPublicKey();
+                } else {
+                    ecdhKeypair = recipient.getEcdhKeyPair();
+                    ecdhPublicKey = originator.getEcdhPublicKey();
+                }
+                return new WfEncryptionKey(ecdhPublicKey, ecdhKeypair);
+
+            /* Encryption method 2: get Pre-Shared Key for Recipient */
+            case AES_256_CTR_PSK:
+                return recipient.getSharedKey();
+        }
+        throw new WfException("Invalid encryption method " + encryptionMethod.fieldValue, WF_CRYPTO_ERROR);
     }
 }

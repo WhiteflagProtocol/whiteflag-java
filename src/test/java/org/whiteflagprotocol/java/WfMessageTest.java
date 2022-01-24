@@ -4,6 +4,7 @@
 package org.whiteflagprotocol.java;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /* Message types required for checking correct message types */
@@ -328,6 +329,7 @@ public class WfMessageTest {
      * Tests test message
      */
     @Test
+    @SuppressWarnings("java:S5961")
     public void testTestMessage() throws WfException {
         /* Setup */
         final String messageSerialized = "WF101T33efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3aeM802013-08-31T04:29:15ZP00D00H00M22+30.79658-037.8260287653210042";
@@ -399,6 +401,7 @@ public class WfMessageTest {
      * Tests compilation of request message
      */
     @Test
+    @SuppressWarnings("java:S5961")
     public void testRequestMessage() throws WfException {
         /* Setup */
         final String messageSerialized = "WF101Q13efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae802013-08-31T04:29:15ZP01D00H00M22+31.79658-033.826028799321000010022003";
@@ -530,5 +533,19 @@ public class WfMessageTest {
         assertEquals("Free text should be correctly set", "Whiteflag test message!", message.body.get("Text"));
         assertFalse("Should not be able to change text field", message.body.set("Text", "alternate text"));
         assertEquals("Serialization should be correct", messageStr, message.toString());
+    }
+    /**
+     * Tests message encryption
+     * TODO: Expand the message encryption test
+     */
+    @Test
+    public void testMessageEncryption1() throws WfException {
+        /* Setup */
+        WfParticipantImpl originator = new WfParticipantImpl(true);
+        WfParticipantImpl recipient = new WfParticipantImpl(false);
+
+        /* Verification */
+        assertTrue("We should be the originator ourselves", originator.isSelf());
+        assertFalse("They should be the rescipient", recipient.isSelf());
     }
 }

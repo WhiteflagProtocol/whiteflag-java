@@ -123,7 +123,7 @@ public class WfMessageSegment {
      * Returns the bit length of this segment, excluding the last variable length field if not set
      * @return the bit length
      */
-    public int bitLength() {
+    public final int bitLength() {
         int bitLength = 0;
         for (WfMessageField field : fields) {
             bitLength += field.bitLength();
@@ -175,17 +175,13 @@ public class WfMessageSegment {
 
     /**
      * Gets the value of the field specified by index
-     * @param index the index of the requested field; negative index counts back from last field
+     * @param fieldIndex the index of the requested field; negative index counts back from last field
      * @return the field value, or NULL if it does not exist
      */
-    public final String get(final int index) {
-        if (index >= 0 && index < fields.length) {
-            return fields[index].get();
-        }
-        if (index < 0 && (fields.length + index) >= 0) {
-            return fields[fields.length + index].get();
-        }
-        return null;
+    public final String get(final int fieldIndex) {
+        final int index = getAbsoluteIndex(fieldIndex);
+        if (index < 0) return null;
+        return fields[index].get();
     }
 
     /**
@@ -215,18 +211,14 @@ public class WfMessageSegment {
 
     /**
      * Sets the value of the field specified by its index in the message segment
-     * @param index the index of the requested field; negative index counts back from last field
+     * @param fieldIndex the index of the requested field; negative index counts back from last field
      * @param data data to be set as the field value
      * @return TRUE if the data was valid and the field value is set, else FALSE
      */
-    public final Boolean set(final int index, final String data) {
-        if (index >= 0 && index < fields.length) {
-            return fields[index].set(data);
-        }
-        if (index < 0 && (fields.length + index) >= 0) {
-            return fields[fields.length + index].set(data);
-        }
-        return false;
+    public final Boolean set(final int fieldIndex, final String data) {
+        final int index = getAbsoluteIndex(fieldIndex);
+        if (index < 0) return false;
+        return fields[index].set(data);
     }
 
     /**
@@ -282,6 +274,7 @@ public class WfMessageSegment {
      * @return the serialized message segment
      * @throws WfCoreException if the segment cannot be serialized
      */
+    @SuppressWarnings("java:S1192")
     protected final String serialize() throws WfCoreException {
         int byteCursor = fields[0].startByte;
         StringBuilder segmentStr = new StringBuilder();
@@ -302,6 +295,7 @@ public class WfMessageSegment {
      * @param fieldIndex the index of the next field to be deserialized
      * @throws WfCoreException if the message cannot be deserialized
      */
+    @SuppressWarnings("java:S1192")
     protected final void deserialize(final String messageStr, final int fieldIndex) throws WfCoreException {
         /* Check if all fields already processed */
         if (fieldIndex >= this.fields.length) return;
@@ -332,6 +326,7 @@ public class WfMessageSegment {
      * @return a binary buffer with the binary encoded message segment
      * @throws WfCoreException if the message cannot be encoded
      */
+    @SuppressWarnings("java:S1192")
     protected final WfBinaryBuffer encode() throws WfCoreException {
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
         int byteCursor = fields[0].startByte;
@@ -353,6 +348,7 @@ public class WfMessageSegment {
      * @param fieldIndex the index of the next field to be decoded
      * @throws WfCoreException if the message cannot be decoded
      */
+    @SuppressWarnings("java:S1192")
     protected final void decode(final WfBinaryBuffer buffer, final int startBit, final int fieldIndex) throws WfCoreException {
         /* Check if all fields already processed */
         if (fieldIndex >= this.fields.length) return;
@@ -416,17 +412,13 @@ public class WfMessageSegment {
 
     /**
      * Gets the field specified by index
-     * @param index the index of the requested field; negative index counts back from last field
+     * @param fieldIndex the index of the requested field; negative index counts back from last field
      * @return the requested message field, or NULL if it does not exist
      */
-    protected final WfMessageField getField(final int index) {
-        if (index >= 0 && index < fields.length) {
-            return fields[index];
-        }
-        if (index < 0 && (fields.length + index) >= 0) {
-            return fields[fields.length + index];
-        }
-        return null;
+    protected final WfMessageField getField(final int fieldIndex) {
+        final int index = getAbsoluteIndex(fieldIndex);
+        if (index < 0) return null;
+        return fields[index];
     }
 
     /**
@@ -435,5 +427,22 @@ public class WfMessageSegment {
      */
     protected final WfMessageField[] getAllFields() {
         return this.fields;
+    }
+
+    /* PRIVATE METHODS */
+
+    /**
+     * Gets the absolute field index and check if index is within bounds
+     * @param index the absolute index of the requested field; negative index counts back from last field
+     * @return the absolute field index or -1 if index out of bounds
+     */
+    private final int getAbsoluteIndex(final int index) {
+        if (index >= 0 && index < fields.length) {
+            return index;
+        }
+        if (index < 0 && (fields.length + index) >= 0) {
+            return fields.length + index;
+        }
+        return -1;
     }
 }

@@ -186,7 +186,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns an array with additional Whiteflag sign/signal message body request fields</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromCode(java.lang.String)" class="member-name-link">fromCode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageCode)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates the message type from the message code</div>
@@ -416,24 +416,6 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="fromCode(java.lang.String)">
-<h3>fromCode</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></span>&nbsp;<span class="element-name">fromCode</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageCode)</span>
-                              throws <span class="exceptions"><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></span></div>
-<div class="block">Creates the message type from the message code</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>messageCode</code> - the message code</dd>
-<dt>Returns:</dt>
-<dd>a <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a></dd>
-<dt>Throws:</dt>
-<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message type is invalid</dd>
-<dt>Since:</dt>
-<dd>1.1</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getCode()">
 <h3>getCode</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getCode</span>()</div>
@@ -480,6 +462,24 @@ not permitted.)</div>
 <dd>v1-draft.6</dd>
 <dt>Whiteflag standard x-reference:</dt>
 <dd>4.3.1.9 Object Request Fields</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="fromCode(java.lang.String)">
+<h3>fromCode</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></span>&nbsp;<span class="element-name">fromCode</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;messageCode)</span>
+                                    throws <span class="exceptions"><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></span></div>
+<div class="block">Creates the message type from the message code</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>messageCode</code> - the message code</dd>
+<dt>Returns:</dt>
+<dd>a <a href="WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a></dd>
+<dt>Throws:</dt>
+<dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the message type is invalid</dd>
+<dt>Since:</dt>
+<dd>1.1</dd>
 </dl>
 </section>
 </li>

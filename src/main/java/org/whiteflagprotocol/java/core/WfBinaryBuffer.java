@@ -75,7 +75,7 @@ public final class WfBinaryBuffer {
     /** 
      * Marks the buffer as complete and makes it read-only
      */
-    private Boolean complete = false;
+    private boolean complete = false;
     /**
      * The chached hexadecimal string representation of the completed buffer
      */
@@ -330,16 +330,25 @@ public final class WfBinaryBuffer {
         return cropBits(newByteArray, -(shift % BYTE));
     }
 
-    /* PROTECTED METHODS */
+    /**
+     * Appends a bytes array to the binary buffer
+     * @param byteArray the byte array with the bits to be appended
+     * @return this {@link WfBinaryBuffer}
+     * @throws WfCoreException if the buffer is complete and cannot be altered
+     */
+    public final WfBinaryBuffer appendBits(final byte[] byteArray) throws WfCoreException {
+        appendBits(byteArray, (byteArray.length * BYTE));
+        return this;
+    }
 
     /**
      * Appends the specified number of bits from a bytes array to the binary buffer
      * @param byteArray the byte array with the bits to be appended
      * @param nBits the number of bits to be appended from the byte array
-     * @return the string without prefix
+     * @return this {@link WfBinaryBuffer}
      * @throws WfCoreException if the buffer is complete and cannot be altered
      */
-    protected final WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) throws WfCoreException {
+    public final WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) throws WfCoreException {
         /* Check if buffer is complete and cannot be altered */
         if (this.complete) throw new WfCoreException("Binary buffer marked as complete and cannot be altered");
 
@@ -353,12 +362,21 @@ public final class WfBinaryBuffer {
     }
 
     /**
+     * Returns a byte array with a subset of the bits in the buffer from the specified start bit to the end
+     * @param startBit the first bit of the subset to extract
+     * @return a byte array with the extracted bits
+     */
+    public final byte[] extractBits(final int startBit) {
+        return extractBits(startBit, (this.length - startBit));
+    }
+
+    /**
      * Returns a byte array with a subset of the bits in the buffer
      * @param startBit the first bit of the subset to extract
      * @param bitLength the length of the subset, i.e. the number of bits to extract
      * @return a byte array with the extracted bits
      */
-    protected final byte[] extractBits(int startBit, int bitLength) {
+    public final byte[] extractBits(int startBit, int bitLength) {
         /* Check subset range */
         if (startBit < 0) startBit = 0;
         if (bitLength < 1 || bitLength > (this.length - startBit)) {

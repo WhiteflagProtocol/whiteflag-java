@@ -87,9 +87,11 @@ loadScripts(document, 'script');</script>
  ways from various data.
  
  A Whiteflag message is put on a blockchain by embedding it in a transaction
- in encoded, and possibly also encrypted, form. The blockchain account of the
- message originator is virtually represented by a <code>WfBlockchainAccount</code>
- object.</div>
+ in encoded, and possibly also encrypted, form. Information from the message
+ originmator and recipient (if any) is provided through the <a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java"><code>WfParticipant</code></a>
+ interface.
+ 
+ TODO: Review code for safe return values and references</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>1.0</dd>
@@ -158,7 +160,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)" class="member-name-link">decode</a><wbr>(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;encodedMsg)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a new Whiteflag message from a binary buffer</div>
+<div class="block">Creates a new Whiteflag message from a binary buffer
+ TODO: Add decryption</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final <a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserialize(java.lang.String)" class="member-name-link">deserialize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;serializedMsg)</code></div>
@@ -173,40 +176,50 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encode()" class="member-name-link">encode</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the cached encoded message, or else it encodes and caches Whiteflag message</div>
+<div class="block">Returns the cached encoded/encrypted message, or else it encodes/encrypts and caches Whiteflag message</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetadata(java.lang.String)" class="member-name-link">getMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInitVector()" class="member-name-link">getInitVector</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the non-secret initialisation vector used for encryption and decryption</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetadata(java.lang.String)" class="member-name-link">getMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the requested metadata value of the Whiteflag message</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetadataKeys()" class="member-name-link">getMetadataKeys</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMetadataKeys()" class="member-name-link">getMetadataKeys</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns metadata keys of the Whiteflag message</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final org.whiteflagprotocol.java.WfBlockchainAccount</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOriginator()" class="member-name-link">getOriginator</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOriginator()" class="member-name-link">getOriginator</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the originator of this message</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final org.whiteflagprotocol.java.WfBlockchainAccount</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecipient()" class="member-name-link">getRecipient</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecipient()" class="member-name-link">getRecipient</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the recipient of this message</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serialize()" class="member-name-link">serialize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serialize()" class="member-name-link">serialize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the cached serialized message, or else it serialzes and caches Whiteflag message</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setInitVector(byte%5B%5D)" class="member-name-link">setInitVector</a><wbr>(byte[]&nbsp;initVector)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the non-secret initialisation vector used for encryption and decryption, if not already set</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOriginator(org.whiteflagprotocol.java.WfBlockchainAccount)" class="member-name-link">setOriginator</a><wbr>(org.whiteflagprotocol.java.WfBlockchainAccount&nbsp;originator)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOriginator(org.whiteflagprotocol.java.WfParticipant)" class="member-name-link">setOriginator</a><wbr>(<a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a>&nbsp;originator)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the originator sending this message and adds its blockchain address to the metadata</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRecipient(org.whiteflagprotocol.java.WfBlockchainAccount)" class="member-name-link">setRecipient</a><wbr>(org.whiteflagprotocol.java.WfBlockchainAccount&nbsp;recipient)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRecipient(org.whiteflagprotocol.java.WfParticipant)" class="member-name-link">setRecipient</a><wbr>(<a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a>&nbsp;recipient)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata</div>
 </div>
@@ -253,7 +266,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a new empty Whiteflag message object of the specified type</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>messageCode</code> - the code indicating the message type to be created</dd>
+<dd><code>messageCode</code> - a string with the code indicating the message type to be created</dd>
 <dt>Returns:</dt>
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt>Throws:</dt>
@@ -329,7 +342,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a new Whiteflag message from a hexadecimal string represaentation of an encoded message</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>hexMessage</code> - the hexadecimal string representation of the encoded message</dd>
+<dd><code>hexMessage</code> - a hexadecimal string representation of the encoded message</dd>
 <dt>Returns:</dt>
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt>Throws:</dt>
@@ -347,7 +360,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a new Whiteflag message from a byte array with an binary encoded message</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>binMessage</code> - the byte array with the binary encoded message</dd>
+<dd><code>binMessage</code> - a byte array with the binary encoded message</dd>
 <dt>Returns:</dt>
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt>Throws:</dt>
@@ -362,10 +375,11 @@ loadScripts(document, 'script');</script>
 <h3>decode</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></span>&nbsp;<span class="element-name">decode</span><wbr><span class="parameters">(<a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a>&nbsp;encodedMsg)</span>
                               throws <span class="exceptions"><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></span></div>
-<div class="block">Creates a new Whiteflag message from a binary buffer</div>
+<div class="block">Creates a new Whiteflag message from a binary buffer
+ TODO: Add decryption</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>encodedMsg</code> - the binary buffer with the encoded message</dd>
+<dd><code>encodedMsg</code> - a binary buffer with the encoded message</dd>
 <dt>Returns:</dt>
 <dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt>Throws:</dt>
@@ -383,7 +397,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a new Whiteflag message object from field values</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>fieldValues</code> - String array with the values for the message fields</dd>
+<dd><code>fieldValues</code> - a string array with the values for the message fields</dd>
 <dt>Returns:</dt>
 <dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
 <dt>Throws:</dt>
@@ -431,13 +445,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setOriginator(org.whiteflagprotocol.java.WfBlockchainAccount)">
+<section class="detail" id="setOriginator(org.whiteflagprotocol.java.WfParticipant)">
 <h3>setOriginator</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">setOriginator</span><wbr><span class="parameters">(org.whiteflagprotocol.java.WfBlockchainAccount&nbsp;originator)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">setOriginator</span><wbr><span class="parameters">(<a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a>&nbsp;originator)</span></div>
 <div class="block">Sets the originator sending this message and adds its blockchain address to the metadata</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>originator</code> - the <code>WfBlockchainAccount</code> of the originator sending this message</dd>
+<dd><code>originator</code> - the originator information</dd>
 <dt>Returns:</dt>
 <dd>null if address newly added to metadata, otherwise the existing value that was replaced</dd>
 <dt>Since:</dt>
@@ -448,24 +462,24 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getOriginator()">
 <h3>getOriginator</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">org.whiteflagprotocol.java.WfBlockchainAccount</span>&nbsp;<span class="element-name">getOriginator</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></span>&nbsp;<span class="element-name">getOriginator</span>()</div>
 <div class="block">Gets the originator of this message</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the <code>WfBlockchainAccount</code> of the originator</dd>
+<dd>the <a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java"><code>WfParticipant</code></a> of the originator</dd>
 <dt>Since:</dt>
 <dd>1.1</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setRecipient(org.whiteflagprotocol.java.WfBlockchainAccount)">
+<section class="detail" id="setRecipient(org.whiteflagprotocol.java.WfParticipant)">
 <h3>setRecipient</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">setRecipient</span><wbr><span class="parameters">(org.whiteflagprotocol.java.WfBlockchainAccount&nbsp;recipient)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">setRecipient</span><wbr><span class="parameters">(<a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a>&nbsp;recipient)</span></div>
 <div class="block">Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>recipient</code> - the <code>WfBlockchainAccount</code> of the recipient of this message</dd>
+<dd><code>recipient</code> - the <a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java"><code>WfParticipant</code></a> of the recipient of this message</dd>
 <dt>Returns:</dt>
 <dd>null if address newly added to metadata, otherwise the existing value that was replaced</dd>
 <dt>Since:</dt>
@@ -476,11 +490,39 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRecipient()">
 <h3>getRecipient</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">org.whiteflagprotocol.java.WfBlockchainAccount</span>&nbsp;<span class="element-name">getRecipient</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></span>&nbsp;<span class="element-name">getRecipient</span>()</div>
 <div class="block">Gets the recipient of this message</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the <code>WfBlockchainAccount</code> of the recipient</dd>
+<dd>the <a href="WfParticipant.html" title="interface in org.whiteflagprotocol.java"><code>WfParticipant</code></a> of the recipient</dd>
+<dt>Since:</dt>
+<dd>1.1</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setInitVector(byte[])">
+<h3>setInitVector</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">setInitVector</span><wbr><span class="parameters">(byte[]&nbsp;initVector)</span></div>
+<div class="block">Sets the non-secret initialisation vector used for encryption and decryption, if not already set</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>initVector</code> - a byte array with the initialisation vector</dd>
+<dt>Returns:</dt>
+<dd>a byte array with the initialisation vector; if already set this is the existing initialisation vector</dd>
+<dt>Since:</dt>
+<dd>1.1</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getInitVector()">
+<h3>getInitVector</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">getInitVector</span>()</div>
+<div class="block">Gets the non-secret initialisation vector used for encryption and decryption</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a byte array with the initialisation vector</dd>
 <dt>Since:</dt>
 <dd>1.1</dd>
 </dl>
@@ -507,7 +549,7 @@ loadScripts(document, 'script');</script>
 <h3>encode</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></span>&nbsp;<span class="element-name">encode</span>()
                             throws <span class="exceptions"><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></span></div>
-<div class="block">Returns the cached encoded message, or else it encodes and caches Whiteflag message</div>
+<div class="block">Returns the cached encoded/encrypted message, or else it encodes/encrypts and caches Whiteflag message</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="core/WfMessageCore.html#encode()">encode</a></code>&nbsp;in class&nbsp;<code><a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></code></dd>

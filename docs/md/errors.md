@@ -20,7 +20,7 @@ to be thrown. The other error classes are primarily used internally.
 ### Error Class Diagram
 
 The class diagram gives a rough overview of the error classes. It is not
-intended as a complete or an accurate reference Please see the
+intended as a complete or accurate reference Instead, please see the
 [WFJL Javadoc API Reference](../javadoc) for all details.
 
 ![WFJL Error Class Diagram](../uml/errors.png)

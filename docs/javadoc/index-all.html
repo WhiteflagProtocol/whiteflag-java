@@ -88,6 +88,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Appends additional fields to this message segment if constructing complex message bodies</div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#appendBits(byte%5B%5D)" class="member-name-link">appendBits(byte[])</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Appends a bytes array to the binary buffer</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#appendBits(byte%5B%5D,int)" class="member-name-link">appendBits(byte[], int)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
 <div class="block">Appends the specified number of bits from a bytes array to the binary buffer</div>
@@ -299,7 +303,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfMessage.html#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer)" class="member-name-link">decode(WfBinaryBuffer)</a> - Static method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
-<div class="block">Creates a new Whiteflag message from a binary buffer</div>
+<div class="block">Creates a new Whiteflag message from a binary buffer
+ TODO: Add decryption</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#decode(org.whiteflagprotocol.java.core.WfBinaryBuffer,int,int)" class="member-name-link">decode(WfBinaryBuffer, int, int)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
@@ -386,7 +391,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfMessage.html#encode()" class="member-name-link">encode()</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
-<div class="block">Returns the cached encoded message, or else it encodes and caches Whiteflag message</div>
+<div class="block">Returns the cached encoded/encrypted message, or else it encodes/encrypts and caches Whiteflag message</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageCodec.html#encodeBDX(java.lang.String)" class="member-name-link">encodeBDX(String)</a> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.html" title="class in org.whiteflagprotocol.java.core">WfMessageCodec</a></dt>
 <dd>
@@ -428,6 +433,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Whiteflag error category as defined by <a href="org/whiteflagprotocol/java/WfException.ErrorType.html" title="enum class in org.whiteflagprotocol.java"><code>WfException.ErrorType</code></a></div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#extractBits(int)" class="member-name-link">extractBits(int)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
+<dd>
+<div class="block">Returns a byte array with a subset of the bits in the buffer from the specified start bit to the end</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#extractBits(int,int)" class="member-name-link">extractBits(int, int)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
 <div class="block">Returns a byte array with a subset of the bits in the buffer</div>
@@ -442,6 +451,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageType.html#F" class="member-name-link">F</a> - Enum constant in enum class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Free Text message type</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfAuthMethod.html#fieldValue" class="member-name-link">fieldValue</a> - Variable in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfAuthMethod</a></dt>
+<dd>
+<div class="block">The indicator used in the VerificationMethod message field for this authentication method</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#fieldValue" class="member-name-link">fieldValue</a> - Variable in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">The value used in a Whiteflag message to indicate the encryption method</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html#freetextBodyFields" class="member-name-link">freetextBodyFields</a> - Static variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageDefinitions.html" title="class in org.whiteflagprotocol.java.core">WfMessageDefinitions</a></dt>
 <dd>
@@ -462,6 +479,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageType.html#fromCode(java.lang.String)" class="member-name-link">fromCode(String)</a> - Static method in enum class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageType.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a></dt>
 <dd>
 <div class="block">Creates the message type from the message code</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfAuthMethod.html#fromFieldValue(java.lang.String)" class="member-name-link">fromFieldValue(String)</a> - Static method in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfAuthMethod</a></dt>
+<dd>
+<div class="block">Returns the encryption method from the indicator value</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#fromFieldValue(java.lang.String)" class="member-name-link">fromFieldValue(String)</a> - Static method in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Returns the encryption method from the indicator value</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#fromHexString(java.lang.String)" class="member-name-link">fromHexString(String)</a> - Static method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
@@ -494,7 +519,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the value of the field specified by name</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/WfBlockchainAddress.html#getAddressString()" class="member-name-link">getAddressString()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfBlockchainAddress.html" title="interface in org.whiteflagprotocol.java">WfBlockchainAddress</a></dt>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getAddress()" class="member-name-link">getAddress()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
 <dd>
 <div class="block">Returns the blockchain address as a string in the encoding specified for that specific blockchain</div>
 </dd>
@@ -502,7 +527,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets all fields from this message segment</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/WfBlockchainAddress.html#getBinaryAddress()" class="member-name-link">getBinaryAddress()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfBlockchainAddress.html" title="interface in org.whiteflagprotocol.java">WfBlockchainAddress</a></dt>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getAuthToken()" class="member-name-link">getAuthToken()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
+<dd>
+<div class="block">Gets the authentication token sent with an A2 message to identify the participant as an originator</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getAuthURL()" class="member-name-link">getAuthURL()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
+<dd>
+<div class="block">Gets the authentication URL sent with an A1 message used to identify the participant as an originator</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getBinaryAddress()" class="member-name-link">getBinaryAddress()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
 <dd>
 <div class="block">Provides the binary blockchain address indepent from the representation for that blockchain</div>
 </dd>
@@ -521,6 +554,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfCipher.html#getContext()" class="member-name-link">getContext()</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCipher.html" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a></dt>
 <dd>
 <div class="block">Gets the current context to which the encryption key is bound</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getEcdhKeyPair()" class="member-name-link">getEcdhKeyPair()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
+<dd>
+<div class="block">Gets the own ECDH key pair used to negatiate keys with others</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getEcdhPublicKey()" class="member-name-link">getEcdhPublicKey()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
+<dd>
+<div class="block">Gets the other's ECDH public key used to negatioate a key</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html#getEncryptionMethod()" class="member-name-link">getEncryptionMethod()</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto">WfEncryptionKey</a></dt>
 <dd>
@@ -553,6 +594,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfCipher.html#getInitVector()" class="member-name-link">getInitVector()</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCipher.html" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a></dt>
 <dd>
 <div class="block">Gets the current initialisation vector</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfMessage.html#getInitVector()" class="member-name-link">getInitVector()</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Gets the non-secret initialisation vector used for encryption and decryption</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/util/WfJsonMessage.html#getMetadata()" class="member-name-link">getMetadata()</a> - Method in class org.whiteflagprotocol.java.util.<a href="org/whiteflagprotocol/java/util/WfJsonMessage.html" title="class in org.whiteflagprotocol.java.util">WfJsonMessage</a></dt>
 <dd>
@@ -597,6 +642,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html#getSecretKey(java.lang.String)" class="member-name-link">getSecretKey(String)</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto">WfEncryptionKey</a></dt>
 <dd>
 <div class="block">Derive the secret cryptographic key from this Whiteflag encryption key</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#getSharedKey()" class="member-name-link">getSharedKey()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
+<dd>
+<div class="block">Gets the shared encryption key qith this participant</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html#getVerificationData(byte%5B%5D)" class="member-name-link">getVerificationData(byte[])</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto">WfAuthToken</a></dt>
 <dd>
@@ -676,14 +725,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Infrastructure Sign message type</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/crypto/WfAuthMethod.html#indicatorValue" class="member-name-link">indicatorValue</a> - Variable in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfAuthMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfAuthMethod</a></dt>
-<dd>
-<div class="block">The indicator used in a Whiteflag messgae for this authentication method</div>
-</dd>
-<dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#indicatorValue" class="member-name-link">indicatorValue</a> - Variable in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
-<dd>
-<div class="block">The value used in a Whiteflag message to indicate the encryption method</div>
-</dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html#isComplete()" class="member-name-link">isComplete()</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core">WfBinaryBuffer</a></dt>
 <dd>
 <div class="block">Checks if the buffer is marked as complete and cannot be altered</div>
@@ -707,6 +748,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html#isFixedLength()" class="member-name-link">isFixedLength()</a> - Method in enum class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCodec.Encoding.html" title="enum class in org.whiteflagprotocol.java.core">WfMessageCodec.Encoding</a></dt>
 <dd>
 <div class="block">Checks if this encoding requires a fixed field length</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html#isSelf()" class="member-name-link">isSelf()</a> - Method in interface org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfParticipant.html" title="interface in org.whiteflagprotocol.java">WfParticipant</a></dt>
+<dd>
+<div class="block">Checks if this participant represents yourself</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageField.html#isSet()" class="member-name-link">isSet()</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></dt>
 <dd>
@@ -811,6 +856,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfECDHKeyPair.html#negotiateKey(java.security.interfaces.ECPublicKey)" class="member-name-link">negotiateKey(ECPublicKey)</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfECDHKeyPair.html" title="class in org.whiteflagprotocol.java.crypto">WfECDHKeyPair</a></dt>
 <dd>
 <div class="block">Calculates the negotiated shared key with an originator</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html#NO_ENCRYPTION" class="member-name-link">NO_ENCRYPTION</a> - Enum constant in enum class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></dt>
+<dd>
+<div class="block">Encryption Method 0: no encryption</div>
 </dd>
 </dl>
 <h2 class="title" id="I:O">O</h2>
@@ -955,15 +1004,19 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the initialisation vector.</div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/WfMessage.html#setInitVector(byte%5B%5D)" class="member-name-link">setInitVector(byte[])</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Sets the non-secret initialisation vector used for encryption and decryption, if not already set</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfCipher.html#setInitVector(java.lang.String)" class="member-name-link">setInitVector(String)</a> - Method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCipher.html" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a></dt>
 <dd>
 <div class="block">Sets the initialisation vector.</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/WfMessage.html#setOriginator(org.whiteflagprotocol.java.WfBlockchainAccount)" class="member-name-link">setOriginator(WfBlockchainAccount)</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dt><a href="org/whiteflagprotocol/java/WfMessage.html#setOriginator(org.whiteflagprotocol.java.WfParticipant)" class="member-name-link">setOriginator(WfParticipant)</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
 <div class="block">Sets the originator sending this message and adds its blockchain address to the metadata</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/WfMessage.html#setRecipient(org.whiteflagprotocol.java.WfBlockchainAccount)" class="member-name-link">setRecipient(WfBlockchainAccount)</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dt><a href="org/whiteflagprotocol/java/WfMessage.html#setRecipient(org.whiteflagprotocol.java.WfParticipant)" class="member-name-link">setRecipient(WfParticipant)</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
 <div class="block">Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata</div>
 </dd>
@@ -1177,10 +1230,6 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag encoded message object</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/WfBlockchainAddress.html" class="type-name-link" title="interface in org.whiteflagprotocol.java">WfBlockchainAddress</a> - Interface in <a href="org/whiteflagprotocol/java/package-summary.html">org.whiteflagprotocol.java</a></dt>
-<dd>
-<div class="block">Whiteflag blockchain address interface</div>
-</dd>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfCipher.html" class="type-name-link" title="class in org.whiteflagprotocol.java.crypto">WfCipher</a> - Class in <a href="org/whiteflagprotocol/java/crypto/package-summary.html">org.whiteflagprotocol.java.crypto</a></dt>
 <dd>
 <div class="block">Whiteflag cipher class</div>
@@ -1247,7 +1296,9 @@ the order they are declared.</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfException.html" class="type-name-link" title="class in org.whiteflagprotocol.java">WfException</a> - Exception in <a href="org/whiteflagprotocol/java/package-summary.html">org.whiteflagprotocol.java</a></dt>
 <dd>
-<div class="block">Whiteflag protocol exception class</div>
+<div class="block">Whiteflag protocol exception class
+ 
+ TODO: Make use of cause to chain exceptions</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfException.html#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.WfException.ErrorType)" class="member-name-link">WfException(String, WfException.ErrorType)</a> - Constructor for exception org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></dt>
 <dd>
@@ -1322,6 +1373,14 @@ the order they are declared.</div>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageType.html" class="type-name-link" title="enum class in org.whiteflagprotocol.java.core">WfMessageType</a> - Enum Class in <a href="org/whiteflagprotocol/java/core/package-summary.html">org.whiteflagprotocol.java.core</a></dt>
 <dd>
 <div class="block">Whiteflag message type</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfParticipant.html" class="type-name-link" title="interface in org.whiteflagprotocol.java">WfParticipant</a> - Interface in <a href="org/whiteflagprotocol/java/package-summary.html">org.whiteflagprotocol.java</a></dt>
+<dd>
+<div class="block">Whiteflag particpant interface
+ 
+ This interface defines how a class representing a particpiant in Whiteflag
+ communications must interact with WFJL classes that need information about
+ that particpant.</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/util/WfUtilException.html" class="type-name-link" title="class in org.whiteflagprotocol.java.util">WfUtilException</a> - Exception in <a href="org/whiteflagprotocol/java/util/package-summary.html">org.whiteflagprotocol.java.util</a></dt>
 <dd>

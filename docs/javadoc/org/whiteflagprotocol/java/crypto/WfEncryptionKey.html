@@ -123,7 +123,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">WfEncryptionKey</a><wbr>(byte[]&nbsp;rawSharedKey)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">WfEncryptionKey</a><wbr>(byte[]&nbsp;rawPreSharedKey)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 </div>
@@ -132,7 +132,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-last odd-row-color">
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 </div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawSharedKey)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">WfEncryptionKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPreSharedKey)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 </div>
@@ -220,22 +220,22 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>WfEncryptionKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawSharedKey)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPreSharedKey)</span></div>
 <div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>rawSharedKey</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
+<dd><code>rawPreSharedKey</code> - a hexadecimal string with the raw pre-shared encryption key</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(byte[])">
 <h3>WfEncryptionKey</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(byte[]&nbsp;rawSharedKey)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfEncryptionKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPreSharedKey)</span></div>
 <div class="block">Constructs a new Whiteflag encryption key from a raw pre-shared key</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>rawSharedKey</code> - a byte array with the raw pre-shared encryption key</dd>
+<dd><code>rawPreSharedKey</code> - a byte array with the raw pre-shared encryption key</dd>
 </dl>
 </section>
 </li>

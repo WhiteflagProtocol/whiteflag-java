@@ -3,7 +3,6 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
-import java.security.GeneralSecurityException;
 import java.security.interfaces.ECPublicKey;
 
 import javax.crypto.SecretKey;

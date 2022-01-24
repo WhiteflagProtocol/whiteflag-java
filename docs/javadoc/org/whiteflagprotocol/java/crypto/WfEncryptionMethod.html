@@ -124,6 +124,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Encryption Method : AES-256-CTR with pre-shared key</div>
 </div>
+<div class="col-first even-row-color"><code><a href="#NO_ENCRYPTION" class="member-name-link">NO_ENCRYPTION</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Encryption Method 0: no encryption</div>
+</div>
 </div>
 </section>
 </li>
@@ -146,15 +150,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">The cipher name for this encryption method i.a.w.</div>
 </div>
-<div class="col-first even-row-color"><code>final byte[]</code></div>
-<div class="col-second even-row-color"><code><a href="#hkdfSalt" class="member-name-link">hkdfSalt</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#fieldValue" class="member-name-link">fieldValue</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">The salt used by this encryption method in the HKDF function to derive the encryption key</div>
-</div>
-<div class="col-first odd-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#indicatorValue" class="member-name-link">indicatorValue</a></code></div>
-<div class="col-last odd-row-color">
 <div class="block">The value used in a Whiteflag message to indicate the encryption method</div>
+</div>
+<div class="col-first odd-row-color"><code>final byte[]</code></div>
+<div class="col-second odd-row-color"><code><a href="#hkdfSalt" class="member-name-link">hkdfSalt</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The salt used by this encryption method in the HKDF function to derive the encryption key</div>
 </div>
 <div class="col-first even-row-color"><code>final int</code></div>
 <div class="col-second even-row-color"><code><a href="#keyLength" class="member-name-link">keyLength</a></code></div>
@@ -185,14 +189,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static final <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromFieldValue(java.lang.String)" class="member-name-link">fromFieldValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fieldValue)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns the encryption method from the indicator value</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </div>
@@ -217,6 +226,13 @@ the order they are declared.</div>
 <h2>Enum Constant Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="NO_ENCRYPTION">
+<h3>NO_ENCRYPTION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></span>&nbsp;<span class="element-name">NO_ENCRYPTION</span></div>
+<div class="block">Encryption Method 0: no encryption</div>
+</section>
+</li>
+<li>
 <section class="detail" id="AES_256_CTR_ECDH">
 <h3>AES_256_CTR_ECDH</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></span>&nbsp;<span class="element-name">AES_256_CTR_ECDH</span></div>
@@ -239,9 +255,9 @@ the order they are declared.</div>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="indicatorValue">
-<h3>indicatorValue</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">indicatorValue</span></div>
+<section class="detail" id="fieldValue">
+<h3>fieldValue</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">fieldValue</span></div>
 <div class="block">The value used in a Whiteflag message to indicate the encryption method</div>
 </section>
 </li>
@@ -323,6 +339,24 @@ not permitted.)</div>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if this enum class has no constant with the specified name</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the argument is null</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="fromFieldValue(java.lang.String)">
+<h3>fromFieldValue</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></span>&nbsp;<span class="element-name">fromFieldValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fieldValue)</span>
+                                               throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
+<div class="block">Returns the encryption method from the indicator value</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldValue</code> - the value used in the EncryptionIndicator message field to indicate the encryption method</dd>
+<dt>Returns:</dt>
+<dd>a <a href="WfEncryptionMethod.html" title="enum class in org.whiteflagprotocol.java.crypto"><code>WfEncryptionMethod</code></a></dd>
+<dt>Throws:</dt>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the encryption indicator is invalid</dd>
+<dt>Since:</dt>
+<dd>1.1</dd>
 </dl>
 </section>
 </li>

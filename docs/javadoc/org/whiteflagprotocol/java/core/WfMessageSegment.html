@@ -129,7 +129,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Appends additional fields to this message segment if constructing complex message bodies</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bitLength()" class="member-name-link">bitLength</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the bit length of this segment, excluding the last variable length field if not set</div>
@@ -158,7 +158,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Encodes this message segment</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(int)" class="member-name-link">get</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(int)" class="member-name-link">get</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the value of the field specified by index</div>
 </div>
@@ -173,7 +173,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets all fields from this message segment</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getField(int)" class="member-name-link">getField</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getField(int)" class="member-name-link">getField</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the field specified by index</div>
 </div>
@@ -214,7 +214,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Serializes this message segment</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set(int,java.lang.String)" class="member-name-link">set</a><wbr>(int&nbsp;index,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set(int,java.lang.String)" class="member-name-link">set</a><wbr>(int&nbsp;fieldIndex,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;data)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the value of the field specified by its index in the message segment</div>
@@ -355,7 +355,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="bitLength()">
 <h3>bitLength</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">bitLength</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">bitLength</span>()</div>
 <div class="block">Returns the bit length of this segment, excluding the last variable length field if not set</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -412,11 +412,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="get(int)">
 <h3>get</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
 <div class="block">Gets the value of the field specified by index</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - the index of the requested field; negative index counts back from last field</dd>
+<dd><code>fieldIndex</code> - the index of the requested field; negative index counts back from last field</dd>
 <dt>Returns:</dt>
 <dd>the field value, or NULL if it does not exist</dd>
 </dl>
@@ -451,12 +451,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set(int,java.lang.String)">
 <h3>set</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">set</span><wbr><span class="parameters">(int&nbsp;index,
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a></span>&nbsp;<span class="element-name">set</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;data)</span></div>
 <div class="block">Sets the value of the field specified by its index in the message segment</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - the index of the requested field; negative index counts back from last field</dd>
+<dd><code>fieldIndex</code> - the index of the requested field; negative index counts back from last field</dd>
 <dd><code>data</code> - data to be set as the field value</dd>
 <dt>Returns:</dt>
 <dd>TRUE if the data was valid and the field value is set, else FALSE</dd>
@@ -611,11 +611,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getField(int)">
 <h3>getField</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></span>&nbsp;<span class="element-name">getField</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core">WfMessageField</a></span>&nbsp;<span class="element-name">getField</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
 <div class="block">Gets the field specified by index</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - the index of the requested field; negative index counts back from last field</dd>
+<dd><code>fieldIndex</code> - the index of the requested field; negative index counts back from last field</dd>
 <dt>Returns:</dt>
 <dd>the requested message field, or NULL if it does not exist</dd>
 </dl>
