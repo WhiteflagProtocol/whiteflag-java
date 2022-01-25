@@ -93,8 +93,7 @@ public class WfMessageCore {
         if (this.type == WfMessageType.ANY) return false;
         if (Boolean.FALSE.equals(header.isValid())) return false;
         if (Boolean.FALSE.equals(body.isValid())) return false;
-        if (!this.type.getCode().equals(header.get(FIELD_MESSAGETYPE))) return false;
-        return true;
+        return this.type.getCode().equals(header.get(FIELD_MESSAGETYPE));
     }
 
     /**
@@ -165,7 +164,7 @@ public class WfMessageCore {
      */
     public String serialize() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
-            throw new WfCoreException("Cannot serialize message with invalid or incomplete data fields");
+            throw new WfCoreException("Cannot serialize message with invalid or incomplete data fields", null);
         }
         return header.serialize() + body.serialize();
     }
@@ -177,7 +176,7 @@ public class WfMessageCore {
      */
     public WfBinaryBuffer encode() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
-            throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
+            throw new WfCoreException("Cannot encode message with invalid or incomplete data fields", null);
         }
         return header.encode().append(body.encode());
     }

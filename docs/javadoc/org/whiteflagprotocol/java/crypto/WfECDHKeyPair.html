@@ -253,11 +253,11 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="&lt;init&gt;()">
 <h3>WfECDHKeyPair</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfECDHKeyPair</span>()
-              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+              throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Constructs a new Whiteflag ECDH key pair</div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the key pair could not be created</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the key pair could not be created</dd>
 </dl>
 </section>
 </li>
@@ -265,13 +265,13 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="&lt;init&gt;(java.security.interfaces.ECPrivateKey)">
 <h3>WfECDHKeyPair</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfECDHKeyPair</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a>&nbsp;ecPrivateKey)</span>
-              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+              throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Constructs a new Whiteflag ECDH key pair from an existing private key</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>ecPrivateKey</code> - the private key object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the private key is invalid or the key pair could not be created</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the private key is invalid or the key pair could not be created</dd>
 </dl>
 </section>
 </li>
@@ -375,13 +375,13 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="createKeyPair()">
 <h3>createKeyPair</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyPair.html" title="class or interface in java.security" class="external-link">KeyPair</a></span>&nbsp;<span class="element-name">createKeyPair</span>()
-                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+                                   throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Creates a new random ECDH key pair with the curve specified for Whiteflag key negotiation</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a key pair object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the key pair could not be created</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the new ECDH key pair could not be created</dd>
 </dl>
 </section>
 </li>
@@ -389,7 +389,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="createKeyPair(java.security.interfaces.ECPrivateKey)">
 <h3>createKeyPair</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyPair.html" title="class or interface in java.security" class="external-link">KeyPair</a></span>&nbsp;<span class="element-name">createKeyPair</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a>&nbsp;ecPrivateKey)</span>
-                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+                                   throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Creates an ECDH key pair from an existing private key with the curve specified for Whiteflag key negotiation</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -397,7 +397,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dt>Returns:</dt>
 <dd>a key pair object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the private key is invalid</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if an ECDH key pair could not be generated from the provided private key</dd>
 </dl>
 </section>
 </li>
@@ -405,7 +405,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="createPublicKey(java.lang.String)">
 <h3>createPublicKey</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></span>&nbsp;<span class="element-name">createPublicKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;rawPublicKey)</span>
-                                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+                                         throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Creates an ECDH public key object from a byte array</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -413,7 +413,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dt>Returns:</dt>
 <dd>an ECDH public key object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the raw key or any of the curve parameters is invalid</dd>
 </dl>
 </section>
 </li>
@@ -421,7 +421,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="createPublicKey(byte[])">
 <h3>createPublicKey</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPublicKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPublicKey</a></span>&nbsp;<span class="element-name">createPublicKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPublicKey)</span>
-                                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+                                         throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Creates an ECDH public key object from a byte array</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -429,7 +429,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dt>Returns:</dt>
 <dd>an ECDH public key object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the raw key or any of the curve parameters is invalid</dd>
 </dl>
 </section>
 </li>
@@ -437,7 +437,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="createPrivateKey(byte[])">
 <h3>createPrivateKey</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/interfaces/ECPrivateKey.html" title="class or interface in java.security.interfaces" class="external-link">ECPrivateKey</a></span>&nbsp;<span class="element-name">createPrivateKey</span><wbr><span class="parameters">(byte[]&nbsp;rawPrivateKey)</span>
-                                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></span></div>
+                                           throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Creates an ECDH private key object from a byte array</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -445,7 +445,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dt>Returns:</dt>
 <dd>an ECDH private key object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/GeneralSecurityException.html" title="class or interface in java.security" class="external-link">GeneralSecurityException</a></code> - if the raw key or any of the parameters is invalid</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the raw key or any of the curve parameters is invalid</dd>
 </dl>
 </section>
 </li>

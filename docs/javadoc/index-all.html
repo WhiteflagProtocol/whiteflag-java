@@ -139,6 +139,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the bit length of a field for a given encoding and unencoded field byte length</div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#bitLength(int)" class="member-name-link">bitLength(int)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Returns the bit length up to and including the specified field, excluding the last variable length field if not set</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#bitLength(java.lang.String)" class="member-name-link">bitLength(String)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Returns the bit length of this segment, excluding the last variable length field if not set</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#body" class="member-name-link">body</a> - Variable in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
 <dd>
 <div class="block">The <a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageSegment</code></a> representing the message body</div>
@@ -160,6 +168,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the byte length of the unencoded field value</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#byteLength()" class="member-name-link">byteLength()</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Returns the byte length of this segment, excluding the last variable length field if not set</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#byteLength(int)" class="member-name-link">byteLength(int)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Returns the byte length of this segment up to and including the specified field, excluding the last variable length field if not set</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#byteLength(java.lang.String)" class="member-name-link">byteLength(String)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Returns the byte length of this segment, excluding the last variable length field if not set</div>
 </dd>
@@ -209,6 +225,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/crypto/WfCryptoUtil.html#convertToHexString(byte%5B%5D)" class="member-name-link">convertToHexString(byte[])</a> - Static method in class org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCryptoUtil.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoUtil</a></dt>
 <dd>
 <div class="block">Converts a byte array to a hexadecimal string</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/WfMessage.html#copy()" class="member-name-link">copy()</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Copies this message, without metadata</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfMessage.html#copy(org.whiteflagprotocol.java.WfMessage)" class="member-name-link">copy(WfMessage)</a> - Static method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
@@ -574,6 +594,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#getField(java.lang.String)" class="member-name-link">getField(String)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
 <dd>
 <div class="block">Gets the field specified by name</div>
+</dd>
+<dt><a href="org/whiteflagprotocol/java/core/WfMessageSegment.html#getFieldIndex(java.lang.String)" class="member-name-link">getFieldIndex(String)</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></dt>
+<dd>
+<div class="block">Gets the index of the field specified by name</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/core/WfMessageCore.html#getFieldNames()" class="member-name-link">getFieldNames()</a> - Method in class org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></dt>
 <dd>
@@ -1012,6 +1036,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the initialisation vector.</div>
 </dd>
+<dt><a href="org/whiteflagprotocol/java/WfMessage.html#setInitVector(java.lang.String)" class="member-name-link">setInitVector(String)</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
+<dd>
+<div class="block">Sets the non-secret initialisation vector used for encryption and decryption, if not already set</div>
+</dd>
 <dt><a href="org/whiteflagprotocol/java/WfMessage.html#setOriginator(org.whiteflagprotocol.java.WfParticipant)" class="member-name-link">setOriginator(WfParticipant)</a> - Method in class org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfMessage.html" title="class in org.whiteflagprotocol.java">WfMessage</a></dt>
 <dd>
 <div class="block">Sets the originator sending this message and adds its blockchain address to the metadata</div>
@@ -1238,7 +1266,7 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag protocol core exception class</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/core/WfCoreException.html#%3Cinit%3E(java.lang.String)" class="member-name-link">WfCoreException(String)</a> - Constructor for exception org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></dt>
+<dt><a href="org/whiteflagprotocol/java/core/WfCoreException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)" class="member-name-link">WfCoreException(String, Throwable)</a> - Constructor for exception org.whiteflagprotocol.java.core.<a href="org/whiteflagprotocol/java/core/WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></dt>
 <dd>
 <div class="block">Creates a generic Whiteflag exception</div>
 </dd>
@@ -1246,7 +1274,7 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag protocol cryptographic exception class</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/crypto/WfCryptoException.html#%3Cinit%3E(java.lang.String)" class="member-name-link">WfCryptoException(String)</a> - Constructor for exception org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></dt>
+<dt><a href="org/whiteflagprotocol/java/crypto/WfCryptoException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)" class="member-name-link">WfCryptoException(String, Throwable)</a> - Constructor for exception org.whiteflagprotocol.java.crypto.<a href="org/whiteflagprotocol/java/crypto/WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></dt>
 <dd>
 <div class="block">Creates a Whiteflag crypto exception</div>
 </dd>
@@ -1296,11 +1324,9 @@ the order they are declared.</div>
 </dd>
 <dt><a href="org/whiteflagprotocol/java/WfException.html" class="type-name-link" title="class in org.whiteflagprotocol.java">WfException</a> - Exception in <a href="org/whiteflagprotocol/java/package-summary.html">org.whiteflagprotocol.java</a></dt>
 <dd>
-<div class="block">Whiteflag protocol exception class
- 
- TODO: Make use of cause to chain exceptions</div>
+<div class="block">Whiteflag protocol exception class</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/WfException.html#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.WfException.ErrorType)" class="member-name-link">WfException(String, WfException.ErrorType)</a> - Constructor for exception org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></dt>
+<dt><a href="org/whiteflagprotocol/java/WfException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable,org.whiteflagprotocol.java.WfException.ErrorType)" class="member-name-link">WfException(String, Throwable, WfException.ErrorType)</a> - Constructor for exception org.whiteflagprotocol.java.<a href="org/whiteflagprotocol/java/WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></dt>
 <dd>
 <div class="block">Creates a Whiteflag exception with a specific error type</div>
 </dd>
@@ -1386,7 +1412,7 @@ the order they are declared.</div>
 <dd>
 <div class="block">Whiteflag protocol utility exception class</div>
 </dd>
-<dt><a href="org/whiteflagprotocol/java/util/WfUtilException.html#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.util.WfUtilException.ErrorType)" class="member-name-link">WfUtilException(String, WfUtilException.ErrorType)</a> - Constructor for exception org.whiteflagprotocol.java.util.<a href="org/whiteflagprotocol/java/util/WfUtilException.html" title="class in org.whiteflagprotocol.java.util">WfUtilException</a></dt>
+<dt><a href="org/whiteflagprotocol/java/util/WfUtilException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable,org.whiteflagprotocol.java.util.WfUtilException.ErrorType)" class="member-name-link">WfUtilException(String, Throwable, WfUtilException.ErrorType)</a> - Constructor for exception org.whiteflagprotocol.java.util.<a href="org/whiteflagprotocol/java/util/WfUtilException.html" title="class in org.whiteflagprotocol.java.util">WfUtilException</a></dt>
 <dd>
 <div class="block">Creates a Whiteflag utility exception with a specific utility error type</div>
 </dd>

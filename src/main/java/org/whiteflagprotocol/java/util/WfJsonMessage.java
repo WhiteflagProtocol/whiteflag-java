@@ -85,7 +85,7 @@ public class WfJsonMessage {
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             jsonMessage = mapper.readValue(jsonStr, WfJsonMessage.class);
         } catch (JsonProcessingException e) {
-            throw new WfUtilException("Cannot convert JSON string to message:" + e.getMessage(), WF_JSON_ERROR);
+            throw new WfUtilException("Could not convert JSON string to message", e, WF_JSON_ERROR);
         }
         return jsonMessage;
     }
@@ -129,7 +129,7 @@ public class WfJsonMessage {
         try {
             jsonStr = new ObjectMapper().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            throw new WfUtilException("Cannot convert message to JSON string: " + e.getMessage(), WF_JSON_ERROR);
+            throw new WfUtilException("Could not convert message to JSON string", e, WF_JSON_ERROR);
         }
         return jsonStr;
     }

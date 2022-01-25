@@ -18,6 +18,7 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
  * 
  * @since 1.1
  */
+@SuppressWarnings("java:S1192")
 public enum WfEncryptionMethod {
     /**
      * Encryption Method 0: no encryption
@@ -44,15 +45,15 @@ public enum WfEncryptionMethod {
     /**
      * The name of the algorithm for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
      */
-    public final String algorithmName;
+    protected final String algorithmName;
     /**
      * The mode of operation for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
      */
-    public final String operationMode;
+    protected final String operationMode;
     /**
      * The padding scheme for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
      */
-    public final String paddingScheme;
+    protected final String paddingScheme;
     /**
      * The cipher name for this encryption method i.a.w. Java Cryptography Standard Algorithm Names
      */
@@ -60,11 +61,11 @@ public enum WfEncryptionMethod {
     /**
      * The byte length of the encryption key for this encryption method
      */
-    public final int keyLength;
+    protected final int keyLength;
     /**
      * The salt used by this encryption method in the HKDF function to derive the encryption key
      */
-    public final byte[] hkdfSalt;
+    protected final byte[] hkdfSalt;
 
     /* METHODS */
 
@@ -111,6 +112,6 @@ public enum WfEncryptionMethod {
         for (WfEncryptionMethod method : values()) {
             if (method.fieldValue.equalsIgnoreCase(fieldValue)) return method;
         }
-        throw new WfCryptoException("Invalid encryption method: " + fieldValue);
+        throw new WfCryptoException("Invalid encryption method: " + fieldValue, null);
     }
 }

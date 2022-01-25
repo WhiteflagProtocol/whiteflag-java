@@ -210,7 +210,7 @@ public final class WfMessageField {
      */
     public final byte[] encode() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
-            throw new WfCoreException("Cannot encode invalid field: " + debugInfo());
+            throw new WfCoreException("Cannot encode invalid field: " + debugInfo(), null);
         }
         return WfMessageCodec.encodeField(this);
     }
@@ -225,16 +225,16 @@ public final class WfMessageField {
     public final String decode(final byte[] data) throws WfCoreException {
         /* Check if field already set */
         if (Boolean.TRUE.equals(this.isSet())) {
-            throw new WfCoreException("Cannot decode already set field: " + debugInfo());
+            throw new WfCoreException("Cannot decode already set field: " + debugInfo(), null);
         }
         /* Decode, check data and set field */
         String str = WfMessageCodec.decodeField(this, data);
         if (Boolean.FALSE.equals(this.isValid(str))) {
-            throw new WfCoreException("Decoded data is invalid for this field: " + debugInfo() + ": " + str);
+            throw new WfCoreException("Decoded data is invalid for this field: " + debugInfo() + ": " + str, null);
         }
         if (Boolean.FALSE.equals(this.set(str))) {
-            throw new WfCoreException("Could not set this field with decoded data: " + debugInfo() + ": " + str);
-        };
+            throw new WfCoreException("Could not set this field with decoded data: " + debugInfo() + ": " + str, null);
+        }
         return str;
     }
 

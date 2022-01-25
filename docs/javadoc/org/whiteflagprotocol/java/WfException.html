@@ -83,9 +83,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">WfException</span>
 <span class="extends-implements">extends <a href="core/WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></span></div>
-<div class="block">Whiteflag protocol exception class
- 
- TODO: Make use of cause to chain exceptions</div>
+<div class="block">Whiteflag protocol exception class</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>1.0</dd>
@@ -141,8 +139,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.WfException.ErrorType)" class="member-name-link">WfException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;errorMessage,
- <a href="WfException.ErrorType.html" title="enum class in org.whiteflagprotocol.java">WfException.ErrorType</a>&nbsp;wfErrorType)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.Throwable,org.whiteflagprotocol.java.WfException.ErrorType)" class="member-name-link">WfException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause,
+ <a href="WfException.ErrorType.html" title="enum class in org.whiteflagprotocol.java">WfException.ErrorType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates a Whiteflag exception with a specific error type</div>
 </div>
@@ -186,15 +185,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,org.whiteflagprotocol.java.WfException.ErrorType)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.Throwable,org.whiteflagprotocol.java.WfException.ErrorType)">
 <h3>WfException</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;errorMessage,
- <a href="WfException.ErrorType.html" title="enum class in org.whiteflagprotocol.java">WfException.ErrorType</a>&nbsp;wfErrorType)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause,
+ <a href="WfException.ErrorType.html" title="enum class in org.whiteflagprotocol.java">WfException.ErrorType</a>&nbsp;type)</span></div>
 <div class="block">Creates a Whiteflag exception with a specific error type</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>errorMessage</code> - a human readible error message</dd>
-<dd><code>wfErrorType</code> - the Whiteflag error type</dd>
+<dd><code>message</code> - a human readible error message</dd>
+<dd><code>cause</code> - the causing error, or null</dd>
+<dd><code>type</code> - the Whiteflag error type</dd>
 </dl>
 </section>
 </li>

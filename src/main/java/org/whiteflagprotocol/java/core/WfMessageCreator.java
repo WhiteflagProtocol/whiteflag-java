@@ -87,7 +87,7 @@ public final class WfMessageCreator {
         /* Create message header, set field values, and determine message type */
         header = new WfMessageSegment(messageType.getHeaderFields());
         if (Boolean.FALSE.equals(header.setAll(headerValues))) {
-            throw new WfCoreException("Header fieldname-to-value mapping contains invalid field names and/or values: " + headerValues);
+            throw new WfCoreException("Header fieldname-to-value mapping contains invalid field names and/or values: " + headerValues, null);
         }
         messageType = WfMessageType.fromCode(header.get(FIELD_MESSAGETYPE));
 
@@ -109,7 +109,7 @@ public final class WfMessageCreator {
                 break;
         }
         if (Boolean.FALSE.equals(body.setAll(bodyValues))) {
-            throw new WfCoreException("Body fieldname-to-value mapping contains invalid field names and/or values: " + bodyValues);
+            throw new WfCoreException("Body fieldname-to-value mapping contains invalid field names and/or values: " + bodyValues, null);
         }
         return this;
     }

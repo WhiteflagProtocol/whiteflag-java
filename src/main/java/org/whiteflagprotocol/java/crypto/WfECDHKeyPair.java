@@ -77,18 +77,18 @@ public final class WfECDHKeyPair implements Destroyable {
 
     /**
      * Constructs a new Whiteflag ECDH key pair
-     * @throws GeneralSecurityException if the key pair could not be created
+     * @throws WfCryptoException if the key pair could not be created
      */
-    public WfECDHKeyPair() throws GeneralSecurityException {
+    public WfECDHKeyPair() throws WfCryptoException {
         this.keypair = createKeyPair();
     }
 
     /**
      * Constructs a new Whiteflag ECDH key pair from an existing private key
      * @param ecPrivateKey the private key object
-     * @throws GeneralSecurityException if the private key is invalid or the key pair could not be created
+     * @throws WfCryptoException if the private key is invalid or the key pair could not be created
      */
-    public WfECDHKeyPair(final ECPrivateKey ecPrivateKey) throws GeneralSecurityException {
+    public WfECDHKeyPair(final ECPrivateKey ecPrivateKey) throws WfCryptoException {
         this.keypair = createKeyPair(ecPrivateKey);
     }
 
@@ -142,11 +142,7 @@ public final class WfECDHKeyPair implements Destroyable {
      * @throws IllegalStateException if the key pair has been destroyed
      */
     public final byte[] negotiateKey(final byte[] rawPublicKey) throws WfCryptoException {
-        try {
-            return negotiateKey(createPublicKey(rawPublicKey));
-        } catch (GeneralSecurityException e) {
-            throw new WfCryptoException("Cannot create negotiated key from public key: " + e.getMessage());
-        }
+        return negotiateKey(createPublicKey(rawPublicKey));
     }
 
     /**
@@ -164,7 +160,7 @@ public final class WfECDHKeyPair implements Destroyable {
             ka.doPhase(ecPublicKey, true);
             return ka.generateSecret();
         } catch (GeneralSecurityException e) {
-            throw new WfCryptoException("Cannot create negotiated key from public key: " + e.getMessage());
+            throw new WfCryptoException("Could not generate negotiated key from ECDH public key", e);
         }
     }
 
@@ -173,34 +169,42 @@ public final class WfECDHKeyPair implements Destroyable {
     /**
      * Creates a new random ECDH key pair with the curve specified for Whiteflag key negotiation
      * @return a key pair object
-     * @throws GeneralSecurityException if the key pair could not be created
+     * @throws WfCryptoException if the new ECDH key pair could not be created
      */
-    public static final KeyPair createKeyPair() throws GeneralSecurityException {
-        KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
-        kpg.initialize(ecParamSpec);
-        return kpg.generateKeyPair();
+    public static final KeyPair createKeyPair() throws WfCryptoException {
+        try {
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
+            kpg.initialize(ecParamSpec);
+            return kpg.generateKeyPair();
+        } catch (GeneralSecurityException e) {
+            throw new WfCryptoException("Could not generate new ECDH key pair", e);
+        }
     }
 
     /**
      * Creates an ECDH key pair from an existing private key with the curve specified for Whiteflag key negotiation
      * @param ecPrivateKey the ECDH private key object
      * @return a key pair object
-     * @throws GeneralSecurityException if the private key is invalid
+     * @throws WfCryptoException if an ECDH key pair could not be generated from the provided private key
      */
-    public static final KeyPair createKeyPair(ECPrivateKey ecPrivateKey) throws GeneralSecurityException {
-        KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
-        ECPoint point = ecParamSpec.getG().multiply(ecPrivateKey.getS());
-        ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(point.getEncoded(false));
-        return new KeyPair(kf.generatePublic(ecPubkeySpec), ecPrivateKey);
+    public static final KeyPair createKeyPair(ECPrivateKey ecPrivateKey) throws WfCryptoException {
+        try {
+            KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
+            ECPoint point = ecParamSpec.getG().multiply(ecPrivateKey.getS());
+            ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(point.getEncoded(false));
+            return new KeyPair(kf.generatePublic(ecPubkeySpec), ecPrivateKey);
+        } catch (GeneralSecurityException e) {
+            throw new WfCryptoException("Could not generate ECDH key pair from existing private key", e);
+        }
     }
 
     /**
      * Creates an ECDH public key object from a byte array
      * @param rawPublicKey a string with the raw 264-bit compressed public ECDH key
      * @return an ECDH public key object
-     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     * @throws WfCryptoException if the raw key or any of the curve parameters is invalid
      */
-    public static final ECPublicKey createPublicKey(String rawPublicKey) throws GeneralSecurityException {
+    public static final ECPublicKey createPublicKey(String rawPublicKey) throws WfCryptoException {
         return createPublicKey(convertToByteArray(rawPublicKey));
     }
 
@@ -208,24 +212,32 @@ public final class WfECDHKeyPair implements Destroyable {
      * Creates an ECDH public key object from a byte array
      * @param rawPublicKey a byte array with the raw 264-bit compressed public ECDH key
      * @return an ECDH public key object
-     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     * @throws WfCryptoException if the raw key or any of the curve parameters is invalid
      */
-	public static final ECPublicKey createPublicKey(byte[] rawPublicKey) throws GeneralSecurityException {
-        KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
-        ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(rawPublicKey);
-        return (ECPublicKey) kf.generatePublic(ecPubkeySpec);
+	public static final ECPublicKey createPublicKey(byte[] rawPublicKey) throws WfCryptoException {
+        try {
+            KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
+            ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(rawPublicKey);
+            return (ECPublicKey) kf.generatePublic(ecPubkeySpec);
+        } catch (GeneralSecurityException e) {
+            throw new WfCryptoException("Could not create ECDH public key from raw public key", e);
+        }
 	}
 
     /**
      * Creates an ECDH private key object from a byte array
      * @param rawPrivateKey a byte array with the raw private ECDH key
      * @return an ECDH private key object
-     * @throws GeneralSecurityException if the raw key or any of the parameters is invalid
+     * @throws WfCryptoException if the raw key or any of the curve parameters is invalid
      */
-    public static final ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws GeneralSecurityException {
-        KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
-        ECPrivateKeySpec ecPrivkeySpec = new ECPrivateKeySpec(new BigInteger(rawPrivateKey), ecParamSpec);
-        return (ECPrivateKey) kf.generatePrivate(ecPrivkeySpec);
+    public static final ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws WfCryptoException {
+        try {
+            KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
+            ECPrivateKeySpec ecPrivkeySpec = new ECPrivateKeySpec(new BigInteger(rawPrivateKey), ecParamSpec);
+            return (ECPrivateKey) kf.generatePrivate(ecPrivkeySpec);
+        } catch (GeneralSecurityException e) {
+            throw new WfCryptoException("Could not create ECDH private key from raw private key", e);
+        }
     }
 
     /**
@@ -240,7 +252,7 @@ public final class WfECDHKeyPair implements Destroyable {
 
         // Copy x-coordinate into byte array 
         byte[] compressedPubkey = new byte[PUBKEYLENGTH];
-        byte[] xBytes = x.toByteArray();
+        final byte[] xBytes = x.toByteArray();
         final int startByte = compressedPubkey.length - xBytes.length;
         System.arraycopy(xBytes, 0, compressedPubkey, startByte, xBytes.length);
 

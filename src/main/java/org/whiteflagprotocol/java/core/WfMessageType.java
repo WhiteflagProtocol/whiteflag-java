@@ -199,6 +199,6 @@ public enum WfMessageType {
         for (WfMessageType type : values()) {
             if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
         }
-        throw new WfCoreException("Invalid message type: " + messageCode);
+        throw new WfCoreException("Invalid message type: " + messageCode, null);
     }
 }

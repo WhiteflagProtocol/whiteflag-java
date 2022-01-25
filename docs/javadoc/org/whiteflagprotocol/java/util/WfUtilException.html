@@ -137,8 +137,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.whiteflagprotocol.java.util.WfUtilException.ErrorType)" class="member-name-link">WfUtilException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;errorMessage,
- <a href="WfUtilException.ErrorType.html" title="enum class in org.whiteflagprotocol.java.util">WfUtilException.ErrorType</a>&nbsp;wfUtilErrorType)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.Throwable,org.whiteflagprotocol.java.util.WfUtilException.ErrorType)" class="member-name-link">WfUtilException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause,
+ <a href="WfUtilException.ErrorType.html" title="enum class in org.whiteflagprotocol.java.util">WfUtilException.ErrorType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates a Whiteflag utility exception with a specific utility error type</div>
 </div>
@@ -182,15 +183,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,org.whiteflagprotocol.java.util.WfUtilException.ErrorType)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.Throwable,org.whiteflagprotocol.java.util.WfUtilException.ErrorType)">
 <h3>WfUtilException</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfUtilException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;errorMessage,
- <a href="WfUtilException.ErrorType.html" title="enum class in org.whiteflagprotocol.java.util">WfUtilException.ErrorType</a>&nbsp;wfUtilErrorType)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WfUtilException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause,
+ <a href="WfUtilException.ErrorType.html" title="enum class in org.whiteflagprotocol.java.util">WfUtilException.ErrorType</a>&nbsp;type)</span></div>
 <div class="block">Creates a Whiteflag utility exception with a specific utility error type</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>errorMessage</code> - String containing the human readible error message</dd>
-<dd><code>wfUtilErrorType</code> - The Whiteflag <a href="WfUtilException.ErrorType.html" title="enum class in org.whiteflagprotocol.java.util"><code>WfUtilException.ErrorType</code></a></dd>
+<dd><code>message</code> - String containing the human readible error message</dd>
+<dd><code>cause</code> - the causing error, or null</dd>
+<dd><code>type</code> - The Whiteflag <a href="WfUtilException.ErrorType.html" title="enum class in org.whiteflagprotocol.java.util"><code>WfUtilException.ErrorType</code></a></dd>
 </dl>
 </section>
 </li>

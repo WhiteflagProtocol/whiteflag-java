@@ -4,7 +4,6 @@
 package org.whiteflagprotocol.java.crypto;
 
 import java.security.SecureRandom;
-import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -60,7 +59,7 @@ public final class WfCipher implements Destroyable {
         try {
             this.cipher = Cipher.getInstance(key.method.cipherName);
         } catch(Exception e) {
-            throw new WfCryptoException(e.getMessage());
+            throw new WfCryptoException("Could not instantiate cryptographic cipher: " + key.method.cipherName, e);
         }
     }
 
@@ -134,13 +133,17 @@ public final class WfCipher implements Destroyable {
     /** 
      * Generates a new random initialisation vector. This should be used when encrypting a new message.
      * @return a byte array with the random initialisation vector
-     * @throws NoSuchAlgorithmException if no strong random generator algorithm is available
+     * @throws WfCryptoException if a random in initialization vector could not be generated
      */
-    public final byte[] setInitVector() throws NoSuchAlgorithmException {
+    public final byte[] setInitVector() throws WfCryptoException {
         /* Random number generator */
         byte[] initialisationVector = new byte[IVBYTELENGTH];
-        SecureRandom.getInstanceStrong().nextBytes(initialisationVector);
-        this.iv = new IvParameterSpec(initialisationVector);
+        try {
+            SecureRandom.getInstanceStrong().nextBytes(initialisationVector);
+            this.iv = new IvParameterSpec(initialisationVector);
+        } catch (Exception e) {
+            throw new WfCryptoException("Could not generate new random initialisation vector", e);
+        }
         return initialisationVector;
     }
 
@@ -169,7 +172,7 @@ public final class WfCipher implements Destroyable {
      * @return a byte array with the initialisation vector
      */
     public final byte[] getInitVector() {
-        if (iv == null) return null;
+        if (iv == null) return new byte[0];
         return iv.getIV();
     }
 
@@ -206,7 +209,7 @@ public final class WfCipher implements Destroyable {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
             return cipher.doFinal(data);
         } catch(Exception e) {
-            throw new WfCryptoException(e.getMessage());
+            throw new WfCryptoException("Could not encrypt data with " + key.method.cipherName + " cipher", e);
         }
     }
 
@@ -233,7 +236,7 @@ public final class WfCipher implements Destroyable {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
             return cipher.doFinal(data);
         } catch(Exception e) {
-            throw new WfCryptoException(e.getMessage());
+            throw new WfCryptoException("Could not decrypt data with " + key.method.cipherName + " cipher", e);
         }
     }
 
@@ -248,7 +251,7 @@ public final class WfCipher implements Destroyable {
             throw new IllegalStateException("Cipher has been destroyed");
         }
         if (Boolean.FALSE.equals(isSet())) {
-            throw new IllegalStateException("Cipher has not been fully set up to perform encryption or decryption");
+            throw new IllegalStateException("Context and/or initialisation vector have not been set");
         }
     }
 }

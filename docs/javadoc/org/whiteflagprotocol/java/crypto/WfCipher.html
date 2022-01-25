@@ -327,13 +327,13 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="setInitVector()">
 <h3>setInitVector</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">setInitVector</span>()
-                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></span></div>
+                           throws <span class="exceptions"><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></span></div>
 <div class="block">Generates a new random initialisation vector. This should be used when encrypting a new message.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a byte array with the random initialisation vector</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code> - if no strong random generator algorithm is available</dd>
+<dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if a random in initialization vector could not be generated</dd>
 </dl>
 </section>
 </li>

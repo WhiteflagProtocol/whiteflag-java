@@ -346,11 +346,11 @@ public final class WfBinaryBuffer {
      * @param byteArray the byte array with the bits to be appended
      * @param nBits the number of bits to be appended from the byte array
      * @return this {@link WfBinaryBuffer}
-     * @throws WfCoreException if the buffer is complete and cannot be altered
+     * @throws IllegalStateException if the buffer is complete and cannot be altered
      */
-    public final WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) throws WfCoreException {
+    public final WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) {
         /* Check if buffer is complete and cannot be altered */
-        if (this.complete) throw new WfCoreException("Binary buffer marked as complete and cannot be altered");
+        if (this.complete) throw new IllegalStateException("Binary buffer marked as complete and cannot be altered", null);
 
         /* Check number of bits */
         if (nBits > (byteArray.length * BYTE)) nBits = byteArray.length * BYTE;

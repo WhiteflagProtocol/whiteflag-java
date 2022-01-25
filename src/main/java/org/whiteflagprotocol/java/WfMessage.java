@@ -5,9 +5,8 @@ package org.whiteflagprotocol.java;
 
 import java.util.Set;
 import java.util.Map;
-import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
+import java.security.interfaces.ECPublicKey;
 
 /* Required Whiteflag core and util classes */
 import org.whiteflagprotocol.java.core.WfBinaryBuffer;
@@ -119,7 +118,7 @@ public class WfMessage extends WfMessageCore {
         try {
             coreMsg = new WfMessageCreator().type(WfMessageType.fromCode(messageCode)).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot create new message of type " + messageCode + ": " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Cannot create new message of type " + messageCode, e, WF_FORMAT_ERROR);
         }
         return new WfMessage(coreMsg);
     }
@@ -161,7 +160,7 @@ public class WfMessage extends WfMessageCore {
         try {
             coreMsg = new WfMessageCreator().deserialize(serializedMsg).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot deserialize message: " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Cannot deserialize message", e, WF_FORMAT_ERROR);
         }
         return new WfMessage(coreMsg, serializedMsg);
     }
@@ -178,14 +177,14 @@ public class WfMessage extends WfMessageCore {
         try {
             jsonMsg = WfJsonMessage.create(jsonMessage);
         } catch (WfUtilException e) {
-            throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Cannot deserialize JSON message", e, WF_FORMAT_ERROR);
         }
         // Create message core with header and body fieldname-to-value mappings
         WfMessageCore coreMsg;
         try {
             coreMsg = new WfMessageCreator().map(jsonMsg.getHeader(), jsonMsg.getBody()).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Cannot deserialize JSON message", e, WF_FORMAT_ERROR);
         }
         // Create message and add metadata
         WfMessage message = new WfMessage(coreMsg);
@@ -228,7 +227,7 @@ public class WfMessage extends WfMessageCore {
         try {
             coreMsg = new WfMessageCreator().decode(encodedMsg).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot decode message: " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Cannot decode message", e, WF_FORMAT_ERROR);
         }
         return new WfMessage(coreMsg, encodedMsg);
     }
@@ -244,7 +243,7 @@ public class WfMessage extends WfMessageCore {
         try {
             coreMsg = new WfMessageCreator().compile(fieldValues).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot compile message: " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Cannot compile message", e, WF_FORMAT_ERROR);
         }
         return new WfMessage(coreMsg);
     }
@@ -280,7 +279,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Copies this message, without metadata
-     * @sicne 1.1
+     * @since 1.1
      * @return a copy of this Whiteflag message
      */
     public final WfMessage copy() {
@@ -375,7 +374,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 this.cachedMsgStr = super.serialize();
             } catch (WfCoreException e) {
-                throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
+                throw new WfException("Cannot serialize message", e, WF_FORMAT_ERROR);
             }
         }
         return this.cachedMsgStr;
@@ -396,25 +395,22 @@ public class WfMessage extends WfMessageCore {
         try {
             this.encryptionMethod = WfEncryptionMethod.fromFieldValue(header.get(FIELD_ENCRYPTIONINDICATOR));
         } catch (WfCryptoException e) {
-            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("No valid encryption method associated with the " + FIELD_ENCRYPTIONINDICATOR + " message field", e, WF_FORMAT_ERROR);
         }
         /* Encode message */
         WfBinaryBuffer encodedMsg;
         try {
             encodedMsg = super.encode();
         } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Could not encode the message", e, WF_FORMAT_ERROR);
         }
         /* Encrypt the encoded message */
-        //TODO: Cleanup error handling
         try {
             encodedMsg = encrypt(encodedMsg);
-        } catch (NoSuchAlgorithmException e) {
-            throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
         } catch (WfCryptoException e) {
-            throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
+            throw new WfException("Could not encrypt the message", e, WF_CRYPTO_ERROR);
         } catch (WfCoreException e) {
-            throw new WfException(e.getMessage(), WF_GENERIC_ERROR);
+            throw new WfException("Could not encrypt the message", e, WF_GENERIC_ERROR);
         }
         /* Done. Cache and return the result */
         this.cachedMsg = encodedMsg.markComplete();
@@ -451,7 +447,7 @@ public class WfMessage extends WfMessageCore {
         try {
             jsonMsgStr = new WfJsonMessage(metadata, header.toMap(), body.toMap()).toJson();
         } catch (WfUtilException e) {
-            throw new WfException("Cannot serialize message into JSON string: " + e.getMessage(), WF_FORMAT_ERROR);
+            throw new WfException("Could not serialize message into JSON string", e, WF_FORMAT_ERROR);
         }
         return jsonMsgStr;
     }
@@ -474,7 +470,7 @@ public class WfMessage extends WfMessageCore {
      * @throws IllegalStateException if originator and recipient of this message are unknown
      * @throws WfCryptoException if message cannot be encrypted
      */
-    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException, WfCoreException, NoSuchAlgorithmException {
+    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException, WfCoreException {
         if (encryptionMethod == WfEncryptionMethod.NO_ENCRYPTION) return encodedMsg;
 
         /* Prepare encryption */
@@ -499,11 +495,10 @@ public class WfMessage extends WfMessageCore {
      * @param method the encryption method
      * @return the requested {@link WfEncryptionKey}
      * @throws IllegalStateException if originator and recipient of this message are unknown
-     * @throws WfException if 
-     * @throws WfCryptoException if a cryptographic key cannot be negotiated
+     * @throws WfException if the encryption key cannot be retrieved
      */
     private final WfEncryptionKey getEncryptionKey() throws WfException, WfCryptoException {
-        if (recipient == null) throw new IllegalStateException("Cannot encrypt message if recipient is not set");
+        if (recipient == null) throw new IllegalStateException("Cannot encrypt message because recipient is not set");
         switch (encryptionMethod) {
 
             /* No key if no encryption */
@@ -512,9 +507,9 @@ public class WfMessage extends WfMessageCore {
 
             /* Encryption method 1: negotiate key with other participant */
             case AES_256_CTR_ECDH:
-                if (originator == null) throw new IllegalStateException("Cannot encrypt message if originator is not set");
+                if (originator == null) throw new IllegalStateException("Cannot encrypt message because originator is not set");
                 if (!originator.isSelf() && !recipient.isSelf()) {
-                    throw new WfException("Cannot encrypt message because we are neither originator nor recipient" + encryptionMethod.fieldValue, WF_CRYPTO_ERROR);
+                    throw new WfException("Cannot encrypt message because we are neither originator nor recipient", null, WF_CRYPTO_ERROR);
                 }
                 WfECDHKeyPair ecdhKeypair;
                 ECPublicKey ecdhPublicKey;
@@ -531,6 +526,6 @@ public class WfMessage extends WfMessageCore {
             case AES_256_CTR_PSK:
                 return recipient.getSharedKey();
         }
-        throw new WfException("Invalid encryption method " + encryptionMethod.fieldValue, WF_CRYPTO_ERROR);
+        throw new WfException("Cannot retrieve encryption key for encryption method " + encryptionMethod.fieldValue + ": " + encryptionMethod.cipherName, null, WF_CRYPTO_ERROR);
     }
 }

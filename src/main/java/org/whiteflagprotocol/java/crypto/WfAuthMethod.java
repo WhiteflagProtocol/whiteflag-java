@@ -32,11 +32,11 @@ public enum WfAuthMethod {
     /**
      * The byte length of the validation token for this authentication method
      */
-    public final int tokenLength;
+    protected final int tokenLength;
     /**
      * The salt used by this authentication method in the HKDF function to derive the validation data
      */
-    public final byte[] hkdfSalt;
+    protected final byte[] hkdfSalt;
 
     /* METHODS */
 
@@ -68,6 +68,6 @@ public enum WfAuthMethod {
         for (WfAuthMethod method : values()) {
             if (method.fieldValue.equalsIgnoreCase(fieldValue)) return method;
         }
-        throw new WfCryptoException("Invalid encryption method: " + fieldValue);
+        throw new WfCryptoException("Invalid encryption method: " + fieldValue, null);
     }
 }

@@ -4,13 +4,11 @@
 package org.whiteflagprotocol.java;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.security.NoSuchAlgorithmException;
 
-import org.whiteflagprotocol.java.crypto.WfCryptoUtil;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
-
-import static org.junit.Assert.*;
 
 /* Message types required for checking correct message types */
 import static org.whiteflagprotocol.java.core.WfMessageType.*;
@@ -541,7 +539,6 @@ public class WfMessageTest {
     }
     /**
      * Tests message encryption
-     * TODO: Expand the message encryption test
      */
     @Test
     public void testMessageEncryption1() throws WfException, NoSuchAlgorithmException {
