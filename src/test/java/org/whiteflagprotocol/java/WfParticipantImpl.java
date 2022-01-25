@@ -54,8 +54,8 @@ public class WfParticipantImpl implements WfParticipant {
      * Set the blockchain address of this participant
      * @param address a hexadecimal string with the blockchain address
      */
-    public void publicSetAddress(final String address) {
-        this.address = WfBinaryBuffer.fromHexString("aa1bb2cc3dd4ee5ff6");
+    public void setAddress(final String address) {
+        this.address = WfBinaryBuffer.fromHexString(address);
     }
 
     /**
@@ -63,6 +63,7 @@ public class WfParticipantImpl implements WfParticipant {
      * @return a hexadecimal string with the blockchain address
      */
     public String getAddress() {
+        if (this.address == null) return null;
         return this.address.toHexString();
     }
 
@@ -71,6 +72,7 @@ public class WfParticipantImpl implements WfParticipant {
      * @return a byte array with the binary blockchain address
      */
     public byte[] getBinaryAddress() {
+        if (this.address == null) return new byte[0];
         return this.address.toByteArray();
     }
 

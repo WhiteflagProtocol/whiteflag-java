@@ -121,24 +121,70 @@ public class WfMessageSegment {
 
     /**
      * Returns the bit length of this segment, excluding the last variable length field if not set
-     * @return the bit length
+     * @return the bit length of this segment
      */
     public final int bitLength() {
+        return bitLength(-1);
+    }
+
+    /**
+     * Returns the bit length of this segment, excluding the last variable length field if not set
+     * @param fieldName the name of the field up to which the segment length is calculated; negative index counts back from last field
+     * @return the bit length of this segment, or 0 if the field does not exist
+     */
+    public final int bitLength(final String fieldName) {
+        return bitLength(getFieldIndex(fieldName));
+    }
+
+    /**
+     * Returns the bit length up to and including the specified field, excluding the last variable length field if not set
+     * @param fieldIndex the index of the field up to which the segment length is calculated; negative index counts back from last field
+     * @return the bit length of this segment up to and including the specified field, or 0 if the field does not exist
+     */
+    public final int bitLength(final int fieldIndex) {
+        /* Check provided index */
+        final int lastFieldIndex = getAbsoluteIndex(fieldIndex);
+        if (lastFieldIndex < 0) return 0;
+
+        /* Calculate segment bit length */
         int bitLength = 0;
-        for (WfMessageField field : fields) {
-            bitLength += field.bitLength();
+        for (int index = 0; index <= lastFieldIndex; index++) {
+            bitLength += fields[index].bitLength();
         }
         return bitLength;
     }
 
     /**
      * Returns the byte length of this segment, excluding the last variable length field if not set
-     * @return the byte length
+     * @return the byte length of this segment
+     */
+    public final int byteLength() {
+        return byteLength(-1);
+    }
+
+    /**
+     * Returns the byte length of this segment, excluding the last variable length field if not set
+     * @param fieldName the name of the field up to which the segment length is calculated; negative index counts back from last field
+     * @return the byte length of this segment, or 0 if the field does not exist
+     */
+    public final int byteLength(final String fieldName) {
+        return byteLength(getFieldIndex(fieldName));
+    }
+
+    /**
+     * Returns the byte length of this segment up to and including the specified field, excluding the last variable length field if not set
+     * @param fieldIndex the index of the field up to which the segment length is calculated; negative index counts back from last field
+     * @return the byte length of this segment, , or 0 if the field does not exist
      */
     @SuppressWarnings("java:S2259")
-    public int byteLength() {
+    public int byteLength(final int fieldIndex) {
+        /* Check provided index */
+        final int lastFieldIndex = getAbsoluteIndex(fieldIndex);
+        if (lastFieldIndex < 0) return 0;
+        
+        /* Calculate segment byte length */
         if (this.fields.length == 0) return 0;
-        return getField(-1).endByte - getField(0).startByte;
+        return getField(fieldIndex).endByte - getField(0).startByte;
     }
 
     /**
@@ -176,7 +222,7 @@ public class WfMessageSegment {
     /**
      * Gets the value of the field specified by index
      * @param fieldIndex the index of the requested field; negative index counts back from last field
-     * @return the field value, or NULL if it does not exist
+     * @return the field value, or NULL if field does not exist
      */
     public final String get(final int fieldIndex) {
         final int index = getAbsoluteIndex(fieldIndex);
@@ -400,14 +446,28 @@ public class WfMessageSegment {
 
     /**
      * Gets the field specified by name
-     * @param fieldname the name of the requested field
+     * @param fieldName the name of the requested field
      * @return the requested message field, or NULL if it does not exist
      */
-    protected final WfMessageField getField(final String fieldname) {
+    protected final WfMessageField getField(final String fieldName) {
         for (WfMessageField field : fields) {
-            if (fieldname.equals(field.name)) return field;
+            if (fieldName.equals(field.name)) return field;
         }
         return null;
+    }
+
+    /**
+     * Gets the index of the field specified by name
+     * @param fieldName the name of the requested field
+     * @return the index of the requested field, or the number of fields if the specified field does not exist
+     */
+    protected final int getFieldIndex(final String fieldName) {
+        int fieldIndex = 0;
+        for (WfMessageField field : fields) {
+            if (fieldName.equals(field.name)) return fieldIndex;
+            fieldIndex++;
+        }
+        return fieldIndex;
     }
 
     /**

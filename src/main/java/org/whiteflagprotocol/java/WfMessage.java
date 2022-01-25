@@ -5,6 +5,7 @@ package org.whiteflagprotocol.java;
 
 import java.util.Set;
 import java.util.Map;
+import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.ECPublicKey;
 import java.util.HashMap;
 
@@ -18,6 +19,7 @@ import org.whiteflagprotocol.java.crypto.WfCipher;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 import org.whiteflagprotocol.java.crypto.WfEncryptionMethod;
 import org.whiteflagprotocol.java.crypto.WfCryptoException;
+import org.whiteflagprotocol.java.crypto.WfCryptoUtil;
 import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.util.WfJsonMessage;
 import org.whiteflagprotocol.java.util.WfUtilException;
@@ -54,7 +56,6 @@ public class WfMessage extends WfMessageCore {
     private static final String METAKEY_ORIGINATOR = "originatorAddress";
     private static final String METAKEY_RECIPIENT = "recipientAddress";
     private static final String FIELD_ENCRYPTIONINDICATOR = "EncryptionIndicator";
-    private static final int BITLENGTH_UNENCRYPTED_HEADER = 24;
 
     /* Metadata */
     private Map<String, String> metadata = new HashMap<>();
@@ -65,11 +66,11 @@ public class WfMessage extends WfMessageCore {
 
     /* Encryption */
     private WfEncryptionMethod encryptionMethod;
-    private byte[] initVector;
+    private byte[] initVector = new byte[0];
 
     /* Cached messge representations */
-    private String cachedMsgStr;
     private WfBinaryBuffer cachedMsg = WfBinaryBuffer.create();
+    private String cachedMsgStr;
     
     /* CONSTRUCTORS */
     
@@ -134,6 +135,7 @@ public class WfMessage extends WfMessageCore {
 
     /**
      * Clones a Whiteflag message into new Whiteflag message object, including metadata
+     * @since 1.1
      * @param message the message to be copied
      * @return a {@link WfMessage} Whiteflag message
      */
@@ -142,6 +144,8 @@ public class WfMessage extends WfMessageCore {
         for (String key : message.getMetadataKeys()) {
             newMessage.addMetadata(key, message.getMetadata(key));
         }
+        if (message.getOriginator() != null) newMessage.setOriginator(message.getOriginator());
+        if (message.getRecipient() != null) newMessage.setRecipient(message.getRecipient());
         return newMessage;
     }
 
@@ -275,6 +279,15 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
+     * Copies this message, without metadata
+     * @sicne 1.1
+     * @return a copy of this Whiteflag message
+     */
+    public final WfMessage copy() {
+        return WfMessage.copy(this);
+    }
+
+    /**
      * Sets the originator sending this message and adds its blockchain address to the metadata
      * @since 1.1
      * @param originator the originator information
@@ -317,14 +330,27 @@ public class WfMessage extends WfMessageCore {
     /**
      * Sets the non-secret initialisation vector used for encryption and decryption, if not already set
      * @since 1.1
+     * @param initVector a hexadecimal string with the initialisation vector
+     * @return a byte array with the initialisation vector; if already set this is the existing initialisation vector
+     */
+    public final byte[] setInitVector(final String initVector) {
+        if (this.initVector.length == 0) {
+            this.initVector = WfCryptoUtil.convertToByteArray(initVector);
+        }
+        return this.initVector;
+    }
+
+    /**
+     * Sets the non-secret initialisation vector used for encryption and decryption, if not already set
+     * @since 1.1
      * @param initVector a byte array with the initialisation vector
      * @return a byte array with the initialisation vector; if already set this is the existing initialisation vector
      */
-    public final byte[] setInitVector(byte[] initVector) {
-        if (this.initVector != null) {
+    public final byte[] setInitVector(final byte[] initVector) {
+        if (this.initVector.length == 0) {
             this.initVector = initVector;
         }
-        return initVector;
+        return this.initVector;
     }
 
     /**
@@ -380,8 +406,11 @@ public class WfMessage extends WfMessageCore {
             throw new WfException(e.getMessage(), WF_FORMAT_ERROR);
         }
         /* Encrypt the encoded message */
+        //TODO: Cleanup error handling
         try {
             encodedMsg = encrypt(encodedMsg);
+        } catch (NoSuchAlgorithmException e) {
+            throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
         } catch (WfCryptoException e) {
             throw new WfException(e.getMessage(), WF_CRYPTO_ERROR);
         } catch (WfCoreException e) {
@@ -445,23 +474,28 @@ public class WfMessage extends WfMessageCore {
      * @throws IllegalStateException if originator and recipient of this message are unknown
      * @throws WfCryptoException if message cannot be encrypted
      */
-    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException, WfCoreException {
+    private final WfBinaryBuffer encrypt(WfBinaryBuffer encodedMsg) throws WfCryptoException, WfCoreException, NoSuchAlgorithmException {
         if (encryptionMethod == WfEncryptionMethod.NO_ENCRYPTION) return encodedMsg;
 
         /* Prepare encryption */
         WfCipher cipher  = WfCipher.fromKey(getEncryptionKey());
         cipher.setContext(originator.getBinaryAddress());
-        this.initVector = setInitVector(cipher.getInitVector());
-
-        /* Perform encryption on the correct message part */
+        if (this.initVector.length == 0) {
+            this.initVector = setInitVector(cipher.setInitVector());
+        } else {
+            cipher.setInitVector(this.initVector);
+        }
+        /* Encryption message, except first */
+        final int unencryptedBitPosition = header.bitLength(FIELD_ENCRYPTIONINDICATOR);
         WfBinaryBuffer buffer = WfBinaryBuffer.create();
-        buffer.appendBits(encodedMsg.extractBits(0, BITLENGTH_UNENCRYPTED_HEADER));
-        buffer.appendBits(cipher.encrypt(encodedMsg.extractBits(BITLENGTH_UNENCRYPTED_HEADER)));
+        buffer.appendBits(encodedMsg.extractBits(0, unencryptedBitPosition));
+        buffer.appendBits(cipher.encrypt(encodedMsg.extractBits(unencryptedBitPosition)));
         return buffer;
     }
 
     /**
      * Retrieves the encryption key from the key store
+     * @since 1.1
      * @param method the encryption method
      * @return the requested {@link WfEncryptionKey}
      * @throws IllegalStateException if originator and recipient of this message are unknown

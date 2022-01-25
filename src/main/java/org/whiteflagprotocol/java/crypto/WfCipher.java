@@ -169,6 +169,7 @@ public final class WfCipher implements Destroyable {
      * @return a byte array with the initialisation vector
      */
     public final byte[] getInitVector() {
+        if (iv == null) return null;
         return iv.getIV();
     }
 
