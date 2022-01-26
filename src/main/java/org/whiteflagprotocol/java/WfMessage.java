@@ -38,7 +38,7 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
  * 
  * A Whiteflag message is put on a blockchain by embedding it in a transaction
  * in encoded, and possibly also encrypted, form. Information from the message
- * originmator and recipient (if any) is provided through the {@link WfParticipant}
+ * originmator and recipient (if any) is provided through the {@link WfAccount}
  * interface.
  * 
  * TODO: Review code for safe return values and references
@@ -60,8 +60,8 @@ public class WfMessage extends WfMessageCore {
     private Map<String, String> metadata = new HashMap<>();
 
     /* Originator and Recipient */
-    private WfParticipant originator;
-    private WfParticipant recipient;
+    private WfAccount originator;
+    private WfAccount recipient;
 
     /* Encryption */
     private byte[] initVector = new byte[0];
@@ -241,7 +241,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decrypted or decoded
      */
-    public static final WfMessage decrypt(final String encryptedMsg, final WfParticipant originator, final WfParticipant recipient, final String initVector) throws WfException {
+    public static final WfMessage decrypt(final String encryptedMsg, final WfAccount originator, final WfAccount recipient, final String initVector) throws WfException {
         return decrypt(WfBinaryBuffer.fromHexString(encryptedMsg), originator, recipient, WfBinaryBuffer.convertToByteArray(initVector));
     }
 
@@ -256,7 +256,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decrypted or decoded
      */
-    public static final WfMessage decrypt(final byte[] encryptedMsg, final WfParticipant originator, final WfParticipant recipient, final byte[] initVector) throws WfException {
+    public static final WfMessage decrypt(final byte[] encryptedMsg, final WfAccount originator, final WfAccount recipient, final byte[] initVector) throws WfException {
         return decrypt(WfBinaryBuffer.fromByteArray(encryptedMsg), originator, recipient, initVector);
     }
 
@@ -270,7 +270,7 @@ public class WfMessage extends WfMessageCore {
      * @return a new {@link WfMessage} Whiteflag message
      * @throws WfException if the message cannot be decrypted or decoded
      */
-    public static final WfMessage decrypt(final WfBinaryBuffer encryptedMsg, final WfParticipant originator, final WfParticipant recipient, final byte[] initVector) throws WfException {
+    public static final WfMessage decrypt(final WfBinaryBuffer encryptedMsg, final WfAccount originator, final WfAccount recipient, final byte[] initVector) throws WfException {
         /* Get the unencrypted header */
         WfMessageSegment header;
         WfMessageCreator creator = new WfMessageCreator();
@@ -374,7 +374,7 @@ public class WfMessage extends WfMessageCore {
      * @param originator the originator information
      * @return null if address newly added to metadata, otherwise the existing value that was replaced
      */
-    public final String setOriginator(WfParticipant originator) {
+    public final String setOriginator(WfAccount originator) {
         this.originator = originator;
         return metadata.put(METAKEY_ORIGINATOR, originator.getAddress());
     }
@@ -382,19 +382,19 @@ public class WfMessage extends WfMessageCore {
     /**
      * Gets the originator of this message
      * @since 1.1
-     * @return the {@link WfParticipant} of the originator
+     * @return the {@link WfAccount} of the originator
      */
-    public final WfParticipant getOriginator() {
+    public final WfAccount getOriginator() {
         return this.originator;
     }
 
     /**
      * Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata
      * @since 1.1
-     * @param recipient the {@link WfParticipant} of the recipient of this message
+     * @param recipient the {@link WfAccount} of the recipient of this message
      * @return null if address newly added to metadata, otherwise the existing value that was replaced
      */
-    public final String setRecipient(WfParticipant recipient) {
+    public final String setRecipient(WfAccount recipient) {
         this.recipient = recipient;
         return metadata.put(METAKEY_RECIPIENT, recipient.getAddress());
     }
@@ -402,9 +402,9 @@ public class WfMessage extends WfMessageCore {
     /**
      * Gets the recipient of this message
      * @since 1.1
-     * @return the {@link WfParticipant} of the recipient
+     * @return the {@link WfAccount} of the recipient
      */
-    public final WfParticipant getRecipient() {
+    public final WfAccount getRecipient() {
         return this.recipient;
     }
 
@@ -611,7 +611,7 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if the cipher cannot be initialized
      * @throws IllegalStateException if the originator of this message is unknown
      */
-    private static final WfCipher createCipher(WfEncryptionMethod method, WfParticipant originator, WfParticipant recipient) throws WfException {
+    private static final WfCipher createCipher(WfEncryptionMethod method, WfAccount originator, WfAccount recipient) throws WfException {
         try {
             WfEncryptionKey key = getEncryptionKey(method, originator, recipient);
             WfCipher cipher = WfCipher.fromKey(key);
@@ -630,7 +630,7 @@ public class WfMessage extends WfMessageCore {
      * @return the requested encryption key
      * @throws WfException if the encryption key cannot be retrieved
      */
-    private static final WfEncryptionKey getEncryptionKey(WfEncryptionMethod method, WfParticipant originator, WfParticipant recipient) throws WfException {
+    private static final WfEncryptionKey getEncryptionKey(WfEncryptionMethod method, WfAccount originator, WfAccount recipient) throws WfException {
         switch (method) {
             case AES_256_CTR_ECDH:
                 return generateNegotiatedKey(originator, recipient);
@@ -647,7 +647,7 @@ public class WfMessage extends WfMessageCore {
      * @param recipient the recipient of the message
      * @return the requested pre-shared encryption key
      */
-    private static final WfEncryptionKey getSharedKey(WfParticipant recipient) {
+    private static final WfEncryptionKey getSharedKey(WfAccount recipient) {
         return recipient.getSharedKey();
     }
 
@@ -659,7 +659,7 @@ public class WfMessage extends WfMessageCore {
      * @return the requested negotiated encryption key
      * @throws WfException if the negotiated encryption key cannot be generated
      */
-    private static final WfEncryptionKey generateNegotiatedKey(WfParticipant originator, WfParticipant recipient) throws WfException {
+    private static final WfEncryptionKey generateNegotiatedKey(WfAccount originator, WfAccount recipient) throws WfException {
         /* Determine whose key pair and public key to use */
         WfECDHKeyPair ecdhKeypair;
         ECPublicKey ecdhPublicKey;

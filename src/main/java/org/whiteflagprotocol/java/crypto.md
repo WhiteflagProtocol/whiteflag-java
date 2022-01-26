@@ -9,10 +9,8 @@ This section describes how Whiteflag cryptographic functions are implemented
 internally by the WFJL. For most implementations, this cryptographic
 functionality is already available through the classes in the main
 `org.whiteflagprotocol.java` package. For example, the `WfMessage` class has
-methods to encrypt and decrypt messages. However, classes that implement the
-`WfAccount` interface require to reference certain Whiteflag cryptographic
-classes, such as `WfEncryptionKey`, `WfECDHKeyPair`, `WfECDHPublicKey` and
-`WfAuthToken`.
+methods to encrypt and decrypt messages. However, classes that implement the `WfAccount` interface require to reference certain Whiteflag cryptographic
+classes, such as `WfEncryptionKey`, `WfECDHKeyPair` and `WfECDHPublicKey`.
 
 ### Example
 

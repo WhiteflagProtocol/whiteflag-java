@@ -6,11 +6,13 @@ the detailed [WFJL Javadoc API Reference](../javadoc)
 ## Overview
 
 This section describes how Whiteflag messages are implemented internally
-by the WFJL.
+by the WFJL. To use Whiteflag messages in software applications, only the
+`org.whiteflagprotocol.java` package with the `WfMessage` class.
 
-To use Whiteflag messages in software applications, only the
-`org.whiteflagprotocol.java` package with the `WfMessage` class and its nested
-creator class `WfMessage.Creator` are required.
+In addition, the `WfBinaryBuffer` from the `org.whiteflagprotocol.java.core`
+may be used if working with binary encoded message, but the `WfMessage` class
+does provide methods to obtain binary encoded messages as byte arrays or
+hexadecimal strings. 
 
 ### Example
 
@@ -83,13 +85,35 @@ to create a message. The available static factory methods to do this are:
 * `WfMessage.clone(WfMessage)`: clones an existing Whiteflag message, including the metadata
 * `WfMessage.deserialize(String)`: deserializes a string with a serialized message
 * `WfMessage.deserializeJson(String)`: deserializes a string with a JSON representation of a message
-* `WfMessage.decode(String)`: decodes a string with the hexadecimal representation of an encoded message
-* `WfMessage.decrypt(String, WfParticipant, WfParticipant, byte[])`: decrypts a string from the hexadecimal representation of an encrypted message
+* `WfMessage.decode(String)`: decodes a string with the hexadecimal representation of an unencrypted encoded message
 * `WfMessage.compile(String[])`: compiles a Whiteflag message from an array with a complete and ordered set of field values
 
 Each of these methods returns a new `WfMessage` object. This object contains
 the message header and body as `WfMessageSegment` objects that contain the
 `WfMessageField` objects.
+
+### Message Encryption and Decryption
+
+Message encryption and decrytion requires additional information about the
+originator and recipient of the message. The encryption method is determined
+by the `EncryptionIndicator` field in the message itself.
+
+For encryption, the orginator and recipient information is provided by passing
+account information from objects implementing the `WfAccount` interface through
+the following methods:
+
+* `WfMessage.setOriginator(WfAccount originator)`: sets the originator of the message
+* `WfMessage.setRecipient(WfAccount recipient)`: sets the recipient of the message
+* `WfMessage.encode()` or `WfMessage.encrypt()`: are identical and return the binary encoded message (encrypted if the `EncryptionIndicator` field is set)
+* `WfMessage.encode().toByteArray()`: returns the binary encoded/encrypted message as a byte array
+* `WfMessage.getInitVector()`: returns the non-secret initialisation vector that is randomly created upon encryption
+
+The non-secret initialisation vector is randomly created upon encryption, is
+required for decryption. It is to be sent over the blockchain `K0A` Whiteflag
+message. For decryption, all the information must be passed directly to the
+static factory method:
+
+* `WfMessage.decrypt(byte[] encryptedMsg, WfAccount originator, WfAccount recipient, byte[] initVector)`
 
 ### Accessing Message Fields
 

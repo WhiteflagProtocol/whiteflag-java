@@ -10,15 +10,20 @@ of the WFJL of the main `org.whiteflagprotocol.java` package. This package
 defines:
 
 * the `WfMessage` class, representing a Whiteflag message with its operations
-  (e.g. encoding, encryption, decoding, decryption).
+  (e.g. encoding, encryption, decoding, decryption etc.).
 
-* the `WfParticipant` interface, defining how an organisation, department,
-  individual, or any grouping thereof must be represented. All these sorts of
-  participant typically have one or more attributes such as a blockchain
-  addresses, authentication information and encryption keys. This interface
-  defines how these attributes are provided to instances of WFJL classes
-  such as a `WfMessage`.
-
+* the `WfAccount` interface, defining how a class representing a Whiteflag
+  account must interact with WFJL classes. As Whiteflag does not require a
+  central user regitsration, such a Whiteflag account is merely an abstraction
+  that bind Whiteflag specific attributes to a blockchain address.
+  
+Whiteflag participants are originators and recipients of Whiteflag messages,
+which may be (groups of) organisations and individuals. As described in the
+[Whiteflag specification](https://standard.whiteflagprotocol.org), participants
+may use multiple Whiteflag accounts that correspond with a blockchain address
+on the underlying blockchain. A Whiteflag account then binds Whiteflag specific
+attributes, such as authentication data and encryption keys, to that blockchain
+address.
 ### Example
 
 A simplified example for creating a new Whiteflag message of a type specified

@@ -12,12 +12,12 @@ import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 
 /**
- * Whiteflag participant interface test implementation
+ * Whiteflag account interface test implementation
  * 
  * This class is an implementation of the {@link WfParticpant} interface for
  * testing purposes.
  */
-public class WfParticipantImpl implements WfParticipant {
+public class WfAccountImpl implements WfAccount {
 
     /* PROPERTIES */
 
@@ -36,7 +36,7 @@ public class WfParticipantImpl implements WfParticipant {
      * Constructs a Whiteflag blockchain account
      * @param self boolean to indicate if this is an own account
      */
-    protected WfParticipantImpl(boolean self) {
+    protected WfAccountImpl(boolean self) {
         this.self = self;
     }
     
@@ -51,7 +51,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Set the blockchain address of this participant
+     * Set the blockchain address that corresponds with this account
      * @param address a hexadecimal string with the blockchain address
      */
     public void setAddress(final String address) {
@@ -59,7 +59,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Gets the blockchain address of this participant
+     * Gets the blockchain address that corresponds with this account
      * @return a hexadecimal string with the blockchain address
      * @throws IllegalStateException if no blockchain address available
      */
@@ -69,7 +69,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Get the binary blockchain address of this particpant
+     * Get the binary blockchain address that corresponds with this account
      * @return a byte array with the binary blockchain address
      * @throws IllegalStateException if no blockchain address available
      */
@@ -79,7 +79,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Sets the authentication URL sent with an A1 message used to identify the originator associted with this participant
+     * Sets the authentication URL sent with an A1 message used to identify the originator associted with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
      * @param url a {@link java.net.URL} pointinng to the authentication data
      */
@@ -88,7 +88,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Gets the authentication URL sent with an A1 message used to identify the originator associted with this participant
+     * Gets the authentication URL sent with an A1 message used to identify the originator associated with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
      * @return a {@link java.net.URL} pointinng to the authentication data
      * @throws IllegalStateException if no authentication URL available
@@ -99,7 +99,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Sets the authentication token sent with an A2 message to identify the originator associted with this participant 
+     * Sets the authentication token sent with an A2 message to identify the originator associated with this account 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
      * @param token a {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token
      */
@@ -108,7 +108,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Gets the authentication token sent with an A2 message to identify the originator associted with this participant 
+     * Gets the authentication token sent with an A2 message to identify the originator associated with this account 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
      * @return the {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token
      * @throws IllegalStateException if no authentication token available
@@ -119,7 +119,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Sets the shared encryption key for this participant
+     * Sets the shared encryption key with this participant's account
      * @wfref 5.2.4 Message Encryption
      * @param key a pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key
      */
@@ -128,7 +128,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Gets the shared encryption key for this participant
+     * Gets the shared encryption key with this participant's account
      * @wfref 5.2.4 Message Encryption
      * @return the pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key
      * @throws IllegalStateException if no pre-shared key available
@@ -139,7 +139,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Sets the ECDH key pair used to derrive a negotiated key with another originator
+     * Sets the own ECDH key pair used to derrive a negotiated key with another originator
      * @wfref 5.2.4 Message Encryption
      * @param ecdhKeyPair a {@link org.whiteflagprotocol.java.crypto.WfECDHKeyPair} ECDH key pair
      * @throws IllegalStateException if this is not an own account
@@ -162,7 +162,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Sets the ECDH public key used to derrive the negotiated key with this participant
+     * Sets the ECDH public key used to derrive the negotiated key with this participant's account
      * @wfref 5.2.4 Message Encryption
      * @param ecdhPublicKey a {@link java.security.interfaces.ECPublicKey} ECDH public key
      * @throws IllegalStateException if this is an own account, in which case the ECDH public key is defined by the ECDH key pair
@@ -173,7 +173,7 @@ public class WfParticipantImpl implements WfParticipant {
     }
 
     /**
-     * Gets the ECDH public key used to derrive the negotiated key with this participant
+     * Gets the ECDH public key used to derrive the negotiated key with this participant's account
      * @wfref 5.2.4 Message Encryption
      * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key
      * @throws IllegalStateException if no ECDH public key available

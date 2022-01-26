@@ -49,7 +49,7 @@ The `WfException.ErrorType` enum defines the following error codes:
 * `WF_REFERENCE_ERROR`: Whiteflag message reference error
 * `WF_AUTH_ERROR`: Whiteflag message authentication error
 * `WF_SIGN_ERROR`: Whiteflag signature error
-* `WF_ENCRYPTION_ERROR`: Whiteflag encryption error
+* `WF_CRYPTO_ERROR`: Whiteflag cryptographic error
 
 ## Usage
 
