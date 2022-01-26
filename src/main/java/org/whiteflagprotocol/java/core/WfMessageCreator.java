@@ -18,7 +18,7 @@ import java.util.Map;
  * 
  * @since 1.0
  */
-public class WfMessageCreator {
+public final class WfMessageCreator {
 
     /* PROPERTIES */
 
@@ -87,7 +87,7 @@ public class WfMessageCreator {
         /* Create message header, set field values, and determine message type */
         header = new WfMessageSegment(messageType.getHeaderFields());
         if (Boolean.FALSE.equals(header.setAll(headerValues))) {
-            throw new WfCoreException("Header fieldname-to-value mapping contains invalid field names and/or values: " + headerValues);
+            throw new WfCoreException("Header fieldname-to-value mapping contains invalid field names and/or values: " + headerValues, null);
         }
         messageType = WfMessageType.fromCode(header.get(FIELD_MESSAGETYPE));
 
@@ -109,7 +109,7 @@ public class WfMessageCreator {
                 break;
         }
         if (Boolean.FALSE.equals(body.setAll(bodyValues))) {
-            throw new WfCoreException("Body fieldname-to-value mapping contains invalid field names and/or values: " + bodyValues);
+            throw new WfCoreException("Body fieldname-to-value mapping contains invalid field names and/or values: " + bodyValues, null);
         }
         return this;
     }
@@ -192,6 +192,20 @@ public class WfMessageCreator {
         }
         body.decode(msgBuffer, bitCursor, nextField); 
         return this;
+    }
+
+    /**
+     * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
+     * @since 1.1
+     * @param msgBuffer a {@link WfBinaryBuffer} with the compressed binary encoded message
+     * @return the {@link WfMessageSegment} unencrypted header
+     * @throws WfCoreException if the encoded message is invalid
+     */
+    public final WfMessageSegment getUnencryptedHeader(final WfBinaryBuffer msgBuffer) throws WfCoreException {
+        /* Create temporary message header */
+        header = new WfMessageSegment(WfMessageType.ANY.getUnencryptedHeaderFields());
+        header.decode(msgBuffer, 0, 0);
+        return header;
     }
 
     /**

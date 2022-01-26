@@ -27,7 +27,7 @@ import static org.whiteflagprotocol.java.core.WfBinaryBuffer.BIT;
  * 
  * @since 1.0
  */
-public class WfMessageCodec {
+public final class WfMessageCodec {
 
     /* CONSTRUCTOR */
 
@@ -49,33 +49,36 @@ public class WfMessageCodec {
     public static final byte[] encodeField(WfMessageField field) {
         byte[] buffer;
         switch (field.encoding) {
-            // Encode UTF 8 field
+            /* Encode UTF 8 field */
             case UTF8:
                 buffer = field.toString().getBytes(StandardCharsets.UTF_8);
                 break;
 
-            // Encode binary field
+            /* Encode binary field */
             case BIN:
                 buffer = encodeBIN(field.toString());
                 break;
 
-            // Encode decimal or hexadecimal field
+            /* Encode decimal or hexadecimal fields */
             case DEC:
             case HEX:
                 buffer = encodeBDX(field.toString());
                 break;
 
-            // Encode datum field
+            /* Encode date-time and duration fields */
             case DATETIME:
             case DURATION:
-                // Encode string without fixed characters
+                /* Encode string without fixed characters */
                 buffer = encodeBDX(field.toString().replaceAll("[\\-+:.A-Z]", ""));
                 break;
+
+            /* Encode lat-long coordinate fields */
             case LAT:
             case LONG:
                 buffer = encodeLatLong(field.toString());
                 break;
-            // Unknown encoding
+
+            /* Unknown encoding */
             default:
                 buffer = new byte[0];
                 break;
@@ -134,7 +137,7 @@ public class WfMessageCodec {
                 str.insert(9, "M");
                 break;
             
-            /* Decode lat-long fields */
+            /* Decode lat-long coordinate fields */
             case LAT:
             case LONG:
                 /* Sign of lat long coordinates */
@@ -254,11 +257,11 @@ public class WfMessageCodec {
      * @return a binary buffer containing the encoded datum
      */
     protected static final byte[] encodeLatLong(final String datumstr) {
-        // Encode string without fixed characters
+        /* Encode string without fixed characters */
         final String str = datumstr.replaceAll("[\\-+:.A-Z]", "");
         byte[] byteArray = encodeBDX(str); 
         
-        // Sign of lat long coordinates
+        /* Sign of lat long coordinates */
         if (datumstr.substring(0,1).equals("-")) {
             byteArray = WfBinaryBuffer.shiftRight(byteArray, 1);
         }
@@ -266,7 +269,7 @@ public class WfMessageCodec {
             byteArray = WfBinaryBuffer.shiftRight(byteArray, 1);
             byteArray[0] |= (byte) 0x80;
         }
-        // Return byte array without excess bits at end
+        /* Return byte array without excess bits at end */
         final int bitLength = 1 + str.length() * QUADBIT;
         return WfBinaryBuffer.cropBits(byteArray, bitLength);
     }
@@ -374,7 +377,7 @@ public class WfMessageCodec {
          * Checks if this encoding requires a fixed field length
          * @return TRUE if the encoding requires a fixed field length
          */
-        public Boolean isFixedLength() {
+        public boolean isFixedLength() {
             return this.fixedLength;
         }
 

@@ -22,8 +22,8 @@ The WFJL software consists of the following Java packages:
 ## Description
 
 The `org.whiteflagprotocol.java` package is the main package providing the
-external programming interface for software using this library. Normally,
-this is the only package required to import in your code.
+external programming interface for software using this library. It defines
+the classes representing Whitelag messages and accounts.
 
 The `org.whiteflagprotocol.java.core` package contains all implementation
 independent core functionality as defined in the Whiteflag specification,
@@ -40,4 +40,4 @@ inspectable, testable and maintainable.
 The `org.whiteflagprotocol.java.util` package contains utilities used by
 the main protocol classes, but that are not part of the external interface
 and also not part of the protocol core, e.g. data conversions, such as
-conversion of Whiteflag message to and from JSON.
+conversion of Whiteflag messages to and from JSON.

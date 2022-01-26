@@ -12,6 +12,8 @@ import static org.whiteflagprotocol.java.crypto.WfAuthMethod.*;
 import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
 import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToHexString;
 
+import java.util.Arrays;
+
 /**
  * Whiteflag authentication token class
  * 
@@ -26,7 +28,7 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToHexString;
  * 
  * @since 1.1
  */
-public class WfAuthToken implements Destroyable {
+public final class WfAuthToken implements Destroyable {
 
     /* PROPERTIES */
     /**
@@ -46,7 +48,7 @@ public class WfAuthToken implements Destroyable {
      * Constructs a new Whiteflag authentication token
      * @param secret a hexadecimal string with the shared secret used as an authentication token
      */
-    public WfAuthToken(String secret) {
+    public WfAuthToken(final String secret) {
         this(convertToByteArray(secret));
     }
 
@@ -54,8 +56,8 @@ public class WfAuthToken implements Destroyable {
      * Constructs a new Whiteflag authentication token
      * @param secret a byte array with the shared secret used as an authentication token
      */
-    public WfAuthToken(byte[] secret) {
-        this.token = secret;
+    public WfAuthToken(final byte[] secret) {
+        this.token = Arrays.copyOf(secret, secret.length);
         this.method = TOKEN_PRESHARED;
     }
 
@@ -65,7 +67,7 @@ public class WfAuthToken implements Destroyable {
      * Destroys this Whiteflag authentication token by clearing the shared secret
      */
     @Override
-    public void destroy() {
+    public final void destroy() {
         WfCryptoUtil.zeroise(token);
         this.destroyed = true;
     }
@@ -75,7 +77,7 @@ public class WfAuthToken implements Destroyable {
      * @return TRUE if destroyed, else FALSE
      */
     @Override
-    public boolean isDestroyed() {
+    public final boolean isDestroyed() {
         return destroyed;
     }
 
@@ -85,7 +87,7 @@ public class WfAuthToken implements Destroyable {
      * @return a hexadecimal string with the verification data
      * @throws IllegalArgumentException if the authentication token has been destroyed
      */
-    public String getVerificationData(String context) {
+    public final String getVerificationData(String context) {
         byte[] verificationData = getVerificationData(convertToByteArray(context));
         return convertToHexString(verificationData);
     }
@@ -96,7 +98,7 @@ public class WfAuthToken implements Destroyable {
      * @return a byte array with the verification data
      * @throws IllegalArgumentException if the authentication token has been destroyed
      */
-    public byte[] getVerificationData(byte[] context) {
+    public final byte[] getVerificationData(final byte[] context) {
         checkDestroyed();
         return WfCryptoUtil.hkdf(token, method.hkdfSalt, context, method.tokenLength);
     }
@@ -107,7 +109,7 @@ public class WfAuthToken implements Destroyable {
      * Checks and throws exception if this authentication token has been destroyed
      * @throws IllegalStateException if this authentication token has been destroyed
      */
-    private void checkDestroyed() {
+    private final void checkDestroyed() {
         if (destroyed) throw new IllegalStateException("Authentication token has been destroyed");
     }
 }

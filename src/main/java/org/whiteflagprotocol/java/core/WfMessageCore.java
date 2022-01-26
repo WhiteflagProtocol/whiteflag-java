@@ -89,12 +89,11 @@ public class WfMessageCore {
      * Checks if this message contains valid data
      * @return TRUE if all message fields contain valid data, else FALSE
      */
-    public Boolean isValid() {
+    public boolean isValid() {
         if (this.type == WfMessageType.ANY) return false;
         if (Boolean.FALSE.equals(header.isValid())) return false;
         if (Boolean.FALSE.equals(body.isValid())) return false;
-        if (!this.type.getCode().equals(header.get(FIELD_MESSAGETYPE))) return false;
-        return true;
+        return this.type.getCode().equals(header.get(FIELD_MESSAGETYPE));
     }
 
     /**
@@ -102,7 +101,7 @@ public class WfMessageCore {
      * @param fieldname the name of the field
      * @return TRUE if the field contains valid data, else FALSE
      */
-    public final Boolean isValid(final String fieldname) {
+    public final boolean isValid(final String fieldname) {
         if (Boolean.TRUE.equals(header.isValid(fieldname))) return true;
         return body.isValid(fieldname);
     }
@@ -113,7 +112,7 @@ public class WfMessageCore {
      * @param data the value to be checked
      * @return TRUE if the field contains valid data, else FALSE
      */
-    public final Boolean isValid(final String fieldname, final String data) {
+    public final boolean isValid(final String fieldname, final String data) {
         if (Boolean.TRUE.equals(header.isValid(fieldname, data))) return true;
         return body.isValid(fieldname, data);
     }
@@ -153,7 +152,7 @@ public class WfMessageCore {
      * @param data data to be set as the field value
      * @return TRUE if field value is set, FALSE if field does not exits, isalready set, or data is invalid
      */
-    public Boolean set(final String fieldname, final String data) {
+    public boolean set(final String fieldname, final String data) {
         if (Boolean.TRUE.equals(header.set(fieldname, data))) return true;
         return body.set(fieldname, data);
     }
@@ -165,7 +164,7 @@ public class WfMessageCore {
      */
     public String serialize() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
-            throw new WfCoreException("Cannot serialize message with invalid or incomplete data fields");
+            throw new WfCoreException("Cannot serialize message with invalid or incomplete data fields", null);
         }
         return header.serialize() + body.serialize();
     }
@@ -177,7 +176,7 @@ public class WfMessageCore {
      */
     public WfBinaryBuffer encode() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
-            throw new WfCoreException("Cannot encode message with invalid or incomplete data fields");
+            throw new WfCoreException("Cannot encode message with invalid or incomplete data fields", null);
         }
         return header.encode().append(body.encode());
     }

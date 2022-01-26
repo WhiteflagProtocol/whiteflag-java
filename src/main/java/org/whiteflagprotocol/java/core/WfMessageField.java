@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * 
  * @since 1.0
  */
-public class WfMessageField {
+public final class WfMessageField {
 
     /* PROPERTIES */
 
@@ -129,7 +129,7 @@ public class WfMessageField {
      * Checks if the message field value has been set
      * @return TRUE if the field has been set, else FALSE
      */
-    public final Boolean isSet() {
+    public final boolean isSet() {
         /* Field is considered set if it contains a valid value */
         return this.isValid();
     }
@@ -138,7 +138,7 @@ public class WfMessageField {
      * Checks if the message field contains a valid value
      * @return TRUE if the field contains a valid value, else FALSE
      */
-    public final Boolean isValid() {
+    public final boolean isValid() {
         return isValid(this.value);
     }
 
@@ -147,7 +147,7 @@ public class WfMessageField {
      * @param data The data to be checked
      * @return TRUE if data is a valid value for this field
      */
-    public final Boolean isValid(final String data) {
+    public final boolean isValid(final String data) {
         if (data == null) return false;
         return this.pattern.matcher(data).matches();
     }
@@ -190,11 +190,11 @@ public class WfMessageField {
      * @return TRUE if field value is set, FALSE if field already set or data is invalid
      */
     public final Boolean set(final String data) {
-        // Cannot set value twice
+        /* Cannot set value twice */
         if (Boolean.TRUE.equals(this.isSet())) {
             return false;
         }
-        // Set if data is valid
+        /* Set if data is valid */
         if (Boolean.TRUE.equals(isValid(data))) {
             this.value = data;
             return true;
@@ -210,7 +210,7 @@ public class WfMessageField {
      */
     public final byte[] encode() throws WfCoreException {
         if (Boolean.FALSE.equals(this.isValid())) {
-            throw new WfCoreException("Cannot encode invalid field: " + debugInfo());
+            throw new WfCoreException("Cannot encode invalid field: " + debugInfo(), null);
         }
         return WfMessageCodec.encodeField(this);
     }
@@ -225,16 +225,16 @@ public class WfMessageField {
     public final String decode(final byte[] data) throws WfCoreException {
         /* Check if field already set */
         if (Boolean.TRUE.equals(this.isSet())) {
-            throw new WfCoreException("Cannot decode already set field: " + debugInfo());
+            throw new WfCoreException("Cannot decode already set field: " + debugInfo(), null);
         }
         /* Decode, check data and set field */
         String str = WfMessageCodec.decodeField(this, data);
         if (Boolean.FALSE.equals(this.isValid(str))) {
-            throw new WfCoreException("Decoded data is invalid for this field: " + debugInfo() + ": " + str);
+            throw new WfCoreException("Decoded data is invalid for this field: " + debugInfo() + ": " + str, null);
         }
         if (Boolean.FALSE.equals(this.set(str))) {
-            throw new WfCoreException("Could not set this field with decoded data: " + debugInfo() + ": " + str);
-        };
+            throw new WfCoreException("Could not set this field with decoded data: " + debugInfo() + ": " + str, null);
+        }
         return str;
     }
 
@@ -244,7 +244,7 @@ public class WfMessageField {
      * Gives debug information of the field
      * @return field name, value and pattern and validity check
      */
-    protected String debugInfo() {
+    protected final String debugInfo() {
         return this.name + " [data valid: " + this.isValid()
                          + ", regex: /" + this.pattern.toString() + "/"
                          + ", bytes: " + startByte + "-" + endByte + "]";

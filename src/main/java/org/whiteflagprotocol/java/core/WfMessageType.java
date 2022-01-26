@@ -3,6 +3,8 @@
  */
 package org.whiteflagprotocol.java.core;
 
+import java.util.Arrays;
+
 /* Field defintions required for message type */
 import static org.whiteflagprotocol.java.core.WfMessageDefinitions.*;
 
@@ -120,46 +122,43 @@ public enum WfMessageType {
         this.bodyFields = bodyFields;
     }
 
-    /* STATIC FACTORY METHODS */
-
-    /**
-     * Creates the message type from the message code
-     * @since 1.1
-     * @param messageCode the message code
-     * @return a {@link WfMessageType}
-     * @throws WfCoreException if the message type is invalid
-     */
-    public static WfMessageType fromCode(final String messageCode) throws WfCoreException {
-        if (messageCode == null || messageCode.isEmpty()) return ANY;
-        for (WfMessageType type : WfMessageType.values()) {
-            if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
-        }
-        throw new WfCoreException("Invalid message type: " + messageCode);
-    }
-
     /* PUBLIC METHODS */
 
     /**
      * Returns the message code string
      * @return the message code
      */
-    public String getCode() {
+    public final String getCode() {
         return messageCode;
     }
 
     /**
      * Returns an array with the header fields
      * @return an array of the {@link WfMessageField}s from the message header
+     * @wfver v1-draft.6
+     * @wfref 4.2.1 Generic Message Header
      */
-    public WfMessageField[] getHeaderFields() {
+    public final WfMessageField[] getHeaderFields() {
         return headerFields;
+    }
+
+    /**
+     * Returns an array with the header fields that are never encrypted
+     * @since 1.1
+     * @return an array of the {@link WfMessageField}s from the message header
+     * @wfver v1-draft.6
+     * @wfref 4.2.1 Generic Message Header
+     * @wfref 4.1.4 Encryption
+     */
+    public final WfMessageField[] getUnencryptedHeaderFields() {
+        return Arrays.copyOf(headerFields, 3);
     }
 
     /**
      * Returns an array with the body fields
      * @return an array with the {@link WfMessageField}s from the message body
      */
-    public WfMessageField[] getBodyFields() {
+    public final WfMessageField[] getBodyFields() {
         return bodyFields;
     }
 
@@ -170,35 +169,52 @@ public enum WfMessageType {
      * @wfver v1-draft.6
      * @wfref 4.3.1.9 Object Request Fields
      */
-    public WfMessageField[] createRequestFields(final int n) {
-        // Request fields are only defined for Request message type
+    public final WfMessageField[] createRequestFields(final int n) {
+        /* Request fields are only defined for Request message type */
         if (!this.equals(Q)) return WfMessageDefinitions.UNDEFINED;
 
-        // Field definitions
+        /* Field definitions */
         final WfMessageField objectField = WfMessageDefinitions.requestFields[0];
         final WfMessageField quantField = WfMessageDefinitions.requestFields[1];
         final int OBJECTFIELDSIZE = objectField.endByte - objectField.startByte;
         final int QUANTFIELDSIZE = quantField.endByte - quantField.startByte;
 
-        // Determine parameters
+        /* Determine parameters */
         final int nFields = (n * 2);
         int startByte = objectField.startByte;
 
-        // Create fields array
+        /* Create fields array */
         WfMessageField[] fields = new WfMessageField[nFields];
         for (int i = 0; i < nFields; i += 2) {
-            // Calculate field number, beginnings and ends
+            /* Calculate field number, beginnings and ends */
             final int nField = (i / 2) + 1;
             final int splitByte = startByte + OBJECTFIELDSIZE;
             final int endByte = splitByte + QUANTFIELDSIZE;
 
-            // Add object and quantity field to array
+            /* Add object and quantity field to array */
             fields[i] = WfMessageField.define(objectField.name + nField, objectField.pattern.toString(), objectField.encoding, startByte, splitByte);
             fields[i + 1] = WfMessageField.define(objectField.name + nField + "Quant", quantField.pattern.toString(), quantField.encoding, splitByte, endByte);
 
-            // Starting byte of next field
+            /* Starting byte of next field */
             startByte = endByte;
         }
         return fields;
+    }
+
+    /* PUBLIC STATIC METHODS */
+
+    /**
+     * Creates the message type from the message code
+     * @since 1.1
+     * @param messageCode the message code
+     * @return a {@link WfMessageType}
+     * @throws WfCoreException if the message type is invalid
+     */
+    public static final WfMessageType fromCode(final String messageCode) throws WfCoreException {
+        if (messageCode == null || messageCode.isEmpty()) return ANY;
+        for (WfMessageType type : values()) {
+            if (type.messageCode.equalsIgnoreCase(messageCode)) return type;
+        }
+        throw new WfCoreException("Invalid message type: " + messageCode, null);
     }
 }

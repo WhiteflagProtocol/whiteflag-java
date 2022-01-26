@@ -1,0 +1,52 @@
+@startuml overview
+!include .stylesheet.puml
+
+left footer WFJL Overview Class Diagram
+
+package org.whiteflagprotocol.java {
+    class WfMessage {
+        -metadata : HashMap<>
+        ..
+        -originator : WfAccount
+        -recipient : WfAccount
+        ..
+        +type : WfMessageType
+        +header : WfMessageSegment
+        +body : WfMessageSegment
+        __
+        {static} +type(String) : WfMessage
+        {static} +copy(WfMessage) : WfMessage
+        {static} +deserialize(String) : WfMessage
+        {static} +deserializeJson(String) : WfMessage
+        {static} +decode(WfBinaryBuffer) : WfMessage
+        {static} +decrypt(WfBinaryBuffer) : WfMessage
+        {static} +compile(String[]) : WfMessage
+        ..
+        +setOriginator(WfAccount)
+        +getOriginator() : WfAccount
+        +setRecipient(WfAccount)
+        +getRecipient() : WfAccount
+        +setInitVector(byte[])
+        +getInitVector() : byte[]
+        ..
+        +encode() : WfBinaryBuffer
+        +encrypt() : WfBinaryBuffer
+        +toJson() : String
+    }
+
+    class WfAccount <<interface>> {
+        +isSelf() : boolean
+        ..
+        +getAddress() : String
+        +getBinaryAddress() : byte[]
+        +getAuthURL() : URL
+        +getAuthToken() : WfAuthToken
+        +getEcdhKeyPair() : WfECDHKeyPair
+        +getEcdhPublicKey() : ECPublicKey
+        +getSharedKey() : WfEncryptionKey
+    }
+}
+
+WfAccount <.. WfMessage
+
+@enduml

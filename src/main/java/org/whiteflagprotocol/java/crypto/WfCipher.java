@@ -4,7 +4,7 @@
 package org.whiteflagprotocol.java.crypto;
 
 import java.security.SecureRandom;
-import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -28,7 +28,7 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToHexString;
  * 
  * @since 1.1
  */
-public class WfCipher implements Destroyable {
+public final class WfCipher implements Destroyable {
 
     /* PROPERTIES */
 
@@ -55,12 +55,12 @@ public class WfCipher implements Destroyable {
      * @param key the {@link WfEncryptionKey} encryption key
      * @throws WfCryptoException if the cipher could not be created
      */
-    private WfCipher(WfEncryptionKey key) throws WfCryptoException {
+    private WfCipher(final WfEncryptionKey key) throws WfCryptoException {
         this.key = key;
         try {
             this.cipher = Cipher.getInstance(key.method.cipherName);
         } catch(Exception e) {
-            throw new WfCryptoException(e.getMessage());
+            throw new WfCryptoException("Could not instantiate cryptographic cipher: " + key.method.cipherName, e);
         }
     }
 
@@ -73,7 +73,7 @@ public class WfCipher implements Destroyable {
      * @throws IllegalArgumentException if the encryption key is invalid
      * @throws WfCryptoException if the cipher could not be created
      */
-    public static WfCipher fromKey(WfEncryptionKey key) throws WfCryptoException {
+    public static final WfCipher fromKey(final WfEncryptionKey key) throws WfCryptoException {
         if (Boolean.TRUE.equals(key.isDestroyed())) {
             throw new IllegalArgumentException("Cannot create Whiteflag cipher from a destroyed key");
         }
@@ -88,7 +88,7 @@ public class WfCipher implements Destroyable {
      * @throws IllegalStateException if the encryption key has already been destroyed
      */
     @Override
-    public void destroy() throws DestroyFailedException {
+    public final void destroy() throws DestroyFailedException {
         if (this.secretKey != null) {
             this.secretKey.destroy();   // Destroy derived key; throws exceptions
         }
@@ -101,7 +101,7 @@ public class WfCipher implements Destroyable {
      * @return TRUE if destroyed, else FALSE
      */
     @Override
-    public boolean isDestroyed() {
+    public final boolean isDestroyed() {
         return destroyed;
     }
 
@@ -110,7 +110,7 @@ public class WfCipher implements Destroyable {
      * @param context a hexadecimal string with the context specific information required to derive the correct key
      * @return this Whiteflag cipher object
      */
-    public WfCipher setContext(String context) {
+    public final WfCipher setContext(final String context) {
         return setContext(convertToByteArray(context));
     }
 
@@ -119,31 +119,27 @@ public class WfCipher implements Destroyable {
      * @param context a byte array with the context specific information required to derive the correct key
      * @return this Whiteflag cipher object
      */
-    public WfCipher setContext(byte[] context) {
+    public final WfCipher setContext(final byte[] context) {
         checkDestroyed();
         this.context = context;
         this.secretKey = key.getSecretKey(context);
         return this;
     }
 
-    /**
-     * Gets the current context to which the encryption key is bound
-     * @return a byte array with the context, typically the blockchain address of the message originator
-     */
-    public byte[] getContext() {
-        return context;
-    }
-
     /** 
      * Generates a new random initialisation vector. This should be used when encrypting a new message.
      * @return a byte array with the random initialisation vector
-     * @throws NoSuchAlgorithmException if no strong random generator algorithm is available
+     * @throws WfCryptoException if a random in initialization vector could not be generated
      */
-    public byte[] setInitVector() throws NoSuchAlgorithmException {
+    public final byte[] setInitVector() throws WfCryptoException {
         checkDestroyed();
         byte[] initialisationVector = new byte[IVBYTELENGTH];
-        SecureRandom.getInstanceStrong().nextBytes(initialisationVector);
-        this.iv = new IvParameterSpec(initialisationVector);
+        try {
+            SecureRandom.getInstanceStrong().nextBytes(initialisationVector);
+            this.iv = new IvParameterSpec(initialisationVector);
+        } catch (Exception e) {
+            throw new WfCryptoException("Could not generate new random initialisation vector", e);
+        }
         return initialisationVector;
     }
 
@@ -152,7 +148,7 @@ public class WfCipher implements Destroyable {
      * @param initialisationVector a hexadecimal string with the initialisation vector
      * @return this Whiteflag cipher object
      */
-    public WfCipher setInitVector(String initialisationVector) {
+    public final WfCipher setInitVector(final String initialisationVector) {
         return setInitVector(convertToByteArray(initialisationVector));
     }
 
@@ -162,7 +158,7 @@ public class WfCipher implements Destroyable {
      * @return this Whiteflag cipher object
      */
     @SuppressWarnings("java:S3329")
-    public WfCipher setInitVector(byte[] initialisationVector) {
+    public final WfCipher setInitVector(final byte[] initialisationVector) {
         checkDestroyed();
         this.iv = new IvParameterSpec(initialisationVector, 0, IVBYTELENGTH);
         return this;
@@ -172,7 +168,8 @@ public class WfCipher implements Destroyable {
      * Gets the current initialisation vector
      * @return a byte array with the initialisation vector
      */
-    public byte[] getInitVector() {
+    public final byte[] getInitVector() {
+        if (iv == null) return new byte[0];
         return iv.getIV();
     }
 
@@ -180,7 +177,7 @@ public class WfCipher implements Destroyable {
      * Checks if the cipher has been fully set up for encryption or decryption.
      * @return TRUE if cipher has been fully set up, else FALSE
      */
-    public Boolean isSet() {
+    public final boolean isSet() {
         if (context == null || context.length == 0) return false;
         if (iv == null || iv.getIV().length != IVBYTELENGTH) return false;
         return !this.destroyed;
@@ -192,7 +189,7 @@ public class WfCipher implements Destroyable {
      * @return a hexadecimal string with the encrypted data
      * @throws WfCryptoException if data could not be encrypted
      */
-    public String encrypt(final String data) throws WfCryptoException {
+    public final String encrypt(final String data) throws WfCryptoException {
         return convertToHexString(encrypt(convertToByteArray(data)));
     }
 
@@ -203,14 +200,14 @@ public class WfCipher implements Destroyable {
      * @throws IllegalStateException if this cipher has not been fully set up or keys have been destroyed
      * @throws WfCryptoException if data could not be encrypted
      */
-    public byte[] encrypt(final byte[] data) throws WfCryptoException {
+    public final byte[] encrypt(final byte[] data) throws WfCryptoException {
         checkDestroyed();
         checkSet();
         try {
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
             return cipher.doFinal(data);
         } catch(Exception e) {
-            throw new WfCryptoException(e.getMessage());
+            throw new WfCryptoException("Could not encrypt data with " + key.method.cipherName + " cipher", e);
         }
     }
 
@@ -220,7 +217,7 @@ public class WfCipher implements Destroyable {
      * @return a hexadecimal string with the decrypted data
      * @throws WfCryptoException if data could not be decrypted
      */
-    public String decrypt(final String data) throws WfCryptoException {
+    public final String decrypt(final String data) throws WfCryptoException {
         return convertToHexString(decrypt(convertToByteArray(data)));
     }
 
@@ -231,15 +228,25 @@ public class WfCipher implements Destroyable {
      * @throws IllegalStateException if this cipher has not been fully set up or keys have been destroyed
      * @throws WfCryptoException if data could not be decrypted
      */
-    public byte[] decrypt(final byte[] data) throws WfCryptoException {
+    public final byte[] decrypt(final byte[] data) throws WfCryptoException {
         checkDestroyed();
         checkSet();
         try {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
             return cipher.doFinal(data);
         } catch(Exception e) {
-            throw new WfCryptoException(e.getMessage());
+            throw new WfCryptoException("Could not decrypt data with " + key.method.cipherName + " cipher", e);
         }
+    }
+
+    /* PROTECTED METHODS */
+
+    /**
+     * Gets the current context to which the encryption key is bound
+     * @return a byte array with the context, typically the blockchain address of the message originator
+     */
+    protected final byte[] getContext() {
+        return Arrays.copyOf(context, context.length);
     }
 
     /* PRIVATE METHODS */
@@ -248,7 +255,7 @@ public class WfCipher implements Destroyable {
      * Checks and throws exception if this cipher has been destroyed
      * @throws IllegalStateException if this cipher has been destroyed
      */
-    private void checkDestroyed() {
+    private final void checkDestroyed() {
         if (destroyed) {
             throw new IllegalStateException("Cipher has been destroyed");
         }
@@ -260,7 +267,7 @@ public class WfCipher implements Destroyable {
      */
     private void checkSet() {
         if (Boolean.FALSE.equals(isSet())) {
-            throw new IllegalStateException("Cipher has not been fully set up to perform encryption or decryption");
+            throw new IllegalStateException("Context and/or initialisation vector have not been set");
         }
     }
 }

@@ -19,8 +19,8 @@ public class WfECDHKeyPairTest {
      */
     @Test
     public void testNegotiateKey1() throws WfCryptoException, GeneralSecurityException {
-        // Repeat to encouter different coordinate lengths
-        for(int i = 0; i < 10; i++) {
+        /* Repeat to encouter different coordinate lengths */
+        for(int i = 0; i < 5; i++) {
             /* Setup */
             WfECDHKeyPair keypair1 = new WfECDHKeyPair();
             WfECDHKeyPair keypair2 = new WfECDHKeyPair();

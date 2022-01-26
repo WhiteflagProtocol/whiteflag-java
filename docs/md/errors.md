@@ -20,7 +20,7 @@ to be thrown. The other error classes are primarily used internally.
 ### Error Class Diagram
 
 The class diagram gives a rough overview of the error classes. It is not
-intended as a complete or an accurate reference Please see the
+intended as a complete or accurate reference Instead, please see the
 [WFJL Javadoc API Reference](../javadoc) for all details.
 
 ![WFJL Error Class Diagram](../uml/errors.png)
@@ -49,7 +49,7 @@ The `WfException.ErrorType` enum defines the following error codes:
 * `WF_REFERENCE_ERROR`: Whiteflag message reference error
 * `WF_AUTH_ERROR`: Whiteflag message authentication error
 * `WF_SIGN_ERROR`: Whiteflag signature error
-* `WF_ENCRYPTION_ERROR`: Whiteflag encryption error
+* `WF_CRYPTO_ERROR`: Whiteflag cryptographic error
 
 ## Usage
 
@@ -59,5 +59,8 @@ An example where a Whiteflag exception is thrown during authentication
 of an originator:
 
 ```java
-throw new WfException("Invalid authentication data", WfException.ErrorType.WF_AUTH_ERROR);
+throw new WfException("Invalid authentication data", null, WfException.ErrorType.WF_AUTH_ERROR);
 ```
+
+Note the second argument, which is a `Throwable` indicating the underlying
+cause. It may be `null` if unknown or not existent.

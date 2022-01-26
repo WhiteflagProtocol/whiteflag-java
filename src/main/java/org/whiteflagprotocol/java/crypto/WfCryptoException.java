@@ -21,9 +21,10 @@ public class WfCryptoException extends Exception {
 
     /**
      * Creates a Whiteflag crypto exception
-     * @param errorMessage a human readible error message
+     * @param message a human readible error message
+     * @param cause the causing error, or null
      */
-    public WfCryptoException(final String errorMessage) {
-        super(errorMessage);
+    public WfCryptoException(final String message, final Throwable cause) {
+        super(message, cause);
     }
 }

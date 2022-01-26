@@ -18,7 +18,7 @@ import static org.whiteflagprotocol.java.core.WfMessageCodec.Encoding.*;
  * 
  * @since 1.0
  */
-public class WfMessageDefinitions {
+public final class WfMessageDefinitions {
 
     /* PROPERTIES */
 
