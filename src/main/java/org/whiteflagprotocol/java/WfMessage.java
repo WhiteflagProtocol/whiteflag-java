@@ -13,7 +13,6 @@ import org.whiteflagprotocol.java.core.WfBinaryBuffer;
 import org.whiteflagprotocol.java.core.WfCoreException;
 import org.whiteflagprotocol.java.core.WfMessageCore;
 import org.whiteflagprotocol.java.core.WfMessageCreator;
-import org.whiteflagprotocol.java.core.WfMessageDefinitions;
 import org.whiteflagprotocol.java.core.WfMessageSegment;
 import org.whiteflagprotocol.java.core.WfMessageType;
 import org.whiteflagprotocol.java.crypto.WfCipher;
@@ -26,7 +25,6 @@ import org.whiteflagprotocol.java.util.WfJsonMessage;
 import org.whiteflagprotocol.java.util.WfUtilException;
 
 /* Required error types */
-import static org.whiteflagprotocol.java.WfException.ErrorType.WF_GENERIC_ERROR;
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
 
@@ -593,7 +591,7 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if the encryption method of the message is invalid
      */
     private static final WfEncryptionMethod getEncryptionMethod(final String encryptionIndicator) throws WfException {
-        if (encryptionIndicator == null || encryptionIndicator == "") {
+        if (encryptionIndicator == null || encryptionIndicator.equals("")) {
             throw new WfException("The " + FIELD_ENCRYPTIONINDICATOR + " message field does not exist or is not set", null, WF_FORMAT_ERROR);
         }
         try {
