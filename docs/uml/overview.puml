@@ -14,14 +14,23 @@ package org.whiteflagprotocol.java {
         +header : WfMessageSegment
         +body : WfMessageSegment
         __
-        +type(String) : WfMessage
-        +copy(WfMessage) : WfMessage
-        +deserialize(String) : WfMessage
-        +deserializeJson(String) : WfMessage
-        +decode(String) : WfMessage
-        +compile(String[]) : WfMessage
+        {static} +type(String) : WfMessage
+        {static} +copy(WfMessage) : WfMessage
+        {static} +deserialize(String) : WfMessage
+        {static} +deserializeJson(String) : WfMessage
+        {static} +decode(WfBinaryBuffer) : WfMessage
+        {static} +decrypt(WfBinaryBuffer) : WfMessage
+        {static} +compile(String[]) : WfMessage
+        ..
+        +setOriginator(WfParticipant)
+        +getOriginator() : WfParticipant
+        +setRecipient(WfParticipant)
+        +getRecipient() : WfParticipant
+        +setInitVector(byte[])
+        +getInitVector() : byte[]
         ..
         +encode() : WfBinaryBuffer
+        +encrypt() : WfBinaryBuffer
         +toJson() : String
     }
 
@@ -37,5 +46,7 @@ package org.whiteflagprotocol.java {
         +getSharedKey() : WfEncryptionKey
     }
 }
+
+WfParticipant <.. WfMessage
 
 @enduml

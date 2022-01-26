@@ -84,6 +84,7 @@ to create a message. The available static factory methods to do this are:
 * `WfMessage.deserialize(String)`: deserializes a string with a serialized message
 * `WfMessage.deserializeJson(String)`: deserializes a string with a JSON representation of a message
 * `WfMessage.decode(String)`: decodes a string with the hexadecimal representation of an encoded message
+* `WfMessage.decrypt(String, WfParticipant, WfParticipant, byte[])`: decrypts a string from the hexadecimal representation of an encrypted message
 * `WfMessage.compile(String[])`: compiles a Whiteflag message from an array with a complete and ordered set of field values
 
 Each of these methods returns a new `WfMessage` object. This object contains

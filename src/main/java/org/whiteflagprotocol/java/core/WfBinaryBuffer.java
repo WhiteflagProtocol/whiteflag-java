@@ -192,9 +192,9 @@ public final class WfBinaryBuffer {
      * Appends a binary buffer to this binary buffer
      * @param binaryBuffer the {@link WfBinaryBuffer} to append to this binary buffer
      * @return this {@link WfBinaryBuffer}
-     * @throws WfCoreException if buffer cannot be altered
+     * @throws IllegalStateException if the buffer is marked complete and cannot be altered
      */
-    public final WfBinaryBuffer append(final WfBinaryBuffer binaryBuffer) throws WfCoreException {
+    public final WfBinaryBuffer append(final WfBinaryBuffer binaryBuffer) throws IllegalStateException {
         return appendBits(binaryBuffer.toByteArray(), binaryBuffer.bitLength());
     }
 
@@ -202,7 +202,8 @@ public final class WfBinaryBuffer {
      * Encodes a Whiteflag message field and adds it to the end of the binary buffer
      * @param field the next {@link WfMessageField} to be encoded and added to the buffer
      * @return this {@link WfBinaryBuffer}
-     * @throws WfCoreException if field connot be encoded or if buffer cannot be altered
+     * @throws WfCoreException if field connot be encoded
+     * @throws IllegalStateException if the buffer is marked complete and cannot be altered
      */
     public final WfBinaryBuffer addMessageField(WfMessageField field) throws WfCoreException {
         return appendBits(field.encode(), field.bitLength());
@@ -334,9 +335,9 @@ public final class WfBinaryBuffer {
      * Appends a bytes array to the binary buffer
      * @param byteArray the byte array with the bits to be appended
      * @return this {@link WfBinaryBuffer}
-     * @throws WfCoreException if the buffer is complete and cannot be altered
+     * @throws IllegalStateException if the buffer is marked complete and cannot be altered
      */
-    public final WfBinaryBuffer appendBits(final byte[] byteArray) throws WfCoreException {
+    public final WfBinaryBuffer appendBits(final byte[] byteArray) {
         appendBits(byteArray, (byteArray.length * BYTE));
         return this;
     }
@@ -346,7 +347,7 @@ public final class WfBinaryBuffer {
      * @param byteArray the byte array with the bits to be appended
      * @param nBits the number of bits to be appended from the byte array
      * @return this {@link WfBinaryBuffer}
-     * @throws IllegalStateException if the buffer is complete and cannot be altered
+     * @throws IllegalStateException if the buffer is marked complete and cannot be altered
      */
     public final WfBinaryBuffer appendBits(final byte[] byteArray, int nBits) {
         /* Check if buffer is complete and cannot be altered */

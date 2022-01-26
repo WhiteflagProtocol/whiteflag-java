@@ -3,6 +3,8 @@
  */
 package org.whiteflagprotocol.java.core;
 
+import java.util.Arrays;
+
 /* Field defintions required for message type */
 import static org.whiteflagprotocol.java.core.WfMessageDefinitions.*;
 
@@ -133,9 +135,23 @@ public enum WfMessageType {
     /**
      * Returns an array with the header fields
      * @return an array of the {@link WfMessageField}s from the message header
+     * @wfver v1-draft.6
+     * @wfref 4.2.1 Generic Message Header
      */
     public final WfMessageField[] getHeaderFields() {
         return headerFields;
+    }
+
+    /**
+     * Returns an array with the header fields that are never encrypted
+     * @since 1.1
+     * @return an array of the {@link WfMessageField}s from the message header
+     * @wfver v1-draft.6
+     * @wfref 4.2.1 Generic Message Header
+     * @wfref 4.1.4 Encryption
+     */
+    public final WfMessageField[] getUnencryptedHeaderFields() {
+        return Arrays.copyOf(headerFields, 3);
     }
 
     /**

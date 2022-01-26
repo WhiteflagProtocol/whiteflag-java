@@ -6,9 +6,10 @@ package org.whiteflagprotocol.java;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.security.NoSuchAlgorithmException;
-
+import org.whiteflagprotocol.java.core.WfBinaryBuffer;
+import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
+import org.whiteflagprotocol.java.crypto.WfCryptoException;
 
 /* Message types required for checking correct message types */
 import static org.whiteflagprotocol.java.core.WfMessageType.*;
@@ -523,8 +524,8 @@ public class WfMessageTest {
     @Test
     public void testJsonDeserialization() throws WfException {
         /* Setup */
-        String messageStr = "WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!";
-        String jsonMessageStr = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
+        final String messageStr = "WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!";
+        final String jsonMessageStr = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
         WfMessage message = WfMessage.deserializeJson(jsonMessageStr);
 
         /* Verify */
@@ -541,7 +542,7 @@ public class WfMessageTest {
      * Tests message encryption
      */
     @Test
-    public void testMessageEncryption1() throws WfException, NoSuchAlgorithmException {
+    public void testMessageEncryption1() throws WfException {
         /* Setup */
         final String encodedMsg = "5746313223000000000088888889111111119999999a22222222aaaaaaab33333333bbbbbbbb0983098309830983118b118b118b118b1993199319931993219b219b219b219b29a329a329a329a331ab31ab31ab31a9b1b9b1b9b1b9b1b9c1c9c1c9c1c9c1c8";
         final String encryptedMsg = "574631326d7658e7d17479677a0de95076989fcd7825b709349b143f2b17644e5cb2c8ded5c7f18d77447cf9dc2115e0c1c81d717b57fadaeedf27bfef8926448ff666d3d9a65168827c94b393974ebbe6b7f0599e184bfd1ace3569117c23ae17c5640f2f2d";
@@ -551,7 +552,7 @@ public class WfMessageTest {
         originator.setAddress("007a0baf6f84f0fa7402ea972686e56d50b707c9b67b108866");
         recipient.setSharedKey(new WfEncryptionKey("32676187ba7badda85ea63a69870a7133909f1999774abb2eed251073616a6e7"));
 
-        WfMessage message = WfMessage.decode(encodedMsg).copy();
+        WfMessage message = WfMessage.decode(encodedMsg).copy();    // Must copy, otherwise encoded message is already set
         message.setOriginator(originator);
         message.setRecipient(recipient);
         message.setInitVector("40aa85015d24e4601448c1ba8d7bf1aa");
@@ -560,5 +561,58 @@ public class WfMessageTest {
         assertTrue("We should be the originator ourselves", originator.isSelf());
         assertFalse("They should be the rescipient", recipient.isSelf());
         assertEquals("Message should be correctly encrypted", encryptedMsg, message.encode().toHexString());
+    }
+    /**
+     * Tests message encryption and decryption with pre-shared key
+     */
+    @Test
+    public void testMessageEncryption2() throws WfException {
+        /* Setup */
+        WfParticipantImpl originator = new WfParticipantImpl(true);
+        WfParticipantImpl recipient = new WfParticipantImpl(false);
+        originator.setAddress("ac000cdbe3c49955b218f8397ddfe533a32a4269658712a2f4a82e8b448e");
+        recipient.setSharedKey(new WfEncryptionKey("b50cf705febdc9b6b2f7af10fa0955c1a5b454d6941494536d75d7810010a90d"));
+
+        final String messageStr = "WF120F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!";
+        WfMessage message1 = WfMessage.deserialize(messageStr);
+        message1.setOriginator(originator);
+        message1.setRecipient(recipient);
+
+        /* Encryption */
+        WfBinaryBuffer encryptedMsg = message1.encode();
+        byte[] initVector = message1.getInitVector();
+        WfMessage message2 = WfMessage.decrypt(encryptedMsg, originator, recipient, initVector);
+
+        /* Verification */
+        assertEquals("Serialized decrypted message should be identical to original", messageStr, message2.serialize());
+        assertEquals("ReferencedMessage field should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
+        assertEquals("Text field should be identical", message1.body.get("Text"), message2.body.get("Text"));
+    }
+    /**
+     * Tests message encryption and decryption with negotiated key
+     */
+    @Test
+    public void testMessageEncryption3() throws WfException, WfCryptoException {
+        /* Setup */
+        WfParticipantImpl originator = new WfParticipantImpl(false);
+        WfParticipantImpl recipient = new WfParticipantImpl(true);
+        originator.setAddress("b77b1cdb02efe1acccf0e277021cb303117bd83c689ea8a64fc549229dba");
+        originator.setEcdhPublicKey(new WfECDHKeyPair().getPublicKey());
+        recipient.setEcdhKeyPair(new WfECDHKeyPair());
+
+        final String messageStr = "WF111Q13efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae802013-08-31T04:29:15ZP01D00H00M22+31.79658-033.826028799321000010022003";
+        WfMessage message1 = WfMessage.deserialize(messageStr);
+        message1.setOriginator(originator);
+        message1.setRecipient(recipient);
+
+        /* Encryption */
+        WfBinaryBuffer encryptedMsg = message1.encrypt();
+        byte[] initVector = message1.getInitVector();
+        WfMessage message2 = WfMessage.decrypt(encryptedMsg, originator, recipient, initVector);
+
+        /* Verification */
+        assertEquals("Serialized decrypted message should be identical to original", messageStr, message2.serialize());
+        assertEquals("ReferencedMessage field should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
+        assertEquals("DateTime field should be identical", message1.body.get("DateTime"), message2.body.get("DateTime"));
     }
 }

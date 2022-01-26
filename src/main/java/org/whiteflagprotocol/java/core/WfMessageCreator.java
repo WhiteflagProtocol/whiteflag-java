@@ -195,6 +195,20 @@ public final class WfMessageCreator {
     }
 
     /**
+     * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
+     * @since 1.1
+     * @param msgBuffer a {@link WfBinaryBuffer} with the compressed binary encoded message
+     * @return the {@link WfMessageSegment} unencrypted header
+     * @throws WfCoreException if the encoded message is invalid
+     */
+    public final WfMessageSegment getUnencryptedHeader(final WfBinaryBuffer msgBuffer) throws WfCoreException {
+        /* Create temporary message header */
+        header = new WfMessageSegment(WfMessageType.ANY.getUnencryptedHeaderFields());
+        header.decode(msgBuffer, 0, 0);
+        return header;
+    }
+
+    /**
      * Compiles a new Whiteflag core message object from field values
      * @param fieldValues String array with the values for the message fields
      * @return this {@link WfMessageCreator}

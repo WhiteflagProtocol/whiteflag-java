@@ -61,6 +61,7 @@ public class WfParticipantImpl implements WfParticipant {
     /**
      * Gets the blockchain address of this participant
      * @return a hexadecimal string with the blockchain address
+     * @throws IllegalStateException if no blockchain address available
      */
     public String getAddress() {
         if (this.address == null) return null;
@@ -70,9 +71,10 @@ public class WfParticipantImpl implements WfParticipant {
     /**
      * Get the binary blockchain address of this particpant
      * @return a byte array with the binary blockchain address
+     * @throws IllegalStateException if no blockchain address available
      */
     public byte[] getBinaryAddress() {
-        if (this.address == null) return new byte[0];
+        if (this.address == null) throw new IllegalStateException("No blockchain address available");
         return this.address.toByteArray();
     }
 
@@ -89,8 +91,10 @@ public class WfParticipantImpl implements WfParticipant {
      * Gets the authentication URL sent with an A1 message used to identify the originator associted with this participant
      * @wfref 5.1.2.1 Method 1: URL Validation
      * @return a {@link java.net.URL} pointinng to the authentication data
+     * @throws IllegalStateException if no authentication URL available
      */
     public URL getAuthURL() {
+        if (this.authURL == null) throw new IllegalStateException("No authentication URL available");
         return this.authURL;
     }
 
@@ -107,8 +111,10 @@ public class WfParticipantImpl implements WfParticipant {
      * Gets the authentication token sent with an A2 message to identify the originator associted with this participant 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
      * @return the {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token
+     * @throws IllegalStateException if no authentication token available
      */
     public WfAuthToken getAuthToken() {
+        if (this.authToken == null) throw new IllegalStateException("No authentication token available");
         return this.authToken;
     }
 
@@ -125,8 +131,10 @@ public class WfParticipantImpl implements WfParticipant {
      * Gets the shared encryption key for this participant
      * @wfref 5.2.4 Message Encryption
      * @return the pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key
+     * @throws IllegalStateException if no pre-shared key available
      */
     public WfEncryptionKey getSharedKey() {
+        if (this.sharedKey == null) throw new IllegalStateException("No pre-shared key available");
         return this.sharedKey;
     }
 
@@ -146,8 +154,10 @@ public class WfParticipantImpl implements WfParticipant {
      * Gets the ECDH public key used to derrive the negotiated key with this originator
      * @wfref 5.2.4 Message Encryption
      * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key
+     * @throws IllegalStateException if no ECDH key pair available
      */
     public WfECDHKeyPair getEcdhKeyPair() {
+        if (this.ecdhKeyPair == null) throw new IllegalStateException("No ECDH key pair available");
         return this.ecdhKeyPair;
     }
 
@@ -166,8 +176,10 @@ public class WfParticipantImpl implements WfParticipant {
      * Gets the ECDH public key used to derrive the negotiated key with this participant
      * @wfref 5.2.4 Message Encryption
      * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key
+     * @throws IllegalStateException if no ECDH public key available
      */
     public ECPublicKey getEcdhPublicKey() {
+        if (this.ecdhPublicKey == null) throw new IllegalStateException("No ECDH public key available");
         return this.ecdhPublicKey;
     }
 }
