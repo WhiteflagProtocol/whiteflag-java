@@ -24,12 +24,7 @@ public class WfMessageTest {
     @Test
     public void testNewMessage() throws WfException {
         /* Setup */
-        WfMessage message;
-        try {
-            message = WfMessage.create("S");
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.create("S");
 
         /* Verify message*/
         assertEquals("Message type should be correct", S, message.type);
@@ -73,12 +68,7 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "0", "K", "0", "0000000000000000000000000000000000000000000000000000000000000000",
                                        "11", "d426bbe111221675e333f30ef608b1aa6e60a47080dd33cb49e96395894ef42f"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify message */
         assertEquals("Message type should be correct", K, message.type);
@@ -112,12 +102,7 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "0", "A", "0", "0000000000000000000000000000000000000000000000000000000000000000",
                                        "1", "b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify */
         assertEquals("Message type should be correct", A, message.type);
@@ -144,12 +129,7 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "0", "A", "0", "0000000000000000000000000000000000000000000000000000000000000000",
                                        "2", "b01218a30dd3c23d050af254bfcce31a715fecdff6a23fd59609612e6e0ef263"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify */
         assertEquals("Message type should be correct", A, message.type);
@@ -193,12 +173,7 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "0", "A", "0", "0000000000000000000000000000000000000000000000000000000000000000",
                                        "1", "https://organisation.int/whiteflag"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.decode("5746313020800000000000000000000000000000000000000000000000000000000000000000b43a3a38399d1797b7b933b0b734b9b0ba34b7b71734b73a17bbb434ba32b33630b380");
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.decode("5746313020800000000000000000000000000000000000000000000000000000000000000000b43a3a38399d1797b7b933b0b734b9b0ba34b7b71734b73a17bbb434ba32b33630b380");
 
         /* Verify */
         assertEquals("Message type should be correct", A, message.type);
@@ -229,8 +204,8 @@ public class WfMessageTest {
             WfMessage message = WfMessage.compile(fieldValues);
             fail("Expected a WfException to be thrown");
             assertFalse("Message should not be valid", message.isValid());
-        } catch (Exception e) {
-            assertTrue(e instanceof WfException);
+        } catch (WfException e) {
+            assertEquals("Should throw a metadata error", WfException.ErrorType.WF_FORMAT_ERROR, e.errorType);
         }
     }
     /**
@@ -239,20 +214,12 @@ public class WfMessageTest {
     @Test
     public void testResourceMessageCloning() throws WfException {
         /* Setup */
-        WfMessage message1;
-        WfMessage message2;
         final String[] fieldValues = { "WF", "1", "0", "1", "R", "2", "4a4f4e0cfa83122b242234254c1920c769d685dfcc4c670bb53eb6f12843c398",
                                        "1", "https://example.com/resource-43842342"
                                     };
-        try {
-            message1 = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message1 = WfMessage.compile(fieldValues);
         message1.addMetadata("transactionHash", "a1b2c3");
-
-        /* Clone */
-        message2 = WfMessage.clone(message1);
+        WfMessage message2 = WfMessage.clone(message1);
 
         /* Verify */
         assertEquals("Metadata should be identical", message1.getMetadata("transactionHash"), message2.getMetadata("transactionHash"));
@@ -270,12 +237,7 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "1", "M", "4", "3efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae",
                                        "80", "2013-08-31T04:29:15Z", "P00D00H00M", "22", "+30.79658", "-037.82602", "8765", "3210", "042"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify */
         assertEquals("Metadata should be added", null, message.addMetadata("transactionHash", "a1b2c3"));
@@ -300,12 +262,8 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "1", "M", "4", "3efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae",
                                        "80", "2013-08-31T04:29:15Z", "P00D00H00M", "22", "+30.79658", "-037.82602", "8765", "3210", "042"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.decode(messageEncoded);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.decode(messageEncoded);
+
         /* Verify */
         assertEquals("Message type should be correct", M, message.type);
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
@@ -340,26 +298,9 @@ public class WfMessageTest {
         final String[] fieldValues = { "WF", "1", "0", "1", "T", "3", "3efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae",
                                        "M", "80", "2013-08-31T04:29:15Z", "P00D00H00M", "22", "+30.79658", "-037.82602", "8765", "3210", "042"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
-        // Encode
-        byte[] messageEncoded;
-        try {
-            messageEncoded = message.encode().toByteArray();
-        } catch (WfException e) {
-            throw e;
-        }
-        // Decode
-        WfMessage messageDecoded;
-        try {
-            messageDecoded = WfMessage.decode(messageEncoded);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.compile(fieldValues);
+        byte[] messageEncoded = message.encode().toByteArray();
+        WfMessage messageDecoded = WfMessage.decode(messageEncoded);
 
         /* Verify */
         assertEquals("Should have no metadata", null, message.getMetadata("transactionHash"));
@@ -413,26 +354,9 @@ public class WfMessageTest {
                                        "80", "2013-08-31T04:29:15Z", "P01D00H00M", "22", "+31.79658", "-033.82602", "8799", "3210", "000",
                                        "10", "02", "20", "03"
                                     };
-        WfMessage message;
-        try {
-            message = WfMessage.compile(fieldValues);
-        } catch (WfException e) {
-            throw e;
-        }
-        // Encode
-        String messageEncoded;
-        try {
-            messageEncoded = message.encode().toHexString();
-        } catch (WfException e) {
-            throw e;
-        }
-        // Decode
-        WfMessage messageDecoded;
-        try {
-            messageDecoded = WfMessage.decode(messageEncoded);
-        } catch (WfException e) {
-            throw e;
-        }
+        WfMessage message = WfMessage.compile(fieldValues);
+        String messageEncoded = message.encode().toHexString();
+        WfMessage messageDecoded = WfMessage.decode(messageEncoded);
 
         /* Verify */
         assertEquals("Message type should be correct", Q, message.type);
@@ -614,5 +538,30 @@ public class WfMessageTest {
         assertEquals("Serialized decrypted message should be identical to original", messageStr, message2.serialize());
         assertEquals("ReferencedMessage field should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
         assertEquals("DateTime field should be identical", message1.body.get("DateTime"), message2.body.get("DateTime"));
+    }
+    /**
+     * Tests message encryption and decryption missing metadata
+     */
+    @Test
+    public void testMessageEncryption4() throws WfException, WfCryptoException {
+        /* Setup */
+        WfAccountImpl originator = new WfAccountImpl(false);
+        WfAccountImpl recipient = new WfAccountImpl(true);
+        originator.setAddress("b77b1cdb02efe1acccf0e277021cb303117bd83c689ea8a64fc549229dba");
+        recipient.setEcdhKeyPair(new WfECDHKeyPair());
+
+        WfMessage message = WfMessage.deserialize("WF111Q13efb4e0cfa83122b242634254c1920a769d615dfcc4c670bb53eb6f12843c3ae802013-08-31T04:29:15ZP01D00H00M22+31.79658-033.826028799321000010022003");
+        message.setOriginator(originator);
+        message.setRecipient(recipient);
+
+        /* Encryption: orginator public ECDH key has not been set! */
+        try {
+            WfBinaryBuffer encryptedMsg = message.encode();
+            byte[] initVector = message.getInitVector();
+            fail("Expected a WfException to be thrown");
+        } catch (WfException e) {
+            System.out.println("Error in testMessageEncryption4: " + e.getMessage());
+            assertEquals("Should throw a metadata error", WfException.ErrorType.WF_METADATA_ERROR, e.errorType);
+        }
     }
 }

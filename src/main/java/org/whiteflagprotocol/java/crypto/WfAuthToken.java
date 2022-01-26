@@ -12,6 +12,8 @@ import static org.whiteflagprotocol.java.crypto.WfAuthMethod.*;
 import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
 import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToHexString;
 
+import java.util.Arrays;
+
 /**
  * Whiteflag authentication token class
  * 
@@ -46,7 +48,7 @@ public final class WfAuthToken implements Destroyable {
      * Constructs a new Whiteflag authentication token
      * @param secret a hexadecimal string with the shared secret used as an authentication token
      */
-    public WfAuthToken(String secret) {
+    public WfAuthToken(final String secret) {
         this(convertToByteArray(secret));
     }
 
@@ -54,8 +56,8 @@ public final class WfAuthToken implements Destroyable {
      * Constructs a new Whiteflag authentication token
      * @param secret a byte array with the shared secret used as an authentication token
      */
-    public WfAuthToken(byte[] secret) {
-        this.token = secret;
+    public WfAuthToken(final byte[] secret) {
+        this.token = Arrays.copyOf(secret, secret.length);
         this.method = TOKEN_PRESHARED;
     }
 

@@ -4,6 +4,7 @@
 package org.whiteflagprotocol.java.crypto;
 
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -54,7 +55,7 @@ public final class WfCipher implements Destroyable {
      * @param key the {@link WfEncryptionKey} encryption key
      * @throws WfCryptoException if the cipher could not be created
      */
-    private WfCipher(WfEncryptionKey key) throws WfCryptoException {
+    private WfCipher(final WfEncryptionKey key) throws WfCryptoException {
         this.key = key;
         try {
             this.cipher = Cipher.getInstance(key.method.cipherName);
@@ -72,7 +73,7 @@ public final class WfCipher implements Destroyable {
      * @throws IllegalArgumentException if the encryption key is invalid
      * @throws WfCryptoException if the cipher could not be created
      */
-    public static final WfCipher fromKey(WfEncryptionKey key) throws WfCryptoException {
+    public static final WfCipher fromKey(final WfEncryptionKey key) throws WfCryptoException {
         if (Boolean.TRUE.equals(key.isDestroyed())) {
             throw new IllegalArgumentException("Cannot create Whiteflag cipher from a destroyed key");
         }
@@ -107,7 +108,7 @@ public final class WfCipher implements Destroyable {
      * @param context a hexadecimal string with the context specific information required to derive the correct key
      * @return this Whiteflag cipher object
      */
-    public final WfCipher setContext(String context) {
+    public final WfCipher setContext(final String context) {
         return setContext(convertToByteArray(context));
     }
 
@@ -116,18 +117,10 @@ public final class WfCipher implements Destroyable {
      * @param context a byte array with the context specific information required to derive the correct key
      * @return this Whiteflag cipher object
      */
-    public final WfCipher setContext(byte[] context) {
+    public final WfCipher setContext(final byte[] context) {
         this.context = context;
         this.secretKey = key.getSecretKey(context);
         return this;
-    }
-
-    /**
-     * Gets the current context to which the encryption key is bound
-     * @return a byte array with the context, typically the blockchain address of the message originator
-     */
-    public final byte[] getContext() {
-        return context;
     }
 
     /** 
@@ -152,7 +145,7 @@ public final class WfCipher implements Destroyable {
      * @param initialisationVector a hexadecimal string with the initialisation vector
      * @return this Whiteflag cipher object
      */
-    public final WfCipher setInitVector(String initialisationVector) {
+    public final WfCipher setInitVector(final String initialisationVector) {
         return setInitVector(convertToByteArray(initialisationVector));
     }
 
@@ -162,7 +155,7 @@ public final class WfCipher implements Destroyable {
      * @return this Whiteflag cipher object
      */
     @SuppressWarnings("java:S3329")
-    public final WfCipher setInitVector(byte[] initialisationVector) {
+    public final WfCipher setInitVector(final byte[] initialisationVector) {
         this.iv = new IvParameterSpec(initialisationVector, 0, IVBYTELENGTH);
         return this;
     }
@@ -180,7 +173,7 @@ public final class WfCipher implements Destroyable {
      * Checks if the cipher has been fully set up for encryption or decryption.
      * @return TRUE if cipher has been fully set up, else FALSE
      */
-    public final Boolean isSet() {
+    public final boolean isSet() {
         if (context == null || context.length == 0) return false;
         if (iv == null || iv.getIV().length != IVBYTELENGTH) return false;
         return !this.destroyed;
@@ -238,6 +231,16 @@ public final class WfCipher implements Destroyable {
         } catch(Exception e) {
             throw new WfCryptoException("Could not decrypt data with " + key.method.cipherName + " cipher", e);
         }
+    }
+
+    /* PROTECTED METHODS */
+
+    /**
+     * Gets the current context to which the encryption key is bound
+     * @return a byte array with the context, typically the blockchain address of the message originator
+     */
+    protected final byte[] getContext() {
+        return Arrays.copyOf(context, context.length);
     }
 
     /* PRIVATE METHODS */

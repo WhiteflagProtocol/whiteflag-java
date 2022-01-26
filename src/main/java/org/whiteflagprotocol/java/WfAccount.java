@@ -40,7 +40,7 @@ public interface WfAccount {
      * blockchains. For example, Bitcoin uses a modified Base58 encoding
      * and Ethereum uses a hexadecimal string.
      * 
-     * @return a string with the blockchain address in the encoding used for that blockchain
+     * @return a string with the blockchain address in the encoding used for that blockchain, or null if no known address
      */
     public String getAddress();
 

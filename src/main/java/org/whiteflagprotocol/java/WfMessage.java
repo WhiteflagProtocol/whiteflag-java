@@ -5,6 +5,7 @@ package org.whiteflagprotocol.java;
 
 import java.util.Set;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.security.interfaces.ECPublicKey;
 
@@ -25,6 +26,7 @@ import org.whiteflagprotocol.java.util.WfJsonMessage;
 import org.whiteflagprotocol.java.util.WfUtilException;
 
 /* Required error types */
+import static org.whiteflagprotocol.java.WfException.ErrorType.WF_METADATA_ERROR;
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_FORMAT_ERROR;
 import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
 
@@ -40,8 +42,6 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
  * in encoded, and possibly also encrypted, form. Information from the message
  * originmator and recipient (if any) is provided through the {@link WfAccount}
  * interface.
- * 
- * TODO: Review code for safe return values and references
  * 
  * @wfver v1-draft.6
  * 
@@ -172,21 +172,21 @@ public class WfMessage extends WfMessageCore {
      * @throws WfException if the serialization of the message is invalid
      */
     public static final WfMessage deserializeJson(final String jsonMessage) throws WfException {
-        // Deserialize JSON string
+        /* Deserialize JSON string */
         WfJsonMessage jsonMsg;
         try {
             jsonMsg = WfJsonMessage.create(jsonMessage);
         } catch (WfUtilException e) {
             throw new WfException("Cannot deserialize JSON message", e, WF_FORMAT_ERROR);
         }
-        // Create message core with header and body fieldname-to-value mappings
+        /* Create message core with header and body fieldname-to-value mappings */
         WfMessageCore coreMsg;
         try {
             coreMsg = new WfMessageCreator().map(jsonMsg.getHeader(), jsonMsg.getBody()).create();
         } catch (WfCoreException e) {
             throw new WfException("Cannot deserialize JSON message", e, WF_FORMAT_ERROR);
         }
-        // Create message and add metadata
+        /* Create message and add metadata */
         WfMessage message = new WfMessage(coreMsg);
         message.setMetadata(jsonMsg.getMetadata());
         return message;
@@ -279,26 +279,9 @@ public class WfMessage extends WfMessageCore {
         } catch (WfCoreException e) {
             throw new WfException("Cannot decode unencrypted message header", e, WF_FORMAT_ERROR);
         }
-        /* Get the encryption method */
-        WfEncryptionMethod method = getEncryptionMethod(header.get(FIELD_ENCRYPTIONINDICATOR));
-        WfBinaryBuffer encodedMsg;
-        if (method != WfEncryptionMethod.NO_ENCRYPTION) {
-            /* Create and initialize cipher */
-            WfCipher cipher = createCipher(method, originator, recipient);
-            cipher.setInitVector(initVector);
+        /* Decrypt message */
+        WfBinaryBuffer encodedMsg = decrypt(encryptedMsg, header, originator, recipient, initVector);
 
-            /* Decrypt message, except first fields */
-            final int unencryptedBitPosition = header.bitLength(FIELD_ENCRYPTIONINDICATOR);
-            encodedMsg = WfBinaryBuffer.create();
-            try {
-                encodedMsg.appendBits(encryptedMsg.extractBits(0, unencryptedBitPosition));
-                encodedMsg.appendBits(cipher.decrypt(encryptedMsg.extractBits(unencryptedBitPosition)));
-            } catch (WfCryptoException e) {
-                throw new WfException("Could not decrypt message", e, WF_CRYPTO_ERROR);
-            }
-        } else {
-            encodedMsg = encryptedMsg;
-        }
         /* Decode the decrypted message */
         WfMessageCore coreMsg;
         try {
@@ -429,7 +412,7 @@ public class WfMessage extends WfMessageCore {
      */
     public final byte[] setInitVector(final byte[] initVector) {
         if (this.initVector.length == 0) {
-            this.initVector = initVector;
+            this.initVector = Arrays.copyOf(initVector, initVector.length);
         }
         return this.initVector;
     }
@@ -440,7 +423,7 @@ public class WfMessage extends WfMessageCore {
      * @return a byte array with the initialisation vector
      */
     public final byte[] getInitVector() {
-        return this.initVector;
+        return Arrays.copyOf(this.initVector, this.initVector.length);
     }
 
     /* PUBLIC METHODS: Operations */
@@ -456,7 +439,7 @@ public class WfMessage extends WfMessageCore {
             try {
                 this.cachedMsgStr = super.serialize();
             } catch (WfCoreException e) {
-                throw new WfException("Cannot serialize message", e, WF_FORMAT_ERROR);
+                throw new WfException("Could not serialize message", e, WF_FORMAT_ERROR);
             }
         }
         return this.cachedMsgStr;
@@ -465,24 +448,24 @@ public class WfMessage extends WfMessageCore {
     /**
      * Returns the cached encoded/encrypted message, or else it encodes/encrypts and caches the message
      * @since 1.1
-     * @return a byte array with the compressed binary encoded message
+     * @return a binary buffer with the encoded/endypted message
      * @throws WfException if any field does not contain valid data
      */
     @Override
     public final WfBinaryBuffer encode() throws WfException {
         /* Return encoded/encrypted message if already cached */
-        if (Boolean.TRUE.equals(cachedMsg.isComplete())) return this.cachedMsg;
+        if (Boolean.TRUE.equals(cachedMsg.isComplete())) return this.cachedMsg.copy();
 
         /* Encode and encrypt message */
         WfBinaryBuffer encodedMsg;
         try {
-            encodedMsg = encrypt(super.encode());
+            encodedMsg = super.encode();
         } catch (WfCoreException e) {
-            throw new WfException("Could not encode the message", e, WF_FORMAT_ERROR);
+            throw new WfException("Could not encode message", e, WF_FORMAT_ERROR);
         }
-        /* Cache and return the result */
-        this.cachedMsg = encodedMsg.markComplete();
-        return encodedMsg;
+        /* Encrypt, cache and return the result */
+        this.cachedMsg = encrypt(encodedMsg).markComplete();
+        return this.cachedMsg.copy();
     }
 
     /**
@@ -585,6 +568,37 @@ public class WfMessage extends WfMessageCore {
     /* PRIVATE STATIC METHODS */
 
     /**
+     * Decrypts an encrypted message
+     * @param encryptedMsg a binary buffer with the encrypted message
+     * @param header the unencrypted header fields
+     * @param originator the message originator
+     * @param recipient the message recipient
+     * @param initVector the initialisation vector
+     * @return a binary buffer with the decrypted messge
+     * @throws WfException if message cannot be decrypted
+     */
+    private static final WfBinaryBuffer decrypt(WfBinaryBuffer encryptedMsg, WfMessageSegment header, WfAccount originator, WfAccount recipient, byte[] initVector) throws WfException {
+        /* Check encryption method */
+        WfEncryptionMethod method = getEncryptionMethod(header.get(FIELD_ENCRYPTIONINDICATOR));
+        if (method == WfEncryptionMethod.NO_ENCRYPTION) return encryptedMsg;
+
+        /* Create and initialize cipher */
+        WfCipher cipher = createCipher(method, originator, recipient);
+        cipher.setInitVector(initVector);
+
+        /* Decrypt message, except first fields */
+        final int unencryptedBitPosition = header.bitLength(FIELD_ENCRYPTIONINDICATOR);
+        WfBinaryBuffer encodedMsg = WfBinaryBuffer.create();
+        try {
+            encodedMsg.appendBits(encryptedMsg.extractBits(0, unencryptedBitPosition));
+            encodedMsg.appendBits(cipher.decrypt(encryptedMsg.extractBits(unencryptedBitPosition)));
+        } catch (WfCryptoException e) {
+            throw new WfException("Could not decrypt message", e, WF_CRYPTO_ERROR);
+        }
+        return encodedMsg;
+    }
+
+    /**
      * Sets the encryption method based on message field
      * @since 1.1
      * @param encryptionIndicator the value of the EncryptionIndicator field
@@ -612,13 +626,20 @@ public class WfMessage extends WfMessageCore {
      * @throws IllegalStateException if the originator of this message is unknown
      */
     private static final WfCipher createCipher(WfEncryptionMethod method, WfAccount originator, WfAccount recipient) throws WfException {
+        /* Get encryption key and create cipher */
+        WfCipher cipher;
         try {
             WfEncryptionKey key = getEncryptionKey(method, originator, recipient);
-            WfCipher cipher = WfCipher.fromKey(key);
-            return cipher.setContext(originator.getBinaryAddress());
+            cipher = WfCipher.fromKey(key);
         } catch (WfCryptoException e) {
             throw new WfException("Could not initialize cipher to encrypt message", e, WF_CRYPTO_ERROR);
         }
+        /* Bind cipher to context */
+        byte[] address = originator.getBinaryAddress();
+        if (address.length == 0) {
+            throw new WfException("No originator blockchain address available", null, WF_METADATA_ERROR);
+        }
+        return cipher.setContext(address);
     }
 
     /**
@@ -646,9 +667,12 @@ public class WfMessage extends WfMessageCore {
      * @since 1.1
      * @param recipient the recipient of the message
      * @return the requested pre-shared encryption key
+     * @throws WfException if no key for recipient
      */
-    private static final WfEncryptionKey getSharedKey(WfAccount recipient) {
-        return recipient.getSharedKey();
+    private static final WfEncryptionKey getSharedKey(WfAccount recipient) throws WfException {
+        WfEncryptionKey key = recipient.getSharedKey();
+        if (key == null) throw new WfException("Missing pre-shared key with recipient", null, WF_METADATA_ERROR);
+        return key;
     }
 
     /**
@@ -665,10 +689,14 @@ public class WfMessage extends WfMessageCore {
         ECPublicKey ecdhPublicKey;
         if (originator.isSelf()) {
             ecdhKeypair = originator.getEcdhKeyPair();
+            if (ecdhKeypair == null) throw new WfException("Missing own ECDH key pair", null, WF_METADATA_ERROR);
             ecdhPublicKey = recipient.getEcdhPublicKey();
+            if (ecdhPublicKey == null) throw new WfException("Missing recipient's ECDH public key", null, WF_METADATA_ERROR);
         } else if (recipient.isSelf()) {
             ecdhKeypair = recipient.getEcdhKeyPair();
+            if (ecdhKeypair == null) throw new WfException("Missing recipients ECDH key pair", null, WF_METADATA_ERROR);
             ecdhPublicKey = originator.getEcdhPublicKey();
+            if (ecdhPublicKey == null) throw new WfException("Missing originator's ECDH public key", null, WF_METADATA_ERROR);
         } else {
             throw new WfException("Cannot encrypt or decrypt message if not the originator or recipient", null, WF_CRYPTO_ERROR);
         }

@@ -78,13 +78,13 @@ public class WfMessageSegment {
      * Checks if all fields of this message segment contain valid data
      * @return TRUE if message segment contains valid data, else FALSE
      */
-    public final Boolean isValid() {
+    public final boolean isValid() {
         int byteCursor = fields[0].startByte;
         for (WfMessageField field : fields) {
-            // Fields should be ordered without missing or overlapping bytes
+            /* Fields should be ordered without missing or overlapping bytes */
             if (field.startByte != byteCursor) return false;
             byteCursor = field.endByte;
-            // Field should be valid
+            /* Field should be valid */
             if (Boolean.FALSE.equals(field.isValid())) return false;
         }
         return true;
@@ -95,7 +95,7 @@ public class WfMessageSegment {
      * @param fieldname the name of the field
      * @return TRUE if the field contains valid data, else FALSE
      */
-    public final Boolean isValid(final String fieldname) {
+    public final boolean isValid(final String fieldname) {
         for (WfMessageField field : fields) {
             if (fieldname.equals(field.name)) {
                 return field.isValid();
@@ -110,7 +110,7 @@ public class WfMessageSegment {
      * @param data the value to be checked
      * @return TRUE if the field contains valid data, else FALSE
      */
-    public final Boolean isValid(final String fieldname, final String data) {
+    public final boolean isValid(final String fieldname, final String data) {
         for (WfMessageField field : fields) {
             if (fieldname.equals(field.name)) {
                 return field.isValid(data);
@@ -422,24 +422,24 @@ public class WfMessageSegment {
      * @return this {@link WfMessageSegment}
      */
     protected final WfMessageSegment append(final WfMessageSegment segment) {
-        // Create new field array and fill with original fields from this segment
+        /* Create new field array and fill with original fields from this segment */
         WfMessageField[] newFields = new WfMessageField[this.getNoFields() + segment.getNoFields()];
         System.arraycopy(this.fields, 0, newFields, 0, this.fields.length);
 
-        // Check ending and starting bytes of both segments
+        /* Check ending and starting bytes of both segments */
         WfMessageField endField = this.getField(-1);
         WfMessageField startField = segment.getField(0); 
         int shift = 0;
         if (endField != null && startField != null) {
             shift = endField.endByte - startField.startByte;
         }
-        // Add new fields from other segment with shifted start and end byte to array
+        /* Add new fields from other segment with shifted start and end byte to array */
         int i = this.fields.length;
         for (WfMessageField field : segment.getAllFields()) {
             newFields[i] = WfMessageField.from(field, shift);
             i++;
         }
-        // Set the fields with new field array
+        /* Set the fields with new field array */
         this.fields = newFields;
         return this;
     }

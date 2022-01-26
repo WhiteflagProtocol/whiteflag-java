@@ -49,36 +49,36 @@ public final class WfMessageCodec {
     public static final byte[] encodeField(WfMessageField field) {
         byte[] buffer;
         switch (field.encoding) {
-            // Encode UTF 8 field
+            /* Encode UTF 8 field */
             case UTF8:
                 buffer = field.toString().getBytes(StandardCharsets.UTF_8);
                 break;
 
-            // Encode binary field
+            /* Encode binary field */
             case BIN:
                 buffer = encodeBIN(field.toString());
                 break;
 
-            // Encode decimal or hexadecimal fields
+            /* Encode decimal or hexadecimal fields */
             case DEC:
             case HEX:
                 buffer = encodeBDX(field.toString());
                 break;
 
-            // Encode date-time and duration fields
+            /* Encode date-time and duration fields */
             case DATETIME:
             case DURATION:
-                // Encode string without fixed characters
+                /* Encode string without fixed characters */
                 buffer = encodeBDX(field.toString().replaceAll("[\\-+:.A-Z]", ""));
                 break;
 
-            // Encode lat-long coordinate fields
+            /* Encode lat-long coordinate fields */
             case LAT:
             case LONG:
                 buffer = encodeLatLong(field.toString());
                 break;
 
-            // Unknown encoding
+            /* Unknown encoding */
             default:
                 buffer = new byte[0];
                 break;
@@ -257,11 +257,11 @@ public final class WfMessageCodec {
      * @return a binary buffer containing the encoded datum
      */
     protected static final byte[] encodeLatLong(final String datumstr) {
-        // Encode string without fixed characters
+        /* Encode string without fixed characters */
         final String str = datumstr.replaceAll("[\\-+:.A-Z]", "");
         byte[] byteArray = encodeBDX(str); 
         
-        // Sign of lat long coordinates
+        /* Sign of lat long coordinates */
         if (datumstr.substring(0,1).equals("-")) {
             byteArray = WfBinaryBuffer.shiftRight(byteArray, 1);
         }
@@ -269,7 +269,7 @@ public final class WfMessageCodec {
             byteArray = WfBinaryBuffer.shiftRight(byteArray, 1);
             byteArray[0] |= (byte) 0x80;
         }
-        // Return byte array without excess bits at end
+        /* Return byte array without excess bits at end */
         final int bitLength = 1 + str.length() * QUADBIT;
         return WfBinaryBuffer.cropBits(byteArray, bitLength);
     }
@@ -377,7 +377,7 @@ public final class WfMessageCodec {
          * Checks if this encoding requires a fixed field length
          * @return TRUE if the encoding requires a fixed field length
          */
-        public Boolean isFixedLength() {
+        public boolean isFixedLength() {
             return this.fixedLength;
         }
 

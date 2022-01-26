@@ -90,14 +90,17 @@ public final class WfBinaryBuffer {
     private WfBinaryBuffer() {
         this.buffer = new byte[0];
     }
-    
+
     /**
-     * Constructs a new Whiteflag binary encoded message buffer from a byte array
-     * @param message a byte array
+     * Constructs a new Whiteflag binary encoded message buffer from a byte array with specified bit length
+     * @param byteArray a byte array
+     * @param bitLength the bit length, i.e. the number of used bits
+     * @param complete boolean indicating if the the buffer should ne marked as complete to make it read-only
      */
-    private WfBinaryBuffer(final byte[] byteArray) {
-        this.buffer = byteArray;
-        this.length = byteArray.length * BYTE;
+    private WfBinaryBuffer(final byte[] byteArray, final int bitLength, final boolean complete) {
+        this.buffer = Arrays.copyOf(byteArray, byteLength(bitLength));
+        this.length = bitLength;
+        this.complete = complete;
     }
 
     /* STATIC FACTORY METHODS */
@@ -116,7 +119,19 @@ public final class WfBinaryBuffer {
      * @return a new {@link WfBinaryBuffer}
      */
     public static final WfBinaryBuffer fromByteArray(final byte[] data) {
-        return new WfBinaryBuffer(data);
+        return new WfBinaryBuffer(data, (data.length * BYTE), false);
+    }
+
+    /**
+     * Creates a new Whiteflag binary encoded message buffer from a byte array
+     * @param data a byte array with a binary encoded Whiteflag message data
+     * @param bitLength the bit length
+     * @return a new {@link WfBinaryBuffer}
+     */
+    public static final WfBinaryBuffer fromByteArray(final byte[] data, final int bitLength) {
+        if (bitLength < 0) return new WfBinaryBuffer();
+        if (bitLength > (data.length * BYTE)) return fromByteArray(data);
+        return new WfBinaryBuffer(data, bitLength, false);
     }
 
     /**
@@ -125,7 +140,7 @@ public final class WfBinaryBuffer {
      * @return a new {@link WfBinaryBuffer}
      */
     public static final WfBinaryBuffer fromHexString(final String data) {
-        return new WfBinaryBuffer(convertToByteArray(data));
+        return fromByteArray(convertToByteArray(data));
     }
 
     /* PUBLIC METHODS */
@@ -135,7 +150,7 @@ public final class WfBinaryBuffer {
      * @return the buffer length in bits
      */
     public final int bitLength() {
-        return this.length;
+        return +this.length;
     }
 
     /**
@@ -143,7 +158,15 @@ public final class WfBinaryBuffer {
      * @return the buffer length in bits
      */
     public final int byteLength() {
-        return this.buffer.length;
+        return +this.buffer.length;
+    }
+
+    /**
+     * Makes a copy of the binary buffer
+     * @return a copy of this {@link WfBinaryBuffer}
+     */
+    public final WfBinaryBuffer copy() {
+        return new WfBinaryBuffer(this.buffer, this.length, this.complete);
     }
 
     /**
@@ -151,7 +174,7 @@ public final class WfBinaryBuffer {
      * @return a byte array with an encoded message
      */
     public final byte[] toByteArray() {
-        return this.buffer;
+        return Arrays.copyOf(this.buffer, this.buffer.length);
     }
 
     /**
@@ -184,7 +207,7 @@ public final class WfBinaryBuffer {
      * Checks if the buffer is marked as complete and cannot be altered
      * @return TRUE if buffer is marked as complete
      */
-    public final Boolean isComplete() {
+    public final boolean isComplete() {
         return this.complete;
     }
 
@@ -392,12 +415,12 @@ public final class WfBinaryBuffer {
         /* Create new byte array with the subset */ 
         byte[] newByteArray = new byte[byteLength];
         if (shift == 0) {
-            // Faster loop if no shitft needed
+            /* Faster loop if no shitft needed */
             for (int byteIndex = 0; byteIndex < byteLength; byteIndex++) {
                 newByteArray[byteIndex] = this.buffer[startByte + byteIndex];
             }
         } else {
-            // Loop through bytes to shift
+            /* Loop through bytes to shift */
             for (int byteIndex = 0; byteIndex < byteLength; byteIndex++) {
                 newByteArray[byteIndex] = (byte) ((0xFF & this.buffer[startByte + byteIndex]) << shift);
             }

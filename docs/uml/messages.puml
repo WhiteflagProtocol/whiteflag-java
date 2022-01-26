@@ -91,7 +91,10 @@ package org.whiteflagprotocol.java.core {
     }
     class WfBinaryBuffer <<DataType>> {
         __
-        +create()
+        {static} +create()
+        {static} +fromByteArray(byte[])
+        {static} +fromHexString(String)
+        +copy()
         ..
         +append(WfBinaryBuffer)
         +addMessageField(WfMessageField)

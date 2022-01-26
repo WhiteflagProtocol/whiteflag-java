@@ -24,6 +24,7 @@ may use multiple Whiteflag accounts that correspond with a blockchain address
 on the underlying blockchain. A Whiteflag account then binds Whiteflag specific
 attributes, such as authentication data and encryption keys, to that blockchain
 address.
+
 ### Example
 
 A simplified example for creating a new Whiteflag message of a type specified

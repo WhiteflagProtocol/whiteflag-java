@@ -179,24 +179,24 @@ public final class WfCryptoUtil {
      * @return the output key material
      */
     protected static final byte[] hkdfExpand(final byte[] prk, final byte[] info, final int keyLength) {
-        // Prepare output
+        /* Prepare output */
         ByteBuffer okm = ByteBuffer.allocate(keyLength);
         int remainder = keyLength;
 
-        // Prepare hashing function
+        /* Prepare hashing function */
         Mac hmac = getHMAC(prk);
         byte[] t = new byte[0];
         final int N = (int) Math.ceil((double) keyLength / (double) hmac.getMacLength());
 
-        // Interations to calculate okm
+        /* Interations to calculate okm */
         for (int i = 1; i <= N; i++) {
-            // Concatinate and hash previous hash T, info and counter i
+            /* Concatinate and hash previous hash T, info and counter i */
             hmac.update(t);
             hmac.update(info);
             hmac.update((byte) i);
             t = hmac.doFinal();
 
-            // Add hash to (remainder of) okm buffer
+            /* Add hash to (remainder of) okm buffer */
             final int length = Math.min(remainder, t.length);
             okm.put(t, 0, length);
             remainder -= length;

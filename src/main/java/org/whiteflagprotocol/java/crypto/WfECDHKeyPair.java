@@ -187,7 +187,7 @@ public final class WfECDHKeyPair implements Destroyable {
      * @return a key pair object
      * @throws WfCryptoException if an ECDH key pair could not be generated from the provided private key
      */
-    public static final KeyPair createKeyPair(ECPrivateKey ecPrivateKey) throws WfCryptoException {
+    public static final KeyPair createKeyPair(final ECPrivateKey ecPrivateKey) throws WfCryptoException {
         try {
             KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             ECPoint point = ecParamSpec.getG().multiply(ecPrivateKey.getS());
@@ -204,7 +204,7 @@ public final class WfECDHKeyPair implements Destroyable {
      * @return an ECDH public key object
      * @throws WfCryptoException if the raw key or any of the curve parameters is invalid
      */
-    public static final ECPublicKey createPublicKey(String rawPublicKey) throws WfCryptoException {
+    public static final ECPublicKey createPublicKey(final String rawPublicKey) throws WfCryptoException {
         return createPublicKey(convertToByteArray(rawPublicKey));
     }
 
@@ -214,7 +214,7 @@ public final class WfECDHKeyPair implements Destroyable {
      * @return an ECDH public key object
      * @throws WfCryptoException if the raw key or any of the curve parameters is invalid
      */
-	public static final ECPublicKey createPublicKey(byte[] rawPublicKey) throws WfCryptoException {
+	public static final ECPublicKey createPublicKey(final byte[] rawPublicKey) throws WfCryptoException {
         try {
             KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             ECPublicKeySpec ecPubkeySpec = getPublicKeySpec(rawPublicKey);
@@ -230,7 +230,7 @@ public final class WfECDHKeyPair implements Destroyable {
      * @return an ECDH private key object
      * @throws WfCryptoException if the raw key or any of the curve parameters is invalid
      */
-    public static final ECPrivateKey createPrivateKey(byte[] rawPrivateKey) throws WfCryptoException {
+    public static final ECPrivateKey createPrivateKey(final byte[] rawPrivateKey) throws WfCryptoException {
         try {
             KeyFactory kf = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             ECPrivateKeySpec ecPrivkeySpec = new ECPrivateKeySpec(new BigInteger(rawPrivateKey), ecParamSpec);
@@ -245,18 +245,18 @@ public final class WfECDHKeyPair implements Destroyable {
      * @param ecPublicKey an ECDH public key object
      * @return a byte array with the raw 264-bit compressed public ECDH key
      */
-    public static final byte[] compressPublicKey(ECPublicKey ecPublicKey) {
-        // Get coordinates of public key
+    public static final byte[] compressPublicKey(final ECPublicKey ecPublicKey) {
+        /* Get coordinates of public key */
         final BigInteger y = ecPublicKey.getW().getAffineY();
         final BigInteger x = ecPublicKey.getW().getAffineX();
 
-        // Copy x-coordinate into byte array 
+        /* Copy x-coordinate into byte array */
         byte[] compressedPubkey = new byte[PUBKEYLENGTH];
         final byte[] xBytes = x.toByteArray();
         final int startByte = compressedPubkey.length - xBytes.length;
         System.arraycopy(xBytes, 0, compressedPubkey, startByte, xBytes.length);
 
-        // Set first byte of compressed key and return compressed key
+        /* Set first byte of compressed key and return compressed key */
         if (y.testBit(0)) compressedPubkey[0] = 0x03;   // y is odd
             else compressedPubkey[0] = 0x02;            // y is even
         return compressedPubkey;
@@ -279,7 +279,7 @@ public final class WfECDHKeyPair implements Destroyable {
      * @param coordinates a byte array with the ASN.1 encoded coordinates
      * @return the {@link org.bouncycastle.jce.spec.ECPublicKeySpec} with the public key specification
      */
-    private static final ECPublicKeySpec getPublicKeySpec(byte[] coordinates) {
+    private static final ECPublicKeySpec getPublicKeySpec(final byte[] coordinates) {
         ECPoint point = curve.decodePoint(coordinates);
         return new ECPublicKeySpec(point, ecParamSpec);
     }

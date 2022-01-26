@@ -3,6 +3,7 @@
  */
 package org.whiteflagprotocol.java.crypto;
 
+import java.util.Arrays;
 import java.security.interfaces.ECPublicKey;
 
 import javax.crypto.SecretKey;
@@ -51,7 +52,7 @@ public final class WfEncryptionKey implements Destroyable {
      * Constructs a new Whiteflag encryption key from a raw pre-shared key
      * @param rawPreSharedKey a hexadecimal string with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(String rawPreSharedKey) {
+    public WfEncryptionKey(final String rawPreSharedKey) {
         this(convertToByteArray(rawPreSharedKey));
     }
 
@@ -59,8 +60,8 @@ public final class WfEncryptionKey implements Destroyable {
      * Constructs a new Whiteflag encryption key from a raw pre-shared key
      * @param rawPreSharedKey a byte array with the raw pre-shared encryption key
      */
-    public WfEncryptionKey(byte[] rawPreSharedKey) {
-        this.rawkey = rawPreSharedKey;
+    public WfEncryptionKey(final byte[] rawPreSharedKey) {
+        this.rawkey = Arrays.copyOf(rawPreSharedKey, rawPreSharedKey.length);
         this.method = AES_256_CTR_PSK;
         this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
     }
@@ -72,7 +73,7 @@ public final class WfEncryptionKey implements Destroyable {
      * @throws WfCryptoException if the encryption key cannot be created
      * @throws IllegalStateException if the key pair has been destroyed
      */
-    public WfEncryptionKey(String rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
+    public WfEncryptionKey(final String rawPublicKey, final WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
         this(convertToByteArray(rawPublicKey), ecdhKeyPair);
     }
 
@@ -83,7 +84,7 @@ public final class WfEncryptionKey implements Destroyable {
      * @throws WfCryptoException if the encryption key cannot be created
      * @throws IllegalStateException if the key pair has been destroyed
      */
-    public WfEncryptionKey(byte[] rawPublicKey, WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
+    public WfEncryptionKey(final byte[] rawPublicKey, final WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
         this.rawkey = ecdhKeyPair.negotiateKey(rawPublicKey);
         this.method = AES_256_CTR_ECDH;
         this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
@@ -96,7 +97,7 @@ public final class WfEncryptionKey implements Destroyable {
      * @throws WfCryptoException if the encryption key cannot be created
      * @throws IllegalStateException if the key pair has been destroyed
      */
-    public WfEncryptionKey(ECPublicKey ecPublicKey, WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
+    public WfEncryptionKey(final ECPublicKey ecPublicKey, final WfECDHKeyPair ecdhKeyPair) throws WfCryptoException {
         this.rawkey = ecdhKeyPair.negotiateKey(ecPublicKey);
         this.method = AES_256_CTR_ECDH;
         this.prk = WfCryptoUtil.hkdfExtract(rawkey, method.hkdfSalt);
@@ -137,7 +138,7 @@ public final class WfEncryptionKey implements Destroyable {
      * @return a java SecretKey object with the secret cryptographic key
      * @throws IllegalArgumentException if the encryption key has been destroyed 
      */
-    public final SecretKey getSecretKey(String context) {
+    public final SecretKey getSecretKey(final String context) {
         return getSecretKey(convertToByteArray(context));
     }
 
@@ -147,7 +148,7 @@ public final class WfEncryptionKey implements Destroyable {
      * @return a java SecretKey object with the secret cryptographic key
      * @throws IllegalArgumentException if the encryption key has been destroyed
      */
-    public final SecretKey getSecretKey(byte[] context) {
+    public final SecretKey getSecretKey(final byte[] context) {
         checkState();
         return new SecretKeySpec(
             WfCryptoUtil.hkdfExpand(prk, context, method.keyLength),
