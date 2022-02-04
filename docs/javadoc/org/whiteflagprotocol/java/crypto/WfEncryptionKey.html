@@ -174,7 +174,7 @@ implements javax.security.auth.Destroyable</pre>
 <td class="colFirst"><code><a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#method">method</a></span></code></th>
 <td class="colLast">
-<div class="block">The <a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto"><code>WfEncryptionMethod</code></a> for which this key is valid</div>
+<div class="block">The encryption method for which this key is valid</div>
 </td>
 </tr>
 </table>
@@ -311,7 +311,7 @@ implements javax.security.auth.Destroyable</pre>
 <li class="blockList">
 <h4>method</h4>
 <pre>public final&nbsp;<a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto">WfEncryptionMethod</a> method</pre>
-<div class="block">The <a href="WfEncryptionMethod.html" title="enum in org.whiteflagprotocol.java.crypto"><code>WfEncryptionMethod</code></a> for which this key is valid</div>
+<div class="block">The encryption method for which this key is valid</div>
 </li>
 </ul>
 </li>
@@ -404,7 +404,7 @@ implements javax.security.auth.Destroyable</pre>
 <div class="block">Constructs a new Whiteflag encryption key through ECDH key negotiation</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>ecPublicKey</code> - a <code>ECPublicKey</code> ECDH public key</dd>
+<dd><code>ecPublicKey</code> - a ECDH public key</dd>
 <dd><code>ecdhKeyPair</code> - the own ECDH key pair object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCryptoException.html" title="class in org.whiteflagprotocol.java.crypto">WfCryptoException</a></code> - if the encryption key cannot be created</dd>

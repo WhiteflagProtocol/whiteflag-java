@@ -52,7 +52,7 @@ public final class WfCipher implements Destroyable {
 
     /**
      * Constructs a new Whiteflag cipher based on the type of the provided Whiteflag encryption key
-     * @param key the {@link WfEncryptionKey} encryption key
+     * @param key the encryption key
      * @throws WfCryptoException if the cipher could not be created
      */
     private WfCipher(final WfEncryptionKey key) throws WfCryptoException {
@@ -68,8 +68,8 @@ public final class WfCipher implements Destroyable {
 
     /**
      * Creates a new Whiteflag cipher instance from a Whiteflag encryption key
-     * @param key the {@link WfEncryptionKey} encryption key
-     * @return a new {@link WfCipher} instance
+     * @param key the encryption key
+     * @return a new Whiteflag cipher instance
      * @throws IllegalArgumentException if the encryption key is invalid
      * @throws WfCryptoException if the cipher could not be created
      */
@@ -89,10 +89,12 @@ public final class WfCipher implements Destroyable {
      */
     @Override
     public final void destroy() throws DestroyFailedException {
-        if (this.secretKey != null) {
-            this.secretKey.destroy();   // Destroy derived key; throws exceptions
+        try {
+            if (this.secretKey != null) this.secretKey.destroy();
+        } catch (DestroyFailedException e) {
+            /* For some reason, javax.crypto.SecretKey does not actually implement the destroy() method */
         }
-        this.key = null;                // Only delete reference
+        this.key = null;    // Only delete reference
         this.destroyed = true;
     }
 

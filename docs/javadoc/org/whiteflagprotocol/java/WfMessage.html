@@ -338,14 +338,14 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <td class="colFirst"><code><a href="WfAccount.html" title="interface in org.whiteflagprotocol.java">WfAccount</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOriginator()">getOriginator</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Gets the originator of this message</div>
+<div class="block">Gets the originator of this message by their account</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="WfAccount.html" title="interface in org.whiteflagprotocol.java">WfAccount</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRecipient()">getRecipient</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Gets the recipient of this message</div>
+<div class="block">Gets the recipient of this message by theri account</div>
 </td>
 </tr>
 <tr id="i21" class="rowColor">
@@ -401,7 +401,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toHexString()">toHexString</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns a hexedimal string representation of the binary encoded message</div>
+<div class="block">Returns a hexadimal string representation of the binary encoded message</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
@@ -455,7 +455,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>messageCode</code> - a string with the code indicating the message type to be created</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be created</dd>
 </dl>
@@ -473,7 +473,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>message</code> - the message to be copied</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a copy of the Whiteflag message</dd>
 </dl>
 </li>
 </ul>
@@ -489,7 +489,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>message</code> - the message to be copied</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a clone of the Whiteflag message</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.1</dd>
 </dl>
@@ -508,7 +508,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>serializedMsg</code> - the uncompressed serialized message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -529,7 +529,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>jsonMessage</code> - the serialized JSON message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the serialization of the message is invalid</dd>
 </dl>
@@ -548,7 +548,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>hexMessage</code> - a hexadecimal string representation of the encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -569,7 +569,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>binMessage</code> - a byte array with the binary encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -590,7 +590,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>encodedMsg</code> - a binary buffer with the encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decoded</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -617,7 +617,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd><code>recipient</code> - the intended recipient of the message</dd>
 <dd><code>initVector</code> - the initialisation vector used to encrypt the message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decrypted or decoded</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -644,7 +644,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd><code>recipient</code> - the intended recipient of the message</dd>
 <dd><code>initVector</code> - a byte array with initialisation vector used to encrypt the message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decrypted or decoded</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -671,7 +671,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dd><code>recipient</code> - the intended recipient of the message</dd>
 <dd><code>initVector</code> - a byte array with the initialisation vector used to encrypt the message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if the message cannot be decrypted or decoded</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -692,7 +692,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>fieldValues</code> - a string array with the values for the message fields</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a> Whiteflag message</dd>
+<dd>a new Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></code> - if any of the provided values is invalid</dd>
 </dl>
@@ -787,10 +787,10 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <li class="blockList">
 <h4>getOriginator</h4>
 <pre class="methodSignature">public final&nbsp;<a href="WfAccount.html" title="interface in org.whiteflagprotocol.java">WfAccount</a>&nbsp;getOriginator()</pre>
-<div class="block">Gets the originator of this message</div>
+<div class="block">Gets the originator of this message by their account</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <a href="WfAccount.html" title="interface in org.whiteflagprotocol.java"><code>WfAccount</code></a> of the originator</dd>
+<dd>the account of the originator</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.1</dd>
 </dl>
@@ -806,7 +806,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <div class="block">Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>recipient</code> - the <a href="WfAccount.html" title="interface in org.whiteflagprotocol.java"><code>WfAccount</code></a> of the recipient of this message</dd>
+<dd><code>recipient</code> - the account of the recipient of this message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>null if address newly added to metadata, otherwise the existing value that was replaced</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -821,10 +821,10 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <li class="blockList">
 <h4>getRecipient</h4>
 <pre class="methodSignature">public final&nbsp;<a href="WfAccount.html" title="interface in org.whiteflagprotocol.java">WfAccount</a>&nbsp;getRecipient()</pre>
-<div class="block">Gets the recipient of this message</div>
+<div class="block">Gets the recipient of this message by theri account</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <a href="WfAccount.html" title="interface in org.whiteflagprotocol.java"><code>WfAccount</code></a> of the recipient</dd>
+<dd>the account of the recipient</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>1.1</dd>
 </dl>
@@ -968,7 +968,7 @@ extends <a href="core/WfMessageCore.html" title="class in org.whiteflagprotocol.
 <h4>toHexString</h4>
 <pre class="methodSignature">public final&nbsp;java.lang.String&nbsp;toHexString()
                                    throws <a href="WfException.html" title="class in org.whiteflagprotocol.java">WfException</a></pre>
-<div class="block">Returns a hexedimal string representation of the binary encoded message</div>
+<div class="block">Returns a hexadimal string representation of the binary encoded message</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a hexadecimal string representation of the binary encoded</dd>

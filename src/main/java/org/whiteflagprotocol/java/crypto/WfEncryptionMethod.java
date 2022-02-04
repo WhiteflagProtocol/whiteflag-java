@@ -102,7 +102,7 @@ public enum WfEncryptionMethod {
      * Returns the encryption method from the indicator value
      * @since 1.1
      * @param fieldValue the value used in the EncryptionIndicator message field to indicate the encryption method
-     * @return a {@link WfEncryptionMethod}
+     * @return the requested encryption method
      * @throws WfCryptoException if the encryption indicator is invalid
      */
     public static final WfEncryptionMethod fromFieldValue(final String fieldValue) throws WfCryptoException {

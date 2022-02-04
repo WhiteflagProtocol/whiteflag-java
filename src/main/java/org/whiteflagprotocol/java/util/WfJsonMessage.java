@@ -75,7 +75,7 @@ public class WfJsonMessage {
     /**
      * Creates a new JSON representation of a Whiteflag message from a serialized JSON string
      * @param jsonStr a JSON representation of a Whiteflag message
-     * @return a {@link WfJsonMessage}
+     * @return a JSON message
      * @throws WfUtilException if JSON is invalid
      */
     public static WfJsonMessage create(String jsonStr) throws WfUtilException {

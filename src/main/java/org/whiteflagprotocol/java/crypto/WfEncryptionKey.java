@@ -38,7 +38,7 @@ public final class WfEncryptionKey implements Destroyable {
 
     /* The encryption method and keys */
     /**
-     * The {@link WfEncryptionMethod} for which this key is valid
+     * The encryption method for which this key is valid
      */
     public final WfEncryptionMethod method;
 
@@ -92,7 +92,7 @@ public final class WfEncryptionKey implements Destroyable {
 
     /**
      * Constructs a new Whiteflag encryption key through ECDH key negotiation
-     * @param ecPublicKey a {@link java.security.interfaces.ECPublicKey} ECDH public key
+     * @param ecPublicKey a ECDH public key
      * @param ecdhKeyPair the own ECDH key pair object
      * @throws WfCryptoException if the encryption key cannot be created
      * @throws IllegalStateException if the key pair has been destroyed

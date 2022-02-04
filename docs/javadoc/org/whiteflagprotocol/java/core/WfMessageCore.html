@@ -172,21 +172,21 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code><a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#body">body</a></span></code></th>
 <td class="colLast">
-<div class="block">The <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageSegment</code></a> representing the message body</div>
+<div class="block">The message body</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#header">header</a></span></code></th>
 <td class="colLast">
-<div class="block">The <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageSegment</code></a> representing the message header</div>
+<div class="block">The message header</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type">type</a></span></code></th>
 <td class="colLast">
-<div class="block">The <a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a> indoicating the type of the message</div>
+<div class="block">The type of the message</div>
 </td>
 </tr>
 </table>
@@ -220,7 +220,7 @@ extends java.lang.Object</pre>
              <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;header,
              <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;body)</code></th>
 <td class="colLast">
-<div class="block">Creates a Whiteflag message core from a header and a body segment</div>
+<div class="block">Creates a Whiteflag message core from a header and a body</div>
 </td>
 </tr>
 </table>
@@ -344,7 +344,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>type</h4>
 <pre>public final&nbsp;<a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a> type</pre>
-<div class="block">The <a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a> indoicating the type of the message</div>
+<div class="block">The type of the message</div>
 <dl>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>2.4.2 Message Functionality</dd>
@@ -358,7 +358,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>header</h4>
 <pre>public final&nbsp;<a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a> header</pre>
-<div class="block">The <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageSegment</code></a> representing the message header</div>
+<div class="block">The message header</div>
 <dl>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>4.2 Message Header</dd>
@@ -372,7 +372,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>body</h4>
 <pre>public final&nbsp;<a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a> body</pre>
-<div class="block">The <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageSegment</code></a> representing the message body</div>
+<div class="block">The message body</div>
 <dl>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>4.3 Message Body</dd>
@@ -398,10 +398,10 @@ extends java.lang.Object</pre>
 <pre>protected&nbsp;WfMessageCore&#8203;(<a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core">WfMessageType</a>&nbsp;type,
                         <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;header,
                         <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core">WfMessageSegment</a>&nbsp;body)</pre>
-<div class="block">Creates a Whiteflag message core from a header and a body segment</div>
+<div class="block">Creates a Whiteflag message core from a header and a body</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>type</code> - the of the message</dd>
+<dd><code>type</code> - the message type</dd>
 <dd><code>header</code> - the message header</dd>
 <dd><code>body</code> - the message body</dd>
 </dl>
@@ -587,7 +587,7 @@ extends java.lang.Object</pre>
 <div class="block">Encodes the Whiteflag message</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> with the compressed binary encoded Whiteflag message</dd>
+<dd>a buffer with the binary encoded Whiteflag message</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if any of the fields does not contain valid data</dd>
 </dl>

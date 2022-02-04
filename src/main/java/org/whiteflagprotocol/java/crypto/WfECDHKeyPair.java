@@ -277,7 +277,7 @@ public final class WfECDHKeyPair implements Destroyable {
     /**
      * Calculates the point on the curve and returns public key specification
      * @param coordinates a byte array with the ASN.1 encoded coordinates
-     * @return the {@link org.bouncycastle.jce.spec.ECPublicKeySpec} with the public key specification
+     * @return the public key specification
      */
     private static final ECPublicKeySpec getPublicKeySpec(final byte[] coordinates) {
         ECPoint point = curve.decodePoint(coordinates);

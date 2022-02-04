@@ -58,7 +58,7 @@ public enum WfAuthMethod {
      * Returns the encryption method from the indicator value
      * @since 1.1
      * @param fieldValue the value used in the VerificationMethod message field to indicate the encryption method
-     * @return a {@link WfAuthMethod}
+     * @return the requested authentication method
      * @throws WfCryptoException if the encryption indicator is invalid
      */
     public static final WfAuthMethod fromFieldValue(final String fieldValue) throws WfCryptoException {

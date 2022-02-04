@@ -14,7 +14,7 @@ import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 /**
  * Whiteflag account interface test implementation
  * 
- * This class is an implementation of the {@link WfParticpant} interface for
+ * This class is an implementation of the {@link WfAccount} interface for
  * testing purposes.
  */
 public class WfAccountImpl implements WfAccount {
@@ -77,9 +77,9 @@ public class WfAccountImpl implements WfAccount {
     }
 
     /**
-     * Sets the authentication URL sent with an A1 message used to identify the originator associted with this account
+     * Sets the authentication URL sent with an A1 message used to identify the originator associated with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
-     * @param url a {@link java.net.URL} pointinng to the authentication data
+     * @param url a URL pointing to the authentication data
      */
     public void setAuthURL(final URL url) {
         this.authURL = url;
@@ -88,7 +88,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Gets the authentication URL sent with an A1 message used to identify the originator associated with this account
      * @wfref 5.1.2.1 Method 1: URL Validation
-     * @return a {@link java.net.URL} pointinng to the authentication data, or null if not available
+     * @return a URL pointing to the authentication data, or null if not available
      */
     public URL getAuthURL() {
         return this.authURL;
@@ -97,7 +97,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Sets the authentication token sent with an A2 message to identify the originator associated with this account 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
-     * @param token a {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token
+     * @param token an authentication token
      */
     public void setAuthToken(final WfAuthToken token) {
         this.authToken = token;
@@ -106,7 +106,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Gets the authentication token sent with an A2 message to identify the originator associated with this account 
      * @wfref 5.1.2.2 Method 2: Shared Token Validation
-     * @return the {@link org.whiteflagprotocol.java.crypto.WfAuthToken} authentication token, or null if not available
+     * @return the authentication token, or null if not available
      */
     public WfAuthToken getAuthToken() {
         return this.authToken;
@@ -115,7 +115,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Sets the shared encryption key with this participant's account
      * @wfref 5.2.4 Message Encryption
-     * @param key a pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key
+     * @param key a pre-shared encryption key
      */
     public void setSharedKey(final WfEncryptionKey key) {
         this.sharedKey = key;
@@ -124,7 +124,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Gets the shared encryption key with this participant's account
      * @wfref 5.2.4 Message Encryption
-     * @return the pre-shared {@link org.whiteflagprotocol.java.crypto.WfEncryptionKey} encryption key, or null if not available
+     * @return the pre-shared encryption key, or null if not available
      */
     public WfEncryptionKey getSharedKey() {
         return this.sharedKey;
@@ -133,7 +133,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Sets the own ECDH key pair used to derrive a negotiated key with another originator
      * @wfref 5.2.4 Message Encryption
-     * @param ecdhKeyPair a {@link org.whiteflagprotocol.java.crypto.WfECDHKeyPair} ECDH key pair
+     * @param ecdhKeyPair an ECDH key pair
      * @throws IllegalStateException if this is not an own account
      */
     public void setEcdhKeyPair(final WfECDHKeyPair ecdhKeyPair) {
@@ -145,7 +145,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Gets the ECDH public key used to derrive the negotiated key with this originator
      * @wfref 5.2.4 Message Encryption
-     * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key, or null if not available
+     * @return the ECDH public key, or null if not available
      */
     public WfECDHKeyPair getEcdhKeyPair() {
         return this.ecdhKeyPair;
@@ -154,7 +154,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Sets the ECDH public key used to derrive the negotiated key with this participant's account
      * @wfref 5.2.4 Message Encryption
-     * @param ecdhPublicKey a {@link java.security.interfaces.ECPublicKey} ECDH public key
+     * @param ecdhPublicKey an ECDH public key
      * @throws IllegalStateException if this is an own account, in which case the ECDH public key is defined by the ECDH key pair
      */
     public void setEcdhPublicKey(final ECPublicKey ecdhPublicKey) {
@@ -165,7 +165,7 @@ public class WfAccountImpl implements WfAccount {
     /**
      * Gets the ECDH public key used to derrive the negotiated key with this participant's account
      * @wfref 5.2.4 Message Encryption
-     * @return the {@link java.security.interfaces.ECPublicKey} ECDH public key, or null if not available
+     * @return the ECDH public key, or null if not available
      */
     public ECPublicKey getEcdhPublicKey() {
         return this.ecdhPublicKey;

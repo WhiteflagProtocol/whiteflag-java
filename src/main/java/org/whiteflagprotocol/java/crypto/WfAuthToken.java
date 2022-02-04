@@ -32,7 +32,7 @@ public final class WfAuthToken implements Destroyable {
 
     /* PROPERTIES */
     /**
-     * The {@link WfAuthMethod} for which this token is valid
+     * The authentication method for which this token is valid
      */
     public final WfAuthMethod method;
 

@@ -41,9 +41,9 @@ public final class WfMessageCodec {
     /* PUBLIC STATIC METHOS */
 
     /**
-     * Encodes a Whiteflag field into a binary buffer
+     * Encodes a Whiteflag message field to compressed binary representation
      * @since 1.1
-     * @param field a {@link WfMessageField}
+     * @param field the message field to be encoded
      * @return a binary buffer with the encoded field
      */
     public static final byte[] encodeField(WfMessageField field) {

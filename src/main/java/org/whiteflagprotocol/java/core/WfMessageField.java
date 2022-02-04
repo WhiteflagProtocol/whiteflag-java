@@ -31,7 +31,7 @@ public final class WfMessageField {
      */
     public final Pattern pattern;
     /**
-     * The {@link WfMessageCodec.Encoding} encoding type of the field
+     * The encoding of the field
      */
     public final WfMessageCodec.Encoding encoding;
     /**
@@ -75,7 +75,7 @@ public final class WfMessageField {
      * @param encoding the encoding of the field
      * @param startByte the starting byte of the field in a serialized / uncompressed message
      * @param endByte the ending byte (not included) of the field in a serialized / uncompressed message; ignored if encoding requires a fixed field length
-     * @return a {@link WfMessageField}
+     * @return a new message field
      * @wfref 4.1.2 Encoding
      */
     public static final WfMessageField define(final String name, String pattern, final WfMessageCodec.Encoding encoding, int startByte, int endByte) {
@@ -93,8 +93,8 @@ public final class WfMessageField {
 
     /**
      * Creates a new Whiteflag message field from an existing field, without copying the value
-     * @param field the {@link WfMessageField} to copy
-     * @return a new {@link WfMessageField}
+     * @param field the message field to copy
+     * @return a new message field
      */
     public static final WfMessageField from(final WfMessageField field) {
         return from(field, 0);
@@ -102,9 +102,9 @@ public final class WfMessageField {
 
     /**
      * Creates a new Whiteflag message field from an existing field, without copying the value
-     * @param field the {@link WfMessageField} to copy
+     * @param field the message field to copy
      * @param shift number of bytes to shift the field
-     * @return a new {@link WfMessageField}
+     * @return a new message field
      */
     public static final WfMessageField from(final WfMessageField field, final int shift) {
         int startByte = field.startByte + shift;

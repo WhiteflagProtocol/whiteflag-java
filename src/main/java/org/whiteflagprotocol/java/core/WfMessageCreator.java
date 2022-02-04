@@ -6,7 +6,7 @@ package org.whiteflagprotocol.java.core;
 import java.util.Map;
 
 /**
- * Whiteflag message builder class
+ * Whiteflag message creator class
  * 
  * <p> This is a builder class to create a Whiteflag message. It contains
  * the logic based on the Whiteflag specification to create a Whiteflag message
@@ -40,7 +40,7 @@ public final class WfMessageCreator {
     /* CONSTRUCTOR */
 
     /**
-     * Constructs a Whiteflag message builder
+     * Constructs a Whiteflag message creator
      */
     public WfMessageCreator() {
         /* Nothing required for instantiating a Whiteflag creator object */
@@ -49,8 +49,8 @@ public final class WfMessageCreator {
     /* PUBLIC METHODS */
 
     /**
-     * Creates the Whiteflag core message
-     * @return a new {@link WfMessageCore}
+     * Creates the Whiteflag message core
+     * @return a new message core
      */
     public final WfMessageCore create() {
         return new WfMessageCore(messageType, header, body);
@@ -58,8 +58,8 @@ public final class WfMessageCreator {
 
     /**
      * Creates a new empty Whiteflag core message object of the specified type
-     * @param messageType the {@link WfMessageType} of the new message
-     * @return this {@link WfMessageCreator}
+     * @param messageType the type of the new message
+     * @return this message creator 
      */
     public final WfMessageCreator type(final WfMessageType messageType) {
         /* Create header and body based on message code */
@@ -80,7 +80,7 @@ public final class WfMessageCreator {
      * Creates a new Whiteflag core message object from header and body maps
      * @param headerValues a fieldname-to-value mapping of the message header fields
      * @param bodyValues a fieldname-to-value mapping of the message body fields
-     * @return this {@link WfMessageCreator}
+     * @return this message creator 
      * @throws WfCoreException if the fieldname-to-value mapping is incorrect
      */
     public final WfMessageCreator map(final Map<String, String> headerValues, final Map<String, String> bodyValues) throws WfCoreException {
@@ -118,7 +118,7 @@ public final class WfMessageCreator {
      * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
      * @since 1.1
      * @param serializedMsg the uncompressed serialized message
-     * @return this {@link WfMessageCreator}
+     * @return this message creator
      * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCreator deserialize(final String serializedMsg) throws WfCoreException {
@@ -156,8 +156,8 @@ public final class WfMessageCreator {
     /**
      * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
      * @since 1.1
-     * @param msgBuffer a {@link WfBinaryBuffer} with the compressed binary encoded message
-     * @return this {@link WfMessageCreator}
+     * @param msgBuffer a buffer with the compressed binary encoded message
+     * @return this message creator 
      * @throws WfCoreException if the encoded message is invalid
      */
     public final WfMessageCreator decode(final WfBinaryBuffer msgBuffer) throws WfCoreException {
@@ -197,8 +197,8 @@ public final class WfMessageCreator {
     /**
      * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
      * @since 1.1
-     * @param msgBuffer a {@link WfBinaryBuffer} with the compressed binary encoded message
-     * @return the {@link WfMessageSegment} unencrypted header
+     * @param msgBuffer a buffer with the compressed binary encoded message
+     * @return the unencrypted message header
      * @throws WfCoreException if the encoded message is invalid
      */
     public final WfMessageSegment getUnencryptedHeader(final WfBinaryBuffer msgBuffer) throws WfCoreException {
@@ -211,7 +211,7 @@ public final class WfMessageCreator {
     /**
      * Compiles a new Whiteflag core message object from field values
      * @param fieldValues String array with the values for the message fields
-     * @return this {@link WfMessageCreator}
+     * @return this message creator 
      * @throws WfCoreException if the provided values are invalid
      */
     public final WfMessageCreator compile(final String[] fieldValues) throws WfCoreException {

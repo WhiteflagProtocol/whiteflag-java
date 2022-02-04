@@ -135,7 +135,7 @@ extends java.lang.Object</pre>
 <div class="block">Whiteflag encoded message object
  
  <p> This class defines a binary buffer to represent encoded messages. It
- can either be created 1. by appending <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> fields from a
+ can either be created 1. by appending message field fields from a
  Whiteflag message, which are encoded when added, or 2. by providing a
  hexadecimal string or byte array with an encoded message. The binary buffer
  can be converted to a hexadecimal string or a byte byffer, e.g. for
@@ -199,7 +199,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static java.util.regex.Pattern</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#HEXPATTERN">HEXPATTERN</a></span></code></th>
 <td class="colLast">
-<div class="block">The regex pattern describing a valid hexadecimnal string</div>
+<div class="block">The regex pattern describing a valid hexadecimal string</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -465,7 +465,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>HEXPATTERN</h4>
 <pre>public static final&nbsp;java.util.regex.Pattern HEXPATTERN</pre>
-<div class="block">The regex pattern describing a valid hexadecimnal string</div>
+<div class="block">The regex pattern describing a valid hexadecimal string</div>
 </li>
 </ul>
 <a id="BINPREFIX">
@@ -600,7 +600,7 @@ extends java.lang.Object</pre>
 <div class="block">Creates a new Whiteflag binary buffer</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>a new binary buffer</dd>
 </dl>
 </li>
 </ul>
@@ -616,7 +616,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - a byte array with a binary encoded Whiteflag message data</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>a new binary buffer</dd>
 </dl>
 </li>
 </ul>
@@ -634,7 +634,7 @@ extends java.lang.Object</pre>
 <dd><code>data</code> - a byte array with a binary encoded Whiteflag message data</dd>
 <dd><code>bitLength</code> - the bit length</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>a new binary buffer</dd>
 </dl>
 </li>
 </ul>
@@ -650,7 +650,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>data</code> - a hexadecimal string with a binary encoded Whiteflag message data</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>a new binary buffer</dd>
 </dl>
 </li>
 </ul>
@@ -692,7 +692,7 @@ extends java.lang.Object</pre>
 <div class="block">Makes a copy of the binary buffer</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a copy of this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>a copy of this binary buffer</dd>
 </dl>
 </li>
 </ul>
@@ -734,7 +734,7 @@ extends java.lang.Object</pre>
 <div class="block">Marks the buffer as complete and makes it read-only</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>this binary buffer</dd>
 </dl>
 </li>
 </ul>
@@ -763,9 +763,9 @@ extends java.lang.Object</pre>
 <div class="block">Appends a binary buffer to this binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>binaryBuffer</code> - the <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> to append to this binary buffer</dd>
+<dd><code>binaryBuffer</code> - the binary buffer to append to this binary buffer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>this binary buffer</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalStateException</code> - if the buffer is marked complete and cannot be altered</dd>
 </dl>
@@ -782,9 +782,9 @@ extends java.lang.Object</pre>
 <div class="block">Encodes a Whiteflag message field and adds it to the end of the binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>field</code> - the next <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to be encoded and added to the buffer</dd>
+<dd><code>field</code> - the next message field to be encoded and added to the buffer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>this binary buffer</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if field connot be encoded</dd>
 <dd><code>java.lang.IllegalStateException</code> - if the buffer is marked complete and cannot be altered</dd>
@@ -803,7 +803,7 @@ extends java.lang.Object</pre>
 <div class="block">Extracts and decodes a Whiteflag message field from the binary buffer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>field</code> - the <a href="WfMessageField.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageField</code></a> to be extracted and decoded</dd>
+<dd><code>field</code> - the message field to be extracted and decoded</dd>
 <dd><code>startBit</code> - the bit where the encoded field is located in the buffer</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>String with the decoded field value</dd>
@@ -912,7 +912,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>byteArray</code> - the byte array with the bits to be appended</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>this binary buffer</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalStateException</code> - if the buffer is marked complete and cannot be altered</dd>
 </dl>
@@ -932,7 +932,7 @@ extends java.lang.Object</pre>
 <dd><code>byteArray</code> - the byte array with the bits to be appended</dd>
 <dd><code>nBits</code> - the number of bits to be appended from the byte array</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a></dd>
+<dd>this binary buffer</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.lang.IllegalStateException</code> - if the buffer is marked complete and cannot be altered</dd>
 </dl>

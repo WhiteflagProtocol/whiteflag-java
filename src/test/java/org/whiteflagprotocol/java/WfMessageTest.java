@@ -543,6 +543,7 @@ public class WfMessageTest {
      * Tests message encryption and decryption missing metadata
      */
     @Test
+    @SuppressWarnings("unused")
     public void testMessageEncryption4() throws WfException, WfCryptoException {
         /* Setup */
         WfAccountImpl originator = new WfAccountImpl(false);

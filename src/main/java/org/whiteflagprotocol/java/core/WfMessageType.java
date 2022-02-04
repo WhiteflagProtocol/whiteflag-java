@@ -115,7 +115,7 @@ public enum WfMessageType {
 
     /**
      * @param messageCode message code of the message type
-     * @param bodyFields array of {@link WfMessageField} body fields
+     * @param bodyFields array of message body fields
      */
     private WfMessageType(final String messageCode, final WfMessageField[] bodyFields) {
         this.messageCode = messageCode;
@@ -134,7 +134,7 @@ public enum WfMessageType {
 
     /**
      * Returns an array with the header fields
-     * @return an array of the {@link WfMessageField}s from the message header
+     * @return an array of the fields from the message header
      * @wfver v1-draft.6
      * @wfref 4.2.1 Generic Message Header
      */
@@ -145,7 +145,7 @@ public enum WfMessageType {
     /**
      * Returns an array with the header fields that are never encrypted
      * @since 1.1
-     * @return an array of the {@link WfMessageField}s from the message header
+     * @return an array of the fields from the message header
      * @wfver v1-draft.6
      * @wfref 4.2.1 Generic Message Header
      * @wfref 4.1.4 Encryption
@@ -156,7 +156,7 @@ public enum WfMessageType {
 
     /**
      * Returns an array with the body fields
-     * @return an array with the {@link WfMessageField}s from the message body
+     * @return an array with the fields from the message body
      */
     public final WfMessageField[] getBodyFields() {
         return bodyFields;
@@ -207,7 +207,7 @@ public enum WfMessageType {
      * Creates the message type from the message code
      * @since 1.1
      * @param messageCode the message code
-     * @return a {@link WfMessageType}
+     * @return the requested message type
      * @throws WfCoreException if the message type is invalid
      */
     public static final WfMessageType fromCode(final String messageCode) throws WfCoreException {

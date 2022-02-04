@@ -23,19 +23,19 @@ public class WfMessageCore {
 
     /* Message type */
     /**
-     * The {@link WfMessageType} indoicating the type of the message
+     * The type of the message
      * @wfref 2.4.2 Message Functionality
      */
     public final WfMessageType type;
 
     /* Message parts */
     /**
-     * The {@link WfMessageSegment} representing the message header
+     * The message header
      * @wfref 4.2 Message Header
      */
     public final WfMessageSegment header;
     /**
-     * The {@link WfMessageSegment} representing the message body
+     * The message body
      * @wfref 4.3 Message Body
      */
     public final WfMessageSegment body;
@@ -46,8 +46,8 @@ public class WfMessageCore {
     /* CONSTRUCTORS */
 
     /**
-     * Creates a Whiteflag message core from a header and a body segment
-     * @param type the of the message
+     * Creates a Whiteflag message core from a header and a body
+     * @param type the message type
      * @param header the message header
      * @param body the message body
      */
@@ -171,7 +171,7 @@ public class WfMessageCore {
 
     /**
      * Encodes the Whiteflag message
-     * @return a {@link WfBinaryBuffer} with the compressed binary encoded Whiteflag message
+     * @return a buffer with the binary encoded Whiteflag message
      * @throws WfCoreException if any of the fields does not contain valid data
      */
     public WfBinaryBuffer encode() throws WfCoreException {

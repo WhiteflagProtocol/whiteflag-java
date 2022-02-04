@@ -47,6 +47,34 @@ package org.whiteflagprotocol.java {
     }
 }
 
-WfAccount <.. WfMessage
+package org.whiteflagprotocol.java.core {
+    enum WfMessageType {}
+    class WfMessageSegment {}
+    class WfMessageField {}
+}
+
+package org.whiteflagprotocol.java.crypto {
+    class WfAuthToken <<Destroyable>> {}
+    class WfEncryptionKey <<Destroyable>> {}
+    class WfECDHKeyPair <<Destroyable>> {}
+    class WfCipher <<Destroyable>> {}
+}
+
+package org.whiteflagprotocol.java.util {
+    class WfJsonMessage {}
+}
+
+WfMessage -- "1" WfMessageType
+WfMessage *-- "2" WfMessageSegment
+WfMessageSegment *-- "*" WfMessageField
+
+WfAccount -- WfMessage
+
+WfAccount --> WfAuthToken
+WfAccount --> WfEncryptionKey
+WfAccount --> WfECDHKeyPair
+
+WfMessage ..> WfCipher
+WfJsonMessage <.. WfMessage
 
 @enduml

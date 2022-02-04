@@ -47,7 +47,7 @@ public class WfUtilException extends Exception {
      * Creates a Whiteflag utility exception with a specific utility error type
      * @param message String containing the human readible error message
      * @param cause the causing error, or null
-     * @param type The Whiteflag {@link ErrorType} 
+     * @param type the error type
      */
     public WfUtilException(final String message, final Throwable cause, final ErrorType type) {
         super(message, cause);

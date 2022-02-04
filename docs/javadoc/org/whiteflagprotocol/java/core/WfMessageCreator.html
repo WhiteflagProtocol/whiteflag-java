@@ -132,7 +132,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public final class <span class="typeNameLabel">WfMessageCreator</span>
 extends java.lang.Object</pre>
-<div class="block">Whiteflag message builder class
+<div class="block">Whiteflag message creator class
  
  <p> This is a builder class to create a Whiteflag message. It contains
  the logic based on the Whiteflag specification to create a Whiteflag message
@@ -168,7 +168,7 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">WfMessageCreator</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Constructs a Whiteflag message builder</div>
+<div class="block">Constructs a Whiteflag message creator</div>
 </td>
 </tr>
 </table>
@@ -200,7 +200,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code><a href="WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Creates the Whiteflag core message</div>
+<div class="block">Creates the Whiteflag message core</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -270,7 +270,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>WfMessageCreator</h4>
 <pre>public&nbsp;WfMessageCreator()</pre>
-<div class="block">Constructs a Whiteflag message builder</div>
+<div class="block">Constructs a Whiteflag message creator</div>
 </li>
 </ul>
 </li>
@@ -290,10 +290,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>create</h4>
 <pre class="methodSignature">public final&nbsp;<a href="WfMessageCore.html" title="class in org.whiteflagprotocol.java.core">WfMessageCore</a>&nbsp;create()</pre>
-<div class="block">Creates the Whiteflag core message</div>
+<div class="block">Creates the Whiteflag message core</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a new <a href="WfMessageCore.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCore</code></a></dd>
+<dd>a new message core</dd>
 </dl>
 </li>
 </ul>
@@ -307,9 +307,9 @@ extends java.lang.Object</pre>
 <div class="block">Creates a new empty Whiteflag core message object of the specified type</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>messageType</code> - the <a href="WfMessageType.html" title="enum in org.whiteflagprotocol.java.core"><code>WfMessageType</code></a> of the new message</dd>
+<dd><code>messageType</code> - the type of the new message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
+<dd>this message creator</dd>
 </dl>
 </li>
 </ul>
@@ -328,7 +328,7 @@ extends java.lang.Object</pre>
 <dd><code>headerValues</code> - a fieldname-to-value mapping of the message header fields</dd>
 <dd><code>bodyValues</code> - a fieldname-to-value mapping of the message body fields</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
+<dd>this message creator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the fieldname-to-value mapping is incorrect</dd>
 </dl>
@@ -347,7 +347,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>serializedMsg</code> - the uncompressed serialized message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
+<dd>this message creator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the provided values are invalid</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -366,9 +366,9 @@ extends java.lang.Object</pre>
 <div class="block">Decodes an encoded Whiteflag message and creates a new Whiteflag core message object</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>msgBuffer</code> - a <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> with the compressed binary encoded message</dd>
+<dd><code>msgBuffer</code> - a buffer with the compressed binary encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
+<dd>this message creator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the encoded message is invalid</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -387,9 +387,9 @@ extends java.lang.Object</pre>
 <div class="block">Decodes an encoded Whiteflag message and creates a new Whiteflag core message object</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>msgBuffer</code> - a <a href="WfBinaryBuffer.html" title="class in org.whiteflagprotocol.java.core"><code>WfBinaryBuffer</code></a> with the compressed binary encoded message</dd>
+<dd><code>msgBuffer</code> - a buffer with the compressed binary encoded message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <a href="WfMessageSegment.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageSegment</code></a> unencrypted header</dd>
+<dd>the unencrypted message header</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the encoded message is invalid</dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -410,7 +410,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>fieldValues</code> - String array with the values for the message fields</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>this <a href="WfMessageCreator.html" title="class in org.whiteflagprotocol.java.core"><code>WfMessageCreator</code></a></dd>
+<dd>this message creator</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="WfCoreException.html" title="class in org.whiteflagprotocol.java.core">WfCoreException</a></code> - if the provided values are invalid</dd>
 </dl>

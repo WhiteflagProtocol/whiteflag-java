@@ -115,7 +115,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
     <ul>
         <li style="list-style-type: square;"><code>org.whiteflagprotocol.java</code>
             is the main package providing the external programming interface for
-            software using this library.This packages defines the classes representing
+            software using this library. This packages defines the classes representing
             Whitelag messages and accounts.</li>
         <li style="list-style-type: square;"><code>org.whiteflagprotocol.java.core</code>
             contains all implementation independent core functionality as defined in
@@ -142,14 +142,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
         import org.whiteflagprotocol.java.WfException;
         
         public class Example {
+          /* Properties */
           private WfMessage message;
         
-          public WfMessage createMessage(String messageType) {
-            try {
-              message = WfMessage.Creator.create(messageType);
-            } catch(WfException e) {
-              throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
-            }
+          /* Methods */
+          public WfMessage decode(String hexString) throws WfException {
+            message = WfMessage.decode(hexString);
             return message;
           }
         }

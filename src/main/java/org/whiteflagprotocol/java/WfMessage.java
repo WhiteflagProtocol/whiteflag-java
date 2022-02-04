@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.security.interfaces.ECPublicKey;
 
+import javax.security.auth.DestroyFailedException;
+
 /* Required Whiteflag core and util classes */
 import org.whiteflagprotocol.java.core.WfBinaryBuffer;
 import org.whiteflagprotocol.java.core.WfCoreException;
@@ -71,22 +73,22 @@ public class WfMessage extends WfMessageCore {
     private String cachedMsgStr;
     
     /* CONSTRUCTORS */
-    
+
     /**
      * Creates a Whiteflag message from a core message by calling the super constructor
      * @since 1.1
-     * @param coreMsg the {@link WfMessageCore} core message
+     * @param coreMsg the core message
      */
     private WfMessage(final WfMessageCore coreMsg) {
         super(coreMsg);
     }
-    
+
     /**
      * Creates a Whiteflag message from a decoded core message by calling the super constructor
      private String cachedMsgStr = null;
      * @since 1.1
-     * @param coreMsg the {@link WfMessageCore} core message
-     * @param encodedMsg the {@link WfBinaryBuffer} with the source binary encoded message to be preserved
+     * @param coreMsg the core message
+     * @param encodedMsg the buffer with the binary encoded source of the message to be preserved
      */
     private WfMessage(final WfMessageCore coreMsg, final WfBinaryBuffer encodedMsg) {
         super(coreMsg);
@@ -96,7 +98,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a Whiteflag message from a deserialized core message by calling the super constructor
      * @since 1.1
-     * @param coreMsg the {@link WfMessageCore} core message
+     * @param coreMsg the core message
      * @param serializedMsg the source serialized message to be preserved
      */
     private WfMessage(final WfMessageCore coreMsg, final String serializedMsg) {
@@ -109,7 +111,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new empty Whiteflag message object of the specified type
      * @param messageCode a string with the code indicating the message type to be created
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be created
      */
     public static final WfMessage create(final String messageCode) throws WfException {
@@ -125,7 +127,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Copies a Whiteflag message into new Whiteflag message object, without metadata
      * @param message the message to be copied
-     * @return a {@link WfMessage} Whiteflag message
+     * @return a copy of the Whiteflag message
      */
     public static final WfMessage copy(final WfMessage message) {
         return new WfMessage(message);
@@ -135,7 +137,7 @@ public class WfMessage extends WfMessageCore {
      * Clones a Whiteflag message into new Whiteflag message object, including metadata
      * @since 1.1
      * @param message the message to be copied
-     * @return a {@link WfMessage} Whiteflag message
+     * @return a clone of the Whiteflag message
      */
     public static final WfMessage clone(final WfMessage message) {
         WfMessage newMessage = copy(message);
@@ -152,7 +154,7 @@ public class WfMessage extends WfMessageCore {
      * Creates a new Whiteflag message object from a serialized message
      * @since 1.1
      * @param serializedMsg the uncompressed serialized message
-     * @return a {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the serialization of the message is invalid
      */
     public static final WfMessage deserialize(final String serializedMsg) throws WfException {
@@ -168,7 +170,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new Whiteflag message object from a serialized JSON message
      * @param jsonMessage the serialized JSON message
-     * @return a {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the serialization of the message is invalid
      */
     public static final WfMessage deserializeJson(final String jsonMessage) throws WfException {
@@ -196,7 +198,7 @@ public class WfMessage extends WfMessageCore {
      * Creates a new Whiteflag message from a hexadecimal string represaentation of an encoded message
      * @since 1.1
      * @param hexMessage a hexadecimal string representation of the encoded message
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
     public static final WfMessage decode(final String hexMessage) throws WfException {
@@ -207,7 +209,7 @@ public class WfMessage extends WfMessageCore {
      * Creates a new Whiteflag message from a byte array with an binary encoded message
      * @since 1.1
      * @param binMessage a byte array with the binary encoded message
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
     public static final WfMessage decode(final byte[] binMessage) throws WfException {
@@ -218,7 +220,7 @@ public class WfMessage extends WfMessageCore {
      * Creates a new Whiteflag message from a binary buffer
      * @since 1.1
      * @param encodedMsg a binary buffer with the encoded message
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be decoded
      */
     public static final WfMessage decode(final WfBinaryBuffer encodedMsg) throws WfException {
@@ -238,7 +240,7 @@ public class WfMessage extends WfMessageCore {
      * @param originator the originator of the message
      * @param recipient the intended recipient of the message
      * @param initVector the initialisation vector used to encrypt the message
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be decrypted or decoded
      */
     public static final WfMessage decrypt(final String encryptedMsg, final WfAccount originator, final WfAccount recipient, final String initVector) throws WfException {
@@ -253,7 +255,7 @@ public class WfMessage extends WfMessageCore {
      * @param originator the originator of the message
      * @param recipient the intended recipient of the message
      * @param initVector a byte array with initialisation vector used to encrypt the message
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be decrypted or decoded
      */
     public static final WfMessage decrypt(final byte[] encryptedMsg, final WfAccount originator, final WfAccount recipient, final byte[] initVector) throws WfException {
@@ -267,7 +269,7 @@ public class WfMessage extends WfMessageCore {
      * @param originator the originator of the message
      * @param recipient the intended recipient of the message
      * @param initVector a byte array with the initialisation vector used to encrypt the message
-     * @return a new {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if the message cannot be decrypted or decoded
      */
     public static final WfMessage decrypt(final WfBinaryBuffer encryptedMsg, final WfAccount originator, final WfAccount recipient, final byte[] initVector) throws WfException {
@@ -300,7 +302,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Creates a new Whiteflag message object from field values
      * @param fieldValues a string array with the values for the message fields
-     * @return a {@link WfMessage} Whiteflag message
+     * @return a new Whiteflag message
      * @throws WfException if any of the provided values is invalid
      */
     public static final WfMessage compile(final String[] fieldValues) throws WfException {
@@ -363,9 +365,9 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Gets the originator of this message
+     * Gets the originator of this message by their account
      * @since 1.1
-     * @return the {@link WfAccount} of the originator
+     * @return the account of the originator
      */
     public final WfAccount getOriginator() {
         return this.originator;
@@ -374,7 +376,7 @@ public class WfMessage extends WfMessageCore {
     /**
      * Sets the intended recipient of this message (if any) and adds its blockchain address to the metadata
      * @since 1.1
-     * @param recipient the {@link WfAccount} of the recipient of this message
+     * @param recipient the account of the recipient of this message
      * @return null if address newly added to metadata, otherwise the existing value that was replaced
      */
     public final String setRecipient(WfAccount recipient) {
@@ -383,9 +385,9 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Gets the recipient of this message
+     * Gets the recipient of this message by theri account
      * @since 1.1
-     * @return the {@link WfAccount} of the recipient
+     * @return the account of the recipient
      */
     public final WfAccount getRecipient() {
         return this.recipient;
@@ -489,7 +491,7 @@ public class WfMessage extends WfMessageCore {
     }
 
     /**
-     * Returns a hexedimal string representation of the binary encoded message
+     * Returns a hexadimal string representation of the binary encoded message
      * @since 1.1
      * @return a hexadecimal string representation of the binary encoded
      * @throws WfException if any field does not contain valid data
@@ -528,8 +530,8 @@ public class WfMessage extends WfMessageCore {
     /**
      * Encrypts the message
      * @since 1.1
-     * @param encodedMsg a {@link WfBinaryBuffer} with the encoded message to be encrypted
-     * @return a {@link WfBinaryBuffer} with the encrypted message
+     * @param encodedMsg a binary buffer with the encoded message to be encrypted
+     * @return a binary buffer with the encrypted message
      * @throws WfException if message could not be encrypted
      * @throws IllegalStateException if the originator or recipient of this message are unknown
      */
@@ -559,8 +561,11 @@ public class WfMessage extends WfMessageCore {
         try {
             encryptedMsg.appendBits(encodedMsg.extractBits(0, unencryptedBitPosition));
             encryptedMsg.appendBits(cipher.encrypt(encodedMsg.extractBits(unencryptedBitPosition)));
+            cipher.destroy();
         } catch (WfCryptoException e) {
             throw new WfException("Could not encrypt message", e, WF_CRYPTO_ERROR);
+        } catch (DestroyFailedException e) {
+            throw new WfException("Could not destroy the cipher", e, WF_CRYPTO_ERROR);
         }
         return encryptedMsg;
     }
@@ -592,8 +597,11 @@ public class WfMessage extends WfMessageCore {
         try {
             encodedMsg.appendBits(encryptedMsg.extractBits(0, unencryptedBitPosition));
             encodedMsg.appendBits(cipher.decrypt(encryptedMsg.extractBits(unencryptedBitPosition)));
+            cipher.destroy();
         } catch (WfCryptoException e) {
             throw new WfException("Could not decrypt message", e, WF_CRYPTO_ERROR);
+        } catch (DestroyFailedException e) {
+            throw new WfException("Could not destroy the cipher", e, WF_CRYPTO_ERROR);
         }
         return encodedMsg;
     }

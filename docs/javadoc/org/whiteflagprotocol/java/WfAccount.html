@@ -125,17 +125,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <pre>public interface <span class="typeNameLabel">WfAccount</span></pre>
 <div class="block">Whiteflag account interface
  
- This interface defines how a class representing a Whiteflag account must
- interact with WFJL classes. As Whiteflag does not require central user
- regitsration, such a Whiteflag account is merely an abstraction to hold
- information about Whiteflag participants, including oneself. A Whiteflag
- account corresponds with a blockchain address. Because blockchain addresses
- are specific to a blockchain, a Whiteflag account is implementation
- specific. This interface therefore defines how an object representing
- a Whiteflag or blockchain account must provide relevant attributes to
- instances of WFJL classes such a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a>.
+ <p> This interface defines how a class representing a Whiteflag account must
+ interact with WFJL classes. Because on blockchains there is no such thing as
+ a user registration or a central user account database, this Whiteflag
+ account is merely an abstraction to hold information about Whiteflag
+ participants, including oneself.
  
- Methods implementing this interface may return `null` if certain data is
+ A Whiteflag account corresponds with a blockchain address. Because
+ blockchain addresses are specific to a blockchain, a Whiteflag account is
+ implementation specific. This interface therefore defines how an object
+ representing a Whiteflag or blockchain account must provide relevant
+ attributes to instances of WFJL classes such a <a href="WfMessage.html" title="class in org.whiteflagprotocol.java"><code>WfMessage</code></a>.
+ 
+ <p> Methods implementing this interface may return `null` if certain data is
  unknown or does not exist for a particpant.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -294,7 +296,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Gets the authentication URL sent with an A1 message used to identify the originator associated with this account</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>a <code>URL</code> pointinng to the authentication data, or null if no known url</dd>
+<dd>a URL pointing to the authentication data, or null if no known url</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>5.1.2.1 Method 1: URL Validation</dd>
 </dl>
@@ -310,7 +312,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Gets the authentication token sent with an A2 message to identify the originator associated with this account</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <a href="crypto/WfAuthToken.html" title="class in org.whiteflagprotocol.java.crypto"><code>WfAuthToken</code></a> authentication token, or null if no knwon token</dd>
+<dd>the authentication token, or null if no knwon token</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>5.1.2.2 Method 2: Shared Token Validation</dd>
 </dl>
@@ -326,7 +328,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Gets the shared encryption key with this participant's account</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the pre-shared <a href="crypto/WfEncryptionKey.html" title="class in org.whiteflagprotocol.java.crypto"><code>WfEncryptionKey</code></a> encryption key, or null if no key available</dd>
+<dd>the pre-shared encryption key, or null if no key available</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>5.2.4 Message Encryption</dd>
 </dl>
@@ -342,7 +344,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Gets the own ECDH key pair used to negatiate keys with other participants</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <code>ECPublicKey</code> ECDH public key, or null if no key pair available</dd>
+<dd>the ECDH public key, or null if no key pair available</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>5.2.4 Message Encryption</dd>
 </dl>
@@ -358,7 +360,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Gets the other's ECDH public key used to negatioate a key with this participant's account</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the <code>ECPublicKey</code> ECDH public key, or null is no public key available</dd>
+<dd>the ECDH public key, or null is no public key available</dd>
 <dt><span class="simpleTagLabel">Whiteflag standard x-reference:</span></dt>
 <dd>5.2.4 Message Encryption</dd>
 </dl>

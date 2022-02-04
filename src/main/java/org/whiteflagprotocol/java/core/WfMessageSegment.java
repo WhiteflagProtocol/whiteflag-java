@@ -419,7 +419,7 @@ public class WfMessageSegment {
     /**
      * Appends additional fields to this message segment if constructing complex message bodies
      * @param segment the segment to be added to the message segment
-     * @return this {@link WfMessageSegment}
+     * @return this message segment
      */
     protected final WfMessageSegment append(final WfMessageSegment segment) {
         /* Create new field array and fill with original fields from this segment */
