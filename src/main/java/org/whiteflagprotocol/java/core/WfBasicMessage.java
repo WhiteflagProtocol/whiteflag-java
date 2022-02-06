@@ -6,18 +6,17 @@ package org.whiteflagprotocol.java.core;
 import java.util.Set;
 
 /**
- * Whiteflag message core class
+ * Whiteflag basic message class
  * 
  * <p> This is a class defining a generic basic Whiteflag message. It
  * includes common properties and methods of all message types, and
  * implementation independent logic specified by the Whiteflag standard.
- * All implementation specific logic should be in a derived message subclass.
  * 
  * @wfref 4. Message Format
  * 
  * @since 1.0
  */
-public class WfMessageCore {
+public class WfBasicMessage {
 
     /* PROPERTIES */
 
@@ -46,26 +45,26 @@ public class WfMessageCore {
     /* CONSTRUCTORS */
 
     /**
-     * Creates a Whiteflag message core from a header and a body
+     * Creates a basic Whiteflag message from a header and a body
      * @param type the message type
      * @param header the message header
      * @param body the message body
      */
-    protected WfMessageCore(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
+    protected WfBasicMessage(final WfMessageType type, final WfMessageSegment header, final WfMessageSegment body) {
         this.type = type;
         this.header = header;
         this.body = body;
     }
 
     /**
-     * Creates a Whiteflag message from an existing core message
+     * Creates a basic Whiteflag message from an existing basic message
      * @since 1.1
-     * @param coreMsg the core message
+     * @param message the basic message
      */
-    protected WfMessageCore(WfMessageCore coreMsg) {
-        this.type = coreMsg.type;
-        this.header = coreMsg.header;
-        this.body = coreMsg.body;
+    protected WfBasicMessage(WfBasicMessage message) {
+        this.type = message.type;
+        this.header = message.header;
+        this.body = message.body;
     }
 
     /* PUBLIC METHODS */

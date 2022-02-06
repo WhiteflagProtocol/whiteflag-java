@@ -5,23 +5,23 @@ left footer WFJL Overview Class Diagram
 
 package org.whiteflagprotocol.java {
     class WfMessage {
+        -base : WfBasicMessage
+        ..
         -metadata : HashMap<>
         ..
         -originator : WfAccount
         -recipient : WfAccount
-        ..
-        +type : WfMessageType
-        +header : WfMessageSegment
-        +body : WfMessageSegment
         __
-        {static} +type(String) : WfMessage
-        {static} +copy(WfMessage) : WfMessage
+        {static} +create(String) : WfMessage
         {static} +deserialize(String) : WfMessage
         {static} +deserializeJson(String) : WfMessage
-        {static} +decode(WfBinaryBuffer) : WfMessage
-        {static} +decrypt(WfBinaryBuffer) : WfMessage
+        {static} +decode(byte[]) : WfMessage
+        {static} +decrypt(byte[]) : WfMessage
         {static} +compile(String[]) : WfMessage
         ..
+        +copy() : WfMessage
+        ..
+        +getType() : WfMessageType
         +setOriginator(WfAccount)
         +getOriginator() : WfAccount
         +setRecipient(WfAccount)
@@ -48,6 +48,7 @@ package org.whiteflagprotocol.java {
 }
 
 package org.whiteflagprotocol.java.core {
+    class WfBasicMessage {}
     enum WfMessageType {}
     class WfMessageSegment {}
     class WfMessageField {}
@@ -64,8 +65,9 @@ package org.whiteflagprotocol.java.util {
     class WfJsonMessage {}
 }
 
-WfMessage -- "1" WfMessageType
-WfMessage *-- "2" WfMessageSegment
+WfMessage *-- "1" WfBasicMessage
+WfBasicMessage -- "1" WfMessageType
+WfBasicMessage *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField
 
 WfAccount -- WfMessage

@@ -49,15 +49,15 @@ public final class WfMessageCreator {
     /* PUBLIC METHODS */
 
     /**
-     * Creates the Whiteflag message core
-     * @return a new message core
+     * Creates the Whiteflag message base
+     * @return a new message base
      */
-    public final WfMessageCore create() {
-        return new WfMessageCore(messageType, header, body);
+    public final WfBasicMessage create() {
+        return new WfBasicMessage(messageType, header, body);
     }
 
     /**
-     * Creates a new empty Whiteflag core message object of the specified type
+     * Creates a new empty Whiteflag base message object of the specified type
      * @param messageType the type of the new message
      * @return this message creator 
      */
@@ -77,7 +77,7 @@ public final class WfMessageCreator {
     }
 
     /**
-     * Creates a new Whiteflag core message object from header and body maps
+     * Creates a new Whiteflag base message object from header and body maps
      * @param headerValues a fieldname-to-value mapping of the message header fields
      * @param bodyValues a fieldname-to-value mapping of the message body fields
      * @return this message creator 
@@ -115,7 +115,7 @@ public final class WfMessageCreator {
     }
 
     /**
-     * Deserializes a serialized Whiteflag message and creates a new Whiteflag core message object
+     * Deserializes a serialized Whiteflag message and creates a new Whiteflag base message object
      * @since 1.1
      * @param serializedMsg the uncompressed serialized message
      * @return this message creator
@@ -154,7 +154,7 @@ public final class WfMessageCreator {
     }
 
     /**
-     * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
+     * Decodes an encoded Whiteflag message and creates a new Whiteflag base message object
      * @since 1.1
      * @param msgBuffer a buffer with the compressed binary encoded message
      * @return this message creator 
@@ -195,7 +195,7 @@ public final class WfMessageCreator {
     }
 
     /**
-     * Decodes an encoded Whiteflag message and creates a new Whiteflag core message object
+     * Decodes an encoded Whiteflag message and creates a new Whiteflag base message object
      * @since 1.1
      * @param msgBuffer a buffer with the compressed binary encoded message
      * @return the unencrypted message header
@@ -209,7 +209,7 @@ public final class WfMessageCreator {
     }
 
     /**
-     * Compiles a new Whiteflag core message object from field values
+     * Compiles a new Whiteflag base message object from field values
      * @param fieldValues String array with the values for the message fields
      * @return this message creator 
      * @throws WfCoreException if the provided values are invalid

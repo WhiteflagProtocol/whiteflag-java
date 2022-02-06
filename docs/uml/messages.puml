@@ -4,7 +4,7 @@
 left footer WFJL Message Class Diagram
 
 package org.whiteflagprotocol.java.core {
-    class WfMessageCore {
+    class WfBasicMessage {
         +type : WfMessageType
         +header : WfMessageSegment
         +body : WfMessageSegment
@@ -94,6 +94,7 @@ package org.whiteflagprotocol.java.core {
         {static} +create()
         {static} +fromByteArray(byte[])
         {static} +fromHexString(String)
+        ..
         +copy()
         ..
         +append(WfBinaryBuffer)
@@ -120,23 +121,23 @@ package org.whiteflagprotocol.java.util {
 
 package org.whiteflagprotocol.java {
     class WfMessage {
+        -base : WfBasicMessage
+        ..
         -metadata : HashMap<>
         ..
         -originator : WfAccount
         -recipient : WfAccount
-        ..
-        +type : WfMessageType
-        +header : WfMessageSegment
-        +body : WfMessageSegment
         __
-        {static} +type(String) : WfMessage
-        {static} +copy(WfMessage) : WfMessage
+        {static} +create(String) : WfMessage
         {static} +deserialize(String) : WfMessage
         {static} +deserializeJson(String) : WfMessage
-        {static} +decode(WfBinaryBuffer) : WfMessage
-        {static} +decrypt(WfBinaryBuffer) : WfMessage
+        {static} +decode(byte[]) : WfMessage
+        {static} +decrypt(byte[]) : WfMessage
         {static} +compile(String[]) : WfMessage
         ..
+        +copy() : WfMessage
+        ..
+        +getType() : WfMessageType
         +setOriginator(WfAccount)
         +getOriginator() : WfAccount
         +setRecipient(WfAccount)
@@ -152,16 +153,16 @@ package org.whiteflagprotocol.java {
 
 WfJsonMessage <. WfMessage
 
-WfMessage --|> WfMessageCore
+WfMessage *-- WfBasicMessage
 WfMessage ..> WfMessageCreator
 
-WfMessageCore -- "1" WfMessageType
-WfMessageCore *-- "2" WfMessageSegment
+WfBasicMessage -- "1" WfMessageType
+WfBasicMessage *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField
 WfMessageCodec <. WfMessageField
 Encoding -+ WfMessageCodec
 
-WfMessageCore <- WfMessageCreator: creates
+WfBasicMessage <- WfMessageCreator: creates
 WfMessageCreator ..> WfMessageType
 WfMessageCreator ..> WfMessageSegment
 

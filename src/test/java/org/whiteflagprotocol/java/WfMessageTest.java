@@ -27,7 +27,7 @@ public class WfMessageTest {
         WfMessage message = WfMessage.create("S");
 
         /* Verify message*/
-        assertEquals("Message type should be correct", S, message.type);
+        assertEquals("Message type should be correct", S, message.getType());
         assertEquals("Number of fields should be correct", 16, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertFalse("Message should not be valid without valid field values", message.isValid());
@@ -38,18 +38,17 @@ public class WfMessageTest {
         assertEquals("Message code should be correctly set", "S", message.get("MessageCode"));
 
         /* Verify header fields */
-        assertTrue("Should be able to set field value", message.header.set("EncryptionIndicator", "1"));
-        assertTrue("Value should be valid", message.header.isValid("EncryptionIndicator", "2"));
-        assertFalse("Should not be able to set field value twice", message.header.set("EncryptionIndicator", "2"));
+        assertTrue("Should be able to set field value", message.set("EncryptionIndicator", "1"));
+        assertTrue("Value should be valid", message.isValid("EncryptionIndicator", "2"));
+        assertFalse("Should not be able to set field value twice", message.set("EncryptionIndicator", "2"));
         assertTrue("Field should be valid", message.isValid("EncryptionIndicator"));
-        assertFalse("Should not be able to set value of non existing field", message.header.set("ObjectType", "1"));
+        assertFalse("Should not be able to set value of non existing field", message.set("ObjectType", "1"));
 
         /* Verify body fields */
-        assertTrue("Should be able to set field value", message.body.set("SubjectCode", "10"));
-        assertFalse("Should not be able to set field value twice", message.body.set("SubjectCode", "20"));
+        assertTrue("Should be able to set field value", message.set("SubjectCode", "10"));
+        assertFalse("Should not be able to set field value twice", message.set("SubjectCode", "20"));
         assertTrue("Should be able to set field value", message.set("ObjectType", "21"));
         assertFalse("Should not be able to set field value twice", message.set("ObjectType", "22"));
-        assertFalse("Should not be able to set value of non existing field", message.body.set("ReferenceIndicator", "1"));
         assertFalse("Should not be able to set value of non existing field", message.set("NoField", "00"));
 
         /* Verify metadata */
@@ -71,15 +70,15 @@ public class WfMessageTest {
         WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify message */
-        assertEquals("Message type should be correct", K, message.type);
+        assertEquals("Message type should be correct", K, message.getType());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Prefix should be correctly set", fieldValues[0], message.get("Prefix"));
         assertEquals("Version number should be correctly set", fieldValues[1], message.get("Version"));
         assertEquals("Encryption indicator should be correctly set", fieldValues[2], message.get("EncryptionIndicator"));
-        assertFalse("Should not be able to change duress indicator field", message.header.set("DuressIndicator", "1"));
+        assertFalse("Should not be able to change duress indicator field", message.set("DuressIndicator", "1"));
         assertEquals("Duress indicator should be correctly set", fieldValues[3], message.get("DuressIndicator"));
-        assertFalse("Should not be able to change message code field", message.header.set("MessageCode", "Q"));
+        assertFalse("Should not be able to change message code field", message.set("MessageCode", "Q"));
         assertEquals("Message code should be correctly set", fieldValues[4], message.get("MessageCode"));
         assertEquals("Reference indicator should be correctly set", fieldValues[5], message.get("ReferenceIndicator"));
         assertEquals("Referenced message should be correctly set", fieldValues[6], message.get("ReferencedMessage"));
@@ -105,7 +104,7 @@ public class WfMessageTest {
         WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify */
-        assertEquals("Message type should be correct", A, message.type);
+        assertEquals("Message type should be correct", A, message.getType());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Prefix should be correctly set", fieldValues[0], message.get("Prefix"));
@@ -132,8 +131,8 @@ public class WfMessageTest {
         WfMessage message = WfMessage.compile(fieldValues);
 
         /* Verify */
-        assertEquals("Message type should be correct", A, message.type);
-        assertEquals("Message type should be correct", fieldValues[4], message.type.getCode());
+        assertEquals("Message type should be correct", A, message.getType());
+        assertEquals("Message type should be correct", fieldValues[4], message.getType().getCode());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Serialization should be correct", messageSerialized, message.serialize());
@@ -150,7 +149,7 @@ public class WfMessageTest {
         WfMessage message = WfMessage.deserialize(messageSerialized);
 
         /* Verify */
-        assertEquals("Message type should be correct", A, message.type);
+        assertEquals("Message type should be correct", A, message.getType());
         assertEquals("Number of fields should be equal to number of provided fields", 9, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Prefix should be correctly set", messageSerialized.substring(0, 2), message.get("Prefix"));
@@ -176,7 +175,7 @@ public class WfMessageTest {
         WfMessage message = WfMessage.decode("5746313020800000000000000000000000000000000000000000000000000000000000000000b43a3a38399d1797b7b933b0b734b9b0ba34b7b71734b73a17bbb434ba32b33630b380");
 
         /* Verify */
-        assertEquals("Message type should be correct", A, message.type);
+        assertEquals("Message type should be correct", A, message.getType());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Prefix should be correctly set", fieldValues[0], message.get("Prefix"));
@@ -209,25 +208,6 @@ public class WfMessageTest {
         }
     }
     /**
-     * Tests cloning and copying of resource message
-     */
-    @Test
-    public void testResourceMessageCloning() throws WfException {
-        /* Setup */
-        final String[] fieldValues = { "WF", "1", "0", "1", "R", "2", "4a4f4e0cfa83122b242234254c1920c769d685dfcc4c670bb53eb6f12843c398",
-                                       "1", "https://example.com/resource-43842342"
-                                    };
-        WfMessage message1 = WfMessage.compile(fieldValues);
-        message1.addMetadata("transactionHash", "a1b2c3");
-        WfMessage message2 = WfMessage.clone(message1);
-
-        /* Verify */
-        assertEquals("Metadata should be identical", message1.getMetadata("transactionHash"), message2.getMetadata("transactionHash"));
-        assertEquals("Metadata should have same number of keys", message1.getMetadataKeys().size(), message2.getMetadataKeys().size());
-        assertEquals("Message type should be correct", message1.type, message2.type);
-        assertEquals("Encoding (hexadecimal string) should be identical", message1.encode().toHexString(), message2.encode().toHexString());
-    }
-    /**
      * Tests serialization of sign/signal message
      */
     @Test
@@ -245,7 +225,7 @@ public class WfMessageTest {
         assertEquals("Metadata should be added", null, message.addMetadata("originatorAddress", "abc123"));
         assertEquals("Metadata should return correct value", "abc123", message.getMetadata("originatorAddress"));
         assertEquals("Metadata should have two keys", 2, message.getMetadataKeys().size());
-        assertEquals("Message type should be correct", M, message.type);
+        assertEquals("Message type should be correct", M, message.getType());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Encoding should be correct", messageEncoded, message.encode().toHexString());
@@ -265,11 +245,11 @@ public class WfMessageTest {
         WfMessage message = WfMessage.decode(messageEncoded);
 
         /* Verify */
-        assertEquals("Message type should be correct", M, message.type);
+        assertEquals("Message type should be correct", M, message.getType());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
         assertEquals("Number of fields should be equal to number of field names in set", message.getFieldNames().size(), message.getNoFields());
         assertEquals("Prefix should be correctly set", fieldValues[0], message.get("Prefix"));
-        assertFalse("Should not be able to change version field", message.header.set("Version", "2"));
+        assertFalse("Should not be able to change version field", message.set("Version", "2"));
         assertEquals("Version number should be correctly set", fieldValues[1], message.get("Version"));
         assertEquals("Encryption indicator should be correctly set", fieldValues[2], message.get("EncryptionIndicator"));
         assertEquals("Duress indicator should be correctly set", fieldValues[3], message.get("DuressIndicator"));
@@ -304,8 +284,8 @@ public class WfMessageTest {
 
         /* Verify */
         assertEquals("Should have no metadata", null, message.getMetadata("transactionHash"));
-        assertEquals("Message type should be correct", T, message.type);
-        assertEquals("Decoded message type should be correct", T, messageDecoded.type);
+        assertEquals("Message type should be correct", T, message.getType());
+        assertEquals("Decoded message type should be correct", T, messageDecoded.getType());
         assertEquals("Serialization should be correct", messageSerialized, message.serialize());
         assertEquals("Cached serialization should be correct", messageSerialized, message.serialize());
         assertEquals("Decoded message serialization should be correct", messageSerialized, messageDecoded.serialize());
@@ -318,7 +298,7 @@ public class WfMessageTest {
         assertEquals("Duress indicator should be correctly set", fieldValues[3], message.get("DuressIndicator"));
         assertEquals("Message code should be correctly set", fieldValues[4], message.get("MessageCode"));
         assertEquals("Reference indicator should be correctly set", fieldValues[5], message.get("ReferenceIndicator"));
-        assertFalse("Should not be able to change reference indicator field", message.header.set("ReferenceIndicator", "6"));
+        assertFalse("Should not be able to change reference indicator field", message.set("ReferenceIndicator", "6"));
         assertEquals("Referenced message should be correctly set", fieldValues[6], message.get("ReferencedMessage"));
         assertEquals("Referenced message should be correctly set in decoded message", fieldValues[6], messageDecoded.get("ReferencedMessage"));
         assertEquals("Pseudo message code should be correctly set", fieldValues[7], message.get("PseudoMessageCode"));
@@ -326,12 +306,12 @@ public class WfMessageTest {
         assertEquals("Subject code should be correctly set", fieldValues[8], message.get("SubjectCode"));
         assertEquals("DateTime should be correctly set", fieldValues[9], message.get("DateTime"));
         assertEquals("Duration should be correctly set", fieldValues[10], message.get("Duration"));
-        assertEquals("Object code  should be correctly set", fieldValues[11], message.body.get("ObjectType"));
+        assertEquals("Object code  should be correctly set", fieldValues[11], message.get("ObjectType"));
         assertEquals("Latitude should be correctly set", fieldValues[12], message.get("ObjectLatitude"));
         assertEquals("Longitude should be correctly set", fieldValues[13], message.get("ObjectLongitude"));
         assertEquals("Size dimention 1 should be correctly set", fieldValues[14], message.get("ObjectSizeDim1"));
         assertEquals("Size dimention 2 should be correctly set", fieldValues[15], message.get("ObjectSizeDim2"));
-        assertEquals("Orientation should be correctly set in decoded message", fieldValues[16], messageDecoded.body.get("ObjectOrientation"));
+        assertEquals("Orientation should be correctly set in decoded message", fieldValues[16], messageDecoded.get("ObjectOrientation"));
         assertTrue("Message should be valid", message.isValid());
         assertTrue("Decoded message should be valid", messageDecoded.isValid());
 
@@ -359,8 +339,8 @@ public class WfMessageTest {
         WfMessage messageDecoded = WfMessage.decode(messageEncoded);
 
         /* Verify */
-        assertEquals("Message type should be correct", Q, message.type);
-        assertEquals("Decoded message type should be correct", Q, messageDecoded.type);
+        assertEquals("Message type should be correct", Q, message.getType());
+        assertEquals("Decoded message type should be correct", Q, messageDecoded.getType());
         assertEquals("Serialization should be correct", messageSerialized, message.serialize());
         assertEquals("Serialization from cache should be identical", messageDecoded.serialize(), message.serialize());
         assertEquals("Number of fields should be equal to number of provided fields", fieldValues.length, message.getNoFields());
@@ -385,8 +365,8 @@ public class WfMessageTest {
         assertEquals("Request object type 1 quantity is correctly set", fieldValues[17], message.get("ObjectType1Quant"));
         assertEquals("Request object type 2 is correctly set", fieldValues[18], message.get("ObjectType2"));
         assertEquals("Request object type 2 quantity is correctly set", fieldValues[19], message.get("ObjectType2Quant"));
-        assertTrue("Message header should be valid", message.header.isValid());
-        assertTrue("Message body be valid", message.body.isValid());
+        assertTrue("Message header should be valid", message.isValid());
+        assertTrue("Message body be valid", message.isValid());
         assertTrue("Message should be valid", message.isValid());
         assertTrue("Decoded message should be valid", messageDecoded.isValid());
     }
@@ -400,18 +380,18 @@ public class WfMessageTest {
         WfMessage message2 = WfMessage.decode("57463130232fb60f0f6c4a8589bddcf076e790ac9eb1601d3fd9ced67eaaa62c9fb9644a16fabb434ba32b33630b3903a32b9ba1036b2b9b9b0b3b2908");
 
         /* Verify */
-        assertEquals("Message type should be correct", F, message1.type);
-        assertEquals("Message type should be correct", F, message2.type);
+        assertEquals("Message type should be correct", F, message1.getType());
+        assertEquals("Message type should be correct", F, message2.getType());
         assertEquals("Number of fields should be equal", message1.getNoFields(), message2.getNoFields());
         assertEquals("Prefix should be identical", message1.get("Prefix"), message2.get("Prefix"));
         assertEquals("Version number should be identical", message1.get("Version"), message2.get("Version"));
-        assertFalse("Should not be able to change encryption indicator field", message1.header.set("EncryptionIndicator", "2"));
+        assertFalse("Should not be able to change encryption indicator field", message1.set("EncryptionIndicator", "2"));
         assertEquals("Encryption indicator should be identical", message1.get("EncryptionIndicator"), message2.get("EncryptionIndicator"));
         assertEquals("Duress indicator should be identical", message1.get("DuressIndicator"), message2.get("DuressIndicator"));
         assertEquals("Message code should be identical", message1.get("MessageCode"), message2.get("MessageCode"));
         assertEquals("Reference indicator should be identical", message1.get("ReferenceIndicator"), message2.get("ReferenceIndicator"));
         assertEquals("Referenced message should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
-        assertFalse("Should not be able to change text field", message2.body.set("Text", "alternate text"));
+        assertFalse("Should not be able to change text field", message2.set("Text", "alternate text"));
         assertEquals("Text fields should be identical", message1.get("Text"), message2.get("Text"));
         assertTrue("Message should be valid", message1.isValid());
         assertTrue("Message should be valid", message2.isValid());
@@ -427,17 +407,17 @@ public class WfMessageTest {
         WfMessage message2 = WfMessage.deserializeJson(jsonMessageStr);
 
         /* Verify */
-        assertEquals("Message type should be identical", message1.type, message2.type);
+        assertEquals("Message type should be identical", message1.getType(), message2.getType());
         assertEquals("Number of fields should be equal", message1.getNoFields(), message2.getNoFields());
         assertEquals("Prefix should be identical", message1.get("Prefix"), message2.get("Prefix"));
         assertEquals("Version number should be identical", message1.get("Version"), message2.get("Version"));
-        assertFalse("Should not be able to change encryption indicator field", message1.header.set("EncryptionIndicator", "2"));
+        assertFalse("Should not be able to change encryption indicator field", message1.set("EncryptionIndicator", "2"));
         assertEquals("Encryption indicator should be identical", message1.get("EncryptionIndicator"), message2.get("EncryptionIndicator"));
         assertEquals("Duress indicator should be identical", message1.get("DuressIndicator"), message2.get("DuressIndicator"));
         assertEquals("Message code should be identical", message1.get("MessageCode"), message2.get("MessageCode"));
         assertEquals("Reference indicator should be identical", message1.get("ReferenceIndicator"), message2.get("ReferenceIndicator"));
         assertEquals("Referenced message should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
-        assertFalse("Should not be able to change text field", message2.body.set("Text", "alternate text"));
+        assertFalse("Should not be able to change text field", message2.set("Text", "alternate text"));
         assertEquals("Text fields should be identical", message1.get("Text"), message2.get("Text"));
         assertTrue("Message should be valid", message1.isValid());
         assertTrue("Message should be valid", message2.isValid());
@@ -458,8 +438,8 @@ public class WfMessageTest {
         assertEquals("Prefix should be correctly set", "WF", message.get("Prefix"));
         assertTrue("Version field should be present", message.getFieldNames().contains("Version"));
         assertTrue("Encryption indicator field should be present", message.getFieldNames().contains("EncryptionIndicator"));
-        assertEquals("Free text should be correctly set", "Whiteflag test message!", message.body.get("Text"));
-        assertFalse("Should not be able to change text field", message.body.set("Text", "alternate text"));
+        assertEquals("Free text should be correctly set", "Whiteflag test message!", message.get("Text"));
+        assertFalse("Should not be able to change text field", message.set("Text", "alternate text"));
         assertEquals("Serialization should be correct", messageStr, message.toString());
     }
     /**
@@ -510,7 +490,7 @@ public class WfMessageTest {
         /* Verification */
         assertEquals("Serialized decrypted message should be identical to original", messageStr, message2.serialize());
         assertEquals("ReferencedMessage field should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
-        assertEquals("Text field should be identical", message1.body.get("Text"), message2.body.get("Text"));
+        assertEquals("Text field should be identical", message1.get("Text"), message2.get("Text"));
     }
     /**
      * Tests message encryption and decryption with negotiated key
@@ -537,7 +517,7 @@ public class WfMessageTest {
         /* Verification */
         assertEquals("Serialized decrypted message should be identical to original", messageStr, message2.serialize());
         assertEquals("ReferencedMessage field should be identical", message1.get("ReferencedMessage"), message2.get("ReferencedMessage"));
-        assertEquals("DateTime field should be identical", message1.body.get("DateTime"), message2.body.get("DateTime"));
+        assertEquals("DateTime field should be identical", message1.get("DateTime"), message2.get("DateTime"));
     }
     /**
      * Tests message encryption and decryption missing metadata

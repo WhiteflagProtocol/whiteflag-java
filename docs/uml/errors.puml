@@ -8,7 +8,6 @@ class Exception <<Throwable>>
 package org.whiteflagprotocol.java.core {
     class WfCoreException
 }
-Exception <|- WfCoreException
 
 package org.whiteflagprotocol.java {
     class WfException
@@ -23,12 +22,10 @@ package org.whiteflagprotocol.java {
     }
     WfException +-- WfException.ErrorType
 }
-WfCoreException <|- WfException
 
 package org.whiteflagprotocol.java.crypto {
     class WfCryptoException
 }
-Exception <|- WfCryptoException
 
 package org.whiteflagprotocol.java.util {
     class WfUtilException
@@ -38,6 +35,12 @@ package org.whiteflagprotocol.java.util {
     }
     WfUtilException +-- WfUtilException.ErrorType
 }
+
+WfCryptoException -|> Exception 
+
+Exception <|- WfCoreException
+WfCoreException <|- WfException
+
 Exception <|-- WfUtilException
 
 @enduml
