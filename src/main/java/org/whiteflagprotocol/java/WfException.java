@@ -3,15 +3,12 @@
  */
 package org.whiteflagprotocol.java;
 
-/* Required Whiteflag core exception class to extend */
-import org.whiteflagprotocol.java.core.WfCoreException;
-
 /**
  * Whiteflag protocol exception class
  * 
  * @since 1.0
  */
-public class WfException extends WfCoreException {
+public class WfException extends Exception {
 
     /* PROPERTIES */
 

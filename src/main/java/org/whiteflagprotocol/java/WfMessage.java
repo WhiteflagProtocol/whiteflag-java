@@ -139,7 +139,7 @@ public class WfMessage {
         try {
             base = new WfMessageCreator().deserialize(serializedMsg).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot deserialize message", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot deserialize message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         return new WfMessage(base, serializedMsg);
     }
@@ -156,14 +156,14 @@ public class WfMessage {
         try {
             jsonMsg = WfJsonMessage.create(jsonMessage);
         } catch (WfUtilException e) {
-            throw new WfException("Cannot deserialize JSON message", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         /* Create message base with header and body fieldname-to-value mappings */
         WfBasicMessage base;
         try {
             base = new WfMessageCreator().map(jsonMsg.getHeader(), jsonMsg.getBody()).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot deserialize JSON message", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot deserialize JSON message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         /* Create message and add metadata */
         WfMessage message = new WfMessage(base);
@@ -205,7 +205,7 @@ public class WfMessage {
         try {
             base = new WfMessageCreator().decode(encodedMsg).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot decode message", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot decode message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         return new WfMessage(base, encodedMsg);
     }
@@ -256,7 +256,7 @@ public class WfMessage {
         try {
             header = creator.getUnencryptedHeader(encryptedMsg);
         } catch (WfCoreException e) {
-            throw new WfException("Cannot decode unencrypted message header", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot decode unencrypted message header: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         /* Decrypt message */
         WfBinaryBuffer encodedMsg = decrypt(encryptedMsg, header, originator, recipient, initVector);
@@ -266,7 +266,7 @@ public class WfMessage {
         try {
             base = creator.decode(encodedMsg).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot decode message", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot decode message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         /* Create a new message and pass meta information */
         WfMessage message = new WfMessage(base, encryptedMsg);
@@ -287,7 +287,7 @@ public class WfMessage {
         try {
             base = new WfMessageCreator().compile(fieldValues).create();
         } catch (WfCoreException e) {
-            throw new WfException("Cannot compile message", e, WF_FORMAT_ERROR);
+            throw new WfException("Cannot compile message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         return new WfMessage(base);
     }
@@ -496,7 +496,7 @@ public class WfMessage {
             try {
                 this.cachedMsgStr = base.serialize();
             } catch (WfCoreException e) {
-                throw new WfException("Could not serialize message", e, WF_FORMAT_ERROR);
+                throw new WfException("Could not serialize message: " + e.getMessage(), e, WF_FORMAT_ERROR);
             }
         }
         return this.cachedMsgStr;
@@ -517,7 +517,7 @@ public class WfMessage {
         try {
             encodedMsg = base.encode();
         } catch (WfCoreException e) {
-            throw new WfException("Could not encode message", e, WF_FORMAT_ERROR);
+            throw new WfException("Could not encode message: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         /* Encrypt, cache and return the result */
         this.cachedMsg = encrypt(encodedMsg).markComplete();
@@ -564,7 +564,7 @@ public class WfMessage {
         try {
             jsonMsgStr = new WfJsonMessage(metadata, base.header.toMap(), base.body.toMap()).toJson();
         } catch (WfUtilException e) {
-            throw new WfException("Could not serialize message into JSON string", e, WF_FORMAT_ERROR);
+            throw new WfException("Could not serialize message into JSON string: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
         return jsonMsgStr;
     }
@@ -604,7 +604,7 @@ public class WfMessage {
             try {
                 this.initVector = setInitVector(cipher.setInitVector());
             } catch (WfCryptoException e) {
-                throw new WfException("Could not create random initialisation vector", e, WF_CRYPTO_ERROR);
+                throw new WfException("Could not create random initialisation vector: " + e.getMessage(), e, WF_CRYPTO_ERROR);
             }
         } else {
             cipher.setInitVector(this.initVector);
@@ -617,9 +617,9 @@ public class WfMessage {
             encryptedMsg.appendBits(cipher.encrypt(encodedMsg.extractBits(unencryptedBitPosition)));
             cipher.destroy();
         } catch (WfCryptoException e) {
-            throw new WfException("Could not encrypt message", e, WF_CRYPTO_ERROR);
+            throw new WfException("Could not encrypt message: " + e.getMessage(), e, WF_CRYPTO_ERROR);
         } catch (DestroyFailedException e) {
-            throw new WfException("Could not destroy the cipher", e, WF_CRYPTO_ERROR);
+            throw new WfException("Could not destroy the cipher: " + e.getMessage(), e, WF_CRYPTO_ERROR);
         }
         return encryptedMsg;
     }
@@ -653,9 +653,9 @@ public class WfMessage {
             encodedMsg.appendBits(cipher.decrypt(encryptedMsg.extractBits(unencryptedBitPosition)));
             cipher.destroy();
         } catch (WfCryptoException e) {
-            throw new WfException("Could not decrypt message", e, WF_CRYPTO_ERROR);
+            throw new WfException("Could not decrypt message: " + e.getMessage(), e, WF_CRYPTO_ERROR);
         } catch (DestroyFailedException e) {
-            throw new WfException("Could not destroy the cipher", e, WF_CRYPTO_ERROR);
+            throw new WfException("Could not destroy the cipher: " + e.getMessage(), e, WF_CRYPTO_ERROR);
         }
         return encodedMsg;
     }
@@ -694,7 +694,7 @@ public class WfMessage {
             WfEncryptionKey key = getEncryptionKey(method, originator, recipient);
             cipher = WfCipher.fromKey(key);
         } catch (WfCryptoException e) {
-            throw new WfException("Could not initialize cipher to encrypt message", e, WF_CRYPTO_ERROR);
+            throw new WfException("Could not initialize cipher to encrypt message: " + e.getMessage(), e, WF_CRYPTO_ERROR);
         }
         /* Bind cipher to context */
         byte[] address = originator.getBinaryAddress();
@@ -766,7 +766,7 @@ public class WfMessage {
         try {
             return new WfEncryptionKey(ecdhPublicKey, ecdhKeypair);
         } catch (WfCryptoException e) {
-            throw new WfException("Could not generate negotiated encryption key", e, WF_CRYPTO_ERROR);
+            throw new WfException("Could not generate negotiated encryption key: " + e.getMessage(), e, WF_CRYPTO_ERROR);
         }
     }
 }

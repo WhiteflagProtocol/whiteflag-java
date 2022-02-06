@@ -3,14 +3,12 @@
 
 left footer WFJL Error Class Diagram
 
-class Exception <<Throwable>>
-
 package org.whiteflagprotocol.java.core {
-    class WfCoreException
+    class WfCoreException <<Throwable>>
 }
 
 package org.whiteflagprotocol.java {
-    class WfException
+    class WfException <<Throwable>>
     enum WfException.ErrorType {
         WF_PROTOCOL_ERROR
         WF_METADATA_ERROR
@@ -24,23 +22,16 @@ package org.whiteflagprotocol.java {
 }
 
 package org.whiteflagprotocol.java.crypto {
-    class WfCryptoException
+    class WfCryptoException <<Throwable>>
 }
 
 package org.whiteflagprotocol.java.util {
-    class WfUtilException
+    class WfUtilException <<Throwable>>
     enum WfUtilException.ErrorType {
         WF_UTIL_ERROR
         WF_JSON_ERROR
     }
     WfUtilException +-- WfUtilException.ErrorType
 }
-
-WfCryptoException -|> Exception 
-
-Exception <|- WfCoreException
-WfCoreException <|- WfException
-
-Exception <|-- WfUtilException
 
 @enduml
