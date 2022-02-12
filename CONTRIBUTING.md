@@ -67,7 +67,7 @@ on this repository.
 Versions in development  use `-dev` as pre-release identifier,
 e.g. `1.2.4-dev` indicates that this is a "work in progress" snapshot from
 a development branch in between versions 1.2.3 and 1.2.4. Multiple pre-release
-identifiers may be used way, e.g. `1.0.0-alpha.3-dev`.
+identifiers may be used way, e.g. `1.1.0-alpha.3-dev`.
 
 ## Git Branches
 
@@ -78,7 +78,7 @@ There are two main branches with infinite lifetime:
 * `develop` is the branch in which all development work is brought together
   and merged for integration and testing of new versions, which are pulled
   into master for a new major or minor release (`x.y.0`)
-  or new pre-release (`1.0.0-alpha.n`) upon completion.
+  or new pre-release (`1.1.0-alpha.n`) upon completion.
 
 In addition, a number of support branches with the following
 naming conventions may be used:
