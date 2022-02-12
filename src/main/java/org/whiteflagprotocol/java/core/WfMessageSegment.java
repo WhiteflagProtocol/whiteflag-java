@@ -11,10 +11,11 @@ import java.util.HashSet;
 /**
  * Whiteflag message segment class
  * 
- * <p> This is a class representing a segment of a Whiteflag message, such as a
- * the message header or the message body. A message segment contains a number of
- * message fields, depending on the part and the type of the message. The fields
- * should be ordered, without missing or overlapping bytes.
+ * <p> This is a class representing a segment of a Whiteflag message, i.e. the
+ * message header or the message body. A message segment contains a number of
+ * {@link WfMessageField}s, depending on the segment and the type of the
+ * message. The fields in the segment must be ordered, without missing or
+ * overlapping bytes.
  * 
  * @wfref 4.2 Message Header
  * @wfref 4.3 Message Body

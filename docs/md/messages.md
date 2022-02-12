@@ -7,7 +7,8 @@ the detailed [WFJL Javadoc API Reference](../javadoc)
 
 This section describes how Whiteflag messages are implemented internally
 by the WFJL. To use Whiteflag messages in software applications, only the
-`org.whiteflagprotocol.java` package with the `WfMessage` class.
+`org.whiteflagprotocol.java` package with the `WfMessage` class should be
+required normally.
 
 In addition, the `WfBinaryBuffer` from the `org.whiteflagprotocol.java.core`
 may be used if working with binary encoded message, but the `WfMessage` class
@@ -49,7 +50,7 @@ a complete or accurate reference for the classes. Instead, please see the
 
 The WFJL implements the Whiteflag messages defined in the Whiteflag standard
 with the `WfMessage` class of the `org.whiteflagprotocol.java` package. This class
-encapsulated the `WfBasicMessage` class from the `org.whiteflagprotocol.java.core`
+encapsulates the `WfBasicMessage` class from the `org.whiteflagprotocol.java.core`
 package and adds implementation-sepcific metadata and methods that allow
 for further integration in larger software applications.
 
@@ -88,9 +89,7 @@ to create a message. The available static factory methods to do this are:
 * `WfMessage.decode(String)`: decodes a string with the hexadecimal representation of an unencrypted encoded message
 * `WfMessage.compile(String[])`: compiles a Whiteflag message from an array with a complete and ordered set of field values
 
-Each of these methods returns a new `WfMessage` object. This object contains
-the message header and body as `WfMessageSegment` objects that contain the
-`WfMessageField` objects.
+Each of these methods returns a new `WfMessage` object.
 
 ### Message Encryption and Decryption
 

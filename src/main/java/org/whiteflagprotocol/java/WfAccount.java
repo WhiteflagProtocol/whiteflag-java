@@ -10,20 +10,21 @@ import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 /**
  * Whiteflag account interface
  * 
- * <p> This interface defines how a class representing a Whiteflag account must
- * interact with WFJL classes. Because on blockchains there is no such thing as
- * a user registration or a central user account database, this Whiteflag
- * account is merely an abstraction to hold information about Whiteflag
- * participants, including oneself.
+ * <p> This interface defines how a class representing a blockchain account
+ * used for Whiteflag interacts with WFJL classes. Blockchains do not have a
+ * central user account database, and even the concept of an account does not
+ * exist on some blockchains. Therefore, this Whiteflag account is merely an
+ * abstraction for information related to a Whiteflag participant, including
+ * oneself.
  * 
- * A Whiteflag account corresponds with a blockchain address. Because
- * blockchain addresses are specific to a blockchain, a Whiteflag account is
- * implementation specific. This interface therefore defines how an object
- * representing a Whiteflag or blockchain account must provide relevant
- * attributes to instances of WFJL classes such a {@link WfMessage}.
- * 
- * <p> Methods implementing this interface may return `null` if certain data is
- * unknown or does not exist for a particpant.
+ * <p> Because different blockchain use the concept of an account differently,
+ * the actual implementation is blockchain-specific. This interface therefore
+ * defines how an object representing a blockchain account of a Whiteflag
+ * participiant must provide relevant information to instances of WFJL classes
+ * such a {@link WfMessage}. Information about a Whiteflag participant includes
+ * the blockchain address, and encryption keys and authentication tokens used
+ * with that address. Methods implementing this interface may return `null` if
+ * certain data is unknown or does not exist for a particpant.
  *  
  * @since 1.1
  */

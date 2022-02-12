@@ -9,13 +9,13 @@ import java.util.regex.Pattern;
 /**
  * Whiteflag encoded message object
  * 
- * <p> This class defines a binary buffer to represent encoded messages. It
- * can either be created 1. by appending message field fields from a
- * Whiteflag message, which are encoded when added, or 2. by providing a
- * hexadecimal string or byte array with an encoded message. The binary buffer
- * can be converted to a hexadecimal string or a byte byffer, e.g. for
- * encryption or embedding the message in a blockchain transaction. After the
- * buffer is marked as complete, it cannot be altered.
+ * <p> This class defines a binary buffer to represent encoded Whiteflag
+ * messages. It can either be created by: 1. appending message fields from
+ * a Whiteflag message, which are encoded when added, or 2. providing a
+ * hexadecimal string or byte array with an encoded message. The binary
+ * buffer can be converted to a hexadecimal string or a byte byffer, e.g.
+ * for encryption or embedding the message in a blockchain transaction.
+ * After the buffer is marked as complete, it cannot be altered.
  * 
  * @wfref 4.1 Message Structure
  * 

@@ -6,12 +6,10 @@ the detailed [WFJL Javadoc API Reference](../javadoc)
 ## Overview
 
 This section describes how Whiteflag cryptographic functions are implemented
-internally by the WFJL. For most implementations, this cryptographic
-functionality is already available through the classes in the main
-`org.whiteflagprotocol.java` package. For example, the `WfMessage` class has
-methods to encrypt and decrypt messages. However, classes that implement the
-`WfAccount` interface require to reference certain Whiteflag cryptographic
-classes, such as `WfEncryptionKey`, `WfECDHKeyPair`, `WfECDHPublicKey` and
+internally by the WFJL. The `WfMessage` class uses these classes and methods
+to encrypt and decrypt messages. Classes that implement the `WfAccount`
+interface require to reference some of the cryptographic classes,
+such as `WfEncryptionKey`, `WfECDHKeyPair`, `WfECDHPublicKey` and
 `WfAuthToken`.
 
 ### Example
@@ -47,7 +45,7 @@ a complete or accurate reference for the classes. Instead, please see the
 ### General
 
 Whiteflag message mostly uses hexadecimal representations for binary data.
-Most cryptographic functions, on the other handm operate on byte arrays.
+Most cryptographic functions, on the other hand, operate on byte arrays.
 Therefore, the `WfCryptoUtil` utility class provides functions to convert
 hexadecimal strings to byte arrays and vice versa:
 
@@ -56,7 +54,7 @@ String hexString = WfCryptoUtil.convertToHexString(byteArray);
 byte[] byteArray = WfCryptoUtil.convertToByteArray(hexString);
 ``` 
 
-Whiteflag crypto classes perform the conversion automatically through
+Whiteflag crypto classes perform the conversion automatically with
 overloaded methods. Hoewever, where possible, it is prefered to represent and
 pass cryptographic data as a as a class insted of a byte array to ensure type
 safety, e.g. WfEncryptionKey, ECPublicKey, WfAuthToken, etc.
@@ -76,9 +74,10 @@ methods (e.g. algortihm, mode, key length) are defined for the WFJL in the
 - Method 1: AES in Counter Mode (CTR) with a 256 bit negotiated key
 - Method 2: AES in Counter Mode (CTR) with a 256 bit pre-shared key
 
-The `WfEncryptionKey` class represents an encryption key. The key is created
-from raw key material and bound to one of the encyrption methods upon creation.
-The raw key material can be provided as a hexadecimal string or a byte array.
+The `WfEncryptionKey` class represents a master encryption key. The key is
+created from raw key material and bound to one of the encyrption methods upon
+creation. The raw key material can be provided as a hexadecimal string or a
+byte array.
 
 The `WfCipher` class performs the encryption of data. An instance of the cipher
 is created with a static factory method that is given the encryption key. Since

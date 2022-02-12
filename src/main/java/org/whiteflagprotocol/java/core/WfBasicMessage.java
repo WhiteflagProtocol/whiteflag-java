@@ -11,6 +11,8 @@ import java.util.Set;
  * <p> This is a class defining a generic basic Whiteflag message. It
  * includes common properties and methods of all message types, and
  * implementation independent logic specified by the Whiteflag standard.
+ * A message is composed of two {@link WfMessageSegment}s: a message 
+ * header and a message body.
  * 
  * @wfref 4. Message Format
  * 

@@ -8,10 +8,9 @@ import java.util.Map;
 /**
  * Whiteflag message creator class
  * 
- * <p> This is a builder class to create a Whiteflag message. It contains
- * the logic based on the Whiteflag specification to create a Whiteflag message
- * object. For example, it ensures that the message body corresponds with
- * the message type.
+ * <p> This is a builder class to create a basic Whiteflag message. It contains
+ * the logic based on the Whiteflag specification to create a valid Whiteflag
+ * message object.
  * 
  * @wfver v1-draft.6
  * @wfref 4. Message Format

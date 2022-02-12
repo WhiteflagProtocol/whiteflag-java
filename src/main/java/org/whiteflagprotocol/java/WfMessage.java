@@ -35,15 +35,18 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
 /**
  * Whiteflag message class
  * 
- * <p> This is a class representing a Whiteflag message. It contains all
- * methods to handle a Whiteflag message, e.g. to encode, decode, etc. It also
- * provides static factory methods to create Whiteflag messages in different
- * ways from various data.
+ * <p> This class represents a Whiteflag message. It provides static factory
+ * methods to create Whiteflag messages in different ways from various data,
+ * and it contains all methods to create, encode and decode a message.
+
  * 
- * A Whiteflag message is put on a blockchain by embedding it in a transaction
- * in encoded, and possibly also encrypted, form. Information from the message
- * originmator and recipient (if any) is provided through the {@link WfAccount}
- * interface.
+ * <p> The class builds upon the {@link WfBasicMessage} class that represents
+ * a Whiteflag message in its basic form with a header and a body containing
+ * pre-defined message fields. This class encapsulates the base message, adds
+ * metadata and additional methods. Metadata includes the message originmator
+ * and recipient (if any), to be provided through the {@link WfAccount}
+ * interface. The additional methods include message encryption and decryption
+ * using the `org.whiteflagprotocol.java.crypto` package.
  * 
  * @wfver v1-draft.6
  * 

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * class represent specific fields in specific message types. A field is
  * defined by a number of properties: name, allowed values, encoding,
  * starting byte and ending byte. The field is considered set if it contains
- * a valid value. It cannot be changed once set.
+ * a valid value. Its value cannot be changed once set.
  * 
  * @wfref 4.1 Message Structure
  * 

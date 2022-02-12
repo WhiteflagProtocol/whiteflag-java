@@ -63,8 +63,7 @@ or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-us
 ### Example
 
 After adding the dependency to your project, the WFJL classes can be used
-in your Java code. Normally, you will only need the classes from the
-`org.whiteflagprotocol.java` package. Your code may look like this:
+in your Java code. Your code may look like this:
 
 ```java
 import org.whiteflagprotocol.java.WfMessage;
@@ -99,7 +98,7 @@ statement. See `LICENSE.md` for details.
 
 The library may require third party software packages, which are not part of
 this distribution and may be licenced differently. The third party software
-dependencies of the WFJL itself are:
+dependencies of the WFJL are:
 
 * the [JUnit test framework](https://junit.org/) for testing the software
 * the [Bouncycastle Crypto API](https://bouncycastle.org/) used as the cryptographic provider for the Whiteflag Elliptic Curve Diffie-Hellman implementation

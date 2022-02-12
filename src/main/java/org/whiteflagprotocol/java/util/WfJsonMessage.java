@@ -21,7 +21,10 @@ import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_
  * <p> This class represents a Whiteflag message represented in the
  * JavaScript Object Notation (JSON) format, in accordance with Annex B
  * of the Whiteflag specification. The basic JSON structure is as follows:
+ * 
  * <code> { "MetaHeader" : {...}, "MessageHeader": {...}, "MessageBody": {...} }</code>
+ * 
+ * @wfref Annex B. JSON Schema of Whiteflag Messages
  * 
  * @since 1.0
  */

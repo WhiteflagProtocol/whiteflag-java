@@ -3,7 +3,7 @@
  * 
  * <p> This package provides a library with an implementation of the
  * Whiteflag protocol for further integration in larger projects. It builds
- * on the Whiteflag protocol core java library, which only contains
+ * on the Whiteflag protocol core and crypto java libraries that only contain
  * implementation-independent protocol features as specified by the
  * Whiteflag standard.
  * 
