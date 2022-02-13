@@ -1,0 +1,82 @@
+@startuml overview
+!include .stylesheet.puml
+
+left footer WFJL Overview Class Diagram
+
+package org.whiteflagprotocol.java {
+    class WfMessage {
+        -base : WfBasicMessage
+        ..
+        -metadata : HashMap<>
+        ..
+        -originator : WfAccount
+        -recipient : WfAccount
+        __
+        {static} +create(String) : WfMessage
+        {static} +deserialize(String) : WfMessage
+        {static} +deserializeJson(String) : WfMessage
+        {static} +decode(byte[]) : WfMessage
+        {static} +decrypt(byte[]) : WfMessage
+        {static} +compile(String[]) : WfMessage
+        ..
+        +copy() : WfMessage
+        ..
+        +getType() : WfMessageType
+        +setOriginator(WfAccount)
+        +getOriginator() : WfAccount
+        +setRecipient(WfAccount)
+        +getRecipient() : WfAccount
+        +setInitVector(byte[])
+        +getInitVector() : byte[]
+        ..
+        +encode() : WfBinaryBuffer
+        +encrypt() : WfBinaryBuffer
+        +toJson() : String
+    }
+
+    class WfAccount <<interface>> {
+        +isSelf() : boolean
+        ..
+        +getAddress() : String
+        +getBinaryAddress() : byte[]
+        +getAuthURL() : URL
+        +getAuthToken() : WfAuthToken
+        +getEcdhKeyPair() : WfECDHKeyPair
+        +getEcdhPublicKey() : ECPublicKey
+        +getSharedKey() : WfEncryptionKey
+    }
+}
+
+package org.whiteflagprotocol.java.core {
+    class WfBasicMessage {}
+    enum WfMessageType {}
+    class WfMessageSegment {}
+    class WfMessageField {}
+}
+
+package org.whiteflagprotocol.java.crypto {
+    class WfAuthToken <<Destroyable>> {}
+    class WfEncryptionKey <<Destroyable>> {}
+    class WfECDHKeyPair <<Destroyable>> {}
+    class WfCipher <<Destroyable>> {}
+}
+
+package org.whiteflagprotocol.java.util {
+    class WfJsonMessage {}
+}
+
+WfMessage *-- "1" WfBasicMessage
+WfBasicMessage -- "1" WfMessageType
+WfBasicMessage *-- "2" WfMessageSegment
+WfMessageSegment *-- "*" WfMessageField
+
+WfAccount -- WfMessage
+
+WfAccount --> WfAuthToken
+WfAccount --> WfEncryptionKey
+WfAccount --> WfECDHKeyPair
+
+WfMessage ..> WfCipher
+WfJsonMessage <.. WfMessage
+
+@enduml

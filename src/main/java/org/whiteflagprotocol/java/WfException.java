@@ -3,10 +3,12 @@
  */
 package org.whiteflagprotocol.java;
 
-/* Required Whiteflag core exception class to extend */
-import org.whiteflagprotocol.java.core.WfCoreException;
-
-public class WfException extends WfCoreException {
+/**
+ * Whiteflag protocol exception class
+ * 
+ * @since 1.0
+ */
+public class WfException extends Exception {
 
     /* PROPERTIES */
 
@@ -49,7 +51,7 @@ public class WfException extends WfCoreException {
         WF_REFERENCE_ERROR,
 
         /**
-         * Whiteflag message authentication error
+         * Whiteflag authentication error
          */
         WF_AUTH_ERROR,
 
@@ -59,20 +61,21 @@ public class WfException extends WfCoreException {
         WF_SIGN_ERROR,
 
         /**
-         * Whiteflag encryption error
+         * Whiteflag cryptographic error
          */
-        WF_ENCRYPTION_ERROR
+        WF_CRYPTO_ERROR
     }
 
     /* CONSTRUCTORS */
 
     /**
      * Creates a Whiteflag exception with a specific error type
-     * @param errorMessage a human readible error message
-     * @param wfErrorType the Whiteflag error type
+     * @param message a human readible error message
+     * @param cause the causing error, or null
+     * @param type the Whiteflag error type
      */
-    public WfException(final String errorMessage, final ErrorType wfErrorType) {
-        super(errorMessage);
-        this.errorType = wfErrorType;
+    public WfException(final String message, final Throwable cause, final ErrorType type) {
+        super(message, cause);
+        this.errorType = type;
     }
 }

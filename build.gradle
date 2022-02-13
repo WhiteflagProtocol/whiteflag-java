@@ -3,7 +3,7 @@
  */
 
 // Project information
-version = '1.0.0'
+version = '1.1.0'
 group = 'org.whiteflagprotocol.java'
 
 // Display basic information
@@ -21,12 +21,20 @@ apply plugin: 'maven-publish'
 
 // Repositories and Dependencies
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.13'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
+}
+
+// Test behaviour
+test {
+    testLogging {
+        events "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+    }
 }
 
 // Include documentation and source

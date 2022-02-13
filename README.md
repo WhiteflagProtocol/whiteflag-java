@@ -33,14 +33,14 @@ To use the WFJL, its [GitHub package](https://github.com/WhiteflagProtocol/white
 should be added to your project as a dependency using the following
 "group:artifact:version" information, with the most recently published version:
 
-`org.whiteflagprotocol.java:whiteflag-java:1.0.0`
+`org.whiteflagprotocol.java:whiteflag-java:1.1.0`
 
 For example, when using [Gradle](https://gradle.org/), the following should be
 included in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'org.whiteflagprotocol.java:whiteflag-java:1.0.0'
+  implementation 'org.whiteflagprotocol.java:whiteflag-java:1.1.0'
 }
 ```
 
@@ -50,7 +50,7 @@ or in your `pom.xml` when using [Maven](https://maven.apache.org/):
 <dependency>
   <groupId>org.whiteflagprotocol.java</groupId>
   <artifactId>whiteflag-java</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency> 
 ```
 
@@ -63,22 +63,19 @@ or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-us
 ### Example
 
 After adding the dependency to your project, the WFJL classes can be used
-in your Java code. Normally, you will only need the classes from the
-`org.whiteflagprotocol.java` package. Your code may look like this:
+in your Java code. Your code may look like this:
 
 ```java
 import org.whiteflagprotocol.java.WfMessage;
 import org.whiteflagprotocol.java.WfException;
 
 public class Example {
+  /* Properties */
   private WfMessage message;
 
-  public WfMessage createMessage(String messageType) {
-    try {
-      message = WfMessage.Creator.create(messageType);
-    } catch(WfException e) {
-      throw new IllegalArgumentException("Cannot create a Whiteflag message of type " + messageType);
-    }
+  /* Methods */
+  public WfMessage createMessage(String messageType) throws WfException {
+    message = WfMessage.type(messageType);
     return message;
   }
 }
@@ -99,10 +96,10 @@ The WFJL software is dedicated to the public domain under the
 [Creative Commons CC0-1.0 Universal Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/)
 statement. See `LICENSE.md` for details.
 
-The library may require third party software packages, which are not
-part of this distribution and may be licenced differently.
-
-The third party software dependencies of the WFJL itself are:
+The library may require third party software packages, which are not part of
+this distribution and may be licenced differently. The third party software
+dependencies of the WFJL are:
 
 * the [JUnit test framework](https://junit.org/) for testing the software
+* the [Bouncycastle Crypto API](https://bouncycastle.org/) used as the cryptographic provider for the Whiteflag Elliptic Curve Diffie-Hellman implementation
 * the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages

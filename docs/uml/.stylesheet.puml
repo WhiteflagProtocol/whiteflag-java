@@ -1,3 +1,4 @@
 @startuml stylesheet
 skinparam monochrome true
+skinparam linetype ortho
 @enduml

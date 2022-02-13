@@ -4,19 +4,21 @@
 left footer WFJL Message Class Diagram
 
 package org.whiteflagprotocol.java.core {
-    class WfMessageCore {
+    class WfBasicMessage {
         +type : WfMessageType
         +header : WfMessageSegment
         +body : WfMessageSegment
         +serialize() : String
-        +encode() : String
+        +encode() : WfBinaryBuffer
     }
     class WfMessageSegment {
         -fields : WfMessageField[]
-        +serialize() : String
-        +deserialize(String)
-        +encode() : WfBinaryString
-        +decode(WfBinaryString)
+        __
+        #serialize() : String
+        #deserialize(String)
+        ..
+        #encode() : WfBinaryBuffer
+        #decode(WfBinaryBuffer)
     }
     class WfMessageField {
         +name : String
@@ -25,18 +27,19 @@ package org.whiteflagprotocol.java.core {
         +startByte : int
         +endByte : int
         -value : String
-        +encode() : WfBinaryString
-        +decode(WfBinaryString) : String
-    }
-    enum WfMessageField.Encoding {
-        BIN
-        DEC
-        HEX
-        UTF8
-        DATETIME
-        DURATION
-        LAT
-        LONG
+        __
+        {static} +define(...) : WfMessageField
+        {static} +from(WfMessageField) : WfMessageField
+        ..
+        +get() : String
+        +set(String) : Boolean
+        ..
+        +isValid() : Boolean
+        +bitLength() : int
+        +byteLength() : int
+        ..
+        +encode() : byte[]
+        +decode(byte[])
     }
     class WfMessageCreator {
         __
@@ -63,20 +66,50 @@ package org.whiteflagprotocol.java.core {
         Q
     }
     class WfMessageDefinitions <<Utility>> {
-        #headerFields : WfMessageField[]
-        #authenticationFields : WfMessageField[]
-        #cryptoFields : WfMessageField[]
-        #testFields : WfMessageField[]
-        #freetextFields : WfMessageField[]
-        #resourceFields : WfMessageField[]
-        #signsignalFields : WfMessageField[]
-        #createRequestFields() : WfMessageField[]
+        {static} #genericHeaderFields : WfMessageField[]
+        {static} #authenticationBodyFields : WfMessageField[]
+        {static} #cryptoBodyFields : WfMessageField[]
+        {static} #testBodyFields : WfMessageField[]
+        {static} #freetextBodyFields : WfMessageField[]
+        {static} #resourceBodyFields : WfMessageField[]
+        {static} #signsignaBodyFields : WfMessageField[]
+        {static} #requestFields : WfMessageField[]
     }
     class WfMessageCodec <<Utility>> {
-        +encode(String) : WfBinaryString
-        +decode(WfBinaryString) : String
+        {static} +encodeField(WfMessageField) : byte[]
+        {static} +decodeField(WfMessageField, byte[])
     }
-    class WfBinaryString <<DataType>>
+    enum Encoding {
+        BIN
+        DEC
+        HEX
+        UTF8
+        DATETIME
+        DURATION
+        LAT
+        LONG
+    }
+    class WfBinaryBuffer <<DataType>> {
+        __
+        {static} +create()
+        {static} +fromByteArray(byte[])
+        {static} +fromHexString(String)
+        ..
+        +copy()
+        ..
+        +append(WfBinaryBuffer)
+        +addMessageField(WfMessageField)
+        +extractMessageField(WfMessageField, int)
+        #appendBits(byte[], int)
+        #extractBits(int, int) : byte[]
+        ..
+        {static} +convertToByteArray(String) : byte[]
+        {static} +convertToHexString(byte[]) : String
+        {static} +shiftRight(byte[], int) : byte[]
+        {static} +shiftLeft(byte[], int) : byte[]
+        {static} #concatinateBits(byte[], int, byte[], int) : byte[]
+        {static} #cropBits(byte[], int) : byte[]
+    }
 }
 
 package org.whiteflagprotocol.java.util {
@@ -88,37 +121,52 @@ package org.whiteflagprotocol.java.util {
 
 package org.whiteflagprotocol.java {
     class WfMessage {
+        -base : WfBasicMessage
+        ..
         -metadata : HashMap<>
+        ..
+        -originator : WfAccount
+        -recipient : WfAccount
+        __
+        {static} +create(String) : WfMessage
+        {static} +deserialize(String) : WfMessage
+        {static} +deserializeJson(String) : WfMessage
+        {static} +decode(byte[]) : WfMessage
+        {static} +decrypt(byte[]) : WfMessage
+        {static} +compile(String[]) : WfMessage
+        ..
+        +copy() : WfMessage
+        ..
+        +getType() : WfMessageType
+        +setOriginator(WfAccount)
+        +getOriginator() : WfAccount
+        +setRecipient(WfAccount)
+        +getRecipient() : WfAccount
+        +setInitVector(byte[])
+        +getInitVector() : byte[]
+        ..
+        +encode() : WfBinaryBuffer
+        +encrypt() : WfBinaryBuffer
         +toJson() : String
-    }
-    class WfMessage.Creator {
-        +type(String)
-        +copy(WfMessage)
-        +deserialize(String)
-        +deserializeJson(String)
-        +decode(String)
-        +compile(String[])
     }
 }
 
 WfJsonMessage <. WfMessage
 
-WfMessage --|> WfMessageCore
-WfMessage +- WfMessage.Creator
-WfMessage <- WfMessage.Creator: creates
-WfMessage.Creator --> WfMessageCreator
+WfMessage *-- WfBasicMessage
+WfMessage ..> WfMessageCreator
 
-WfMessageCore --> WfMessageType
-WfMessageCore *-- "2" WfMessageSegment
+WfBasicMessage -- "1" WfMessageType
+WfBasicMessage *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField
-WfMessageField +- WfMessageField.Encoding
 WfMessageCodec <. WfMessageField
+Encoding -+ WfMessageCodec
 
-WfMessageCreator -> WfMessageCore: creates
+WfBasicMessage <- WfMessageCreator: creates
 WfMessageCreator ..> WfMessageType
 WfMessageCreator ..> WfMessageSegment
 
-WfMessageType --> WfMessageDefinitions
-WfMessageDefinitions --> WfMessageField
+WfMessageType ..> WfMessageDefinitions
+WfMessageDefinitions ..> WfMessageField
 
 @enduml
