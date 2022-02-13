@@ -78,7 +78,7 @@ There are two main branches with infinite lifetime:
 * `develop` is the branch in which all development work is brought together
   and merged for integration and testing of new versions, which are pulled
   into master for a new major or minor release (`x.y.0`)
-  or new pre-release (`1.1.0-alpha.n`) upon completion.
+  or new pre-release (`1.2.0-alpha.n`) upon completion.
 
 In addition, a number of support branches with the following
 naming conventions may be used:
