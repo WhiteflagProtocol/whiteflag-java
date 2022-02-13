@@ -13,6 +13,10 @@ import static org.whiteflagprotocol.java.crypto.WfCryptoUtil.convertToByteArray;
  * encryption parameters in accordance with the Whiteflag specification.
  * No implementation specific properties and methods are defined by this class.
  * 
+ * <p> The names of cryptographic algorithms, modes, schemes used by this class
+ * are in accordance with the
+ * <a href="https://docs.oracle.com/en/java/javase/17/docs/specs/security/standard-names.html">Java Security Standard Algorithm Names</a>.
+ * 
  * @wfver v1-draft.6
  * @wfref 5.2.3 Key and Token Derivation
  * 
@@ -43,19 +47,19 @@ public enum WfEncryptionMethod {
      */
     public final String fieldValue;
     /**
-     * The name of the algorithm for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
+     * The name of the algorithm for this encryption method, i.a.w. Java Security Standard Algorithm Names
      */
     protected final String algorithmName;
     /**
-     * The mode of operation for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
+     * The mode of operation for this encryption method, i.a.w. Java Security Standard Algorithm Names
      */
     protected final String operationMode;
     /**
-     * The padding scheme for this encryption method, i.a.w. Java Cryptography Standard Algorithm Names
+     * The padding scheme for this encryption method, i.a.w. Java Security Standard Algorithm Names
      */
     protected final String paddingScheme;
     /**
-     * The cipher name for this encryption method i.a.w. Java Cryptography Standard Algorithm Names
+     * The cipher name for this encryption method i.a.w. Java Security Standard Algorithm Names
      */
     public final String cipherName;
     /**
@@ -73,9 +77,9 @@ public enum WfEncryptionMethod {
     /**
      * Sets the properties of the encryption methods
      * @param fieldValue the value used in the EncryptionIndicator message field to indicate the encryption method
-     * @param algorithmName the name of the encryption algorithm, i.a.w. Java Cryptography Standard Algorithm Names
-     * @param operationMode the encryption mode of operation, i.a.w. Java Cryptography Standard Algorithm Names
-     * @param paddingScheme the padding scheme, i.a.w. Java Cryptography Standard Algorithm Names
+     * @param algorithmName the name of the encryption algorithm, i.a.w. Java Security Standard Algorithm Names
+     * @param operationMode the encryption mode of operation, i.a.w. Java Security Standard Algorithm Names
+     * @param paddingScheme the padding scheme, i.a.w. Java Security Standard Algorithm Names
      * @param keyLength the length of the encryption key in bytes
      * @param hkdfSalt the salt used in the HKDF function to derive the encryption key
      */

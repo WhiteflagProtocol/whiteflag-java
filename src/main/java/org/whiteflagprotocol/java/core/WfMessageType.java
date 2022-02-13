@@ -27,36 +27,42 @@ public enum WfMessageType {
 
     /** 
      * Authentication message type
+     * <p> Message introducing the sender on the network with the sender’s authentication data
      * @wfref 4.3.4 Management Messages: Authentication
      */
     A("A", authenticationBodyFields),
 
     /** 
      * Cryptographic message type
+     * <p> Message for management of keys and parameters of cryptographic functions
      * @wfref 4.3.5 Management Messages: Cryptographic Support
      */
     K("K", cryptoBodyFields),
 
     /** 
      * Test message type
+     * <p> Message that can be used for testing Whiteflag functionality by applications
      * @wfref 4.3.6 Management Messages: Test
      */
     T("T", testBodyFields),
 
     /** 
      * Resource message type
+     * <p> Message to point to an internet resource
      * @wfref 4.3.2 Functional Messages: Resource
      */
     R("R", resourceBodyFields),
 
     /** 
      * Free Text message type
+     * <p> Message to send a free text string
      * @wfref 4.3.3 Functional Messages: Free Text
      */
     F("F", freetextBodyFields),
 
     /** 
      * Protective Sign message type
+     * <p> Sign to mark objects under the protection of international law
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.1 Protective Signs
      */
@@ -64,6 +70,7 @@ public enum WfMessageType {
 
     /** 
      * Emergency Signal message type
+     * <p> Signal to send an emergency signal when in need of assistance
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.2 Emergency Signals
      */
@@ -71,6 +78,7 @@ public enum WfMessageType {
 
     /** 
      * Danger Sign message type
+     * <p> Sign to mark a location or area of imminent danger, e.g. an area under attack, land mines, disaster, etc.
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.3 Danger and Disaster Signs
      */
@@ -78,6 +86,7 @@ public enum WfMessageType {
 
     /** 
      * Status Signal message type
+     * <p> Signal to provide the status of an object, or specifically for persons: give a proof of life
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.4 Status Signals
      */
@@ -85,13 +94,15 @@ public enum WfMessageType {
 
     /** 
      * Infrastructure Sign message type
+     * <p> Sign to mark critical infrastructure, e.g. roads, utilities, water treatment, hospitals, power plants etc.
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.5 Infrastructure Signs
      */
     I("I", signsignalBodyFields),
 
     /** 
-     * Mission Sign message type
+     * Mission Signal message type
+     * <p> Signal to provide information on activities undertaken during a mission
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.6 Mission Signals
      */
@@ -99,6 +110,7 @@ public enum WfMessageType {
 
     /** 
      * Request Signal message type
+     * <p> Signal to perform requests to other parties
      * @wfref 4.3.1 Functional Messages: Signs/Signals
      * @wfref 4.3.1.2.7 Request Signals
      */
