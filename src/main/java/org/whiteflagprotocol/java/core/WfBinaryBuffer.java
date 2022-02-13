@@ -39,7 +39,7 @@ public final class WfBinaryBuffer {
      */
     public static final String HEXPREFIX = "0x";
     /**
-     * The radic of a binary digit
+     * The radix of a binary digit
      */
     public static final int BINRADIX = 2;
     /**
