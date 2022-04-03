@@ -38,7 +38,6 @@ import static org.whiteflagprotocol.java.WfException.ErrorType.WF_CRYPTO_ERROR;
  * <p> This class represents a Whiteflag message. It provides static factory
  * methods to create Whiteflag messages in different ways from various data,
  * and it contains all methods to create, encode and decode a message.
-
  * 
  * <p> The class builds upon the {@link WfBasicMessage} class that represents
  * a Whiteflag message in its basic form with a header and a body containing
@@ -91,7 +90,6 @@ public class WfMessage {
 
     /**
      * Creates a Whiteflag message from a decoded base message
-     private String cachedMsgStr = null;
      * @since 1.1
      * @param base the base message
      * @param encodedMsg the buffer with the binary encoded source of the message to be preserved
