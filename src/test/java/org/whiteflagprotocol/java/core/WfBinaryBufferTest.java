@@ -150,7 +150,7 @@ public class WfBinaryBufferTest {
         assertEquals("Binary buffer length should be 22 bits", 22, buffer.bitLength());
         assertTrue("Byte array 1 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("e63884"));
         buffer.appendBits(byteArray2, 13);         // 1110 0110 | 0011 1000 | 1000 0101 | 1011 1001 | 1110 0000
-        assertEquals("Binary buffer length should be 34 bits", 35, buffer.bitLength());
+        assertEquals("Binary buffer length should be 35 bits", 35, buffer.bitLength());
         assertTrue("Byte array 2 should have been correctly added to the binary buffer", buffer.toHexString().equalsIgnoreCase("e63885b9e0"));
     }
 
