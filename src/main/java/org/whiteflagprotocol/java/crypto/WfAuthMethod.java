@@ -55,11 +55,11 @@ public enum WfAuthMethod {
     /* PUBLIC STATIC METHODS */
 
     /**
-     * Returns the encryption method from the indicator value
+     * Returns the authentication method from the indicator value
      * @since 1.1
-     * @param fieldValue the value used in the VerificationMethod message field to indicate the encryption method
+     * @param fieldValue the value used in the VerificationMethod message field to indicate the authentication method
      * @return the requested authentication method
-     * @throws WfCryptoException if the encryption indicator is invalid
+     * @throws WfCryptoException if the authentication method is invalid
      */
     public static final WfAuthMethod fromFieldValue(final String fieldValue) throws WfCryptoException {
         if (fieldValue == null || fieldValue.isEmpty()) {
@@ -68,6 +68,6 @@ public enum WfAuthMethod {
         for (WfAuthMethod method : values()) {
             if (method.fieldValue.equalsIgnoreCase(fieldValue)) return method;
         }
-        throw new WfCryptoException("Invalid encryption method: " + fieldValue, null);
+        throw new WfCryptoException("Invalid authentication method: " + fieldValue, null);
     }
 }
