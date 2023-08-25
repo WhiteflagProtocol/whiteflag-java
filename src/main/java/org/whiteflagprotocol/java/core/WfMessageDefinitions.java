@@ -40,7 +40,7 @@ public final class WfMessageDefinitions {
         WfMessageField.define("MessageCode", "(?=A|K|T|P|E|S|D|I|M|Q|R|F)^[A-Z]{1}$", UTF8, 5, 6),
         WfMessageField.define("ReferenceIndicator", "(?=0|1|2|3|4|5|6|7|8|9)^"+HEX.charset()+"{1}$", HEX, 6, 7),
         WfMessageField.define("ReferencedMessage", "^"+HEX.charset()+"{64}$", HEX, 7, 71)
-    }; 
+    };
 
     /**
      * Authentication message body fields
