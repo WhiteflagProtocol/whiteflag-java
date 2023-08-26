@@ -36,7 +36,7 @@ public final class WfMessageSchema {
         try {
             root = mapWfSchema(loadWfSchemaResource());
         } catch (Exception e) {
-            throw new CompletionException(e);
+            throw new RuntimeException("Cannot statically load Whiteflag message schema", e);
         }
     }
 
