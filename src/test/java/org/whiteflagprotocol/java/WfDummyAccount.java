@@ -17,7 +17,7 @@ import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
  * This class is an implementation of the {@link WfAccount} interface for
  * testing purposes.
  */
-public class WfAccountImpl implements WfAccount {
+public class WfDummyAccount implements WfAccount {
 
     /* PROPERTIES */
 
@@ -36,7 +36,7 @@ public class WfAccountImpl implements WfAccount {
      * Constructs a Whiteflag blockchain account
      * @param self boolean to indicate if this is an own account
      */
-    protected WfAccountImpl(boolean self) {
+    protected WfDummyAccount(boolean self) {
         this.self = self;
     }
     

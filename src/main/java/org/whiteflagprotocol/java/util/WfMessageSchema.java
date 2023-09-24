@@ -31,26 +31,35 @@ import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_
  */
 public final class WfMessageSchema {
 
-    static {
-        // Loading Whiteflag message schema from resource file
-        try {
-            root = mapWfSchema(loadWfSchemaResource());
-        } catch (Exception e) {
-            throw new RuntimeException("Cannot statically load Whiteflag message schema", e);
-        }
-    }
-
     /* PROPERTIES */
 
     /**
      *  The Whiteflag message schema resource location
      */
     private static final String RESOURCEFILE = "protocol/v1/WfMessageSchema.json";
-
     /**
      *  The Whiteflag message schema
      */
-    protected static final JsonNode root;
+    protected static final JsonNode root;           // message schema root
+    protected static final JsonNode properties;     // message properties
+    protected static final JsonNode definitions;    // message definitions
+    protected static final JsonNode specifications; // protocol specifications
+
+    /* STATIC CODE */
+
+    /**
+     * Load Whiteflag message schema from resource file
+     */
+    static {
+        try {
+            root = mapWfSchema(loadWfSchemaResource(RESOURCEFILE));
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot statically load Whiteflag message schema", e);
+        }
+        properties = root.get("properties");
+        definitions = root.get("definitions");
+        specifications = root.get("specifications");
+    }
 
     /* CONSTRUCTOR */
 
@@ -61,15 +70,20 @@ public final class WfMessageSchema {
         throw new IllegalStateException("Cannot instantiate Whiteflag message schema utility class");
     }
 
+    /* PUBLIC METHODS */
+
+    //TODO: queries into schmema
+
     /* PRIVATE METHODS */
 
     /**
      * Loads Whiteflag message schema resource file into string
+     * @param resource the name of the Whiteflag message schema resource file
      * @return JSON string with the Whiteflag message schema
      */
-    private static final String loadWfSchemaResource() {
+    private static final String loadWfSchemaResource(final String resource) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        try (InputStream stream = classloader.getResourceAsStream(RESOURCEFILE);
+        try (InputStream stream = classloader.getResourceAsStream(resource);
              BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             return reader.lines().collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException e) {

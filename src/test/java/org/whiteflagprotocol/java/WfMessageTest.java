@@ -451,8 +451,8 @@ public class WfMessageTest {
         final String encodedMsg = "5746313223000000000088888889111111119999999a22222222aaaaaaab33333333bbbbbbbb0983098309830983118b118b118b118b1993199319931993219b219b219b219b29a329a329a329a331ab31ab31ab31a9b1b9b1b9b1b9b1b9c1c9c1c9c1c9c1c8";
         final String encryptedMsg = "574631326d7658e7d17479677a0de95076989fcd7825b709349b143f2b17644e5cb2c8ded5c7f18d77447cf9dc2115e0c1c81d717b57fadaeedf27bfef8926448ff666d3d9a65168827c94b393974ebbe6b7f0599e184bfd1ace3569117c23ae17c5640f2f2d";
 
-        WfAccountImpl originator = new WfAccountImpl(true);
-        WfAccountImpl recipient = new WfAccountImpl(false);
+        WfDummyAccount originator = new WfDummyAccount(true);
+        WfDummyAccount recipient = new WfDummyAccount(false);
         originator.setAddress("007a0baf6f84f0fa7402ea972686e56d50b707c9b67b108866");
         recipient.setSharedKey(new WfEncryptionKey("32676187ba7badda85ea63a69870a7133909f1999774abb2eed251073616a6e7"));
 
@@ -472,8 +472,8 @@ public class WfMessageTest {
     @Test
     public void testMessageEncryption2() throws WfException {
         /* Setup */
-        WfAccountImpl originator = new WfAccountImpl(true);
-        WfAccountImpl recipient = new WfAccountImpl(false);
+        WfDummyAccount originator = new WfDummyAccount(true);
+        WfDummyAccount recipient = new WfDummyAccount(false);
         originator.setAddress("ac000cdbe3c49955b218f8397ddfe533a32a4269658712a2f4a82e8b448e");
         recipient.setSharedKey(new WfEncryptionKey("b50cf705febdc9b6b2f7af10fa0955c1a5b454d6941494536d75d7810010a90d"));
 
@@ -498,8 +498,8 @@ public class WfMessageTest {
     @Test
     public void testMessageEncryption3() throws WfException, WfCryptoException {
         /* Setup */
-        WfAccountImpl originator = new WfAccountImpl(false);
-        WfAccountImpl recipient = new WfAccountImpl(true);
+        WfDummyAccount originator = new WfDummyAccount(false);
+        WfDummyAccount recipient = new WfDummyAccount(true);
         originator.setAddress("b77b1cdb02efe1acccf0e277021cb303117bd83c689ea8a64fc549229dba");
         originator.setEcdhPublicKey(new WfECDHKeyPair().getPublicKey());
         recipient.setEcdhKeyPair(new WfECDHKeyPair());
@@ -526,8 +526,8 @@ public class WfMessageTest {
     @SuppressWarnings("unused")
     public void testMessageEncryption4() throws WfException, WfCryptoException {
         /* Setup */
-        WfAccountImpl originator = new WfAccountImpl(false);
-        WfAccountImpl recipient = new WfAccountImpl(true);
+        WfDummyAccount originator = new WfDummyAccount(false);
+        WfDummyAccount recipient = new WfDummyAccount(true);
         originator.setAddress("b77b1cdb02efe1acccf0e277021cb303117bd83c689ea8a64fc549229dba");
         recipient.setEcdhKeyPair(new WfECDHKeyPair());
 

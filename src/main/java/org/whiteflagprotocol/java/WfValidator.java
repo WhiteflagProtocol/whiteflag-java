@@ -1,7 +1,7 @@
 /*
  * Whiteflag Java Library
  */
-package org.whiteflagprotocol.java.core;
+package org.whiteflagprotocol.java;
 
 import org.whiteflagprotocol.java.util.WfMessageSchema;
 
@@ -15,21 +15,22 @@ import org.whiteflagprotocol.java.util.WfMessageSchema;
  * 
  * @since 1.2
  */
-public final class WfMessageValidator {
+public final class WfValidator {
 
     /* PROPERTIES */
 
     /**
      *  The Whiteflag message to be validated
      */
-    private WfBasicMessage message;
+    private WfMessage message;
 
     /* CONSTRUCTOR */
 
     /** 
-     * Prevents this utility class to be instantiated
+     * Creates a new validator for a message
+     * @param message the message to be validated
      */
-    public WfMessageValidator(WfBasicMessage message) {
+    public WfValidator(WfMessage message) {
         this.message = message;
     }
 }
