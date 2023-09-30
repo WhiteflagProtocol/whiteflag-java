@@ -8,11 +8,14 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
+import java.util.Iterator;
 import java.util.MissingResourceException;
+import java.util.Objects;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.MissingNode;
 
 /* Required error types */
 import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_ERROR;
@@ -55,9 +58,9 @@ public final class WfMessageSchema {
         } catch (Exception e) {
             throw new RuntimeException("Cannot statically load Whiteflag message schema", e);
         }
-        properties = root.get("properties");
-        definitions = root.get("definitions");
-        specifications = root.get("specifications");
+        properties = root.at("/properties");
+        definitions = root.at("/definitions");
+        specifications = root.at("/specifications");
     }
 
     /* CONSTRUCTOR */
@@ -71,7 +74,46 @@ public final class WfMessageSchema {
 
     /* PUBLIC METHODS */
 
-    //TODO: queries into schmema
+    /**
+     * Get the name of the message type
+     * @param messageCode the code indicating the message type
+     * @return the name of the message type or null if unable to retrieve
+     */
+    public static final String getMessageTypeName(String messageCode) {
+        JsonNode specification =  getMessageSpecification(messageCode);
+        if (specification.isMissingNode()) return null;
+        return specification.path("title").textValue();
+    }
+
+    /**
+     * Get the description of the message type
+     * @param messageCode the code indicating the message type
+     * @return the description of the message type or null if unable to retrieve
+     */
+    public static final String getMessageTypeDescription(String messageCode) {
+        JsonNode specification =  getMessageSpecification(messageCode);
+        if (specification.isMissingNode()) return null;
+        return specification.path("description").textValue();
+    }
+
+    /* PROTECTED METHODS */
+
+    /**
+     * Get the JSON specification of the message type
+     * @param messageCode code indicating the message type
+     * @return JSON description of the message type or null if not available
+     */
+    protected static final JsonNode getMessageSpecification(String messageCode) {
+        Iterator<JsonNode> i = specifications.path("MessageCode").elements();
+        while(i.hasNext()) {
+            JsonNode currentNode = i.next();
+            String code = currentNode.path("const").textValue();
+            if (code != null && Objects.equals(code, messageCode)) {
+                return currentNode;
+            }
+        }
+        return MissingNode.getInstance();
+    }
 
     /* PRIVATE METHODS */
 
@@ -82,11 +124,11 @@ public final class WfMessageSchema {
      */
     private static final String loadWfSchemaResource(final String resource) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        try (InputStream stream = classloader.getResourceAsStream(resource);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
+        try(InputStream stream = classloader.getResourceAsStream(resource);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             return reader.lines().collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException e) {
-            throw new MissingResourceException("Cannot load Whiteflag message schema from resource " + RESOURCEFILE,"WfJsonMessageSchema","");
+            throw new MissingResourceException("Cannot load Whiteflag message schema from resource " + RESOURCEFILE, "", "");
         }
     }
 
