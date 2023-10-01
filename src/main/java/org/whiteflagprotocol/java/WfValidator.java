@@ -54,6 +54,6 @@ public final class WfValidator {
      * @return TRUE if provided data is valid, else FALSE
      */
     public boolean validate() {
-        return WfMessageSchema.validate(message.toJsonMessage());
+        return WfMessageSchema.validateJsonMessage(message.toJsonMessage());
     }
 }

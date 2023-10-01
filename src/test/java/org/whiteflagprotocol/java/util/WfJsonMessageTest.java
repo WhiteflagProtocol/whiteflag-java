@@ -21,7 +21,7 @@ public class WfJsonMessageTest {
         String jsonStr1A = "{\"MetaHeader\": { },\n\"MessageHeader\": {\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\n\"MessageBody\":{\"Text\": \"Whiteflag test message!\"} } ";
         String jsonStr1B = "{\"MetaHeader\":{},\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Whiteflag test message!\"}}";
         WfJsonMessage jsonMessage = WfJsonMessage.create(jsonStr1A);
-        String jsonStr2 = jsonMessage.toJson();
+        String jsonStr2 = jsonMessage.toJsonString();
 
         /* Verify */
         assertEquals("What goes in must come out", jsonStr1B, jsonStr2);

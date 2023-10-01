@@ -114,7 +114,7 @@ package org.whiteflagprotocol.java.core {
 
 package org.whiteflagprotocol.java.util {
     class WfJsonMessage {
-        +toJson() : String
+        +toJsonString() : String
         +create(String)
     }
 }
@@ -147,7 +147,7 @@ package org.whiteflagprotocol.java {
         ..
         +encode() : WfBinaryBuffer
         +encrypt() : WfBinaryBuffer
-        +toJson() : String
+        +toJsonString() : String
     }
 }
 

@@ -130,11 +130,24 @@ public class WfJsonMessage {
     }
 
     /**
-     * Creates a serialized JSON representation of a Whiteflag message
-     * @return the serialized JSON representation of the message
+     * Returns this Whiteflag JSON message object as a JSON string
+     * @return the serialized JSON string of the message, or an empty JSON object
+     */
+    @Override
+    public String toString() {
+        try {
+            return this.toJsonString(); 
+        } catch (WfUtilException e) {
+            return "{}";
+        }
+    }
+
+    /**
+     * Creates a JSON string representation of the Whiteflag JSON message
+     * @return the serialized JSON string of the message
      * @throws WfUtilException if no valid JSON serialization can be created
      */
-    public String toJson() throws WfUtilException {
+    public String toJsonString() throws WfUtilException {
         try {
             return mapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
@@ -143,7 +156,7 @@ public class WfJsonMessage {
     }
 
     /**
-     * Creates a JSON node object representation of a Whiteflag message
+     * Creates a JSON node object representation of the Whiteflag JSON message
      * @since 1.2
      * @return the JSON node object representation of the message
      */

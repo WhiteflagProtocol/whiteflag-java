@@ -31,10 +31,11 @@ package org.whiteflagprotocol.java {
         ..
         +encode() : WfBinaryBuffer
         +encrypt() : WfBinaryBuffer
-        +toJson() : String
+        +toJsonString() : String
     }
 
     class WfAccount <<interface>> {
+        __
         +isSelf() : boolean
         ..
         +getAddress() : String
@@ -46,7 +47,12 @@ package org.whiteflagprotocol.java {
         +getSharedKey() : WfEncryptionKey
     }
 
-    class WfValidator {}
+    class WfValidator {
+        __
+        {static} +create(WfMessage) : WfValidator
+        ..
+        +validate() : boolean
+    }
 }
 
 package org.whiteflagprotocol.java.core {
@@ -63,7 +69,7 @@ package org.whiteflagprotocol.java.crypto {
     class WfCipher <<Destroyable>> {}
 }
 
-package org.whiteflagprotocol.java.util {
+package org.whiteflagprotocol.java.util { 
     class WfJsonMessage {}
     class WfMessageSchema {}
 }

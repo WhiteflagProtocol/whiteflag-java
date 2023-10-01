@@ -403,7 +403,7 @@ public class WfMessageTest {
     public void testJsonSerialization() throws WfException {
         /* Setup */
         WfMessage message1 = WfMessage.deserialize("WF100F5f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942dfWhiteflag test message!");
-        String jsonMessageStr = message1.toJson();
+        String jsonMessageStr = message1.toJsonString();
         WfMessage message2 = WfMessage.deserializeJson(jsonMessageStr);
 
         /* Verify */
