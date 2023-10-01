@@ -82,4 +82,6 @@ WfAccount --> WfECDHKeyPair
 WfMessage ..> WfCipher
 WfJsonMessage <.. WfMessage
 
+WfMessageSchema <.. WfValidator
+
 @enduml

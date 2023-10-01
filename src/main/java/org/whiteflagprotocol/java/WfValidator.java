@@ -50,19 +50,10 @@ public final class WfValidator {
     /* PUBLIC METHODS */
 
     /**
-     * Gets the type of this message
-     * @return the message type
+     * Performs the validation based on provided data
+     * @return TRUE if provided data is valid, else FALSE
      */
     public boolean validate() {
-        /* Check internal validity */
-        if (!message.isValid()) return false;
-
-        /*
-         * TODO: Check validity by holding jeson representation aginst schema
-         * https://github.com/networknt/json-schema-validator
-         */
-
-        return true;
+        return WfMessageSchema.validate(message.toJsonMessage());
     }
-
 }

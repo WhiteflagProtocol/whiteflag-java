@@ -561,13 +561,11 @@ public class WfMessage {
      * @throws WfException if the message cannot be serialised
      */
     public final String toJson() throws WfException {
-        String jsonMsgStr;
         try {
-            jsonMsgStr = new WfJsonMessage(metadata, base.header.toMap(), base.body.toMap()).toJson();
+            return this.toJsonMessage().toJson();
         } catch (WfUtilException e) {
             throw new WfException("Could not serialize message into JSON string: " + e.getMessage(), e, WF_FORMAT_ERROR);
         }
-        return jsonMsgStr;
     }
 
     /* PROTECTED METHODS */
@@ -578,6 +576,15 @@ public class WfMessage {
      */
     protected final void setMetadata(final Map<String, String> metadata) {
         metadata.forEach(this.metadata::put);
+    }
+
+    /**
+     * Returns JSON message representation of the Whiteflag message
+     * @since 1.2
+     * @return the JSON representation object
+     */
+    protected final WfJsonMessage toJsonMessage() {
+        return new WfJsonMessage(metadata, base.header.toMap(), base.body.toMap());
     }
 
     /* PRIVATE METHODS */

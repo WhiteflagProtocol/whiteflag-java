@@ -8,6 +8,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -32,6 +33,14 @@ import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_
 public class WfJsonMessage {
 
     /* PROPERTIES */
+
+    /**
+     * Static JSON mapper
+     */
+    private static final ObjectMapper mapper = new ObjectMapper();
+    static {
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
     /**
      * Optional container object for implementation specific metadata about the message or the underlying blockchain
@@ -83,9 +92,7 @@ public class WfJsonMessage {
      */
     public static WfJsonMessage create(String jsonStr) throws WfUtilException {
         WfJsonMessage jsonMessage;
-        ObjectMapper mapper = new ObjectMapper();
         try {
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             jsonMessage = mapper.readValue(jsonStr, WfJsonMessage.class);
         } catch (JsonProcessingException e) {
             throw new WfUtilException("Could not convert JSON string to message", e, WF_JSON_ERROR);
@@ -128,12 +135,19 @@ public class WfJsonMessage {
      * @throws WfUtilException if no valid JSON serialization can be created
      */
     public String toJson() throws WfUtilException {
-        String jsonStr;
         try {
-            jsonStr = new ObjectMapper().writeValueAsString(this);
+            return mapper.writeValueAsString(this);
         } catch (JsonProcessingException e) {
             throw new WfUtilException("Could not convert message to JSON string", e, WF_JSON_ERROR);
         }
-        return jsonStr;
+    }
+
+    /**
+     * Creates a JSON node object representation of a Whiteflag message
+     * @since 1.2
+     * @return the JSON node object representation of the message
+     */
+    public JsonNode toJsonNode() {
+        return mapper.valueToTree(this);
     }
 }

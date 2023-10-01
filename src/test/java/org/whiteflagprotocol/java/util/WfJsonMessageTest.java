@@ -6,6 +6,8 @@ package org.whiteflagprotocol.java.util;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 /**
  * Whiteflag JSON message test class
  */
@@ -76,5 +78,17 @@ public class WfJsonMessageTest {
         assertEquals("Version number should be correctly set", "1", jsonMessage.getHeader().get("Version"));
         assertEquals("Message code should be correctly set", "F", jsonMessage.getHeader().get("MessageCode"));
         assertEquals("Free text should be correctly set", "Whiteflag test message!", jsonMessage.getBody().get("Text"));
+    }
+    /**
+     * Tests creating a JSON node object
+     */
+    @Test
+    public void testJsonObject() throws WfUtilException {
+        String jsonStr1 = "{\"MessageHeader\":{\"Prefix\":\"WF\",\"Version\":\"1\",\"EncryptionIndicator\":\"0\",\"DuressIndicator\":\"0\",\"MessageCode\":\"F\",\"ReferenceIndicator\":\"5\",\"ReferencedMessage\":\"f6c1e1ed8950b137bb9e0edcf21593d62c03a7fb39dacfd554c593f72c8942df\"},\"MessageBody\":{\"Text\":\"Object mapping test\"}}";
+        WfJsonMessage jsonMessage = WfJsonMessage.create(jsonStr1);
+        JsonNode jsonNode = jsonMessage.toJsonNode();
+
+        /* Verify */
+        assertEquals("Data should be correctly transformed", jsonMessage.getBody().get("Text"), jsonNode.at("/MessageBody/Text").textValue());
     }
 }

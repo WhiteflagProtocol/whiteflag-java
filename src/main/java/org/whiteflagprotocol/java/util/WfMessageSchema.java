@@ -11,11 +11,17 @@ import java.util.stream.Collectors;
 import java.util.Iterator;
 import java.util.MissingResourceException;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersionDetector;
+import com.networknt.schema.ValidationMessage;
+
 
 /* Required error types */
 import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_ERROR;
@@ -40,21 +46,26 @@ public final class WfMessageSchema {
      */
     private static final String SCHEMAFILE = "protocol/v1/WfMessageSchema.json";
     /**
-     *  The Whiteflag message schema
+     *  The Whiteflag message schema as JSON object
      */
     protected static final JsonNode root;           // message schema root
     protected static final JsonNode properties;     // message properties
     protected static final JsonNode definitions;    // message definitions
     protected static final JsonNode specifications; // protocol specifications
+    /**
+     * The Whiteflag message schema as JSON schema object
+     */
+    protected static final JsonSchema schema;       // message schema validator
 
     /* STATIC CODE */
 
     /**
-     * Statically load Whiteflag message schema from resource file
+     * Statically loads Whiteflag message schema from resource file
      */
     static {
         try {
             root = mapWfSchema(loadResource(SCHEMAFILE));
+            schema = JsonSchemaFactory.getInstance(SpecVersionDetector.detect(root)).getSchema(root);
         } catch (Exception e) {
             throw new WfMissingSchemaException("No valid Whiteflag message schema found", e);
         }
@@ -75,7 +86,17 @@ public final class WfMessageSchema {
     /* PUBLIC METHODS */
 
     /**
-     * Get the name of the message type
+     * Validates a Whiteflag message against the message schema
+     * @return TRUE if message is valid, else FALSE
+     */
+    public static final boolean validate(WfJsonMessage message) {
+        Set<ValidationMessage> errors = schema.validate(message.toJsonNode());
+        if (errors.size() > 1) return false;
+        return true;
+    }
+
+    /**
+     * Gets the name of the message type
      * @param messageCode the code indicating the message type
      * @return the name of the message type or null if unable to retrieve
      */
@@ -86,7 +107,7 @@ public final class WfMessageSchema {
     }
 
     /**
-     * Get the description of the message type
+     * Gets the description of the message type
      * @param messageCode the code indicating the message type
      * @return the description of the message type or null if unable to retrieve
      */
@@ -99,7 +120,7 @@ public final class WfMessageSchema {
     /* PROTECTED METHODS */
 
     /**
-     * Get the JSON specification of the message type
+     * Gets the JSON specification of the message type
      * @param messageCode code indicating the message type
      * @return JSON description of the message type or null if not available
      */
@@ -124,10 +145,11 @@ public final class WfMessageSchema {
      */
     private static final String loadResource(final String resource) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        try(InputStream stream = classloader.getResourceAsStream(resource);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
+        try {
+            InputStream stream = classloader.getResourceAsStream(resource);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
             return reader.lines().collect(Collectors.joining(System.lineSeparator()));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MissingResourceException("Cannot load resource " + SCHEMAFILE + ": " + e.getMessage(), "", "");
         }
     }
