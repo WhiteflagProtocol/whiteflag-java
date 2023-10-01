@@ -45,6 +45,8 @@ package org.whiteflagprotocol.java {
         +getEcdhPublicKey() : ECPublicKey
         +getSharedKey() : WfEncryptionKey
     }
+
+    class WfValidator {}
 }
 
 package org.whiteflagprotocol.java.core {
@@ -63,6 +65,7 @@ package org.whiteflagprotocol.java.crypto {
 
 package org.whiteflagprotocol.java.util {
     class WfJsonMessage {}
+    class WfMessageSchema {}
 }
 
 WfMessage *-- "1" WfBasicMessage

@@ -38,7 +38,7 @@ public final class WfMessageSchema {
     /**
      *  The Whiteflag message schema resource location
      */
-    private static final String RESOURCEFILE = "protocol/v1/WfMessageSchema.json";
+    private static final String SCHEMAFILE = "protocol/v1/WfMessageSchema.json";
     /**
      *  The Whiteflag message schema
      */
@@ -50,13 +50,13 @@ public final class WfMessageSchema {
     /* STATIC CODE */
 
     /**
-     * Load Whiteflag message schema from resource file
+     * Statically load Whiteflag message schema from resource file
      */
     static {
         try {
-            root = mapWfSchema(loadWfSchemaResource(RESOURCEFILE));
+            root = mapWfSchema(loadResource(SCHEMAFILE));
         } catch (Exception e) {
-            throw new RuntimeException("Cannot statically load Whiteflag message schema", e);
+            throw new WfMissingSchemaException("No valid Whiteflag message schema found", e);
         }
         properties = root.at("/properties");
         definitions = root.at("/definitions");
@@ -122,13 +122,13 @@ public final class WfMessageSchema {
      * @param resource the name of the Whiteflag message schema resource file
      * @return JSON string with the Whiteflag message schema
      */
-    private static final String loadWfSchemaResource(final String resource) {
+    private static final String loadResource(final String resource) {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         try(InputStream stream = classloader.getResourceAsStream(resource);
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             return reader.lines().collect(Collectors.joining(System.lineSeparator()));
         } catch (IOException e) {
-            throw new MissingResourceException("Cannot load Whiteflag message schema from resource " + RESOURCEFILE, "", "");
+            throw new MissingResourceException("Cannot load resource " + SCHEMAFILE + ": " + e.getMessage(), "", "");
         }
     }
 
@@ -142,7 +142,7 @@ public final class WfMessageSchema {
         try {
             return mapper.readTree(jsonSchemaString);
         } catch (JsonProcessingException e) {
-            throw new WfUtilException("Resource " + RESOURCEFILE + " does not contain a valid Whiteflag message schema", e, WF_JSON_ERROR);
+            throw new WfUtilException("Resource " + SCHEMAFILE + " does not contain a valid JSON schema", e, WF_JSON_ERROR);
         }
     }
 }

@@ -60,6 +60,7 @@ public class WfUtilException extends Exception {
      * @param type the error type
      */
     public WfUtilException(final String message, final ErrorType type) {
+        super(message);
         this.errorType = type;
     }
 }
