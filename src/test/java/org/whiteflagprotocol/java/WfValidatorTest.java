@@ -23,7 +23,7 @@ public class WfValidatorTest {
         WfValidator validator = WfValidator.create(message);
 
         /* Verify */
-        assertTrue("Message should be valid", validator.validate());
+        assertTrue("The JSON representation of the message should be valid", validator.validateJson());
     }
     /**
      * Tests for correctly constructed authentication message with header and body object
@@ -38,6 +38,6 @@ public class WfValidatorTest {
         WfValidator validator = WfValidator.create(message);
 
         /* Verify */
-        assertTrue("Message should be valid", validator.validate());
+        assertTrue("The JSON representation of the message should be valid", validator.validateJson());
     }
 }

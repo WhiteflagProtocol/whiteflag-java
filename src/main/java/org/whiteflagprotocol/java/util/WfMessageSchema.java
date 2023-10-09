@@ -89,8 +89,17 @@ public final class WfMessageSchema {
      * Validates a Whiteflag message against the message schema
      * @return TRUE if message is valid, else FALSE
      */
-    public static final boolean validateJsonMessage(WfJsonMessage message) {
+    public static final boolean validateMessage(WfJsonMessage message) {
         return validateNode(message.toJsonNode());
+    }
+
+    /**
+     * Gets valid message types
+     * @return a string array with valid messages codes
+     */
+    public static final String[] getMessageTypes() {
+        //TODO: implement this method
+        return null;
     }
 
     /**
@@ -122,6 +131,8 @@ public final class WfMessageSchema {
     */
     protected static final boolean validateNode(JsonNode node) {
         Set<ValidationMessage> errors = schema.validate(node);
+        
+        //TODO: return errors
         if (errors.size() > 1) return false;
         return true;
     }
