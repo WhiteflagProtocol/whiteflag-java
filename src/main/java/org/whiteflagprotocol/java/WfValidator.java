@@ -3,17 +3,19 @@
  */
 package org.whiteflagprotocol.java;
 
-import org.whiteflagprotocol.java.util.WfMessageSchema;
+import org.whiteflagprotocol.java.util.WfJsonSchema;
 
 /**
  * Whiteflag message validator class
  *
- * <p> This unitlity class is used to validate Whiteflag messages. It uses
- * static factory methods to create a validator. This allows to create
+ * <p> This class is used to validate Whiteflag messages. It uses a static
+ * factory methods to create a validator. This allows to create different
  * validators for specific situations, e.g. from validating a single message
  * to validating a chain of related messages.
  * 
- * <p> The validator uses the Whiteflag message schema to validate against.
+ * <p> Use cases:
+ * - validate an individual message
+ * - validate the JSON representation against the JSON message schema
  * 
  * @since 1.2
  */
@@ -50,10 +52,18 @@ public final class WfValidator {
     /* PUBLIC METHODS */
 
     /**
-     * Performs the validation based on provided data
+     * Validates the Whiteflag message
+     * @return TRUE if provided data is valid, else FALSE
+     */
+    public boolean validate() {
+        return message.isValid();
+    }
+
+    /**
+     * Validates the JSON representation of the Whiteflag message
      * @return TRUE if provided data is valid, else FALSE
      */
     public boolean validateJson() {
-        return WfMessageSchema.validateMessage(message.toJsonMessage());
+        return WfJsonSchema.validateMessage(message.toJsonMessage());
     }
 }

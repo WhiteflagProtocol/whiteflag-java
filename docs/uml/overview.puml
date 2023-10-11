@@ -52,6 +52,7 @@ package org.whiteflagprotocol.java {
         {static} +create(WfMessage) : WfValidator
         ..
         +validate() : boolean
+        +validateJson() : boolean
     }
 }
 
@@ -71,7 +72,7 @@ package org.whiteflagprotocol.java.crypto {
 
 package org.whiteflagprotocol.java.util { 
     class WfJsonMessage {}
-    class WfMessageSchema {}
+    class WfJsonSchema {}
 }
 
 WfMessage *-- "1" WfBasicMessage
@@ -88,6 +89,6 @@ WfAccount --> WfECDHKeyPair
 WfMessage ..> WfCipher
 WfJsonMessage <.. WfMessage
 
-WfMessageSchema <.. WfValidator
+WfJsonSchema <.. WfValidator
 
 @enduml
