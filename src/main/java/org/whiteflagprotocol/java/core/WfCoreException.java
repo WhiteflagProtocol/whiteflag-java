@@ -4,7 +4,7 @@
 package org.whiteflagprotocol.java.core;
 
 /**
- * Whiteflag protocol core exception class
+ * Whiteflag core exception class
  * 
  * @since 1.0
  */

@@ -4,7 +4,7 @@
 package org.whiteflagprotocol.java.util;
 
 /**
- * Whiteflag protocol utility exception class
+ * Whiteflag utilities exception class
  * 
  * @since 1.0
  */
@@ -23,7 +23,7 @@ public class WfUtilException extends Exception {
     public final ErrorType errorType;
 
     /** 
-     * Whiteflag utility error categories
+     * Whiteflag utilities error categories
      * 
      * <p> These error categories are used by the {@link WfUtilException} class to
      * specify the type of error.

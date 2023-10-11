@@ -3,7 +3,7 @@
  */
 package org.whiteflagprotocol.java;
 
-import org.whiteflagprotocol.java.util.WfJsonSchema;
+import org.whiteflagprotocol.java.util.WfJsonValidator;
 
 /**
  * Whiteflag message validator class
@@ -64,6 +64,6 @@ public final class WfValidator {
      * @return TRUE if provided data is valid, else FALSE
      */
     public boolean validateJson() {
-        return WfJsonSchema.validateMessage(message.toJsonMessage());
+        return WfJsonValidator.validateMessage(message.toJsonMessage());
     }
 }

@@ -23,7 +23,7 @@ public class WfException extends Exception {
     public final ErrorType errorType;
 
     /** 
-     * Whiteflag protocol error categories
+     * Whiteflag error categories
      * 
      * <p> These error categories are used by the {@link WfException} class to
      * specify the type of error.
