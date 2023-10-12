@@ -63,20 +63,22 @@ or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-us
 ### Example
 
 After adding the dependency to your project, the WFJL classes can be used
-in your Java code. Your code may look like this:
+in your Java code. A simple example to decode an unencrypted Whiteflag message
+available in a hexadecimal string from a blockchain transaction, and return the
+message as a JSON string:
 
 ```java
 import org.whiteflagprotocol.java.WfMessage;
 import org.whiteflagprotocol.java.WfException;
 
-public class Example {
+public class ExampleMessageDecoder {
   /* Properties */
   private WfMessage message;
 
   /* Methods */
-  public WfMessage createMessage(String messageType) throws WfException {
-    message = WfMessage.type(messageType);
-    return message;
+  public String decodeToJson(String hexData) throws WfException {
+    message = WfMessage.decode(hexData);
+    return message.toJsonString();
   }
 }
 ```
@@ -89,6 +91,13 @@ documentation is also found in this repository in the `docs/` directory.
 
 The repository structure and development guidelines for the source code are
 described in `CONTRIBUTING.md`.
+
+## Known issues
+
+Because the WFJL uses a "flat" key-value-pair structure for the representation
+of message bodies, both internally as well as for JSON serialization, the JSON
+representation of `T` and `Q`` message bodies does not validate against the
+[Whiteflag JSON message schema](https://standard.whiteflagprotocol.org/v1/wf-message.schema.json).
 
 ## License and Third Party Software
 
@@ -103,3 +112,4 @@ dependencies of the WFJL are:
 * the [JUnit test framework](https://junit.org/) for testing the software
 * the [Bouncycastle Crypto API](https://bouncycastle.org/) used as the cryptographic provider for the Whiteflag Elliptic Curve Diffie-Hellman implementation
 * the [Jackson JSON library](https://github.com/FasterXML/jackson) for reading and creating [JSON](https://en.wikipedia.org/wiki/JSON) formatted Whiteflag messages
+* the [Java JSON Schema Validator](https://github.com/networknt/json-schema-validator) for JSON schema validation
