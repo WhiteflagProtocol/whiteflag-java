@@ -156,6 +156,8 @@ WfJsonMessage <. WfMessage
 WfMessage *-- WfBasicMessage
 WfMessage ..> WfMessageCreator
 
+WfBinaryBuffer <.. WfMessage
+
 WfBasicMessage -- "1" WfMessageType
 WfBasicMessage *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField

@@ -73,6 +73,7 @@ package org.whiteflagprotocol.java.crypto {
 package org.whiteflagprotocol.java.util { 
     class WfJsonMessage {}
     class WfJsonSchema {}
+    class WfJsonValidator {}
 }
 
 WfMessage *-- "1" WfBasicMessage
@@ -80,7 +81,9 @@ WfBasicMessage -- "1" WfMessageType
 WfBasicMessage *-- "2" WfMessageSegment
 WfMessageSegment *-- "*" WfMessageField
 
-WfAccount -- WfMessage
+WfAccount --o WfMessage
+WfAccount --o WfMessage
+WfMessage <-- WfValidator
 
 WfAccount --> WfAuthToken
 WfAccount --> WfEncryptionKey
@@ -89,6 +92,7 @@ WfAccount --> WfECDHKeyPair
 WfMessage ..> WfCipher
 WfJsonMessage <.. WfMessage
 
-WfJsonSchema <.. WfValidator
+WfJsonSchema .. WfJsonValidator
+WfJsonValidator <.. WfValidator
 
 @enduml

@@ -10,6 +10,8 @@ import org.whiteflagprotocol.java.core.WfBinaryBuffer;
 import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 import org.whiteflagprotocol.java.crypto.WfCryptoException;
+import org.whiteflagprotocol.java.util.WfJsonMessage;
+import org.whiteflagprotocol.java.util.WfJsonValidator;
 
 /* Message types required for checking correct message types */
 import static org.whiteflagprotocol.java.core.WfMessageType.*;
@@ -17,6 +19,7 @@ import static org.whiteflagprotocol.java.core.WfMessageType.*;
 /**
  * Whiteflag message representation test class
  */
+@SuppressWarnings("java:S1192")
 public class WfMessageTest {
     /**
      * Tests creating a new JSON message
@@ -91,6 +94,10 @@ public class WfMessageTest {
         assertFalse("Value should not be valid", message.isValid("ReferencedMessage", "wrong datatype"));
         assertFalse("Value should not be valid", message.isValid("CryptoDataType", "123"));
         assertTrue("Value should be valid", message.isValid("CryptoDataType", "0A"));
+        
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests for correctly constructed authentication message with header and body object
@@ -117,6 +124,10 @@ public class WfMessageTest {
         assertEquals("Verification method type should be correctly set", fieldValues[7], message.get("VerificationMethod"));
         assertEquals("Verification data should be correctly set", fieldValues[8], message.get("VerificationData"));
         assertTrue("Message should be valid", message.isValid());
+        
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests serialization of authentication message
@@ -138,6 +149,10 @@ public class WfMessageTest {
         assertEquals("Serialization should be correct", messageSerialized, message.serialize());
         assertEquals("Serialization from cache should be correct", messageSerialized, message.serialize());
         assertTrue("Message should be valid", message.isValid());
+        
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests deserialization of authentication message
@@ -162,6 +177,10 @@ public class WfMessageTest {
         assertEquals("Verification method type should be correctly set", messageSerialized.substring(71, 72), message.get("VerificationMethod"));
         assertEquals("Verification data should be correctly set", messageSerialized.substring(72), message.get("VerificationData"));
         assertTrue("Message should be valid", message.isValid());
+        
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests decoding of authentication message
@@ -188,6 +207,10 @@ public class WfMessageTest {
         assertEquals("Verification method should be correctly set", fieldValues[7], message.get("VerificationMethod"));
         assertEquals("Verification data should be correctly set", fieldValues[8], message.get("VerificationData"));
         assertTrue("Message should be valid", message.isValid());
+
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests invalid message data
@@ -231,6 +254,10 @@ public class WfMessageTest {
         assertEquals("Encoding should be correct", messageEncoded, message.encode().toHexString());
         assertEquals("Encoding from cache should be correct", messageEncoded, message.encode().toHexString());
         assertTrue("Message should be valid", message.isValid());
+
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests decoding of sign/signal message
@@ -266,6 +293,10 @@ public class WfMessageTest {
         assertEquals("Size dimention 2 should be correctly set", fieldValues[14], message.get("ObjectSizeDim2"));
         assertEquals("Orientation should be correctly set", fieldValues[15], message.get("ObjectOrientation"));
         assertTrue("Message should be valid", message.isValid());
+
+        /* Verify JSON */
+        assertTrue("The JSON representation should validate against Whiteflag JSON schema",
+                    WfJsonValidator.validateMessage(message.toJsonMessage()));
     }
     /**
      * Tests test message
@@ -321,6 +352,9 @@ public class WfMessageTest {
         assertEquals("Metadata should be added", null, messageDecoded.addMetadata("originatorAddress", "abc123"));
         assertEquals("Metadata should return correct value", "abc123", messageDecoded.getMetadata("originatorAddress"));
         assertEquals("Metadata should have two keys", 2, messageDecoded.getMetadataKeys().size());
+
+        /* Verify JSON */
+        // Whiteflag test messages do not validate against schema because serialization is not compliant
     }
     /**
      * Tests compilation of request message
@@ -369,6 +403,9 @@ public class WfMessageTest {
         assertTrue("Message body be valid", message.isValid());
         assertTrue("Message should be valid", message.isValid());
         assertTrue("Decoded message should be valid", messageDecoded.isValid());
+
+        /* Verify JSON */
+        // Whiteflag request messages do not validate against schema because serialization is not compliant
     }
     /**
      * Tests serialization of free text message

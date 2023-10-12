@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /* Required error types */
 import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_ERROR;
@@ -29,6 +30,7 @@ import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_
  * 
  * @since 1.0
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "MetaHeader", "MessageHeader", "MessageBody" })
 public class WfJsonMessage {
 

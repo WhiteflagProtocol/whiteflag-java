@@ -4,6 +4,7 @@
 package org.whiteflagprotocol.java.util;
 
 import java.util.Set;
+import java.util.HashSet;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.networknt.schema.ValidationMessage;
@@ -35,7 +36,7 @@ public final class WfJsonValidator {
      * @return TRUE if message is valid, else FALSE
      */
     public static final boolean validateMessage(WfJsonMessage jsonMessage) {
-        return validateJsonNode(jsonMessage.toJsonNode());
+        return validateNode(jsonMessage.toJsonNode());
     }
 
     /**
@@ -43,9 +44,8 @@ public final class WfJsonValidator {
      * @param jsonNode a JSON node
      * @return TRUE if message is valid, else FALSE
      */
-    public static final boolean validateJsonNode(JsonNode jsonNode) {
-        Set<ValidationMessage> errors = WfJsonSchema.schema.validate(jsonNode);
-        if (errors.size() > 0) return false;
+    public static final boolean validateNode(JsonNode jsonNode) {
+        if (WfJsonSchema.schema.validate(jsonNode).size() > 0) return false;
         return true;
     }
 
@@ -54,8 +54,8 @@ public final class WfJsonValidator {
      * @param jsonMessage Whiteflag JSON message
      * @return a set of errors found in the Whiteflag JSON message
      */
-    public static final Set<ValidationMessage> inspectMessage(WfJsonMessage jsonMessage) {
-        return inspectJsonNode(jsonMessage.toJsonNode());
+    public static final Set<String> inspectMessage(WfJsonMessage jsonMessage) {
+        return inspectNode(jsonMessage.toJsonNode());
     }
 
     /**
@@ -63,8 +63,11 @@ public final class WfJsonValidator {
      * @param jsonNode a JSON node
      * @return a set of errors found in the JSON node
      */
-    public static final Set<ValidationMessage> inspectJsonNode(JsonNode jsonNode) {
-        //TODO: convert Set of error objects to Set of strings.
-        return WfJsonSchema.schema.validate(jsonNode);
+    public static final Set<String> inspectNode(JsonNode jsonNode) {
+        Set<String> errors = new HashSet<>();
+        for (ValidationMessage error : WfJsonSchema.schema.validate(jsonNode)) {
+            errors.add(error.getMessage());
+        }
+        return errors;
     }
 }

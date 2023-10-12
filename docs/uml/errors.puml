@@ -9,7 +9,7 @@ package org.whiteflagprotocol.java.core {
 
 package org.whiteflagprotocol.java {
     class WfException <<Throwable>>
-    enum WfException.ErrorType {
+    enum ErrorType {
         WF_PROTOCOL_ERROR
         WF_METADATA_ERROR
         WF_FORMAT_ERROR
@@ -18,7 +18,7 @@ package org.whiteflagprotocol.java {
         WF_SIGN_ERROR
         WF_ENCRYPTION_ERROR
     }
-    WfException +-- WfException.ErrorType
+    WfException +-- ErrorType
 }
 
 package org.whiteflagprotocol.java.crypto {
@@ -26,12 +26,13 @@ package org.whiteflagprotocol.java.crypto {
 }
 
 package org.whiteflagprotocol.java.util {
+    class WfUtilRuntimeException <<Throwable>>
     class WfUtilException <<Throwable>>
-    enum WfUtilException.ErrorType {
+    enum ErrorType {
         WF_UTIL_ERROR
         WF_JSON_ERROR
     }
-    WfUtilException +-- WfUtilException.ErrorType
+    WfUtilException +-- ErrorType
 }
 
 @enduml
