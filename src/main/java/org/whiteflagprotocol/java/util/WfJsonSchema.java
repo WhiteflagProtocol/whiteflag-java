@@ -3,14 +3,12 @@
  */
 package org.whiteflagprotocol.java.util;
 
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 import java.util.Iterator;
 import java.util.MissingResourceException;
-import java.util.Set;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonPointer;
@@ -20,7 +18,6 @@ import com.fasterxml.jackson.databind.node.MissingNode;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SpecVersionDetector;
-import com.networknt.schema.ValidationMessage;
 
 /* Required error types */
 import static org.whiteflagprotocol.java.util.WfUtilException.ErrorType.WF_JSON_ERROR;

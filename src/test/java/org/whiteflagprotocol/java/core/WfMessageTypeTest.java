@@ -6,7 +6,6 @@ package org.whiteflagprotocol.java.core;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import org.whiteflagprotocol.java.core.WfMessageType;
 import org.whiteflagprotocol.java.util.WfJsonSchema;
 
 /**

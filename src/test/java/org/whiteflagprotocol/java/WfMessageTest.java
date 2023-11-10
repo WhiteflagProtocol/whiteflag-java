@@ -10,7 +10,6 @@ import org.whiteflagprotocol.java.core.WfBinaryBuffer;
 import org.whiteflagprotocol.java.crypto.WfECDHKeyPair;
 import org.whiteflagprotocol.java.crypto.WfEncryptionKey;
 import org.whiteflagprotocol.java.crypto.WfCryptoException;
-import org.whiteflagprotocol.java.util.WfJsonMessage;
 import org.whiteflagprotocol.java.util.WfJsonValidator;
 
 /* Message types required for checking correct message types */
