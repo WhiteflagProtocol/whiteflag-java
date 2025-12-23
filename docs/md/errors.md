@@ -1,7 +1,6 @@
 # WFJL Error Handling
 
-Go back to the [WFJL Documentation Home](../index.md) or visit
-the detailed [WFJL Javadoc API Reference](../javadoc)
+| [WFJL Documentation Home](../index.md) | [WFJL Javadoc Reference](../javadoc) | [Whiteflag Specification](https://standard.whiteflagprotocol.org) |
 
 ## Overview
 
