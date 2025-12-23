@@ -30,7 +30,7 @@ To use the WFJL, its [GitHub package](https://github.com/WhiteflagProtocol/white
 should be added to your project as a dependency using the following
 "group:artifact:version" information, with the most recently published version:
 
-`org.whiteflagprotocol.java:whiteflag-java:1.1.0`
+`org.whiteflagprotocol.java:whiteflag-java:1.1.1`
 
 For example, when using [Gradle](https://gradle.org/), the following should be
 included in your `build.gradle` file:
@@ -56,3 +56,4 @@ to your project. Please see the GitHub documentation for detailed information
 about installing packages from the GitHub repository with either
 [Maven](https://docs.github.com/en/packages/guides/configuring-apache-maven-for-use-with-github-packages#installing-a-package)
 or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-use-with-github-packages#installing-a-package).
+
