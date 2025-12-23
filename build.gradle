@@ -2,63 +2,71 @@
  * Gradle build file for the Whiteflag Java Library
  */
 
-// Project information
-version = '1.1.0'
+/* Plugins */
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'java-library-distribution'
+    id 'distribution'
+    id 'maven-publish'
+}
+/* Project information */
+version = '1.1.1'
 group = 'org.whiteflagprotocol.java'
 
-// Display basic information
+/* Display basic information */
 println  "Configuration for ${project.rootProject}";
 println  "  project:    ${project.name}"
 println  "  group:      ${project.group}"
 println  "  version:    ${project.version}";
 println  "  directory:  ${project.projectDir}";
 
-// Plugins
-apply plugin: 'java'
-apply plugin: 'java-library'
-apply plugin: 'java-library-distribution'
-apply plugin: 'maven-publish'
-
-// Repositories and Dependencies
+/* Repositories and Dependencies */
 repositories {
     mavenCentral()
 }
-
 dependencies {
     testImplementation 'junit:junit:4.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 }
-
-// Test behaviour
-test {
-    testLogging {
-        events "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
-    }
-}
-
-// Include documentation and source
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-// Metadata
+/* Metadata */
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
                    'Implementation-Version': project.version)
     }
 }
-
-// Distribution
+/* Testing */
+test {
+    testLogging {
+        events "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
+    }
+}
+/* Distribution */
 distributions {
     main {
         distributionBaseName = project.name
     }
 }
-
-// Publishing library as package
+/* Include documentation and source */
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+/* Documentation */
+javadoc {
+    options.tags = [ 'wfver:a:Whiteflag version:',
+                     'wfref:a:Whiteflag standard x-reference:' ]
+    options.stylesheetFile = project.file("src/main/javadoc/style.css")
+    options.overview = "src/main/javadoc/overview.html"
+}
+task docs(type: Copy) {
+    dependsOn javadoc
+    from "$buildDir/docs/javadoc"
+    into "docs/javadoc"
+}
+/* Publishing library as package */
 publishing {
     repositories {
         maven {
@@ -82,19 +90,4 @@ publishing {
             }
         }
     }
-}
-
-// Javadoc options
-javadoc {
-    options.tags = [ 'wfver:a:Whiteflag version:',
-                     'wfref:a:Whiteflag standard x-reference:' ]
-    options.stylesheetFile = project.file("src/main/javadoc/style.css")
-    options.overview = "src/main/javadoc/overview.html"
-}
-
-// Task to build documentation
-task docs(type: Copy) {
-    dependsOn javadoc
-    from "$buildDir/docs/javadoc"
-    into "docs/javadoc"
 }

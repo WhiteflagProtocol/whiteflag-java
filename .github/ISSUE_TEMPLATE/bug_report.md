@@ -4,8 +4,9 @@ about: Please create a bug report to help us solve any problems and improve the 
 title: ''
 labels: bug
 assignees: ''
-
 ---
+
+## Issue details
 
 ### Description
 

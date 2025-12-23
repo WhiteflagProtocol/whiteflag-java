@@ -4,8 +4,9 @@ about: Feel free to suggest an idea for this project
 title: ''
 labels: enhancement
 assignees: ''
-
 ---
+
+## Issue details
 
 ### Description
 
