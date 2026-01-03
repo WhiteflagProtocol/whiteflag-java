@@ -4,7 +4,7 @@
 
 ## Overview
 
-As any Java software, the WFJL is organised in packages.
+As any Java software, the WFJL is organized in packages.
 Packages help to structure the software by grouping related classes. Packages
 also provide access protection and a name space. The packages structure
 corresponds with the source code directory structure under `src/main/java/`.
@@ -22,18 +22,18 @@ The WFJL software consists of the following Java packages:
 
 The `org.whiteflagprotocol.java` package is the main package providing the
 external programming interface for software using this library. It defines
-the classes representing Whitelag messages and accounts.
+the classes representing Whiteflag messages and accounts.
 
 The `org.whiteflagprotocol.java.core` package contains all implementation
 independent core functionality as defined in the Whiteflag specification,
-such as the Whiteflag message definitions. This seperates the core
+such as the Whiteflag message definitions. This separates the core
 protocol functionality from implementation-specific design decisions
 as much as possible.
 
 The `org.whiteflagprotocol.java.crypto` package contains all implementation
-independent cryptogrpahic functionality as defined in the Whiteflag
-specification, such as encryption, key derivation and negatiation, and
-authentication. Seperating these critical security functions makes them better
+independent cryptographic functionality as defined in the Whiteflag
+specification, such as encryption, key derivation and negotiation, and
+authentication. Separating these critical security functions makes them better
 inspectable, testable and maintainable.
 
 The `org.whiteflagprotocol.java.util` package contains utilities used by

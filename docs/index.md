@@ -7,7 +7,7 @@ is an implementation of the [Whiteflag Protocol](https://standard.whiteflagproto
 in Java to support the development of Whiteflag-enabled applications.
 
 The WFJL is to support all Whiteflag protocol features, but with minimal
-dependencies. Therefore, the library is independent from any specific
+dependencies. Therefore, the library is independent of any specific
 blockchain, database solution, user interface, etc.
 
 ## Documentation
@@ -56,4 +56,3 @@ to your project. Please see the GitHub documentation for detailed information
 about installing packages from the GitHub repository with either
 [Maven](https://docs.github.com/en/packages/guides/configuring-apache-maven-for-use-with-github-packages#installing-a-package)
 or [Gradle](https://docs.github.com/en/packages/guides/configuring-gradle-for-use-with-github-packages#installing-a-package).
-

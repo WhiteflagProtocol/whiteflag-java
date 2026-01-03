@@ -12,7 +12,7 @@ required normally.
 In addition, the `WfBinaryBuffer` from the `org.whiteflagprotocol.java.core`
 may be used if working with binary encoded message, but the `WfMessage` class
 does provide methods to obtain binary encoded messages as byte arrays or
-hexadecimal strings. 
+hexadecimal strings.
 
 ### Example
 
@@ -50,7 +50,7 @@ a complete or accurate reference for the classes. Instead, please see the
 The WFJL implements the Whiteflag messages defined in the Whiteflag standard
 with the `WfMessage` class of the `org.whiteflagprotocol.java` package. This class
 encapsulates the `WfBasicMessage` class from the `org.whiteflagprotocol.java.core`
-package and adds implementation-sepcific metadata and methods that allow
+package and adds implementation-specific metadata and methods that allow
 for further integration in larger software applications.
 
 ### Message Core, Segment and Field classes
@@ -92,11 +92,11 @@ Each of these methods returns a new `WfMessage` object.
 
 ### Message Encryption and Decryption
 
-Message encryption and decrytion requires additional information about the
+Message encryption and decryption requires additional information about the
 originator and recipient of the message. The encryption method is determined
 by the `EncryptionIndicator` field in the message itself.
 
-For encryption, the orginator and recipient information is provided by passing
+For encryption, the originator and recipient information is provided by passing
 account information from objects implementing the `WfAccount` interface through
 the following methods:
 
@@ -104,9 +104,9 @@ the following methods:
 * `WfMessage.setRecipient(WfAccount recipient)`: sets the recipient of the message
 * `WfMessage.encode()` or `WfMessage.encrypt()`: are identical and return the binary encoded message (encrypted if the `EncryptionIndicator` field is set)
 * `WfMessage.encode().toByteArray()`: returns the binary encoded/encrypted message as a byte array
-* `WfMessage.getInitVector()`: returns the non-secret initialisation vector that is randomly created upon encryption
+* `WfMessage.getInitVector()`: returns the non-secret initialization vector that is randomly created upon encryption
 
-The non-secret initialisation vector is randomly created upon encryption, is
+The non-secret initialization vector is randomly created upon encryption, is
 required for decryption. It is to be sent over the blockchain `K0A` Whiteflag
 message. For decryption, all the information must be passed directly to the
 static factory method:
@@ -116,7 +116,7 @@ static factory method:
 ### Accessing Message Fields
 
 Message fields can be accessed through the getters and setter methods of the
-`WfMessage` class and the fieldname:
+`WfMessage` class and the field name:
 
 * `WfMessage.set(String fieldname, String value)`: sets the value of the specified message field
 * `WfMessage.get(String fieldname)`: returns the value of the specified message field
@@ -138,13 +138,13 @@ are available:
 * `WfMessage.isValid()`: returns a Boolean to indicate if the message is valid, i.e. if all message fields contain valid data
 * `WfMessage.isValid(String fieldname)`: returns a Boolean to indicate if specified field contains valid data
 * `WfMessage.isValid(String fieldname, String data)`: returns a Boolean to indicate if specified data would be valid for the specified field
-* `WfMessage.getNoFields()`: returns an interger with the number of fields
+* `WfMessage.getNoFields()`: returns an integer with the number of fields
 * `WfMessage.getFieldNames()`: returns a Set with all field names
 
-### Accessing Message Msetadata
+### Accessing Message Metadata
 
 The Whiteflag message object also holds the metadata associated with the
-message. The metatdata may be accessed with the following methods:
+message. The metadata may be accessed with the following methods:
 
 * `WfMessage.addMetadata(String key, String value)`: sets the value if the key does not yet exist, otherwise it returns the existing value
 * `WfMessage.getMetadata(String key)`: returns a String with the value of the provided key

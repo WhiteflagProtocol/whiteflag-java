@@ -8,7 +8,7 @@
 ## Introduction
 
 [Whiteflag](https://www.whiteflagprotocol.org) is a fully neutral and
-secure communciations protocol based on blockchain technology. It enables
+secure communications protocol based on blockchain technology. It enables
 near real-time communication in armed conflicts and disasters to exchange
 early warning and status information to create shared situational awareness.
 
@@ -19,7 +19,7 @@ The Whiteflag Java Library (WFJL) is an implementation of the Whiteflag
 Protocol in [Java](https://www.java.com/) to support the development of
 Whiteflag-enabled applications. The WFJL is to include all Whiteflag protocol
 features, but with minimal dependencies. Therefore, the library is independent
-from any specific blockchain, database solution, user interface, etc.
+of any specific blockchain, database solution, user interface, etc.
 
 Version 1 of the WFJL corresponds with version 1 of the protocol, and more
 specifically with `v1-draft.6` of the standard. The planned WFJL functionality
@@ -95,18 +95,18 @@ described in `CONTRIBUTING.md`.
 ## Known issues
 
 Because the WFJL uses a "flat" key-value-pair structure for the representation
-of message bodies, both internally as well as for JSON serialization, the JSON
+of message bodies, both internally and for JSON serialization, the JSON
 representation of `T` and `Q`` message bodies does not validate against the
 [Whiteflag JSON message schema](https://standard.whiteflagprotocol.org/v1/wf-message.schema.json).
 
-## License and Third Party Software
+## Licence and Third Party Software
 
 The WFJL software is dedicated to the public domain under the
 [Creative Commons CC0-1.0 Universal Public Domain Dedication](http://creativecommons.org/publicdomain/zero/1.0/)
 statement. See `LICENSE.md` for details.
 
 The library may require third party software packages, which are not part of
-this distribution and may be licenced differently. The third party software
+this distribution and may be licensed differently. The third party software
 dependencies of the WFJL are:
 
 * the [JUnit test framework](https://junit.org/) for testing the software

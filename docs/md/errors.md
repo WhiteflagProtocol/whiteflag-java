@@ -8,12 +8,12 @@ In addition to the standard Java exception classes, the WFJL extends the
 [Java Exception class](https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html)
 for Whiteflag specific errors:
 
-* `WfException`: used by the `org.whiteflagprotocol.java` to indicate errors to other software components while processing WHiteflag data
+* `WfException`: used by the `org.whiteflagprotocol.java` to indicate errors to other software components while processing Whiteflag data
 * `WfCoreException`: used internally by the `org.whiteflagprotocol.java.core` package for incompatibilities with the Whiteflag specification
 * `WfCryptoException`: used internally by the `org.whiteflagprotocol.java.crypto` package to wrap cryptographic errors
 * `WfUtilException`: used internally by the `org.whiteflagprotocol.java.util` package to wrap utility errors
 
-Software using the library should typcially only expect the `WfException` class
+Software using the library should typically only expect the `WfException` class
 to be thrown. The other error classes are primarily used internally.
 
 ### Error Class Diagram
@@ -31,7 +31,7 @@ intended as a complete or accurate reference Instead, please see the
 The core package defines the `WfCoreException` class, that is thrown by its
 classes if any request is made that is not in accordance with the Whiteflag
 specification, e.g. when a field value is not allowed or is not correctly
-formatted for a specfic field.
+formatted for a specific field.
 
 The main package `org.whiteflagprotocol.java` that provides the external
 interface, uses the `WfExcepetion` class. The `WfException` class has a

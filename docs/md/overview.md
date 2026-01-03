@@ -13,11 +13,11 @@ defines:
 
 * the `WfAccount` interface, defining how a class representing a Whiteflag
   account must interact with WFJL classes. As Whiteflag does not require a
-  central user regitsration, such a Whiteflag account is merely an abstraction
+  central user registration, such a Whiteflag account is merely an abstraction
   that bind Whiteflag specific attributes to a blockchain address.
   
 Whiteflag participants are originators and recipients of Whiteflag messages,
-which may be (groups of) organisations and individuals. As described in the
+which may be (groups of) organizations and individuals. As described in the
 [Whiteflag specification](https://standard.whiteflagprotocol.org), participants
 may use multiple Whiteflag accounts that correspond with a blockchain address
 on the underlying blockchain. A Whiteflag account then binds Whiteflag specific

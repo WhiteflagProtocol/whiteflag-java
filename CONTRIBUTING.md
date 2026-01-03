@@ -14,7 +14,7 @@ Please report bugs and file requests by creating an issue in the
 The [Gradle](https://gradle.org/) build tool is used to structure, test
 and build the WFJL software.
 
-As any Java software, the WFJL is organised in packages. The repository
+As any Java software, the WFJL is organized in packages. The repository
 adheres to the standard Maven project structure with `src/main/java/org/whiteflagprotocol/java`
 as the path to the main WFJL package. Please see `docs/md/packages.md`
 for a description of the WFJL packages.
@@ -64,7 +64,7 @@ files, which can be found in `docs/md/`.
 For available versions, see the [version tags](https://github.com/WhiteflagProtocol/whiteflag-java/tags)
 on this repository.
 
-Versions in development  use `-dev` as pre-release identifier,
+Versions in development use `-dev` as pre-release identifier,
 e.g. `1.2.4-dev` indicates that this is a "work in progress" snapshot from
 a development branch in between versions 1.2.3 and 1.2.4. Multiple pre-release
 identifiers may be used way, e.g. `1.1.0-alpha.3-dev`.
@@ -105,7 +105,7 @@ with the exceptions and additional coding guidance below.
 
 All major code elements (classes and methods) should be documented using
 [javadoc](https://www.oracle.com/java/technologies/javase/javadoc-tool.html).
-A comment starting with a `/**` sequence is a javadoc comment. Non-JSDoc
+A comment starting with a `/**` sequence is a javadoc comment. Non-javadoc
 comments must start with `/*`, except for end-line or temporary comments.
 
 ### Style Guide Exceptions
@@ -116,9 +116,9 @@ Google Java Style Guide:
 * indentation of 4 spaces (no tabs!)
 * lines may be 128 characters long
 
-### Class organisation
+### Class organization
 
-Classes should be organised as follows:
+Classes should be organized as follows:
 
 1. Constant Properties
 2. Variable Properties
@@ -136,6 +136,6 @@ Classes should be organised as follows:
 1. Look at the existing code as a guidance and example!
 2. It is better to use multiple lines if a line is longer than 128 characters:
     * except for strings: do not break strings
-    * put logical and concatination operators at the beginning of a new line
+    * put logical and concatenation operators at the beginning of a new line
 3. Comment your code, but avoid commenting the obvious:
     * modules, classes, and functions must be described using `javadoc`
